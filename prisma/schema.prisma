@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User {
+  id        String   @id @default(cuid())
+  discordId String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rpName    String?
+  avatarUrl String?
+
+  wallet   Wallet @relation(fields: [walletId], references: [id])
+  walletId String @unique
+
+  inventory InventoryItem[]
+}
+
+model Wallet {
+  id        String   @id @default(cuid())
+  knuts     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User?
+}
+
+model ShopItem {
+  id             String          @id @default(cuid())
+  name           String
+  description    String?
+  iconUrl        String?
+  priceKnuts     Int
+  category       String          @default("general")
+  isActive       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  maxPerUser     Int?
+  inventoryItems InventoryItem[]
+}
+
+model InventoryItem {
+  id         String @id @default(cuid())
+  userId     String
+  shopItemId String
+
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  shopItem ShopItem @relation(fields: [shopItemId], references: [id])
+
+  @@unique([userId, shopItemId])
+}
