@@ -19,8 +19,8 @@ export class RaceService {
     public static createEmbed(race: Race): EmbedBuilder {
         return new EmbedBuilder()
             .setColor(0x475b56)
-            .setTitle(`🟢 ${race.name} (${this.getStarsString(race.stars)})`)
-            .setDescription(`★ "${race.description}"`)
+            .setTitle(`${race.emoji} ${race.name} (${this.getStarsString(race.stars)})`)
+            .setDescription(`<:48765whitearrow:1518587298281685173> "${race.description}"`)
             .setImage(race.image)
             .setTimestamp();
     }
@@ -30,7 +30,7 @@ export class RaceService {
             .setCustomId('race:reroll')
             .setLabel('Перекрут')
             .setStyle(ButtonStyle.Secondary)
-            .setEmoji('🔄');
+            .setEmoji('<:84305verifiedgreen:1518587318926049290>');
 
         return new ActionRowBuilder<ButtonBuilder>().addComponents(button);
     }

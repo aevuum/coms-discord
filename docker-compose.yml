@@ -7,6 +7,23 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: sync
+
+        - path: ./prisma
+          target: /app/prisma
+          action: sync+restart
+
+        - path: ./package.json
+          target: /app/package.json
+          action: rebuild
+
+        - path: ./tsconfig.json
+          target: /app/tsconfig.json
+          action: rebuild
 
   postgres:
     image: postgres:17

@@ -3,13 +3,12 @@ FROM node:22-alpine
 WORKDIR /app
 
 COPY package*.json ./
-COPY prisma ./prisma/
-
 RUN npm config set registry https://registry.npmmirror.com/ && \
     npm install --no-audit --progress=false
 
-COPY . .
-
+COPY prisma ./prisma/
 RUN npx prisma generate
+
+COPY . .
 
 CMD ["npm", "run", "dev"]
