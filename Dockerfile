@@ -7,8 +7,10 @@ RUN npm config set registry https://registry.npmmirror.com/ && \
     npm install --no-audit --progress=false
 
 COPY prisma ./prisma/
+
 RUN npx prisma generate
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+# ✅ Или генерируем при запуске
+CMD ["sh", "-c", "npx prisma generate && npm run dev"]

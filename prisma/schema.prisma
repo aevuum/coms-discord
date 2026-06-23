@@ -1,65 +1,159 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../src/database/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
+enum CharacterStatus {
+  ALIVE
+  DEAD
+  FROZEN
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
+  TRANSFER_IN
+  TRANSFER_OUT
+  SALARY
+  PURCHASE
+  FINE
+  ADMIN_ADD
+  ADMIN_REMOVE
+}
 
 model User {
   id        String   @id @default(cuid())
   discordId String   @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  rpName    String?
-  avatarUrl String?
+  messagesCount Int @default(0)
+  voiceSeconds  Int @default(0)
+
+  profileBannerUrl String?
 
   wallet   Wallet @relation(fields: [walletId], references: [id])
   walletId String @unique
 
   inventory InventoryItem[]
+
+  characters Character[]
+}
+
+
+model UserAward {
+  id String @id @default(cuid())
+
+  userId  String
+  awardId String
+
+  issuedAt DateTime @default(now())
+
+
+  @@unique([userId, awardId])
 }
 
 model Wallet {
   id        String   @id @default(cuid())
-  knuts     Int      @default(0)
+
+  comsCoins Int @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   user User?
 }
 
+model Character {
+  id String @id @default(cuid())
+
+  rpName    String
+  avatarUrl String?
+
+  status CharacterStatus @default(ALIVE)
+
+  balanceKnuts Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions CharacterTransaction[]
+  inventoryItems CharacterInventoryItem[]
+}
+
+model CharacterTransaction {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  type TransactionType
+
+  amountKnuts Int
+
+  balanceAfter Int
+
+  reason String?
+
+  createdAt DateTime @default(now())
+}
+
 model ShopItem {
-  id             String          @id @default(cuid())
-  name           String
-  description    String?
-  iconUrl        String?
-  priceKnuts     Int
-  category       String          @default("general")
-  isActive       Boolean         @default(true)
-  createdAt      DateTime        @default(now())
-  maxPerUser     Int?
-  inventoryItems InventoryItem[]
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  iconUrl     String?
+
+  priceKnuts Int
+
+  category String  @default("general")
+  isActive Boolean @default(true)
+
+  maxPerUser Int?
+
+  createdAt DateTime @default(now())
+
+  playerInventory    InventoryItem[]
+  characterInventory CharacterInventoryItem[]
 }
 
 model InventoryItem {
-  id         String @id @default(cuid())
+  id String @id @default(cuid())
+
   userId     String
   shopItemId String
 
-  quantity  Int      @default(1)
+  quantity Int @default(1)
+
   createdAt DateTime @default(now())
 
-  user     User     @relation(fields: [userId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   shopItem ShopItem @relation(fields: [shopItemId], references: [id])
 
   @@unique([userId, shopItemId])
+}
+
+model CharacterInventoryItem {
+  id String @id @default(cuid())
+
+  characterId String
+  shopItemId  String
+
+  quantity Int @default(1)
+
+  createdAt DateTime @default(now())
+
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  shopItem  ShopItem  @relation(fields: [shopItemId], references: [id])
+
+  @@unique([characterId, shopItemId])
 }
