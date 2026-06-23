@@ -8,6 +8,13 @@ export class UserRepository {
       },
       include: {
         wallet: true,
+
+        awards: {
+          include: {
+            award: true,
+          },
+        },
+
         characters: {
           orderBy: {
             createdAt: "asc",
@@ -21,12 +28,20 @@ export class UserRepository {
     return prisma.user.create({
       data: {
         discordId,
+
         wallet: {
           create: {},
         },
       },
       include: {
         wallet: true,
+
+        awards: {
+          include: {
+            award: true,
+          },
+        },
+
         characters: true,
       },
     });
@@ -42,6 +57,20 @@ export class UserRepository {
       },
       data: {
         profileBannerUrl: bannerUrl,
+      },
+    });
+  }
+
+  public static async updateSelectedAward(
+    discordId: string,
+    awardId: string | null,
+  ) {
+    return prisma.user.update({
+      where: {
+        discordId,
+      },
+      data: {
+        selectedAwardId: awardId,
       },
     });
   }

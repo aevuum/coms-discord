@@ -74,6 +74,24 @@ export class ProfileContainer {
           ].join("\n");
           break;
         }
+        case "awards": {
+          const userWithAwards = profile as any;
+          const awards = userWithAwards.awards ?? [];
+
+          contentText = [
+            "## <:972712donator:1518581051960852601> Награды",
+            "",
+            awards.length
+              ? awards
+                  .map(
+                    (ua: any) =>
+                      `${ua.award?.emoji ?? "🏆"} **${ua.award?.label ?? "Награда"}**\n${ua.award?.description ?? ""}`,
+                  )
+                  .join("\n\n")
+              : "*У пользователя нет наград*",
+          ].join("\n");
+          break;
+        }
 
         case "main":
         default: {
@@ -87,12 +105,23 @@ export class ProfileContainer {
       }
     }
 
-    const fullMessageText = [
-      `<:726931good:1518587367110213642> **${discordUser.displayName}**`,
-      `**Discord ID:** \`${discordUser.id}\``,
-      "",
-      contentText,
-    ].join("\n");
+    const userProfile = profile as any;
+    let nicknameBlock = `**${discordUser.displayName}**`;
+
+    if (
+      userProfile?.selectedAwardId &&
+      userProfile.selectedAwardId !== "none"
+    ) {
+      const selectedAwardObj = userProfile.awards?.find(
+        (ua: any) => ua.awardId === userProfile.selectedAwardId,
+      );
+      if (selectedAwardObj?.award) {
+        const award = selectedAwardObj.award;
+        nicknameBlock = `**__${discordUser.displayName}__**\n${award.emoji} **${award.label} (\`${award.rarity}**\`)`;
+      }
+    }
+
+    const fullMessageText = [nicknameBlock, "", contentText].join("\n");
 
     const mainSection = new SectionBuilder()
       .setThumbnailAccessory(new ThumbnailBuilder().setURL(avatarUrl))

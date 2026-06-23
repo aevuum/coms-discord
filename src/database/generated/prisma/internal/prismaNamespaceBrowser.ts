@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Award: 'Award',
   UserAward: 'UserAward',
   Wallet: 'Wallet',
   Character: 'Character',
@@ -84,11 +85,25 @@ export const UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   messagesCount: 'messagesCount',
   voiceSeconds: 'voiceSeconds',
+  selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
   walletId: 'walletId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AwardScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  emoji: 'emoji',
+  description: 'description',
+  rewardComsCoins: 'rewardComsCoins',
+  rarity: 'rarity',
+  createdAt: 'createdAt'
+} as const
+
+export type AwardScalarFieldEnum = (typeof AwardScalarFieldEnum)[keyof typeof AwardScalarFieldEnum]
 
 
 export const UserAwardScalarFieldEnum = {

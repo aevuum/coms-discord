@@ -9,6 +9,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const AwardRarity = {
+  COMMON: 'COMMON',
+  RARE: 'RARE',
+  EPIC: 'EPIC',
+  LEGENDARY: 'LEGENDARY'
+} as const
+
+export type AwardRarity = (typeof AwardRarity)[keyof typeof AwardRarity]
+
+
 export const CharacterStatus = {
   ALIVE: 'ALIVE',
   DEAD: 'DEAD',

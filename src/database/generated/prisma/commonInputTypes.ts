@@ -137,6 +137,23 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
 }
 
+export type EnumAwardRarityFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwardRarity | Prisma.EnumAwardRarityFieldRefInput<$PrismaModel>
+  in?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwardRarityFilter<$PrismaModel> | $Enums.AwardRarity
+}
+
+export type EnumAwardRarityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwardRarity | Prisma.EnumAwardRarityFieldRefInput<$PrismaModel>
+  in?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwardRarityWithAggregatesFilter<$PrismaModel> | $Enums.AwardRarity
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAwardRarityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAwardRarityFilter<$PrismaModel>
+}
+
 export type EnumCharacterStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.CharacterStatus | Prisma.EnumCharacterStatusFieldRefInput<$PrismaModel>
   in?: $Enums.CharacterStatus[] | Prisma.ListEnumCharacterStatusFieldRefInput<$PrismaModel>
@@ -345,6 +362,23 @@ export type NestedIntNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumAwardRarityFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwardRarity | Prisma.EnumAwardRarityFieldRefInput<$PrismaModel>
+  in?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwardRarityFilter<$PrismaModel> | $Enums.AwardRarity
+}
+
+export type NestedEnumAwardRarityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AwardRarity | Prisma.EnumAwardRarityFieldRefInput<$PrismaModel>
+  in?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AwardRarity[] | Prisma.ListEnumAwardRarityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAwardRarityWithAggregatesFilter<$PrismaModel> | $Enums.AwardRarity
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAwardRarityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAwardRarityFilter<$PrismaModel>
 }
 
 export type NestedEnumCharacterStatusFilter<$PrismaModel = never> = {

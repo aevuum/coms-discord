@@ -43,6 +43,11 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
     const attachment = uploadedFiles?.first();
     const bannerUrl = attachment?.url ?? null;
 
+    const selectedAwardId =
+      interaction.fields
+        .getStringSelectValues("profile_primary_awardid")
+        ?.at(0) ?? null;
+
     if (bannerUrl && !attachment.contentType?.startsWith("image/")) {
       const errorContainer = new ContainerBuilder().addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
@@ -57,11 +62,23 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
       return;
     }
 
-    await UserRepository.updateBanner(result.targetDiscordId, bannerUrl);
+    if (bannerUrl) {
+      await UserRepository.updateBanner(result.targetDiscordId, bannerUrl);
+    }
+
+    if (selectedAwardId) {
+      const user = await UserRepository.getByDiscordId(result.targetDiscordId);
+      if (user) {
+        await (UserRepository as any).updateSelectedAward(
+          result.targetDiscordId,
+          selectedAwardId,
+        );
+      }
+    }
 
     const successContainer = new ContainerBuilder().addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        "<:312537mark:1518581040548024430> Баннер профиля успешно обновлён.",
+        "<:312537mark:1518581040548024430> Настройки профиля успешно обновлены.",
       ),
     );
 

@@ -9,6 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { ProfileSettingsModal } from "../lib/profileSettingsModal.js";
+import { ProfileService } from "../service/profileService.js";
 
 export class ProfileSettingsHandler extends InteractionHandler {
   public constructor(
@@ -51,8 +52,16 @@ export class ProfileSettingsHandler extends InteractionHandler {
       return;
     }
 
+    const profile = await ProfileService.getOrCreateProfile(
+      result.targetDiscordId,
+    );
+
     await interaction.showModal(
-      ProfileSettingsModal.create(result.targetDiscordId),
+      ProfileSettingsModal.create(
+        result.targetDiscordId,
+        profile.awards,
+        profile.selectedAwardId ?? undefined,
+      ),
     );
   }
 }

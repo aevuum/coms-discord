@@ -174,6 +174,8 @@ export type UserAwardWhereInput = {
   userId?: Prisma.StringFilter<"UserAward"> | string
   awardId?: Prisma.StringFilter<"UserAward"> | string
   issuedAt?: Prisma.DateTimeFilter<"UserAward"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  award?: Prisma.XOR<Prisma.AwardScalarRelationFilter, Prisma.AwardWhereInput>
 }
 
 export type UserAwardOrderByWithRelationInput = {
@@ -181,17 +183,21 @@ export type UserAwardOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   awardId?: Prisma.SortOrder
   issuedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
+  award?: Prisma.AwardOrderByWithRelationInput
 }
 
 export type UserAwardWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId_awardId?: Prisma.UserAwardUserIdAwardIdCompoundUniqueInput
+  userId_awardId?: Prisma.UserAwardUserId_awardIdCompoundUniqueInput
   AND?: Prisma.UserAwardWhereInput | Prisma.UserAwardWhereInput[]
   OR?: Prisma.UserAwardWhereInput[]
   NOT?: Prisma.UserAwardWhereInput | Prisma.UserAwardWhereInput[]
   userId?: Prisma.StringFilter<"UserAward"> | string
   awardId?: Prisma.StringFilter<"UserAward"> | string
   issuedAt?: Prisma.DateTimeFilter<"UserAward"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  award?: Prisma.XOR<Prisma.AwardScalarRelationFilter, Prisma.AwardWhereInput>
 }, "id" | "userId_awardId">
 
 export type UserAwardOrderByWithAggregationInput = {
@@ -216,9 +222,9 @@ export type UserAwardScalarWhereWithAggregatesInput = {
 
 export type UserAwardCreateInput = {
   id?: string
-  userId: string
-  awardId: string
   issuedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAwardsInput
+  award: Prisma.AwardCreateNestedOneWithoutUsersInput
 }
 
 export type UserAwardUncheckedCreateInput = {
@@ -230,9 +236,9 @@ export type UserAwardUncheckedCreateInput = {
 
 export type UserAwardUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  awardId?: Prisma.StringFieldUpdateOperationsInput | string
   issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAwardsNestedInput
+  award?: Prisma.AwardUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserAwardUncheckedUpdateInput = {
@@ -251,8 +257,6 @@ export type UserAwardCreateManyInput = {
 
 export type UserAwardUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  awardId?: Prisma.StringFieldUpdateOperationsInput | string
   issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -263,7 +267,17 @@ export type UserAwardUncheckedUpdateManyInput = {
   issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type UserAwardUserIdAwardIdCompoundUniqueInput = {
+export type UserAwardListRelationFilter = {
+  every?: Prisma.UserAwardWhereInput
+  some?: Prisma.UserAwardWhereInput
+  none?: Prisma.UserAwardWhereInput
+}
+
+export type UserAwardOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type UserAwardUserId_awardIdCompoundUniqueInput = {
   userId: string
   awardId: string
 }
@@ -289,6 +303,224 @@ export type UserAwardMinOrderByAggregateInput = {
   issuedAt?: Prisma.SortOrder
 }
 
+export type UserAwardCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutUserInput, Prisma.UserAwardUncheckedCreateWithoutUserInput> | Prisma.UserAwardCreateWithoutUserInput[] | Prisma.UserAwardUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutUserInput | Prisma.UserAwardCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.UserAwardCreateManyUserInputEnvelope
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+}
+
+export type UserAwardUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutUserInput, Prisma.UserAwardUncheckedCreateWithoutUserInput> | Prisma.UserAwardCreateWithoutUserInput[] | Prisma.UserAwardUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutUserInput | Prisma.UserAwardCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.UserAwardCreateManyUserInputEnvelope
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+}
+
+export type UserAwardUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutUserInput, Prisma.UserAwardUncheckedCreateWithoutUserInput> | Prisma.UserAwardCreateWithoutUserInput[] | Prisma.UserAwardUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutUserInput | Prisma.UserAwardCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.UserAwardUpsertWithWhereUniqueWithoutUserInput | Prisma.UserAwardUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.UserAwardCreateManyUserInputEnvelope
+  set?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  disconnect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  delete?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  update?: Prisma.UserAwardUpdateWithWhereUniqueWithoutUserInput | Prisma.UserAwardUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.UserAwardUpdateManyWithWhereWithoutUserInput | Prisma.UserAwardUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.UserAwardScalarWhereInput | Prisma.UserAwardScalarWhereInput[]
+}
+
+export type UserAwardUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutUserInput, Prisma.UserAwardUncheckedCreateWithoutUserInput> | Prisma.UserAwardCreateWithoutUserInput[] | Prisma.UserAwardUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutUserInput | Prisma.UserAwardCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.UserAwardUpsertWithWhereUniqueWithoutUserInput | Prisma.UserAwardUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.UserAwardCreateManyUserInputEnvelope
+  set?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  disconnect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  delete?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  update?: Prisma.UserAwardUpdateWithWhereUniqueWithoutUserInput | Prisma.UserAwardUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.UserAwardUpdateManyWithWhereWithoutUserInput | Prisma.UserAwardUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.UserAwardScalarWhereInput | Prisma.UserAwardScalarWhereInput[]
+}
+
+export type UserAwardCreateNestedManyWithoutAwardInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutAwardInput, Prisma.UserAwardUncheckedCreateWithoutAwardInput> | Prisma.UserAwardCreateWithoutAwardInput[] | Prisma.UserAwardUncheckedCreateWithoutAwardInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutAwardInput | Prisma.UserAwardCreateOrConnectWithoutAwardInput[]
+  createMany?: Prisma.UserAwardCreateManyAwardInputEnvelope
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+}
+
+export type UserAwardUncheckedCreateNestedManyWithoutAwardInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutAwardInput, Prisma.UserAwardUncheckedCreateWithoutAwardInput> | Prisma.UserAwardCreateWithoutAwardInput[] | Prisma.UserAwardUncheckedCreateWithoutAwardInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutAwardInput | Prisma.UserAwardCreateOrConnectWithoutAwardInput[]
+  createMany?: Prisma.UserAwardCreateManyAwardInputEnvelope
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+}
+
+export type UserAwardUpdateManyWithoutAwardNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutAwardInput, Prisma.UserAwardUncheckedCreateWithoutAwardInput> | Prisma.UserAwardCreateWithoutAwardInput[] | Prisma.UserAwardUncheckedCreateWithoutAwardInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutAwardInput | Prisma.UserAwardCreateOrConnectWithoutAwardInput[]
+  upsert?: Prisma.UserAwardUpsertWithWhereUniqueWithoutAwardInput | Prisma.UserAwardUpsertWithWhereUniqueWithoutAwardInput[]
+  createMany?: Prisma.UserAwardCreateManyAwardInputEnvelope
+  set?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  disconnect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  delete?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  update?: Prisma.UserAwardUpdateWithWhereUniqueWithoutAwardInput | Prisma.UserAwardUpdateWithWhereUniqueWithoutAwardInput[]
+  updateMany?: Prisma.UserAwardUpdateManyWithWhereWithoutAwardInput | Prisma.UserAwardUpdateManyWithWhereWithoutAwardInput[]
+  deleteMany?: Prisma.UserAwardScalarWhereInput | Prisma.UserAwardScalarWhereInput[]
+}
+
+export type UserAwardUncheckedUpdateManyWithoutAwardNestedInput = {
+  create?: Prisma.XOR<Prisma.UserAwardCreateWithoutAwardInput, Prisma.UserAwardUncheckedCreateWithoutAwardInput> | Prisma.UserAwardCreateWithoutAwardInput[] | Prisma.UserAwardUncheckedCreateWithoutAwardInput[]
+  connectOrCreate?: Prisma.UserAwardCreateOrConnectWithoutAwardInput | Prisma.UserAwardCreateOrConnectWithoutAwardInput[]
+  upsert?: Prisma.UserAwardUpsertWithWhereUniqueWithoutAwardInput | Prisma.UserAwardUpsertWithWhereUniqueWithoutAwardInput[]
+  createMany?: Prisma.UserAwardCreateManyAwardInputEnvelope
+  set?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  disconnect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  delete?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  connect?: Prisma.UserAwardWhereUniqueInput | Prisma.UserAwardWhereUniqueInput[]
+  update?: Prisma.UserAwardUpdateWithWhereUniqueWithoutAwardInput | Prisma.UserAwardUpdateWithWhereUniqueWithoutAwardInput[]
+  updateMany?: Prisma.UserAwardUpdateManyWithWhereWithoutAwardInput | Prisma.UserAwardUpdateManyWithWhereWithoutAwardInput[]
+  deleteMany?: Prisma.UserAwardScalarWhereInput | Prisma.UserAwardScalarWhereInput[]
+}
+
+export type UserAwardCreateWithoutUserInput = {
+  id?: string
+  issuedAt?: Date | string
+  award: Prisma.AwardCreateNestedOneWithoutUsersInput
+}
+
+export type UserAwardUncheckedCreateWithoutUserInput = {
+  id?: string
+  awardId: string
+  issuedAt?: Date | string
+}
+
+export type UserAwardCreateOrConnectWithoutUserInput = {
+  where: Prisma.UserAwardWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserAwardCreateWithoutUserInput, Prisma.UserAwardUncheckedCreateWithoutUserInput>
+}
+
+export type UserAwardCreateManyUserInputEnvelope = {
+  data: Prisma.UserAwardCreateManyUserInput | Prisma.UserAwardCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserAwardUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.UserAwardWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserAwardUpdateWithoutUserInput, Prisma.UserAwardUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.UserAwardCreateWithoutUserInput, Prisma.UserAwardUncheckedCreateWithoutUserInput>
+}
+
+export type UserAwardUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.UserAwardWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserAwardUpdateWithoutUserInput, Prisma.UserAwardUncheckedUpdateWithoutUserInput>
+}
+
+export type UserAwardUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.UserAwardScalarWhereInput
+  data: Prisma.XOR<Prisma.UserAwardUpdateManyMutationInput, Prisma.UserAwardUncheckedUpdateManyWithoutUserInput>
+}
+
+export type UserAwardScalarWhereInput = {
+  AND?: Prisma.UserAwardScalarWhereInput | Prisma.UserAwardScalarWhereInput[]
+  OR?: Prisma.UserAwardScalarWhereInput[]
+  NOT?: Prisma.UserAwardScalarWhereInput | Prisma.UserAwardScalarWhereInput[]
+  id?: Prisma.StringFilter<"UserAward"> | string
+  userId?: Prisma.StringFilter<"UserAward"> | string
+  awardId?: Prisma.StringFilter<"UserAward"> | string
+  issuedAt?: Prisma.DateTimeFilter<"UserAward"> | Date | string
+}
+
+export type UserAwardCreateWithoutAwardInput = {
+  id?: string
+  issuedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutAwardsInput
+}
+
+export type UserAwardUncheckedCreateWithoutAwardInput = {
+  id?: string
+  userId: string
+  issuedAt?: Date | string
+}
+
+export type UserAwardCreateOrConnectWithoutAwardInput = {
+  where: Prisma.UserAwardWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserAwardCreateWithoutAwardInput, Prisma.UserAwardUncheckedCreateWithoutAwardInput>
+}
+
+export type UserAwardCreateManyAwardInputEnvelope = {
+  data: Prisma.UserAwardCreateManyAwardInput | Prisma.UserAwardCreateManyAwardInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserAwardUpsertWithWhereUniqueWithoutAwardInput = {
+  where: Prisma.UserAwardWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserAwardUpdateWithoutAwardInput, Prisma.UserAwardUncheckedUpdateWithoutAwardInput>
+  create: Prisma.XOR<Prisma.UserAwardCreateWithoutAwardInput, Prisma.UserAwardUncheckedCreateWithoutAwardInput>
+}
+
+export type UserAwardUpdateWithWhereUniqueWithoutAwardInput = {
+  where: Prisma.UserAwardWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserAwardUpdateWithoutAwardInput, Prisma.UserAwardUncheckedUpdateWithoutAwardInput>
+}
+
+export type UserAwardUpdateManyWithWhereWithoutAwardInput = {
+  where: Prisma.UserAwardScalarWhereInput
+  data: Prisma.XOR<Prisma.UserAwardUpdateManyMutationInput, Prisma.UserAwardUncheckedUpdateManyWithoutAwardInput>
+}
+
+export type UserAwardCreateManyUserInput = {
+  id?: string
+  awardId: string
+  issuedAt?: Date | string
+}
+
+export type UserAwardUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  award?: Prisma.AwardUpdateOneRequiredWithoutUsersNestedInput
+}
+
+export type UserAwardUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  awardId?: Prisma.StringFieldUpdateOperationsInput | string
+  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserAwardUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  awardId?: Prisma.StringFieldUpdateOperationsInput | string
+  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserAwardCreateManyAwardInput = {
+  id?: string
+  userId: string
+  issuedAt?: Date | string
+}
+
+export type UserAwardUpdateWithoutAwardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutAwardsNestedInput
+}
+
+export type UserAwardUncheckedUpdateWithoutAwardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserAwardUncheckedUpdateManyWithoutAwardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  issuedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type UserAwardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -296,6 +528,8 @@ export type UserAwardSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   userId?: boolean
   awardId?: boolean
   issuedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  award?: boolean | Prisma.AwardDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAward"]>
 
 export type UserAwardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -303,6 +537,8 @@ export type UserAwardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   userId?: boolean
   awardId?: boolean
   issuedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  award?: boolean | Prisma.AwardDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAward"]>
 
 export type UserAwardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -310,6 +546,8 @@ export type UserAwardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   userId?: boolean
   awardId?: boolean
   issuedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  award?: boolean | Prisma.AwardDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userAward"]>
 
 export type UserAwardSelectScalar = {
@@ -320,10 +558,25 @@ export type UserAwardSelectScalar = {
 }
 
 export type UserAwardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "awardId" | "issuedAt", ExtArgs["result"]["userAward"]>
+export type UserAwardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  award?: boolean | Prisma.AwardDefaultArgs<ExtArgs>
+}
+export type UserAwardIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  award?: boolean | Prisma.AwardDefaultArgs<ExtArgs>
+}
+export type UserAwardIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  award?: boolean | Prisma.AwardDefaultArgs<ExtArgs>
+}
 
 export type $UserAwardPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserAward"
-  objects: {}
+  objects: {
+    user: Prisma.$UserPayload<ExtArgs>
+    award: Prisma.$AwardPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
@@ -723,6 +976,8 @@ readonly fields: UserAwardFieldRefs;
  */
 export interface Prisma__UserAwardClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  award<T extends Prisma.AwardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AwardDefaultArgs<ExtArgs>>): Prisma.Prisma__AwardClient<runtime.Types.Result.GetResult<Prisma.$AwardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -773,6 +1028,10 @@ export type UserAwardFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
+  /**
    * Filter, which UserAward to fetch.
    */
   where: Prisma.UserAwardWhereUniqueInput
@@ -791,6 +1050,10 @@ export type UserAwardFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
+  /**
    * Filter, which UserAward to fetch.
    */
   where: Prisma.UserAwardWhereUniqueInput
@@ -808,6 +1071,10 @@ export type UserAwardFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the UserAward
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
   /**
    * Filter, which UserAward to fetch.
    */
@@ -857,6 +1124,10 @@ export type UserAwardFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
+  /**
    * Filter, which UserAward to fetch.
    */
   where?: Prisma.UserAwardWhereInput
@@ -904,6 +1175,10 @@ export type UserAwardFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the UserAward
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
   /**
    * Filter, which UserAwards to fetch.
    */
@@ -953,6 +1228,10 @@ export type UserAwardCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
+  /**
    * The data needed to create a UserAward.
    */
   data: Prisma.XOR<Prisma.UserAwardCreateInput, Prisma.UserAwardUncheckedCreateInput>
@@ -986,6 +1265,10 @@ export type UserAwardCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    */
   data: Prisma.UserAwardCreateManyInput | Prisma.UserAwardCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1000,6 +1283,10 @@ export type UserAwardUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the UserAward
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
   /**
    * The data needed to update a UserAward.
    */
@@ -1052,6 +1339,10 @@ export type UserAwardUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many UserAwards to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1066,6 +1357,10 @@ export type UserAwardUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the UserAward
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
   /**
    * The filter to search for the UserAward to update in case it exists.
    */
@@ -1092,6 +1387,10 @@ export type UserAwardDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the UserAward
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
   /**
    * Filter which UserAward to delete.
    */
@@ -1124,4 +1423,8 @@ export type UserAwardDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the UserAward
    */
   omit?: Prisma.UserAwardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAwardInclude<ExtArgs> | null
 }

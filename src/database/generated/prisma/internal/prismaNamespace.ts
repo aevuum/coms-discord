@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  Award: 'Award',
   UserAward: 'UserAward',
   Wallet: 'Wallet',
   Character: 'Character',
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -482,6 +483,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    Award: {
+      payload: Prisma.$AwardPayload<ExtArgs>
+      fields: Prisma.AwardFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AwardFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AwardFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>
+        }
+        findFirst: {
+          args: Prisma.AwardFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AwardFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>
+        }
+        findMany: {
+          args: Prisma.AwardFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>[]
+        }
+        create: {
+          args: Prisma.AwardCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>
+        }
+        createMany: {
+          args: Prisma.AwardCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AwardCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>[]
+        }
+        delete: {
+          args: Prisma.AwardDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>
+        }
+        update: {
+          args: Prisma.AwardUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>
+        }
+        deleteMany: {
+          args: Prisma.AwardDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AwardUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AwardUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>[]
+        }
+        upsert: {
+          args: Prisma.AwardUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AwardPayload>
+        }
+        aggregate: {
+          args: Prisma.AwardAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAward>
+        }
+        groupBy: {
+          args: Prisma.AwardGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AwardGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AwardCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AwardCountAggregateOutputType> | number
         }
       }
     }
@@ -1049,11 +1124,25 @@ export const UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   messagesCount: 'messagesCount',
   voiceSeconds: 'voiceSeconds',
+  selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
   walletId: 'walletId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AwardScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  emoji: 'emoji',
+  description: 'description',
+  rewardComsCoins: 'rewardComsCoins',
+  rarity: 'rarity',
+  createdAt: 'createdAt'
+} as const
+
+export type AwardScalarFieldEnum = (typeof AwardScalarFieldEnum)[keyof typeof AwardScalarFieldEnum]
 
 
 export const UserAwardScalarFieldEnum = {
@@ -1209,6 +1298,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AwardRarity'
+ */
+export type EnumAwardRarityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AwardRarity'>
+    
+
+
+/**
+ * Reference to a field of type 'AwardRarity[]'
+ */
+export type ListEnumAwardRarityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AwardRarity[]'>
     
 
 
@@ -1371,6 +1474,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  award?: Prisma.AwardOmit
   userAward?: Prisma.UserAwardOmit
   wallet?: Prisma.WalletOmit
   character?: Prisma.CharacterOmit

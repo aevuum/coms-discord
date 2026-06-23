@@ -1,5 +1,8 @@
+import {
+  Character,
+  CharacterStatus,
+} from "../../../database/generated/prisma/client.js";
 import { UserRepository } from "../repositories/userRepository.js";
-import { Character, CharacterStatus } from "../types/profile.js";
 
 export class ProfileService {
   public static async getProfile(discordId: string) {
@@ -30,9 +33,9 @@ export class ProfileService {
     }
 
     const statusMap: Record<CharacterStatus, string> = {
-      ALIVE: "🟢",
-      DEAD: "🔴",
-      FROZEN: "🧊",
+      ALIVE: "<:172841lastmeadowbadge:1518587343378976779>",
+      DEAD: "<:633509a:1518587362513256458>",
+      FROZEN: "<:97970trialmoderator:1518587338513715260>",
     };
 
     return characters

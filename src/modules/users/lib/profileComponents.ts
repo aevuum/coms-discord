@@ -11,7 +11,7 @@ export class ProfileComponents {
     const menuRow = new ActionRowBuilder<any>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId(`profile_menu_${targetUserId}`)
-        .setPlaceholder("v Выберите раздел")
+        .setPlaceholder("Выберите раздел")
         .addOptions(
           new StringSelectMenuOptionBuilder()
             .setLabel("Главная")
@@ -22,13 +22,17 @@ export class ProfileComponents {
             .setValue("economy")
             .setEmoji("<:178616member:1518581036798181436>"),
           new StringSelectMenuOptionBuilder()
-            .setLabel("Инвентарь")
-            .setValue("inventory")
-            .setEmoji("<:29865potionwhite:1518587289989550100>"),
+            .setLabel("Награды")
+            .setValue("awards")
+            .setEmoji("<:972712donator:1518581051960852601>"),
           new StringSelectMenuOptionBuilder()
             .setLabel("Персонажи")
             .setValue("characters")
             .setEmoji("<:6849serverguide:1518587250802426078>"),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Инвентарь")
+            .setValue("inventory")
+            .setEmoji("<:29865potionwhite:1518587289989550100>"),
           new StringSelectMenuOptionBuilder()
             .setLabel("Статистика")
             .setValue("stats")

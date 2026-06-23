@@ -1,37 +1,30 @@
-export type CharacterStatus = "ALIVE" | "DEAD" | "FROZEN";
+import {
+  Character,
+  UserAward,
+  Wallet,
+} from "../../../database/generated/prisma/client.js";
 
-export interface Character {
+export interface Award {
   id: string;
-  rpName: string;
-  status: CharacterStatus;
-  avatarUrl: string | null;
-  balanceKnuts: number;
-  userId: string;
+  label: string;
+  emoji: string;
+  description: string;
+  rewardComsCoins: number;
+  rarity: string;
   createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface Wallet {
-  id: string;
-  comsCoins: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Profile {
   id: string;
   discordId: string;
-
   messagesCount: number;
   voiceSeconds: number;
-
   profileBannerUrl: string | null;
-
   walletId: string;
-
   createdAt: Date;
   updatedAt: Date;
-
   wallet: Wallet;
   characters: Character[];
+  userAwards?: UserAward[];
+  selectedAward?: UserAward | null;
 }
