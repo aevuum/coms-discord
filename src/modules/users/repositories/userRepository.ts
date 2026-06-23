@@ -74,4 +74,23 @@ export class UserRepository {
       },
     });
   }
+
+  public static async incrementMessageCount(discordId: string): Promise<void> {
+    await prisma.user.upsert({
+      where: { discordId },
+      update: { messagesCount: { increment: 1 } },
+      create: { discordId, messagesCount: 1, wallet: { create: {} } },
+    });
+  }
+
+  public static async addVoiceSeconds(
+    discordId: string,
+    seconds: number,
+  ): Promise<void> {
+    await prisma.user.upsert({
+      where: { discordId },
+      update: { voiceSeconds: { increment: seconds } },
+      create: { discordId, voiceSeconds: seconds, wallet: { create: {} } },
+    });
+  }
 }
