@@ -46,6 +46,11 @@ export class ProfileComponents {
         .setLabel("Настроить профиль")
         .setStyle(ButtonStyle.Secondary)
         .setEmoji("<:479873settingsna:1518581042456432791>"),
+      new ButtonBuilder()
+        .setCustomId(`character_settings_${targetUserId}`)
+        .setLabel("Управление персонажем")
+        .setStyle(ButtonStyle.Danger)
+        .setEmoji("<:61835category:1518587300928426005>"),
     );
 
     return [menuRow, buttonRow];

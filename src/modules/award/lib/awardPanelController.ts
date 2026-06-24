@@ -59,19 +59,19 @@ export class AwardPanelController {
           .setPlaceholder("Выберите редкость награды")
           .addOptions([
             {
-              label: "<:99885bpll:1518587340111741038> Обычная (COMMON)",
+              label: "Обычная",
               value: AwardRarity.COMMON,
             },
             {
-              label: "<:99885bpll:1518587340111741038> Редкая (RARE)",
+              label: "Редкая",
               value: AwardRarity.RARE,
             },
             {
-              label: "<:99885bpll:1518587340111741038> Эпическая (EPIC)",
+              label: "Эпическая",
               value: AwardRarity.EPIC,
             },
             {
-              label: "<:99885bpll:1518587340111741038> Легендарная (LEGENDARY)",
+              label: "Легендарная",
               value: AwardRarity.LEGENDARY,
             },
           ]);
@@ -226,7 +226,8 @@ export class AwardPanelController {
                         label: "Назад",
                         customId: "award_panel_back",
                         emoji: {
-                          name: "<:48765whitearrow:1518587298281685173>",
+                          name: "48765whitearrow",
+                          id: "1518587298281685173",
                         },
                       },
                     ],

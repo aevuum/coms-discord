@@ -130,6 +130,7 @@ export const CharacterScalarFieldEnum = {
   id: 'id',
   rpName: 'rpName',
   avatarUrl: 'avatarUrl',
+  faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
   createdAt: 'createdAt',

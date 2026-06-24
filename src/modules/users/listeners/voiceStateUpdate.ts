@@ -36,25 +36,15 @@ export class VoiceStateUpdateListener extends Listener {
     if (leftVoice || switchedChannel) {
       const joinTime = voiceSessions.get(memberId);
 
-      if (joinTime) {
+      if (joinTime !== undefined) {
         const timeSpent = now - joinTime;
-        voiceSessions.delete(memberId);
 
-        if (timeSpent > 0) {
-          try {
-            await UserRepository.addVoiceSeconds(memberId, timeSpent);
-          } catch (error) {
-            this.container.logger.error(
-              "Ошибка при сохранении времени ГС:",
-              error,
-            );
-          }
-        }
+        await UserRepository.addVoiceSeconds(memberId, timeSpent);
       }
+    }
 
-      if (switchedChannel) {
-        voiceSessions.set(memberId, now);
-      }
+    if (switchedChannel) {
+      voiceSessions.set(memberId, now);
     }
   }
 }

@@ -7,6 +7,14 @@ datasource db {
   provider = "postgresql"
 }
 
+enum CharacterFaculty {
+  GRYFFINDOR
+  SLYTHERIN
+  HUFFLEPUFF
+  RAVENCLAW
+  ADULT
+}
+
 enum AwardRarity {
   COMMON
   RARE
@@ -103,6 +111,7 @@ model Character {
 
   rpName    String
   avatarUrl String?
+  faculty CharacterFaculty
 
   status CharacterStatus @default(ALIVE)
 

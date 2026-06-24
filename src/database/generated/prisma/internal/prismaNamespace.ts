@@ -1169,6 +1169,7 @@ export const CharacterScalarFieldEnum = {
   id: 'id',
   rpName: 'rpName',
   avatarUrl: 'avatarUrl',
+  faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
   createdAt: 'createdAt',
@@ -1312,6 +1313,20 @@ export type EnumAwardRarityFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'AwardRarity[]'
  */
 export type ListEnumAwardRarityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AwardRarity[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CharacterFaculty'
+ */
+export type EnumCharacterFacultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterFaculty'>
+    
+
+
+/**
+ * Reference to a field of type 'CharacterFaculty[]'
+ */
+export type ListEnumCharacterFacultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CharacterFaculty[]'>
     
 
 

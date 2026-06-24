@@ -1,7 +1,6 @@
 import {
   ContainerBuilder,
   SectionBuilder,
-  TextDisplayBuilder,
   ThumbnailBuilder,
   MediaGalleryBuilder,
   MediaGalleryItemBuilder,
@@ -54,15 +53,8 @@ export class ProfileContainer {
         }
 
         case "characters": {
-          const characters = ProfileService.formatCharacters(
-            profile.characters,
-            "*Персонажи отсутствуют*",
-          );
-          contentText = [
-            "## <a:79289discordhalloween:1518587311741210644> Персонажи",
-            "",
-            characters,
-          ].join("\n");
+          contentText =
+            "## <a:79289discordhalloween:1518587311741210644> Персонажи\n";
           break;
         }
 
@@ -130,6 +122,33 @@ export class ProfileContainer {
       );
 
     container.addSectionComponents(mainSection);
+
+    if (tab === "characters" && profile?.characters) {
+      if (profile.characters.length === 0) {
+        const emptySection = new SectionBuilder().addTextDisplayComponents(
+          (b) => b.setContent("*Персонажи отсутствуют*"),
+        );
+        container.addSectionComponents(emptySection);
+      } else {
+        const formattedCharacters = ProfileService.getFormattedCharactersList(
+          profile.characters,
+        );
+
+        for (const char of formattedCharacters) {
+          const charSection = new SectionBuilder().addTextDisplayComponents(
+            (b) => b.setContent(char.text),
+          );
+
+          if (char.avatarUrl) {
+            charSection.setThumbnailAccessory(
+              new ThumbnailBuilder().setURL(char.avatarUrl),
+            );
+          }
+
+          container.addSectionComponents(charSection);
+        }
+      }
+    }
 
     const interactiveRows = ProfileComponents.createMenu(discordUser.id);
     container.addActionRowComponents(...(interactiveRows as any));

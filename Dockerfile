@@ -12,5 +12,4 @@ RUN npx prisma generate
 
 COPY . .
 
-# ✅ Или генерируем при запуске
 CMD ["sh", "-c", "npx prisma generate && npm run dev"]

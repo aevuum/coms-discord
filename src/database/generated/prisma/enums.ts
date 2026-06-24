@@ -9,6 +9,17 @@
 * 🟢 You can import this file directly.
 */
 
+export const CharacterFaculty = {
+  GRYFFINDOR: 'GRYFFINDOR',
+  SLYTHERIN: 'SLYTHERIN',
+  HUFFLEPUFF: 'HUFFLEPUFF',
+  RAVENCLAW: 'RAVENCLAW',
+  ADULT: 'ADULT'
+} as const
+
+export type CharacterFaculty = (typeof CharacterFaculty)[keyof typeof CharacterFaculty]
+
+
 export const AwardRarity = {
   COMMON: 'COMMON',
   RARE: 'RARE',
