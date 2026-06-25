@@ -13,10 +13,10 @@ export class CharacterService {
     avatarUrl: string | null,
     faculty: CharacterFaculty,
   ) {
-    const user = await UserRepository.getByDiscordId(discordId);
+    let user = await UserRepository.getByDiscordId(discordId);
 
     if (!user) {
-      throw new Error("Пользователь не найден");
+      user = await UserRepository.create(discordId);
     }
 
     return CharacterRepository.create(user.id, rpName, avatarUrl, faculty);
@@ -26,7 +26,7 @@ export class CharacterService {
     const user = await UserRepository.getByDiscordId(discordId);
 
     if (!user) {
-      throw new Error("Пользователь не найден");
+      return [];
     }
 
     return CharacterRepository.getUserCharacters(user.id);

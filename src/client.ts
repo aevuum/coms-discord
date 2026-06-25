@@ -18,6 +18,5 @@ const client = new SapphireClient({
 });
 
 registerModulePaths(client, join(__dirname, "modules"));
-console.log("Listeners:", [...client.stores.get("listeners").keys()]);
 
 await client.login(process.env.DISCORD_TOKEN);

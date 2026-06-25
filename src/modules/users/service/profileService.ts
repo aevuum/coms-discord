@@ -13,6 +13,14 @@ const facultyLabels: Record<CharacterFaculty, string> = {
   [CharacterFaculty.ADULT]: "Взрослый",
 };
 
+const facultyEmojis: Record<CharacterFaculty, string> = {
+  [CharacterFaculty.GRYFFINDOR]: "<:grifinoria:1519583216992784567>",
+  [CharacterFaculty.SLYTHERIN]: "<:slytherincrest:1519583221988196392>",
+  [CharacterFaculty.HUFFLEPUFF]: "<:hufflepuff:1519583218544676873>",
+  [CharacterFaculty.RAVENCLAW]: "<:ravenclaw:1519583220327252048>",
+  [CharacterFaculty.ADULT]: "<:515636magicwandids:1519585028596563968>",
+};
+
 export class ProfileService {
   public static async getProfile(discordId: string) {
     return UserRepository.getByDiscordId(discordId);
@@ -46,10 +54,13 @@ export class ProfileService {
 
     return characters.map((character) => {
       const status = statusMap[character.status] ?? "❓";
+
       const faculty = facultyLabels[character.faculty] ?? "Нет факультета";
 
+      const facultyEmoji = facultyEmojis[character.faculty] ?? "🎓";
+
       return {
-        text: `${status} ${character.rpName}\n> ${faculty}`,
+        text: `${status} ${character.rpName}\n> ${facultyEmoji} ${faculty}`,
         avatarUrl: character.avatarUrl,
       };
     });

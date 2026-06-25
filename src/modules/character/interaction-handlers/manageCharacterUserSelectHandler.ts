@@ -10,6 +10,7 @@ import {
   TextInputStyle,
   FileUploadBuilder,
   LabelBuilder,
+  StringSelectMenuBuilder,
 } from "discord.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
@@ -61,12 +62,49 @@ export class ManageCharacterUserSelectHandler extends InteractionHandler {
 
       const avatarLabel = new LabelBuilder()
         .setLabel("Аватар персонажа")
+        .setDescription("Загрузите изображение персонажа")
         .setFileUploadComponent(avatarUpload);
+
+      const facultySelect = new StringSelectMenuBuilder()
+        .setCustomId("character_faculty")
+        .setPlaceholder("Выберите факультет")
+        .addOptions(
+          {
+            label: "Гриффиндор",
+            value: "GRYFFINDOR",
+            emoji: "<:grifinoria:1519583216992784567>",
+          },
+          {
+            label: "Слизерин",
+            value: "SLYTHERIN",
+            emoji: "<:slytherincrest:1519583221988196392>",
+          },
+          {
+            label: "Пуффендуй",
+            value: "HUFFLEPUFF",
+            emoji: "<:hufflepuff:1519583218544676873>",
+          },
+          {
+            label: "Когтевран",
+            value: "RAVENCLAW",
+            emoji: "<:ravenclaw:1519583220327252048>",
+          },
+          {
+            label: "Взрослый",
+            value: "ADULT",
+            emoji: "<:515636magicwandids:1519585028596563968>",
+          },
+        );
+
+      const facultyLabel = new LabelBuilder()
+        .setLabel("Факультет")
+        .setDescription("Выберите факультет персонажа")
+        .setStringSelectMenuComponent(facultySelect);
 
       const modal = new ModalBuilder()
         .setCustomId(`manage_character_modal_${userId}`)
         .setTitle("Создание персонажа")
-        .addLabelComponents(nameLabel, avatarLabel);
+        .addLabelComponents(nameLabel, avatarLabel, facultyLabel);
 
       await interaction.showModal(modal);
       return;

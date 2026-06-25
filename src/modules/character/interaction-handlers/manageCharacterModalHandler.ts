@@ -56,7 +56,9 @@ export class ManageCharacterModalHandler extends InteractionHandler {
     await interaction.reply({
       flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
       components: [
-        ManageCharacterContainer.createSuccess("Персонаж успешно создан."),
+        ManageCharacterContainer.createSuccess(
+          "<:48765whitearrow:1518587298281685173> Персонаж успешно создан.",
+        ),
       ],
     });
   }

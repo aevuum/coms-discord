@@ -61,18 +61,22 @@ export class AwardPanelController {
             {
               label: "Обычная",
               value: AwardRarity.COMMON,
+              emoji: "<:37647tarotcardids:1519585008262578326>",
             },
             {
               label: "Редкая",
               value: AwardRarity.RARE,
+              emoji: "<:36558tarotcardids:1519585006991839242>",
             },
             {
               label: "Эпическая",
               value: AwardRarity.EPIC,
+              emoji: "<:47365tarotcardids:1519585016122834985>",
             },
             {
               label: "Легендарная",
               value: AwardRarity.LEGENDARY,
+              emoji: "<:22796tarotcardids:1519585002827026588>",
             },
           ]);
 
