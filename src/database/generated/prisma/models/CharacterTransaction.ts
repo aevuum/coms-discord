@@ -28,12 +28,12 @@ export type AggregateCharacterTransaction = {
 
 export type CharacterTransactionAvgAggregateOutputType = {
   amountKnuts: number | null
-  balanceAfter: number | null
+  balanceAfterKnuts: number | null
 }
 
 export type CharacterTransactionSumAggregateOutputType = {
   amountKnuts: number | null
-  balanceAfter: number | null
+  balanceAfterKnuts: number | null
 }
 
 export type CharacterTransactionMinAggregateOutputType = {
@@ -41,7 +41,7 @@ export type CharacterTransactionMinAggregateOutputType = {
   characterId: string | null
   type: $Enums.TransactionType | null
   amountKnuts: number | null
-  balanceAfter: number | null
+  balanceAfterKnuts: number | null
   reason: string | null
   createdAt: Date | null
 }
@@ -51,7 +51,7 @@ export type CharacterTransactionMaxAggregateOutputType = {
   characterId: string | null
   type: $Enums.TransactionType | null
   amountKnuts: number | null
-  balanceAfter: number | null
+  balanceAfterKnuts: number | null
   reason: string | null
   createdAt: Date | null
 }
@@ -61,7 +61,7 @@ export type CharacterTransactionCountAggregateOutputType = {
   characterId: number
   type: number
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason: number
   createdAt: number
   _all: number
@@ -70,12 +70,12 @@ export type CharacterTransactionCountAggregateOutputType = {
 
 export type CharacterTransactionAvgAggregateInputType = {
   amountKnuts?: true
-  balanceAfter?: true
+  balanceAfterKnuts?: true
 }
 
 export type CharacterTransactionSumAggregateInputType = {
   amountKnuts?: true
-  balanceAfter?: true
+  balanceAfterKnuts?: true
 }
 
 export type CharacterTransactionMinAggregateInputType = {
@@ -83,7 +83,7 @@ export type CharacterTransactionMinAggregateInputType = {
   characterId?: true
   type?: true
   amountKnuts?: true
-  balanceAfter?: true
+  balanceAfterKnuts?: true
   reason?: true
   createdAt?: true
 }
@@ -93,7 +93,7 @@ export type CharacterTransactionMaxAggregateInputType = {
   characterId?: true
   type?: true
   amountKnuts?: true
-  balanceAfter?: true
+  balanceAfterKnuts?: true
   reason?: true
   createdAt?: true
 }
@@ -103,7 +103,7 @@ export type CharacterTransactionCountAggregateInputType = {
   characterId?: true
   type?: true
   amountKnuts?: true
-  balanceAfter?: true
+  balanceAfterKnuts?: true
   reason?: true
   createdAt?: true
   _all?: true
@@ -200,7 +200,7 @@ export type CharacterTransactionGroupByOutputType = {
   characterId: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason: string | null
   createdAt: Date
   _count: CharacterTransactionCountAggregateOutputType | null
@@ -233,7 +233,7 @@ export type CharacterTransactionWhereInput = {
   characterId?: Prisma.StringFilter<"CharacterTransaction"> | string
   type?: Prisma.EnumTransactionTypeFilter<"CharacterTransaction"> | $Enums.TransactionType
   amountKnuts?: Prisma.IntFilter<"CharacterTransaction"> | number
-  balanceAfter?: Prisma.IntFilter<"CharacterTransaction"> | number
+  balanceAfterKnuts?: Prisma.IntFilter<"CharacterTransaction"> | number
   reason?: Prisma.StringNullableFilter<"CharacterTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CharacterTransaction"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
@@ -244,7 +244,7 @@ export type CharacterTransactionOrderByWithRelationInput = {
   characterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   character?: Prisma.CharacterOrderByWithRelationInput
@@ -258,7 +258,7 @@ export type CharacterTransactionWhereUniqueInput = Prisma.AtLeast<{
   characterId?: Prisma.StringFilter<"CharacterTransaction"> | string
   type?: Prisma.EnumTransactionTypeFilter<"CharacterTransaction"> | $Enums.TransactionType
   amountKnuts?: Prisma.IntFilter<"CharacterTransaction"> | number
-  balanceAfter?: Prisma.IntFilter<"CharacterTransaction"> | number
+  balanceAfterKnuts?: Prisma.IntFilter<"CharacterTransaction"> | number
   reason?: Prisma.StringNullableFilter<"CharacterTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CharacterTransaction"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
@@ -269,7 +269,7 @@ export type CharacterTransactionOrderByWithAggregationInput = {
   characterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.CharacterTransactionCountOrderByAggregateInput
@@ -287,7 +287,7 @@ export type CharacterTransactionScalarWhereWithAggregatesInput = {
   characterId?: Prisma.StringWithAggregatesFilter<"CharacterTransaction"> | string
   type?: Prisma.EnumTransactionTypeWithAggregatesFilter<"CharacterTransaction"> | $Enums.TransactionType
   amountKnuts?: Prisma.IntWithAggregatesFilter<"CharacterTransaction"> | number
-  balanceAfter?: Prisma.IntWithAggregatesFilter<"CharacterTransaction"> | number
+  balanceAfterKnuts?: Prisma.IntWithAggregatesFilter<"CharacterTransaction"> | number
   reason?: Prisma.StringNullableWithAggregatesFilter<"CharacterTransaction"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterTransaction"> | Date | string
 }
@@ -296,7 +296,7 @@ export type CharacterTransactionCreateInput = {
   id?: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason?: string | null
   createdAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutTransactionsInput
@@ -307,7 +307,7 @@ export type CharacterTransactionUncheckedCreateInput = {
   characterId: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason?: string | null
   createdAt?: Date | string
 }
@@ -316,7 +316,7 @@ export type CharacterTransactionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutTransactionsNestedInput
@@ -327,7 +327,7 @@ export type CharacterTransactionUncheckedUpdateInput = {
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -337,7 +337,7 @@ export type CharacterTransactionCreateManyInput = {
   characterId: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason?: string | null
   createdAt?: Date | string
 }
@@ -346,7 +346,7 @@ export type CharacterTransactionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -356,7 +356,7 @@ export type CharacterTransactionUncheckedUpdateManyInput = {
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,14 +376,14 @@ export type CharacterTransactionCountOrderByAggregateInput = {
   characterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type CharacterTransactionAvgOrderByAggregateInput = {
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
 }
 
 export type CharacterTransactionMaxOrderByAggregateInput = {
@@ -391,7 +391,7 @@ export type CharacterTransactionMaxOrderByAggregateInput = {
   characterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -401,14 +401,14 @@ export type CharacterTransactionMinOrderByAggregateInput = {
   characterId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type CharacterTransactionSumOrderByAggregateInput = {
   amountKnuts?: Prisma.SortOrder
-  balanceAfter?: Prisma.SortOrder
+  balanceAfterKnuts?: Prisma.SortOrder
 }
 
 export type CharacterTransactionCreateNestedManyWithoutCharacterInput = {
@@ -461,7 +461,7 @@ export type CharacterTransactionCreateWithoutCharacterInput = {
   id?: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason?: string | null
   createdAt?: Date | string
 }
@@ -470,7 +470,7 @@ export type CharacterTransactionUncheckedCreateWithoutCharacterInput = {
   id?: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason?: string | null
   createdAt?: Date | string
 }
@@ -509,7 +509,7 @@ export type CharacterTransactionScalarWhereInput = {
   characterId?: Prisma.StringFilter<"CharacterTransaction"> | string
   type?: Prisma.EnumTransactionTypeFilter<"CharacterTransaction"> | $Enums.TransactionType
   amountKnuts?: Prisma.IntFilter<"CharacterTransaction"> | number
-  balanceAfter?: Prisma.IntFilter<"CharacterTransaction"> | number
+  balanceAfterKnuts?: Prisma.IntFilter<"CharacterTransaction"> | number
   reason?: Prisma.StringNullableFilter<"CharacterTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CharacterTransaction"> | Date | string
 }
@@ -518,7 +518,7 @@ export type CharacterTransactionCreateManyCharacterInput = {
   id?: string
   type: $Enums.TransactionType
   amountKnuts: number
-  balanceAfter: number
+  balanceAfterKnuts: number
   reason?: string | null
   createdAt?: Date | string
 }
@@ -527,7 +527,7 @@ export type CharacterTransactionUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -536,7 +536,7 @@ export type CharacterTransactionUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -545,7 +545,7 @@ export type CharacterTransactionUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
   amountKnuts?: Prisma.IntFieldUpdateOperationsInput | number
-  balanceAfter?: Prisma.IntFieldUpdateOperationsInput | number
+  balanceAfterKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -557,7 +557,7 @@ export type CharacterTransactionSelect<ExtArgs extends runtime.Types.Extensions.
   characterId?: boolean
   type?: boolean
   amountKnuts?: boolean
-  balanceAfter?: boolean
+  balanceAfterKnuts?: boolean
   reason?: boolean
   createdAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -568,7 +568,7 @@ export type CharacterTransactionSelectCreateManyAndReturn<ExtArgs extends runtim
   characterId?: boolean
   type?: boolean
   amountKnuts?: boolean
-  balanceAfter?: boolean
+  balanceAfterKnuts?: boolean
   reason?: boolean
   createdAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -579,7 +579,7 @@ export type CharacterTransactionSelectUpdateManyAndReturn<ExtArgs extends runtim
   characterId?: boolean
   type?: boolean
   amountKnuts?: boolean
-  balanceAfter?: boolean
+  balanceAfterKnuts?: boolean
   reason?: boolean
   createdAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -590,12 +590,12 @@ export type CharacterTransactionSelectScalar = {
   characterId?: boolean
   type?: boolean
   amountKnuts?: boolean
-  balanceAfter?: boolean
+  balanceAfterKnuts?: boolean
   reason?: boolean
   createdAt?: boolean
 }
 
-export type CharacterTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "type" | "amountKnuts" | "balanceAfter" | "reason" | "createdAt", ExtArgs["result"]["characterTransaction"]>
+export type CharacterTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "type" | "amountKnuts" | "balanceAfterKnuts" | "reason" | "createdAt", ExtArgs["result"]["characterTransaction"]>
 export type CharacterTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
@@ -616,7 +616,7 @@ export type $CharacterTransactionPayload<ExtArgs extends runtime.Types.Extension
     characterId: string
     type: $Enums.TransactionType
     amountKnuts: number
-    balanceAfter: number
+    balanceAfterKnuts: number
     reason: string | null
     createdAt: Date
   }, ExtArgs["result"]["characterTransaction"]>
@@ -1047,7 +1047,7 @@ export interface CharacterTransactionFieldRefs {
   readonly characterId: Prisma.FieldRef<"CharacterTransaction", 'String'>
   readonly type: Prisma.FieldRef<"CharacterTransaction", 'TransactionType'>
   readonly amountKnuts: Prisma.FieldRef<"CharacterTransaction", 'Int'>
-  readonly balanceAfter: Prisma.FieldRef<"CharacterTransaction", 'Int'>
+  readonly balanceAfterKnuts: Prisma.FieldRef<"CharacterTransaction", 'Int'>
   readonly reason: Prisma.FieldRef<"CharacterTransaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"CharacterTransaction", 'DateTime'>
 }

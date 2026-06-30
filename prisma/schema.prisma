@@ -29,8 +29,6 @@ enum CharacterStatus {
 }
 
 enum TransactionType {
-  DEPOSIT
-  WITHDRAW
   TRANSFER_IN
   TRANSFER_OUT
   SALARY
@@ -41,8 +39,9 @@ enum TransactionType {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  discordId String   @unique
+  id        String @id @default(cuid())
+  discordId String @unique
+  // level     Int    @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -51,8 +50,8 @@ model User {
   voiceSeconds  Int @default(0)
 
   selectedAwardId String?
-  awards UserAward[]
-  
+  awards          UserAward[]
+
   profileBannerUrl String?
 
   wallet   Wallet @relation(fields: [walletId], references: [id])
@@ -61,7 +60,6 @@ model User {
   inventory InventoryItem[]
 
   characters Character[]
-  
 }
 
 model Award {
@@ -84,7 +82,7 @@ model Award {
 model UserAward {
   id String @id @default(cuid())
 
-  userId String
+  userId  String
   awardId String
 
   issuedAt DateTime @default(now())
@@ -96,7 +94,7 @@ model UserAward {
 }
 
 model Wallet {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
 
   comsCoins Int @default(0)
 
@@ -111,20 +109,22 @@ model Character {
 
   rpName    String
   avatarUrl String?
-  faculty CharacterFaculty
+  faculty   CharacterFaculty
 
   status CharacterStatus @default(ALIVE)
 
-  balanceKnuts Int @default(0)
+  balanceKnuts Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   userId String
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  transactions CharacterTransaction[]
+  transactions   CharacterTransaction[]
   inventoryItems CharacterInventoryItem[]
+
+  @@index([userId])
 }
 
 model CharacterTransaction {
@@ -137,11 +137,13 @@ model CharacterTransaction {
 
   amountKnuts Int
 
-  balanceAfter Int
+  balanceAfterKnuts Int
 
   reason String?
 
   createdAt DateTime @default(now())
+
+  @@index([characterId, createdAt])
 }
 
 model ShopItem {

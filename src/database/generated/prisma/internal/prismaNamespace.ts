@@ -1185,7 +1185,7 @@ export const CharacterTransactionScalarFieldEnum = {
   characterId: 'characterId',
   type: 'type',
   amountKnuts: 'amountKnuts',
-  balanceAfter: 'balanceAfter',
+  balanceAfterKnuts: 'balanceAfterKnuts',
   reason: 'reason',
   createdAt: 'createdAt'
 } as const

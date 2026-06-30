@@ -47,7 +47,7 @@ export class ProfileContainer {
             "## <:67793memberhexagon:1518587303218511892> Статистика",
             "",
             `<:70956comment:1518587304808284290> Сообщений: **${profile.messagesCount.toLocaleString()}**`,
-            `<:26487intake:1518587280028073994> В голосовых: **${ProfileService.formatVoice(profile.voiceSeconds)}**`,
+            `<:988044dots:1518581053642772621> В голосовых: **${ProfileService.formatVoice(profile.voiceSeconds)}**`,
           ].join("\n");
           break;
         }

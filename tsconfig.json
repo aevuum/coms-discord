@@ -15,5 +15,5 @@
     "resolveJsonModule": true
   },
 
-  "include": ["src"]
+  "include": ["src", "src/modules/economy/scripts"]
 }

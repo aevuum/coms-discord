@@ -40,8 +40,6 @@ export type CharacterStatus = (typeof CharacterStatus)[keyof typeof CharacterSta
 
 
 export const TransactionType = {
-  DEPOSIT: 'DEPOSIT',
-  WITHDRAW: 'WITHDRAW',
   TRANSFER_IN: 'TRANSFER_IN',
   TRANSFER_OUT: 'TRANSFER_OUT',
   SALARY: 'SALARY',

@@ -3,6 +3,7 @@ import {
   CharacterFaculty,
   CharacterStatus,
 } from "../../../database/generated/prisma/client.js";
+import { Currency } from "../../economy/lib/currency.js";
 
 export class CharacterRepository {
   public static async create(
@@ -17,7 +18,7 @@ export class CharacterRepository {
         rpName,
         avatarUrl,
         faculty,
-        balanceKnuts: 0,
+        balanceKnuts: Currency.START_BALANCE,
       },
     });
   }

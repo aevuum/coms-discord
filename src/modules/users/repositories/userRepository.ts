@@ -93,4 +93,36 @@ export class UserRepository {
       create: { discordId, voiceSeconds: seconds, wallet: { create: {} } },
     });
   }
+
+  public static async getTransferUsers(excludeDiscordId: string) {
+    return prisma.user.findMany({
+      where: {
+        discordId: {
+          not: excludeDiscordId,
+        },
+
+        characters: {
+          some: {},
+        },
+      },
+
+      select: {
+        id: true,
+        discordId: true,
+
+        characters: {
+          select: {
+            id: true,
+            rpName: true,
+          },
+
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+
+      take: 25,
+    });
+  }
 }
