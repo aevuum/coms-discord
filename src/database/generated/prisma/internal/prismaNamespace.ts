@@ -392,7 +392,8 @@ export const ModelName = {
   CharacterTransaction: 'CharacterTransaction',
   ShopItem: 'ShopItem',
   InventoryItem: 'InventoryItem',
-  CharacterInventoryItem: 'CharacterInventoryItem'
+  CharacterInventoryItem: 'CharacterInventoryItem',
+  CharacterTupper: 'CharacterTupper'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "characterTupper"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CharacterTupper: {
+      payload: Prisma.$CharacterTupperPayload<ExtArgs>
+      fields: Prisma.CharacterTupperFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharacterTupperFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharacterTupperFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>
+        }
+        findFirst: {
+          args: Prisma.CharacterTupperFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharacterTupperFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>
+        }
+        findMany: {
+          args: Prisma.CharacterTupperFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>[]
+        }
+        create: {
+          args: Prisma.CharacterTupperCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>
+        }
+        createMany: {
+          args: Prisma.CharacterTupperCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharacterTupperCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>[]
+        }
+        delete: {
+          args: Prisma.CharacterTupperDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>
+        }
+        update: {
+          args: Prisma.CharacterTupperUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharacterTupperDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharacterTupperUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharacterTupperUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharacterTupperUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterTupperPayload>
+        }
+        aggregate: {
+          args: Prisma.CharacterTupperAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharacterTupper>
+        }
+        groupBy: {
+          args: Prisma.CharacterTupperGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterTupperGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharacterTupperCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterTupperCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1228,6 +1303,18 @@ export const CharacterInventoryItemScalarFieldEnum = {
 } as const
 
 export type CharacterInventoryItemScalarFieldEnum = (typeof CharacterInventoryItemScalarFieldEnum)[keyof typeof CharacterInventoryItemScalarFieldEnum]
+
+
+export const CharacterTupperScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  name: 'name',
+  prefix: 'prefix',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterTupperScalarFieldEnum = (typeof CharacterTupperScalarFieldEnum)[keyof typeof CharacterTupperScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1497,6 +1584,7 @@ export type GlobalOmitConfig = {
   shopItem?: Prisma.ShopItemOmit
   inventoryItem?: Prisma.InventoryItemOmit
   characterInventoryItem?: Prisma.CharacterInventoryItemOmit
+  characterTupper?: Prisma.CharacterTupperOmit
 }
 
 /* Types for Logging */

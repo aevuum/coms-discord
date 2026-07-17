@@ -59,7 +59,8 @@ export const ModelName = {
   CharacterTransaction: 'CharacterTransaction',
   ShopItem: 'ShopItem',
   InventoryItem: 'InventoryItem',
-  CharacterInventoryItem: 'CharacterInventoryItem'
+  CharacterInventoryItem: 'CharacterInventoryItem',
+  CharacterTupper: 'CharacterTupper'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -189,6 +190,18 @@ export const CharacterInventoryItemScalarFieldEnum = {
 } as const
 
 export type CharacterInventoryItemScalarFieldEnum = (typeof CharacterInventoryItemScalarFieldEnum)[keyof typeof CharacterInventoryItemScalarFieldEnum]
+
+
+export const CharacterTupperScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  name: 'name',
+  prefix: 'prefix',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterTupperScalarFieldEnum = (typeof CharacterTupperScalarFieldEnum)[keyof typeof CharacterTupperScalarFieldEnum]
 
 
 export const SortOrder = {

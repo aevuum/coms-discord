@@ -28,7 +28,10 @@ export class CharacterRepository {
       where: {
         userId,
       },
-
+      include: {
+        user: true,
+        tupper: true,
+      },
       orderBy: {
         createdAt: "asc",
       },
@@ -39,6 +42,10 @@ export class CharacterRepository {
     return prisma.character.findUnique({
       where: {
         id,
+      },
+      include: {
+        user: true,
+        tupper: true,
       },
     });
   }
@@ -56,7 +63,6 @@ export class CharacterRepository {
       where: {
         id,
       },
-
       data: {
         status,
       },

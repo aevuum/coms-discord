@@ -5,6 +5,7 @@ import {
 
 import { UserRepository } from "../../users/repositories/userRepository.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
+import { TupperService } from "../../tupper/service/tupperService.js";
 
 export class CharacterService {
   public static async create(
@@ -19,7 +20,16 @@ export class CharacterService {
       user = await UserRepository.create(discordId);
     }
 
-    return CharacterRepository.create(user.id, rpName, avatarUrl, faculty);
+    const character = await CharacterRepository.create(
+      user.id,
+      rpName,
+      avatarUrl,
+      faculty,
+    );
+
+    await TupperService.createForCharacter(character.id, character.rpName);
+
+    return character;
   }
 
   public static async getCharacters(discordId: string) {
@@ -30,6 +40,10 @@ export class CharacterService {
     }
 
     return CharacterRepository.getUserCharacters(user.id);
+  }
+
+  public static getCharacterById(id: string) {
+    return CharacterRepository.getById(id);
   }
 
   public static async remove(characterId: string) {

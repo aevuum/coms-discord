@@ -107,6 +107,8 @@ model Wallet {
 model Character {
   id String @id @default(cuid())
 
+  tupper CharacterTupper?
+
   rpName    String
   avatarUrl String?
   faculty   CharacterFaculty
@@ -196,4 +198,18 @@ model CharacterInventoryItem {
   shopItem  ShopItem  @relation(fields: [shopItemId], references: [id])
 
   @@unique([characterId, shopItemId])
+}
+
+model CharacterTupper {
+  id String @id @default(cuid())
+
+  characterId String    @unique
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  name String
+
+  prefix String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
