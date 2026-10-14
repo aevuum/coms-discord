@@ -3,18 +3,11 @@ import {
   InteractionHandlerTypes,
 } from "@sapphire/framework";
 
-import {
-  ButtonInteraction,
-  ContainerBuilder,
-  MessageFlags,
-  SectionBuilder,
-  SeparatorBuilder,
-  SeparatorSpacingSize,
-  TextDisplayBuilder,
-} from "discord.js";
+import { ButtonInteraction, MessageFlags } from "discord.js";
 
-import { CharacterService } from "../../character/service/characterService.js";
+import { TupperService } from "../service/tupperService.js";
 import { TupperComponents } from "../lib/tupperComponents.js";
+import { TupperResponder } from "../lib/tupperResponder.js";
 
 export class CharacterSettingsButton extends InteractionHandler {
   public constructor(
@@ -36,42 +29,21 @@ export class CharacterSettingsButton extends InteractionHandler {
   }
 
   public override async run(interaction: ButtonInteraction) {
-    const characters = await CharacterService.getCharacters(
-      interaction.user.id,
-    );
+    try {
+      const characters = await TupperService.getCharacters(
+        interaction.user.id,
+      );
 
-    if (!characters.length) {
-      return interaction.reply({
-        content: "У вас нет персонажей.",
-        flags: MessageFlags.Ephemeral,
+      await interaction.reply({
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          characters.length === 1
+            ? TupperComponents.settings(characters[0], false)
+            : TupperComponents.selection(characters),
+        ],
       });
+    } catch (error) {
+      await TupperResponder.error(interaction, error);
     }
-
-    const container = new ContainerBuilder();
-
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        "# <:67793memberhexagon:1518587303218511892> Настройка персонажа\n\n <:48765whitearrow:1518587298281685173> Выберите персонажа, которого хотите настроить.",
-      ),
-    );
-
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
-    );
-
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        "<:48765whitearrow:1518587298281685173> После выбора персонажа откроются настройки его таппера.",
-      ),
-    );
-
-    container.addActionRowComponents(
-      ...TupperComponents.createCharacterSelect(characters),
-    );
-
-    await interaction.reply({
-      flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral,
-      components: [container],
-    });
   }
 }

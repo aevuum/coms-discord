@@ -1,10 +1,25 @@
 import prisma from "../../../database/prisma.js";
 
+import {
+  CharacterStatus,
+  TransactionType,
+} from "../../../database/generated/prisma/client.js";
+
+import { EconomyError, type TransferParams } from "../types/economy.js";
+
 export class EconomyRepository {
   public static async getCharacter(id: string) {
     return prisma.character.findUnique({
       where: {
         id,
+      },
+
+      include: {
+        user: {
+          select: {
+            discordId: true,
+          },
+        },
       },
     });
   }
@@ -21,62 +36,82 @@ export class EconomyRepository {
     });
   }
 
-  public static async updateBalance(characterId: string, balanceKnuts: number) {
-    return prisma.character.update({
-      where: {
-        id: characterId,
-      },
-
-      data: {
-        balanceKnuts,
-      },
-    });
-  }
-
-  public static async transfer(
-    fromCharacterId: string,
-    toCharacterId: string,
-    amountKnuts: number,
-  ) {
+  public static async transfer(params: TransferParams) {
     return prisma.$transaction(async (tx) => {
-      const sender = await tx.character.update({
+      const debited = await tx.character.updateMany({
         where: {
-          id: fromCharacterId,
+          id: params.senderId,
+          status: CharacterStatus.ALIVE,
+          balanceKnuts: {
+            gte: params.amountKnuts,
+          },
         },
 
         data: {
           balanceKnuts: {
-            decrement: amountKnuts,
+            decrement: params.amountKnuts,
           },
         },
       });
 
-      const receiver = await tx.character.update({
+      if (debited.count === 0) {
+        throw new EconomyError(
+          "Недостаточно средств или персонаж-отправитель недоступен.",
+        );
+      }
+
+      const credited = await tx.character.updateMany({
         where: {
-          id: toCharacterId,
+          id: params.receiverId,
+          status: CharacterStatus.ALIVE,
         },
 
         data: {
           balanceKnuts: {
-            increment: amountKnuts,
+            increment: params.amountKnuts,
           },
         },
+      });
+
+      if (credited.count === 0) {
+        throw new EconomyError("Персонаж-получатель недоступен для перевода.");
+      }
+
+      const sender = await tx.character.findUniqueOrThrow({
+        where: {
+          id: params.senderId,
+        },
+      });
+
+      const receiver = await tx.character.findUniqueOrThrow({
+        where: {
+          id: params.receiverId,
+        },
+      });
+
+      await tx.characterTransaction.createMany({
+        data: [
+          {
+            characterId: sender.id,
+            type: TransactionType.TRANSFER_OUT,
+            amountKnuts: -params.amountKnuts,
+            balanceAfterKnuts: sender.balanceKnuts,
+            reason: params.senderReason,
+          },
+          {
+            characterId: receiver.id,
+            type: TransactionType.TRANSFER_IN,
+            amountKnuts: params.amountKnuts,
+            balanceAfterKnuts: receiver.balanceKnuts,
+            reason: params.receiverReason,
+          },
+        ],
       });
 
       return {
         sender,
         receiver,
       };
-    });
-  }
-
-  public static async getCharactersByIds(ids: string[]) {
-    return prisma.character.findMany({
-      where: {
-        id: {
-          in: ids,
-        },
-      },
     });
   }
 }

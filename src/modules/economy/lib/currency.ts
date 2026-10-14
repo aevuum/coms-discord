@@ -1,6 +1,7 @@
 export const KNUTS_PER_SICKLE = 29;
 export const SICKLES_PER_GALLEON = 17;
 export const KNUTS_PER_GALLEON = KNUTS_PER_SICKLE * SICKLES_PER_GALLEON;
+export const MAX_BALANCE_KNUTS = 2_147_483_647;
 
 export type CurrencyBalance = {
   totalKnuts: number;
@@ -9,11 +10,13 @@ export type CurrencyBalance = {
   knuts: number;
 };
 
-export class Currency {
-  public static readonly START_BALANCE = 15 * 17 * 29 + 10 * 29 + 150;
+const GALLEON_EMOJI = "<:galleon:1521547045268099242>";
+const SICKLE_EMOJI = "<:sickle:1521547672304226304>";
+const KNUT_EMOJI = "<:knut:1521547458969342052>";
 
-  public static readonly INPUT_REGEX =
-    /(\d+)\s*(г|галлеон(?:ов|а)?|галлеоны|g|с|сикл(?:ей|я)?|сикли|s|к|кнат(?:ов|а)?|кнаты|k)/gi;
+export class Currency {
+  public static readonly START_BALANCE =
+    15 * KNUTS_PER_GALLEON + 10 * KNUTS_PER_SICKLE + 150;
 
   public static toKnuts(galleons: number, sickles = 0, knuts = 0): number {
     return galleons * KNUTS_PER_GALLEON + sickles * KNUTS_PER_SICKLE + knuts;
@@ -40,10 +43,16 @@ export class Currency {
     const balance = this.fromKnuts(totalKnuts);
 
     return [
-      `<:galleon:1521547045268099242> Галлеоны: **${balance.galleons}**`,
-      `<:sickle:1521547672304226304> Сикли: **${balance.sickles}**`,
-      `<:knut:1521547458969342052> Кнаты: **${balance.knuts}**`,
+      `${GALLEON_EMOJI} Галлеоны: **${balance.galleons}**`,
+      `${SICKLE_EMOJI} Сикли: **${balance.sickles}**`,
+      `${KNUT_EMOJI} Кнаты: **${balance.knuts}**`,
     ].join("\n");
+  }
+
+  public static inline(totalKnuts: number): string {
+    const balance = this.fromKnuts(totalKnuts);
+
+    return `**${balance.galleons}** ${GALLEON_EMOJI} **${balance.sickles}** ${SICKLE_EMOJI} **${balance.knuts}** ${KNUT_EMOJI}`;
   }
 
   public static short(totalKnuts: number): string {
@@ -52,75 +61,7 @@ export class Currency {
     return `${balance.galleons}г ${balance.sickles}с ${balance.knuts}к`;
   }
 
-  public static parse(input: string): number {
-    const text = input.trim().toLowerCase().replace(/,/g, ".");
-
-    let total = 0;
-
-    const matches = text.matchAll(this.INPUT_REGEX);
-
-    for (const match of matches) {
-      const value = Number(match[1]);
-
-      const currency = match[2];
-
-      if (
-        currency.startsWith("г") ||
-        currency.startsWith("gal") ||
-        currency === "g"
-      ) {
-        total += value * KNUTS_PER_GALLEON;
-        continue;
-      }
-
-      if (currency.startsWith("с") || currency === "s") {
-        total += value * KNUTS_PER_SICKLE;
-        continue;
-      }
-
-      total += value;
-    }
-
-    if (total <= 0) {
-      throw new Error("Введите сумму. Например: 2г 5с 10к");
-    }
-
-    return total;
-  }
-
   public static canAfford(balanceKnuts: number, amountKnuts: number): boolean {
     return balanceKnuts >= amountKnuts;
-  }
-
-  public static compare(left: number, right: number): number {
-    if (left === right) {
-      return 0;
-    }
-
-    return left > right ? 1 : -1;
-  }
-
-  public static add(balanceKnuts: number, amountKnuts: number): number {
-    return balanceKnuts + amountKnuts;
-  }
-
-  public static subtract(balanceKnuts: number, amountKnuts: number): number {
-    if (!this.canAfford(balanceKnuts, amountKnuts)) {
-      throw new Error("Недостаточно средств.");
-    }
-
-    return balanceKnuts - amountKnuts;
-  }
-
-  public static isZero(knuts: number): boolean {
-    return knuts === 0;
-  }
-
-  public static isNegative(knuts: number): boolean {
-    return knuts < 0;
-  }
-
-  public static normalize(knuts: number): CurrencyBalance {
-    return this.fromKnuts(knuts);
   }
 }

@@ -3,10 +3,12 @@ import {
   InteractionHandlerTypes,
 } from "@sapphire/framework";
 
-import { StringSelectMenuInteraction, MessageFlags } from "discord.js";
+import { MessageFlags, StringSelectMenuInteraction } from "discord.js";
 
-import { CharacterService } from "../../character/service/characterService.js";
+import { TupperService } from "../service/tupperService.js";
 import { TupperComponents } from "../lib/tupperComponents.js";
+import { TupperAction, TupperCustomIds } from "../lib/tupperCustomIds.js";
+import { TupperResponder } from "../lib/tupperResponder.js";
 
 export class CharacterSelectMenu extends InteractionHandler {
   public constructor(
@@ -20,36 +22,35 @@ export class CharacterSelectMenu extends InteractionHandler {
   }
 
   public override parse(interaction: StringSelectMenuInteraction) {
-    if (interaction.customId !== "tupper_select_character") {
+    const parsed = TupperCustomIds.parse(interaction.customId);
+
+    if (!parsed || parsed.action !== TupperAction.Select) {
       return this.none();
     }
 
-    return this.some();
+    return this.some({
+      characterId: interaction.values[0],
+    });
   }
 
-  public override async run(interaction: StringSelectMenuInteraction) {
-    const character = await CharacterService.getCharacterById(
-      interaction.values[0],
-    );
+  public override async run(
+    interaction: StringSelectMenuInteraction,
+    result: {
+      characterId: string;
+    },
+  ) {
+    try {
+      const character = await TupperService.getOwnedCharacter(
+        interaction.user.id,
+        result.characterId,
+      );
 
-    if (!character) {
-      return interaction.reply({
-        content: "Персонаж не найден.",
-        flags: MessageFlags.Ephemeral,
+      await interaction.update({
+        flags: MessageFlags.IsComponentsV2,
+        components: [TupperComponents.settings(character, true)],
       });
+    } catch (error) {
+      await TupperResponder.error(interaction, error);
     }
-
-    if (character.user.discordId !== interaction.user.id) {
-      return interaction.reply({
-        content: "Это не ваш персонаж.",
-        flags: MessageFlags.Ephemeral,
-      });
-    }
-
-    await interaction.update({
-      flags: MessageFlags.IsComponentsV2 | MessageFlags.Ephemeral,
-
-      components: TupperComponents.createSettings(character),
-    });
   }
 }

@@ -1,10 +1,15 @@
-import { Message } from "discord.js";
+import { container } from "@sapphire/framework";
+import type { Message } from "discord.js";
+
 import { TupperCache } from "../cache/tupperCache.js";
+import { MessageFormatter } from "../lib/messageFormatter.js";
 import { WebhookService } from "./webhookService.js";
+
+const MAX_CONTENT_LENGTH = 2000;
 
 export class TupperMessageService {
   public static async handle(message: Message): Promise<boolean> {
-    if (message.author.bot || !message.guild) {
+    if (message.author.bot || !message.inGuild()) {
       return false;
     }
 
@@ -16,19 +21,41 @@ export class TupperMessageService {
 
     const { tupper, content } = parsed;
 
-    if (!content.length) {
+    if (tupper.character.user.discordId !== message.author.id) {
       return false;
     }
 
-    const webhook = await WebhookService.get(message.channel);
+    const files = message.attachments.map((attachment) => ({
+      attachment: attachment.url,
+      name: attachment.name,
+    }));
 
-    await webhook.send({
-      content,
+    if (!content.length && !files.length) {
+      return false;
+    }
 
-      username: tupper.name,
+    const formatted = await MessageFormatter.format(message, content);
 
-      avatarURL: tupper.character.avatarUrl ?? undefined,
-    });
+    try {
+      const sent = await WebhookService.send(message.channel, {
+        content:
+          (formatted.length <= MAX_CONTENT_LENGTH ? formatted : content) ||
+          undefined,
+        username: tupper.name,
+        avatarURL: tupper.character.avatarUrl ?? undefined,
+        files,
+        allowedMentions: {
+          parse: ["users"],
+        },
+      });
+
+      if (!sent) {
+        return false;
+      }
+    } catch (error) {
+      container.logger.error(error);
+      return false;
+    }
 
     await message.delete().catch(() => {});
 

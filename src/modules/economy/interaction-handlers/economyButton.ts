@@ -7,8 +7,16 @@ import { ButtonInteraction, MessageFlags } from "discord.js";
 
 import { EconomyAction, EconomyCustomIds } from "../lib/economyCustomIds.js";
 import { EconomyContainer } from "../lib/economyContainer.js";
+import { EconomyResponder } from "../lib/economyResponder.js";
 import { EconomyService } from "../services/economyService.js";
-import { EconomyComponents } from "../lib/economyComponents.js";
+
+const BUTTON_ACTIONS = new Set<EconomyAction>([
+  EconomyAction.Main,
+  EconomyAction.Back,
+  EconomyAction.Transfer,
+  EconomyAction.History,
+  EconomyAction.TransferConfirm,
+]);
 
 export class EconomyButtonHandler extends InteractionHandler {
   public constructor(
@@ -24,112 +32,100 @@ export class EconomyButtonHandler extends InteractionHandler {
   public override parse(interaction: ButtonInteraction) {
     const parsed = EconomyCustomIds.parse(interaction.customId);
 
-    if (!parsed) return this.none();
-
-    if (
-      parsed.action !== EconomyAction.Transfer &&
-      parsed.action !== EconomyAction.History &&
-      parsed.action !== EconomyAction.Back
-    )
+    if (!parsed || !BUTTON_ACTIONS.has(parsed.action)) {
       return this.none();
+    }
 
-    return this.some({
-      action: parsed.action,
-      args: parsed.args,
-    });
+    return this.some(parsed);
   }
 
-  public override async run(interaction: ButtonInteraction, result: any) {
-    switch (result.action) {
-      case EconomyAction.Back: {
-        const characters = await EconomyService.getCharacters(
-          interaction.user.id,
-        );
+  public override async run(
+    interaction: ButtonInteraction,
+    result: {
+      action: EconomyAction;
+      args: string[];
+    },
+  ) {
+    const [characterId] = result.args;
 
-        if (characters.length === 1) {
+    try {
+      switch (result.action) {
+        case EconomyAction.Back: {
+          const characters = await EconomyService.getOverview(
+            interaction.user.id,
+          );
+
           await interaction.update({
             flags: MessageFlags.IsComponentsV2,
-            components: [EconomyContainer.main(characters[0])],
+            components: [EconomyContainer.overview(characters)],
           });
+
           return;
         }
 
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [
-            EconomyContainer.selectCharacter(
-              characters
-                .map((c) => ({ id: c.id, rpName: c.rpName }))
-                .slice(0, 25),
-            ),
-          ],
-        });
+        case EconomyAction.Main: {
+          const card = await EconomyService.getCharacterCard(
+            interaction.user.id,
+            characterId,
+          );
 
-        return;
+          await interaction.update({
+            flags: MessageFlags.IsComponentsV2,
+            components: [EconomyContainer.main(card.character, card.hasMultiple)],
+          });
+
+          return;
+        }
+
+        case EconomyAction.Transfer: {
+          const sender = await EconomyService.getTransferSender(
+            interaction.user.id,
+            characterId,
+          );
+
+          await interaction.update({
+            flags: MessageFlags.IsComponentsV2,
+            components: [EconomyContainer.selectTransferUser(sender)],
+          });
+
+          return;
+        }
+
+        case EconomyAction.History: {
+          const history = await EconomyService.getHistory(
+            interaction.user.id,
+            characterId,
+            Number(result.args[1] ?? 0),
+          );
+
+          await interaction.update({
+            flags: MessageFlags.IsComponentsV2,
+            components: [EconomyContainer.history(history)],
+          });
+
+          return;
+        }
+
+        case EconomyAction.TransferConfirm: {
+          const [senderId, receiverId, amount] = result.args;
+
+          const transfer = await EconomyService.transfer(
+            interaction.user.id,
+            senderId,
+            receiverId,
+            Number(amount),
+          );
+
+          await interaction.update({
+            flags: MessageFlags.IsComponentsV2,
+            components: [EconomyContainer.transferSuccess(transfer)],
+          });
+
+          return;
+        }
       }
-
-      case EconomyAction.Transfer: {
-        const senderId = result.args[0];
-
-        const users = await EconomyService.getTransferUsers(
-          interaction.user.id,
-        );
-
-        const usersWithNames: {
-          id: string;
-          discordId: string;
-          username: string;
-          characters: {
-            id: string;
-            rpName: string;
-          }[];
-        }[] = await Promise.all(
-          users.map(async (user) => {
-            const member = await interaction.guild?.members
-              .fetch(user.discordId)
-              .catch(() => null);
-
-            return {
-              ...user,
-              username:
-                member?.displayName ??
-                member?.user.username ??
-                "Неизвестный пользователь",
-            };
-          }),
-        );
-
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [
-            EconomyComponents.transferUserSelect(usersWithNames, senderId),
-            EconomyComponents.back(),
-          ],
-        });
-
-        return;
-      }
-
-      case EconomyAction.History: {
-        const characterId = result.args[0];
-
-        const character = await EconomyService.getOwnedCharacter(
-          interaction.user.id,
-          characterId,
-        );
-
-        const history = await EconomyService.history(
-          interaction.user.id,
-          characterId,
-        );
-
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [EconomyContainer.history(character, history)],
-        });
-
-        return;
-      }
+    } catch (error) {
+      await EconomyResponder.error(interaction, error, characterId);
     }
   }
 }

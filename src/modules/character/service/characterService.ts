@@ -27,7 +27,12 @@ export class CharacterService {
       faculty,
     );
 
-    await TupperService.createForCharacter(character.id, character.rpName);
+    try {
+      await TupperService.createForCharacter(character.id, character.rpName);
+    } catch (error) {
+      await CharacterRepository.delete(character.id);
+      throw error;
+    }
 
     return character;
   }
@@ -52,6 +57,8 @@ export class CharacterService {
     if (!character) {
       throw new Error("Персонаж не найден");
     }
+
+    await TupperService.removeForCharacter(characterId);
 
     return CharacterRepository.delete(characterId);
   }

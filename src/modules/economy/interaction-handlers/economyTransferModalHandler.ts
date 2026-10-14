@@ -3,17 +3,16 @@ import {
   InteractionHandlerTypes,
 } from "@sapphire/framework";
 
+import { MessageFlags, ModalSubmitInteraction } from "discord.js";
+
 import {
-  ModalSubmitInteraction,
-  MessageFlags,
-  ContainerBuilder,
-  TextDisplayBuilder,
-} from "discord.js";
-
-import { EconomyAction, EconomyCustomIds } from "../lib/economyCustomIds.js";
-
+  EconomyAction,
+  EconomyCustomIds,
+  TransferModalFields,
+} from "../lib/economyCustomIds.js";
+import { EconomyContainer } from "../lib/economyContainer.js";
+import { EconomyResponder } from "../lib/economyResponder.js";
 import { EconomyService } from "../services/economyService.js";
-import { Currency } from "../lib/currency.js";
 
 export class EconomyTransferModalHandler extends InteractionHandler {
   public constructor(
@@ -47,67 +46,36 @@ export class EconomyTransferModalHandler extends InteractionHandler {
     },
   ) {
     try {
-      const galleons = Number(
-        interaction.fields.getTextInputValue("galleons") || "0",
+      const amount = EconomyService.parseAmount(
+        interaction.fields.getTextInputValue(TransferModalFields.Galleons),
+        interaction.fields.getTextInputValue(TransferModalFields.Sickles),
+        interaction.fields.getTextInputValue(TransferModalFields.Knuts),
       );
 
-      const sickles = Number(
-        interaction.fields.getTextInputValue("sickles") || "0",
-      );
-
-      const knuts = Number(
-        interaction.fields.getTextInputValue("knuts") || "0",
-      );
-
-      await EconomyService.transfer(
+      const preview = await EconomyService.previewTransfer(
         interaction.user.id,
         result.senderId,
         result.receiverId,
-        `${galleons}г ${sickles}с ${knuts}к`,
+        amount,
       );
 
-      const amount = Currency.toKnuts(galleons, sickles, knuts);
+      const components = [EconomyContainer.transferConfirm(preview)];
 
-      const container = new ContainerBuilder();
+      if (interaction.isFromMessage()) {
+        await interaction.update({
+          flags: MessageFlags.IsComponentsV2,
+          components,
+        });
 
-      container.addTextDisplayComponents(
-        new TextDisplayBuilder().setContent(
-          [
-            "# <:766839verifiedgreen:1518587368636944534> Перевод выполнен",
-            "",
-            "<:48765whitearrow:1518587298281685173> Средства успешно переданы.",
-            "",
-            `### Сумма`,
-            Currency.format(amount),
-          ].join("\n"),
-        ),
-      );
+        return;
+      }
 
       await interaction.reply({
         flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components: [container],
+        components,
       });
     } catch (error) {
-      const container = new ContainerBuilder();
-
-      container.addTextDisplayComponents(
-        new TextDisplayBuilder().setContent(
-          [
-            "# <:83987delete:1518587334218627072> Ошибка",
-            "",
-            `<:48765whitearrow:1518587298281685173> ${
-              error instanceof Error
-                ? error.message
-                : "Произошла неизвестная ошибка."
-            }`,
-          ].join("\n"),
-        ),
-      );
-
-      await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components: [container],
-      });
+      await EconomyResponder.error(interaction, error, result.senderId);
     }
   }
 }

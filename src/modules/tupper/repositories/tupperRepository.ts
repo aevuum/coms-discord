@@ -2,32 +2,28 @@ import prisma from "../../../database/prisma.js";
 
 import { TupperCache } from "../cache/tupperCache.js";
 
+const withCharacter = {
+  character: {
+    include: {
+      user: true,
+    },
+  },
+} as const;
+
 export class TupperRepository {
   public static async create(
     characterId: string,
     name: string,
     prefix: string,
   ) {
-    const created = await prisma.characterTupper.create({
+    const tupper = await prisma.characterTupper.create({
       data: {
         characterId,
         name,
         prefix,
       },
-    });
 
-    const tupper = await prisma.characterTupper.findUniqueOrThrow({
-      where: {
-        id: created.id,
-      },
-
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
+      include: withCharacter,
     });
 
     TupperCache.insert(tupper);
@@ -35,77 +31,25 @@ export class TupperRepository {
     return tupper;
   }
 
-  public static async getByCharacterId(characterId: string) {
-    return prisma.characterTupper.findUnique({
-      where: {
-        characterId,
-      },
-
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
-    });
-  }
-
-  public static async getById(id: string) {
-    return prisma.characterTupper.findUnique({
-      where: {
-        id,
-      },
-
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
-    });
-  }
-
   public static async getByPrefix(prefix: string) {
     return prisma.characterTupper.findUnique({
       where: {
         prefix,
       },
-
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
     });
   }
 
   public static async updateName(characterId: string, name: string) {
-    const updated = await prisma.characterTupper.upsert({
+    const updated = await prisma.characterTupper.update({
       where: {
         characterId,
       },
 
-      update: {
+      data: {
         name,
       },
 
-      create: {
-        characterId,
-        name,
-        prefix: "default",
-      },
-
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
+      include: withCharacter,
     });
 
     TupperCache.remove(updated.prefix);
@@ -115,61 +59,42 @@ export class TupperRepository {
   }
 
   public static async updatePrefix(characterId: string, prefix: string) {
-    const current = await prisma.characterTupper.findUnique({
+    const current = await prisma.characterTupper.findUniqueOrThrow({
       where: {
         characterId,
       },
     });
 
-    if (current) {
-      TupperCache.remove(current.prefix);
-    }
-
-    const updated = await prisma.characterTupper.upsert({
+    const updated = await prisma.characterTupper.update({
       where: {
         characterId,
       },
 
-      update: {
+      data: {
         prefix,
       },
 
-      create: {
-        characterId,
-        prefix,
-        name: "Без имени",
-      },
-
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
+      include: withCharacter,
     });
 
+    TupperCache.remove(current.prefix);
     TupperCache.insert(updated);
 
     return updated;
   }
 
   public static async loadCache() {
-    TupperCache.clear();
-
     const tuppers = await prisma.characterTupper.findMany({
-      include: {
-        character: {
-          include: {
-            user: true,
-          },
-        },
-      },
+      include: withCharacter,
     });
+
+    TupperCache.clear();
 
     for (const tupper of tuppers) {
       TupperCache.insert(tupper);
     }
+
+    return tuppers.length;
   }
 
   public static async delete(characterId: string) {

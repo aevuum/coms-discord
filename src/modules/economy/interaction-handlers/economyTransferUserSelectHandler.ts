@@ -3,10 +3,12 @@ import {
   InteractionHandlerTypes,
 } from "@sapphire/framework";
 
-import { MessageFlags, StringSelectMenuInteraction } from "discord.js";
+import { MessageFlags, UserSelectMenuInteraction } from "discord.js";
 
 import { EconomyAction, EconomyCustomIds } from "../lib/economyCustomIds.js";
+import { EconomyComponents } from "../lib/economyComponents.js";
 import { EconomyContainer } from "../lib/economyContainer.js";
+import { EconomyResponder } from "../lib/economyResponder.js";
 import { EconomyService } from "../services/economyService.js";
 
 export class EconomyTransferUserSelectHandler extends InteractionHandler {
@@ -20,7 +22,7 @@ export class EconomyTransferUserSelectHandler extends InteractionHandler {
     });
   }
 
-  public override parse(interaction: StringSelectMenuInteraction) {
+  public override parse(interaction: UserSelectMenuInteraction) {
     const parsed = EconomyCustomIds.parse(interaction.customId);
 
     if (!parsed || parsed.action !== EconomyAction.TransferUser) {
@@ -34,40 +36,42 @@ export class EconomyTransferUserSelectHandler extends InteractionHandler {
   }
 
   public override async run(
-    interaction: StringSelectMenuInteraction,
+    interaction: UserSelectMenuInteraction,
     result: {
       senderId: string;
       receiverDiscordId: string;
     },
   ) {
     try {
-      const characters = await EconomyService.getUserCharactersByDiscordId(
+      const receivers = await EconomyService.getTransferReceivers(
+        interaction.user.id,
+        result.senderId,
         result.receiverDiscordId,
       );
 
-      if (!characters.length) {
-        await interaction.reply({
-          content: "У выбранного пользователя нет персонажей.",
-          flags: MessageFlags.Ephemeral,
-        });
+      if (receivers.characters.length === 1) {
+        await interaction.showModal(
+          EconomyComponents.transferModal(
+            receivers.sender.id,
+            receivers.characters[0].id,
+          ),
+        );
 
         return;
       }
 
       await interaction.update({
         flags: MessageFlags.IsComponentsV2,
-
         components: [
-          EconomyContainer.selectTransferCharacter(characters, result.senderId),
+          EconomyContainer.selectTransferCharacter(
+            receivers.sender,
+            receivers.receiverDiscordId,
+            receivers.characters,
+          ),
         ],
       });
     } catch (error) {
-      console.error(error);
-
-      await interaction.reply({
-        content: "Не удалось загрузить персонажей пользователя.",
-        flags: MessageFlags.Ephemeral,
-      });
+      await EconomyResponder.error(interaction, error, result.senderId);
     }
   }
 }

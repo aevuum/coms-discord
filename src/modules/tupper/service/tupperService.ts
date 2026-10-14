@@ -1,48 +1,159 @@
+import { UserRepository } from "../../users/repositories/userRepository.js";
+import { CharacterRepository } from "../../character/repositories/characterRepository.js";
 import { TupperRepository } from "../repositories/tupperRepository.js";
+import { TupperError, type TupperCharacter } from "../types/tupper.js";
 
 export class TupperService {
-  public static async createForCharacter(characterId: string, name: string) {
-    const prefix = this.generatePrefix(name);
+  private static readonly NAME_MIN_LENGTH = 2;
+  private static readonly NAME_MAX_LENGTH = 80;
+  private static readonly PREFIX_MAX_LENGTH = 32;
+  private static readonly PREFIX_BASE_MAX_LENGTH = 24;
+  private static readonly FORBIDDEN_NAME = /discord|clyde/i;
 
-    return TupperRepository.create(characterId, name, prefix);
+  public static async loadCache() {
+    return TupperRepository.loadCache();
   }
 
-  public static generatePrefix(name: string) {
-    const clear = name
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-zа-яё0-9]/gi, "");
+  public static async getCharacters(
+    discordId: string,
+  ): Promise<TupperCharacter[]> {
+    const user = await UserRepository.getByDiscordId(discordId);
 
-    return `${clear}:`;
-  }
+    const characters = user
+      ? await CharacterRepository.getUserCharacters(user.id)
+      : [];
 
-  public static async rename(characterId: string, name: string) {
-    name = name.trim();
-
-    if (name.length < 2 || name.length > 80) {
-      throw new Error("Некорректная длина имени.");
+    if (!characters.length) {
+      throw new TupperError("У вас нет персонажей.");
     }
 
-    return TupperRepository.updateName(characterId, name);
+    return characters;
   }
 
-  public static async changePrefix(characterId: string, prefix: string) {
-    prefix = prefix.trim();
+  public static async getOwnedCharacter(
+    discordId: string,
+    characterId: string,
+  ): Promise<TupperCharacter> {
+    const character = characterId
+      ? await CharacterRepository.getById(characterId)
+      : null;
+
+    if (!character || character.user.discordId !== discordId) {
+      throw new TupperError("Это не ваш персонаж.");
+    }
+
+    return character;
+  }
+
+  public static async createForCharacter(characterId: string, name: string) {
+    const prefix = await this.generatePrefix(name);
+
+    return TupperRepository.create(
+      characterId,
+      this.sanitizeName(name),
+      prefix,
+    );
+  }
+
+  public static async removeForCharacter(characterId: string) {
+    return TupperRepository.delete(characterId);
+  }
+
+  public static async rename(
+    discordId: string,
+    characterId: string,
+    input: string,
+  ) {
+    const character = await this.getOwnedCharacter(discordId, characterId);
+
+    const name = input.trim();
+
+    if (
+      name.length < this.NAME_MIN_LENGTH ||
+      name.length > this.NAME_MAX_LENGTH
+    ) {
+      throw new TupperError(
+        `Имя должно быть от ${this.NAME_MIN_LENGTH} до ${this.NAME_MAX_LENGTH} символов.`,
+      );
+    }
+
+    if (this.FORBIDDEN_NAME.test(name)) {
+      throw new TupperError(
+        "Имя не может содержать слова «discord» или «clyde».",
+      );
+    }
+
+    await this.ensureTupper(character);
+
+    await TupperRepository.updateName(character.id, name);
+
+    return this.getOwnedCharacter(discordId, characterId);
+  }
+
+  public static async changePrefix(
+    discordId: string,
+    characterId: string,
+    input: string,
+  ) {
+    const character = await this.getOwnedCharacter(discordId, characterId);
+
+    const prefix = input.trim();
 
     if (!prefix.length) {
-      throw new Error("Тег не может быть пустым.");
+      throw new TupperError("Тег не может быть пустым.");
     }
 
-    if (prefix.length > 32) {
-      throw new Error("Тег слишком длинный.");
+    if (prefix.length > this.PREFIX_MAX_LENGTH) {
+      throw new TupperError(
+        `Тег не может быть длиннее ${this.PREFIX_MAX_LENGTH} символов.`,
+      );
     }
 
     const exists = await TupperRepository.getByPrefix(prefix);
 
-    if (exists && exists.characterId !== characterId) {
-      throw new Error("Такой тег уже используется.");
+    if (exists && exists.characterId !== character.id) {
+      throw new TupperError("Такой тег уже используется.");
     }
 
-    return TupperRepository.updatePrefix(characterId, prefix);
+    await this.ensureTupper(character);
+
+    await TupperRepository.updatePrefix(character.id, prefix);
+
+    return this.getOwnedCharacter(discordId, characterId);
+  }
+
+  private static async ensureTupper(character: TupperCharacter) {
+    if (!character.tupper) {
+      await this.createForCharacter(character.id, character.rpName);
+    }
+  }
+
+  private static sanitizeName(name: string) {
+    const clean = name
+      .trim()
+      .replace(this.FORBIDDEN_NAME, "")
+      .trim()
+      .slice(0, this.NAME_MAX_LENGTH);
+
+    return clean.length >= this.NAME_MIN_LENGTH ? clean : "Персонаж";
+  }
+
+  private static async generatePrefix(name: string) {
+    const base =
+      name
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-zа-яё0-9]/gi, "")
+        .slice(0, this.PREFIX_BASE_MAX_LENGTH) || "персонаж";
+
+    for (let index = 1; index <= 100; index++) {
+      const prefix = index === 1 ? `${base}:` : `${base}${index}:`;
+
+      if (!(await TupperRepository.getByPrefix(prefix))) {
+        return prefix;
+      }
+    }
+
+    throw new TupperError("Не удалось подобрать свободный тег.");
   }
 }

@@ -17,14 +17,14 @@ export class TransactionRepository {
 
         amountKnuts,
 
-        balanceAfterKnuts: balanceAfterKnuts,
+        balanceAfterKnuts,
 
         reason,
       },
     });
   }
 
-  public static async getHistory(characterId: string, take = 15) {
+  public static async getHistory(characterId: string, skip: number, take: number) {
     return prisma.characterTransaction.findMany({
       where: {
         characterId,
@@ -34,7 +34,16 @@ export class TransactionRepository {
         createdAt: "desc",
       },
 
+      skip,
       take,
+    });
+  }
+
+  public static async count(characterId: string) {
+    return prisma.characterTransaction.count({
+      where: {
+        characterId,
+      },
     });
   }
 }

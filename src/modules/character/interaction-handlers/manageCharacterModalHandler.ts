@@ -51,7 +51,22 @@ export class ManageCharacterModalHandler extends InteractionHandler {
       }
     }
 
-    await CharacterService.create(result.userId, rpName, avatarUrl, faculty);
+    try {
+      await CharacterService.create(result.userId, rpName, avatarUrl, faculty);
+    } catch (error) {
+      this.container.logger.error(error);
+
+      await interaction.reply({
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          ManageCharacterContainer.createError(
+            "Не удалось создать персонажа. Попробуйте ещё раз.",
+          ),
+        ],
+      });
+
+      return;
+    }
 
     await interaction.reply({
       flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],

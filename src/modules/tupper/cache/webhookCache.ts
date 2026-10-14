@@ -1,13 +1,13 @@
-import { WebhookClient } from "discord.js";
+import type { Webhook } from "discord.js";
 
 export class WebhookCache {
-  private static cache = new Map<string, WebhookClient>();
+  private static cache = new Map<string, Webhook>();
 
   public static get(channelId: string) {
     return this.cache.get(channelId);
   }
 
-  public static set(channelId: string, webhook: WebhookClient) {
+  public static set(channelId: string, webhook: Webhook) {
     this.cache.set(channelId, webhook);
   }
 

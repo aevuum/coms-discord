@@ -4,6 +4,7 @@ import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 
 import { EconomyService } from "../services/economyService.js";
 import { EconomyContainer } from "../lib/economyContainer.js";
+import { EconomyResponder } from "../lib/economyResponder.js";
 
 export class EconomyCommand extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -23,38 +24,15 @@ export class EconomyCommand extends Command {
   }
 
   public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-    const characters = await EconomyService.getCharacters(interaction.user.id);
+    try {
+      const characters = await EconomyService.getOverview(interaction.user.id);
 
-    if (!characters.length) {
-      await interaction.reply({
-        content: "У вас нет зарегистрированных персонажей.",
-        flags: MessageFlags.Ephemeral,
-      });
-
-      return;
-    }
-
-    if (characters.length === 1) {
       await interaction.reply({
         flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-
-        components: [EconomyContainer.main(characters[0])],
+        components: [EconomyContainer.overview(characters)],
       });
-
-      return;
+    } catch (error) {
+      await EconomyResponder.error(interaction, error);
     }
-
-    await interaction.reply({
-      flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-
-      components: [
-        EconomyContainer.selectCharacter(
-          characters.map((character) => ({
-            id: character.id,
-            rpName: character.rpName,
-          })),
-        ),
-      ],
-    });
   }
 }
