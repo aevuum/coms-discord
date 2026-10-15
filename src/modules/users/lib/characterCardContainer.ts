@@ -3,8 +3,6 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ContainerBuilder,
-  MediaGalleryBuilder,
-  MediaGalleryItemBuilder,
   SectionBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
@@ -36,7 +34,7 @@ export type CardItem = {
   attachmentName: string | null;
 };
 
-const MAX_GALLERY_ITEMS = 10;
+export const MAX_IMAGE_ITEMS = 8;
 
 export class CharacterCardContainer {
   public static build(character: CardCharacter, items: CardItem[]) {
@@ -91,27 +89,37 @@ export class CharacterCardContainer {
       new TextDisplayBuilder().setContent(
         [
           `### ${CHEST} Инвентарь`,
-          items.length
-            ? items
-                .map((item) => `${ARROW} **${item.name}** × ${item.quantity}`)
-                .join("\n")
-            : "-# Инвентарь пуст.",
-        ].join("\n"),
+          items.length ? null : "-# Инвентарь пуст.",
+        ]
+          .filter((line) => line !== null)
+          .join("\n"),
       ),
     );
 
-    const images = items
+    const withImages = items
       .filter((item) => item.attachmentName)
-      .slice(0, MAX_GALLERY_ITEMS);
+      .slice(0, MAX_IMAGE_ITEMS);
 
-    if (images.length) {
-      container.addMediaGalleryComponents(
-        new MediaGalleryBuilder().addItems(
-          images.map((item) =>
-            new MediaGalleryItemBuilder()
+    for (const item of withImages) {
+      container.addSectionComponents(
+        new SectionBuilder()
+          .addTextDisplayComponents(
+            new TextDisplayBuilder().setContent(this.itemLine(item)),
+          )
+          .setThumbnailAccessory(
+            new ThumbnailBuilder()
               .setURL(`attachment://${item.attachmentName}`)
               .setDescription(item.name.slice(0, 1024)),
           ),
+      );
+    }
+
+    const withoutImages = items.filter((item) => !withImages.includes(item));
+
+    if (withoutImages.length) {
+      container.addTextDisplayComponents(
+        new TextDisplayBuilder().setContent(
+          withoutImages.map((item) => this.itemLine(item)).join("\n"),
         ),
       );
     }
@@ -146,6 +154,10 @@ export class CharacterCardContainer {
     );
 
     return container;
+  }
+
+  private static itemLine(item: CardItem) {
+    return `${ARROW} **${item.name}** × ${item.quantity}`;
   }
 
   public static notice(title: string, message: string) {

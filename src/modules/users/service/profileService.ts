@@ -6,7 +6,10 @@ import { CharacterRepository } from "../../character/repositories/characterRepos
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { ProfileError } from "../types/profile.js";
 import { CharacterInventoryService } from "../../character/service/characterInventoryService.js";
-import type { CardItem } from "../lib/characterCardContainer.js";
+import {
+  MAX_IMAGE_ITEMS,
+  type CardItem,
+} from "../lib/characterCardContainer.js";
 
 export class ProfileService {
   public static async getProfile(discordId: string) {
@@ -70,7 +73,7 @@ export class ProfileService {
     const files: AttachmentBuilder[] = [];
 
     const cardItems: CardItem[] = items.map((item) => {
-      if (!item.imageData || files.length >= 10) {
+      if (!item.imageData || files.length >= MAX_IMAGE_ITEMS) {
         return {
           name: item.name,
           quantity: item.quantity,
