@@ -8,6 +8,10 @@ import { PermissionService } from "../../permissions/service/permissionService.j
 import { SpellContainer } from "../../spells/lib/spellContainer.js";
 import { SpellService } from "../../spells/service/spellService.js";
 import { SpellMode } from "../../spells/types/spells.js";
+import { CoinsAdminContainer } from "../../coins/lib/coinsAdminContainer.js";
+import { StipendService } from "../../coins/service/stipendService.js";
+import { ShopAdminContainer } from "../../shop/lib/shopAdminContainer.js";
+import { ShopService } from "../../shop/service/shopService.js";
 import { ManageContainer } from "../lib/manageContainer.js";
 import { ManageError } from "../lib/manageResponder.js";
 import { getManageSection } from "../lib/manageSections.js";
@@ -55,6 +59,14 @@ export class ManageService {
 
       case ManageSectionId.Spells:
         return SpellContainer.page(await SpellService.getPage(0), SpellMode.Manage);
+
+      case ManageSectionId.Shop:
+        return ShopAdminContainer.root(await ShopService.listAllItems());
+
+      case ManageSectionId.Coins:
+        return CoinsAdminContainer.root(
+          await StipendService.list(subject.guildId as string),
+        );
 
       case ManageSectionId.Permissions: {
         const overview = await PermissionService.getOverview(subject);

@@ -255,6 +255,7 @@ export type UserWhereInput = {
   awards?: Prisma.UserAwardListRelationFilter
   wallet?: Prisma.XOR<Prisma.WalletScalarRelationFilter, Prisma.WalletWhereInput>
   inventory?: Prisma.InventoryItemListRelationFilter
+  coinTransactions?: Prisma.CoinTransactionListRelationFilter
   characters?: Prisma.CharacterListRelationFilter
 }
 
@@ -271,6 +272,7 @@ export type UserOrderByWithRelationInput = {
   awards?: Prisma.UserAwardOrderByRelationAggregateInput
   wallet?: Prisma.WalletOrderByWithRelationInput
   inventory?: Prisma.InventoryItemOrderByRelationAggregateInput
+  coinTransactions?: Prisma.CoinTransactionOrderByRelationAggregateInput
   characters?: Prisma.CharacterOrderByRelationAggregateInput
 }
 
@@ -290,6 +292,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   awards?: Prisma.UserAwardListRelationFilter
   wallet?: Prisma.XOR<Prisma.WalletScalarRelationFilter, Prisma.WalletWhereInput>
   inventory?: Prisma.InventoryItemListRelationFilter
+  coinTransactions?: Prisma.CoinTransactionListRelationFilter
   characters?: Prisma.CharacterListRelationFilter
 }, "id" | "discordId" | "walletId">
 
@@ -337,6 +340,7 @@ export type UserCreateInput = {
   awards?: Prisma.UserAwardCreateNestedManyWithoutUserInput
   wallet: Prisma.WalletCreateNestedOneWithoutUserInput
   inventory?: Prisma.InventoryItemCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterCreateNestedManyWithoutUserInput
 }
 
@@ -352,6 +356,7 @@ export type UserUncheckedCreateInput = {
   walletId: string
   awards?: Prisma.UserAwardUncheckedCreateNestedManyWithoutUserInput
   inventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -367,6 +372,7 @@ export type UserUpdateInput = {
   awards?: Prisma.UserAwardUpdateManyWithoutUserNestedInput
   wallet?: Prisma.WalletUpdateOneRequiredWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUpdateManyWithoutUserNestedInput
 }
 
@@ -382,6 +388,7 @@ export type UserUncheckedUpdateInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   awards?: Prisma.UserAwardUncheckedUpdateManyWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -570,6 +577,20 @@ export type UserUpdateOneRequiredWithoutInventoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInventoryInput, Prisma.UserUpdateWithoutInventoryInput>, Prisma.UserUncheckedUpdateWithoutInventoryInput>
 }
 
+export type UserCreateNestedOneWithoutCoinTransactionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoinTransactionsInput, Prisma.UserUncheckedCreateWithoutCoinTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoinTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCoinTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoinTransactionsInput, Prisma.UserUncheckedCreateWithoutCoinTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoinTransactionsInput
+  upsert?: Prisma.UserUpsertWithoutCoinTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCoinTransactionsInput, Prisma.UserUpdateWithoutCoinTransactionsInput>, Prisma.UserUncheckedUpdateWithoutCoinTransactionsInput>
+}
+
 export type UserCreateWithoutAwardsInput = {
   id?: string
   discordId: string
@@ -581,6 +602,7 @@ export type UserCreateWithoutAwardsInput = {
   profileBannerUrl?: string | null
   wallet: Prisma.WalletCreateNestedOneWithoutUserInput
   inventory?: Prisma.InventoryItemCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterCreateNestedManyWithoutUserInput
 }
 
@@ -595,6 +617,7 @@ export type UserUncheckedCreateWithoutAwardsInput = {
   profileBannerUrl?: string | null
   walletId: string
   inventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -625,6 +648,7 @@ export type UserUpdateWithoutAwardsInput = {
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wallet?: Prisma.WalletUpdateOneRequiredWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUpdateManyWithoutUserNestedInput
 }
 
@@ -639,6 +663,7 @@ export type UserUncheckedUpdateWithoutAwardsInput = {
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   inventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -653,6 +678,7 @@ export type UserCreateWithoutWalletInput = {
   profileBannerUrl?: string | null
   awards?: Prisma.UserAwardCreateNestedManyWithoutUserInput
   inventory?: Prisma.InventoryItemCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterCreateNestedManyWithoutUserInput
 }
 
@@ -667,6 +693,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   profileBannerUrl?: string | null
   awards?: Prisma.UserAwardUncheckedCreateNestedManyWithoutUserInput
   inventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -697,6 +724,7 @@ export type UserUpdateWithoutWalletInput = {
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awards?: Prisma.UserAwardUpdateManyWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUpdateManyWithoutUserNestedInput
 }
 
@@ -711,6 +739,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awards?: Prisma.UserAwardUncheckedUpdateManyWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -726,6 +755,7 @@ export type UserCreateWithoutCharactersInput = {
   awards?: Prisma.UserAwardCreateNestedManyWithoutUserInput
   wallet: Prisma.WalletCreateNestedOneWithoutUserInput
   inventory?: Prisma.InventoryItemCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCharactersInput = {
@@ -740,6 +770,7 @@ export type UserUncheckedCreateWithoutCharactersInput = {
   walletId: string
   awards?: Prisma.UserAwardUncheckedCreateNestedManyWithoutUserInput
   inventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCharactersInput = {
@@ -770,6 +801,7 @@ export type UserUpdateWithoutCharactersInput = {
   awards?: Prisma.UserAwardUpdateManyWithoutUserNestedInput
   wallet?: Prisma.WalletUpdateOneRequiredWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCharactersInput = {
@@ -784,6 +816,7 @@ export type UserUncheckedUpdateWithoutCharactersInput = {
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   awards?: Prisma.UserAwardUncheckedUpdateManyWithoutUserNestedInput
   inventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutInventoryInput = {
@@ -797,6 +830,7 @@ export type UserCreateWithoutInventoryInput = {
   profileBannerUrl?: string | null
   awards?: Prisma.UserAwardCreateNestedManyWithoutUserInput
   wallet: Prisma.WalletCreateNestedOneWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterCreateNestedManyWithoutUserInput
 }
 
@@ -811,6 +845,7 @@ export type UserUncheckedCreateWithoutInventoryInput = {
   profileBannerUrl?: string | null
   walletId: string
   awards?: Prisma.UserAwardUncheckedCreateNestedManyWithoutUserInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedCreateNestedManyWithoutUserInput
   characters?: Prisma.CharacterUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -841,6 +876,7 @@ export type UserUpdateWithoutInventoryInput = {
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awards?: Prisma.UserAwardUpdateManyWithoutUserNestedInput
   wallet?: Prisma.WalletUpdateOneRequiredWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUpdateManyWithoutUserNestedInput
 }
 
@@ -855,6 +891,83 @@ export type UserUncheckedUpdateWithoutInventoryInput = {
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   walletId?: Prisma.StringFieldUpdateOperationsInput | string
   awards?: Prisma.UserAwardUncheckedUpdateManyWithoutUserNestedInput
+  coinTransactions?: Prisma.CoinTransactionUncheckedUpdateManyWithoutUserNestedInput
+  characters?: Prisma.CharacterUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCoinTransactionsInput = {
+  id?: string
+  discordId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  messagesCount?: number
+  voiceSeconds?: number
+  selectedAwardId?: string | null
+  profileBannerUrl?: string | null
+  awards?: Prisma.UserAwardCreateNestedManyWithoutUserInput
+  wallet: Prisma.WalletCreateNestedOneWithoutUserInput
+  inventory?: Prisma.InventoryItemCreateNestedManyWithoutUserInput
+  characters?: Prisma.CharacterCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCoinTransactionsInput = {
+  id?: string
+  discordId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  messagesCount?: number
+  voiceSeconds?: number
+  selectedAwardId?: string | null
+  profileBannerUrl?: string | null
+  walletId: string
+  awards?: Prisma.UserAwardUncheckedCreateNestedManyWithoutUserInput
+  inventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutUserInput
+  characters?: Prisma.CharacterUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCoinTransactionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCoinTransactionsInput, Prisma.UserUncheckedCreateWithoutCoinTransactionsInput>
+}
+
+export type UserUpsertWithoutCoinTransactionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCoinTransactionsInput, Prisma.UserUncheckedUpdateWithoutCoinTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCoinTransactionsInput, Prisma.UserUncheckedCreateWithoutCoinTransactionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCoinTransactionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCoinTransactionsInput, Prisma.UserUncheckedUpdateWithoutCoinTransactionsInput>
+}
+
+export type UserUpdateWithoutCoinTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  discordId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awards?: Prisma.UserAwardUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.WalletUpdateOneRequiredWithoutUserNestedInput
+  inventory?: Prisma.InventoryItemUpdateManyWithoutUserNestedInput
+  characters?: Prisma.CharacterUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  discordId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  walletId?: Prisma.StringFieldUpdateOperationsInput | string
+  awards?: Prisma.UserAwardUncheckedUpdateManyWithoutUserNestedInput
+  inventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutUserNestedInput
   characters?: Prisma.CharacterUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -866,12 +979,14 @@ export type UserUncheckedUpdateWithoutInventoryInput = {
 export type UserCountOutputType = {
   awards: number
   inventory: number
+  coinTransactions: number
   characters: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   awards?: boolean | UserCountOutputTypeCountAwardsArgs
   inventory?: boolean | UserCountOutputTypeCountInventoryArgs
+  coinTransactions?: boolean | UserCountOutputTypeCountCoinTransactionsArgs
   characters?: boolean | UserCountOutputTypeCountCharactersArgs
 }
 
@@ -902,6 +1017,13 @@ export type UserCountOutputTypeCountInventoryArgs<ExtArgs extends runtime.Types.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCoinTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CoinTransactionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCharactersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CharacterWhereInput
 }
@@ -920,6 +1042,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   awards?: boolean | Prisma.User$awardsArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
   inventory?: boolean | Prisma.User$inventoryArgs<ExtArgs>
+  coinTransactions?: boolean | Prisma.User$coinTransactionsArgs<ExtArgs>
   characters?: boolean | Prisma.User$charactersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -967,6 +1090,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   awards?: boolean | Prisma.User$awardsArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
   inventory?: boolean | Prisma.User$inventoryArgs<ExtArgs>
+  coinTransactions?: boolean | Prisma.User$coinTransactionsArgs<ExtArgs>
   characters?: boolean | Prisma.User$charactersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -983,6 +1107,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     awards: Prisma.$UserAwardPayload<ExtArgs>[]
     wallet: Prisma.$WalletPayload<ExtArgs>
     inventory: Prisma.$InventoryItemPayload<ExtArgs>[]
+    coinTransactions: Prisma.$CoinTransactionPayload<ExtArgs>[]
     characters: Prisma.$CharacterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1392,6 +1517,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   awards<T extends Prisma.User$awardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$awardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAwardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wallet<T extends Prisma.WalletDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WalletDefaultArgs<ExtArgs>>): Prisma.Prisma__WalletClient<runtime.Types.Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   inventory<T extends Prisma.User$inventoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$inventoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  coinTransactions<T extends Prisma.User$coinTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$coinTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoinTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   characters<T extends Prisma.User$charactersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$charactersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1877,6 +2003,30 @@ export type User$inventoryArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.InventoryItemScalarFieldEnum | Prisma.InventoryItemScalarFieldEnum[]
+}
+
+/**
+ * User.coinTransactions
+ */
+export type User$coinTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CoinTransaction
+   */
+  select?: Prisma.CoinTransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CoinTransaction
+   */
+  omit?: Prisma.CoinTransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoinTransactionInclude<ExtArgs> | null
+  where?: Prisma.CoinTransactionWhereInput
+  orderBy?: Prisma.CoinTransactionOrderByWithRelationInput | Prisma.CoinTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.CoinTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CoinTransactionScalarFieldEnum | Prisma.CoinTransactionScalarFieldEnum[]
 }
 
 /**

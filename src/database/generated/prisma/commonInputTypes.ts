@@ -287,6 +287,40 @@ export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
 }
 
+export type EnumShopCurrencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShopCurrency | Prisma.EnumShopCurrencyFieldRefInput<$PrismaModel>
+  in?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShopCurrencyFilter<$PrismaModel> | $Enums.ShopCurrency
+}
+
+export type EnumShopCurrencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShopCurrency | Prisma.EnumShopCurrencyFieldRefInput<$PrismaModel>
+  in?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShopCurrencyWithAggregatesFilter<$PrismaModel> | $Enums.ShopCurrency
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShopCurrencyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShopCurrencyFilter<$PrismaModel>
+}
+
+export type EnumCoinTransactionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoinTransactionType | Prisma.EnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoinTransactionTypeFilter<$PrismaModel> | $Enums.CoinTransactionType
+}
+
+export type EnumCoinTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoinTransactionType | Prisma.EnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoinTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.CoinTransactionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCoinTransactionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCoinTransactionTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -571,6 +605,40 @@ export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumShopCurrencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShopCurrency | Prisma.EnumShopCurrencyFieldRefInput<$PrismaModel>
+  in?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShopCurrencyFilter<$PrismaModel> | $Enums.ShopCurrency
+}
+
+export type NestedEnumShopCurrencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShopCurrency | Prisma.EnumShopCurrencyFieldRefInput<$PrismaModel>
+  in?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ShopCurrency[] | Prisma.ListEnumShopCurrencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumShopCurrencyWithAggregatesFilter<$PrismaModel> | $Enums.ShopCurrency
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShopCurrencyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShopCurrencyFilter<$PrismaModel>
+}
+
+export type NestedEnumCoinTransactionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoinTransactionType | Prisma.EnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoinTransactionTypeFilter<$PrismaModel> | $Enums.CoinTransactionType
+}
+
+export type NestedEnumCoinTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CoinTransactionType | Prisma.EnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CoinTransactionType[] | Prisma.ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCoinTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.CoinTransactionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCoinTransactionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCoinTransactionTypeFilter<$PrismaModel>
 }
 
 

@@ -63,7 +63,9 @@ export const ModelName = {
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
   CommandPermission: 'CommandPermission',
-  CharacterTupper: 'CharacterTupper'
+  CharacterTupper: 'CharacterTupper',
+  CoinTransaction: 'CoinTransaction',
+  RoleStipend: 'RoleStipend'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -199,12 +201,15 @@ export const ShopItemScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  emoji: 'emoji',
   iconUrl: 'iconUrl',
-  priceKnuts: 'priceKnuts',
+  price: 'price',
+  currency: 'currency',
   category: 'category',
   isActive: 'isActive',
   maxPerUser: 'maxPerUser',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ShopItemScalarFieldEnum = (typeof ShopItemScalarFieldEnum)[keyof typeof ShopItemScalarFieldEnum]
@@ -253,6 +258,32 @@ export const CharacterTupperScalarFieldEnum = {
 } as const
 
 export type CharacterTupperScalarFieldEnum = (typeof CharacterTupperScalarFieldEnum)[keyof typeof CharacterTupperScalarFieldEnum]
+
+
+export const CoinTransactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  amount: 'amount',
+  balanceAfter: 'balanceAfter',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type CoinTransactionScalarFieldEnum = (typeof CoinTransactionScalarFieldEnum)[keyof typeof CoinTransactionScalarFieldEnum]
+
+
+export const RoleStipendScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  roleId: 'roleId',
+  amount: 'amount',
+  lastPaidAt: 'lastPaidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleStipendScalarFieldEnum = (typeof RoleStipendScalarFieldEnum)[keyof typeof RoleStipendScalarFieldEnum]
 
 
 export const SortOrder = {

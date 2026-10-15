@@ -6,7 +6,13 @@ import {
   ButtonStyle,
 } from "discord.js";
 
-import type { Character } from "../../../database/generated/prisma/client.js";
+import type {
+  Character,
+  InventoryItem,
+  ShopItem,
+} from "../../../database/generated/prisma/client.js";
+
+import { ShopFormatter } from "../../shop/lib/shopFormatter.js";
 
 const MAX_SELECT_OPTIONS = 25;
 
@@ -66,6 +72,28 @@ export class ProfileComponents {
               .setLabel(character.rpName.slice(0, 100))
               .setValue(character.id)
               .setEmoji("<:928205membericon:1518581050555633674>"),
+          ),
+        ),
+    );
+  }
+
+  public static itemSelect(
+    targetUserId: string,
+    inventory: (InventoryItem & { shopItem: ShopItem })[],
+  ) {
+    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(`profile_item_${targetUserId}`)
+        .setPlaceholder("Использовать предмет")
+        .addOptions(
+          inventory.slice(0, MAX_SELECT_OPTIONS).map((entry) =>
+            ShopFormatter.applyEmoji(
+              new StringSelectMenuOptionBuilder()
+                .setLabel(entry.shopItem.name.slice(0, 100))
+                .setDescription(`В наличии: ${entry.quantity} шт.`)
+                .setValue(entry.shopItemId),
+              entry.shopItem.emoji,
+            ),
           ),
         ),
     );

@@ -20,6 +20,20 @@ export class UserRepository {
             createdAt: "asc",
           },
         },
+
+        inventory: {
+          where: {
+            quantity: {
+              gt: 0,
+            },
+          },
+          include: {
+            shopItem: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
       },
     });
   }
@@ -43,6 +57,20 @@ export class UserRepository {
         },
 
         characters: true,
+
+        inventory: {
+          where: {
+            quantity: {
+              gt: 0,
+            },
+          },
+          include: {
+            shopItem: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
       },
     });
   }

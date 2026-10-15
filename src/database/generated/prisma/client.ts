@@ -106,3 +106,13 @@ export type CommandPermission = Prisma.CommandPermissionModel
  * 
  */
 export type CharacterTupper = Prisma.CharacterTupperModel
+/**
+ * Model CoinTransaction
+ * 
+ */
+export type CoinTransaction = Prisma.CoinTransactionModel
+/**
+ * Model RoleStipend
+ * 
+ */
+export type RoleStipend = Prisma.RoleStipendModel

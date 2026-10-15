@@ -396,7 +396,9 @@ export const ModelName = {
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
   CommandPermission: 'CommandPermission',
-  CharacterTupper: 'CharacterTupper'
+  CharacterTupper: 'CharacterTupper',
+  CoinTransaction: 'CoinTransaction',
+  RoleStipend: 'RoleStipend'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1378,6 +1380,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CoinTransaction: {
+      payload: Prisma.$CoinTransactionPayload<ExtArgs>
+      fields: Prisma.CoinTransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CoinTransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CoinTransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.CoinTransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CoinTransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>
+        }
+        findMany: {
+          args: Prisma.CoinTransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>[]
+        }
+        create: {
+          args: Prisma.CoinTransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>
+        }
+        createMany: {
+          args: Prisma.CoinTransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CoinTransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.CoinTransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>
+        }
+        update: {
+          args: Prisma.CoinTransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CoinTransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CoinTransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CoinTransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CoinTransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CoinTransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.CoinTransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCoinTransaction>
+        }
+        groupBy: {
+          args: Prisma.CoinTransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CoinTransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CoinTransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CoinTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    RoleStipend: {
+      payload: Prisma.$RoleStipendPayload<ExtArgs>
+      fields: Prisma.RoleStipendFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoleStipendFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoleStipendFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>
+        }
+        findFirst: {
+          args: Prisma.RoleStipendFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoleStipendFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>
+        }
+        findMany: {
+          args: Prisma.RoleStipendFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>[]
+        }
+        create: {
+          args: Prisma.RoleStipendCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>
+        }
+        createMany: {
+          args: Prisma.RoleStipendCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoleStipendCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>[]
+        }
+        delete: {
+          args: Prisma.RoleStipendDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>
+        }
+        update: {
+          args: Prisma.RoleStipendUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>
+        }
+        deleteMany: {
+          args: Prisma.RoleStipendDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoleStipendUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoleStipendUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>[]
+        }
+        upsert: {
+          args: Prisma.RoleStipendUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoleStipendPayload>
+        }
+        aggregate: {
+          args: Prisma.RoleStipendAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRoleStipend>
+        }
+        groupBy: {
+          args: Prisma.RoleStipendGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoleStipendGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoleStipendCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoleStipendCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1534,12 +1684,15 @@ export const ShopItemScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  emoji: 'emoji',
   iconUrl: 'iconUrl',
-  priceKnuts: 'priceKnuts',
+  price: 'price',
+  currency: 'currency',
   category: 'category',
   isActive: 'isActive',
   maxPerUser: 'maxPerUser',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ShopItemScalarFieldEnum = (typeof ShopItemScalarFieldEnum)[keyof typeof ShopItemScalarFieldEnum]
@@ -1588,6 +1741,32 @@ export const CharacterTupperScalarFieldEnum = {
 } as const
 
 export type CharacterTupperScalarFieldEnum = (typeof CharacterTupperScalarFieldEnum)[keyof typeof CharacterTupperScalarFieldEnum]
+
+
+export const CoinTransactionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  amount: 'amount',
+  balanceAfter: 'balanceAfter',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type CoinTransactionScalarFieldEnum = (typeof CoinTransactionScalarFieldEnum)[keyof typeof CoinTransactionScalarFieldEnum]
+
+
+export const RoleStipendScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  roleId: 'roleId',
+  amount: 'amount',
+  lastPaidAt: 'lastPaidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleStipendScalarFieldEnum = (typeof RoleStipendScalarFieldEnum)[keyof typeof RoleStipendScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1740,6 +1919,34 @@ export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
+ * Reference to a field of type 'ShopCurrency'
+ */
+export type EnumShopCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShopCurrency'>
+    
+
+
+/**
+ * Reference to a field of type 'ShopCurrency[]'
+ */
+export type ListEnumShopCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShopCurrency[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CoinTransactionType'
+ */
+export type EnumCoinTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoinTransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'CoinTransactionType[]'
+ */
+export type ListEnumCoinTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoinTransactionType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1875,6 +2082,8 @@ export type GlobalOmitConfig = {
   characterInventoryItem?: Prisma.CharacterInventoryItemOmit
   commandPermission?: Prisma.CommandPermissionOmit
   characterTupper?: Prisma.CharacterTupperOmit
+  coinTransaction?: Prisma.CoinTransactionOmit
+  roleStipend?: Prisma.RoleStipendOmit
 }
 
 /* Types for Logging */

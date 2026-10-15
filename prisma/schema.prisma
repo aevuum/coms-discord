@@ -59,6 +59,8 @@ model User {
 
   inventory InventoryItem[]
 
+  coinTransactions CoinTransaction[]
+
   characters Character[]
 }
 
@@ -205,14 +207,21 @@ model CharacterTransaction {
   @@index([characterId, createdAt])
 }
 
+enum ShopCurrency {
+  COMS_COINS
+  KNUTS
+}
+
 model ShopItem {
   id String @id @default(cuid())
 
   name        String
   description String?
+  emoji       String?
   iconUrl     String?
 
-  priceKnuts Int
+  price    Int
+  currency ShopCurrency @default(COMS_COINS)
 
   category String  @default("general")
   isActive Boolean @default(true)
@@ -220,6 +229,7 @@ model ShopItem {
   maxPerUser Int?
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   playerInventory    InventoryItem[]
   characterInventory CharacterInventoryItem[]
@@ -236,7 +246,7 @@ model InventoryItem {
   createdAt DateTime @default(now())
 
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  shopItem ShopItem @relation(fields: [shopItemId], references: [id])
+  shopItem ShopItem @relation(fields: [shopItemId], references: [id], onDelete: Cascade)
 
   @@unique([userId, shopItemId])
 }
@@ -282,4 +292,42 @@ model CharacterTupper {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum CoinTransactionType {
+  PURCHASE
+  STIPEND
+  ADMIN_ADD
+  ADMIN_REMOVE
+}
+
+model CoinTransaction {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type         CoinTransactionType
+  amount       Int
+  balanceAfter Int
+  reason       String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model RoleStipend {
+  id String @id @default(cuid())
+
+  guildId String
+  roleId  String
+  amount  Int
+
+  lastPaidAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([guildId, roleId])
 }

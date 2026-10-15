@@ -12,6 +12,8 @@ import {
 import { ProfileService } from "../service/profileService.js";
 import type { Profile } from "../types/profile.js";
 import { ProfileComponents } from "./profileComponents.js";
+import { CoinFormatter } from "../../coins/lib/coinFormatter.js";
+import { ShopFormatter } from "../../shop/lib/shopFormatter.js";
 
 export class ProfileContainer {
   public static build(
@@ -40,7 +42,8 @@ export class ProfileContainer {
           contentText = [
             "## <:26828shopgreen:1518587281349415084> Экономика",
             "",
-            `Баланс: **${balance.toLocaleString()}**`,
+            `Комс-коины: ${CoinFormatter.amount(balance)}`,
+            "-# Потратить их можно в /shop.",
           ].join("\n");
           break;
         }
@@ -62,10 +65,18 @@ export class ProfileContainer {
         }
 
         case "inventory": {
+          const inventory = profile.inventory ?? [];
           contentText = [
             "## <:527877discordlegendchest:1518587359136972930> Инвентарь",
             "",
-            "*Функционал инвентаря находится в разработке...*",
+            inventory.length
+              ? inventory
+                  .map(
+                    (entry) =>
+                      `${ShopFormatter.title(entry.shopItem)} × **${entry.quantity}**`,
+                  )
+                  .join("\n")
+              : "*Инвентарь пуст — загляните в /shop*",
           ].join("\n");
           break;
         }
@@ -169,6 +180,12 @@ export class ProfileContainer {
 
       container.addSeparatorComponents(
         new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
+      );
+    }
+
+    if (tab === "inventory" && profile?.inventory?.length) {
+      container.addActionRowComponents(
+        ProfileComponents.itemSelect(discordUser.id, profile.inventory),
       );
     }
 

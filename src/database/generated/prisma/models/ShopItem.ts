@@ -27,12 +27,12 @@ export type AggregateShopItem = {
 }
 
 export type ShopItemAvgAggregateOutputType = {
-  priceKnuts: number | null
+  price: number | null
   maxPerUser: number | null
 }
 
 export type ShopItemSumAggregateOutputType = {
-  priceKnuts: number | null
+  price: number | null
   maxPerUser: number | null
 }
 
@@ -40,47 +40,56 @@ export type ShopItemMinAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
+  emoji: string | null
   iconUrl: string | null
-  priceKnuts: number | null
+  price: number | null
+  currency: $Enums.ShopCurrency | null
   category: string | null
   isActive: boolean | null
   maxPerUser: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ShopItemMaxAggregateOutputType = {
   id: string | null
   name: string | null
   description: string | null
+  emoji: string | null
   iconUrl: string | null
-  priceKnuts: number | null
+  price: number | null
+  currency: $Enums.ShopCurrency | null
   category: string | null
   isActive: boolean | null
   maxPerUser: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ShopItemCountAggregateOutputType = {
   id: number
   name: number
   description: number
+  emoji: number
   iconUrl: number
-  priceKnuts: number
+  price: number
+  currency: number
   category: number
   isActive: number
   maxPerUser: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
 
 export type ShopItemAvgAggregateInputType = {
-  priceKnuts?: true
+  price?: true
   maxPerUser?: true
 }
 
 export type ShopItemSumAggregateInputType = {
-  priceKnuts?: true
+  price?: true
   maxPerUser?: true
 }
 
@@ -88,36 +97,45 @@ export type ShopItemMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  emoji?: true
   iconUrl?: true
-  priceKnuts?: true
+  price?: true
+  currency?: true
   category?: true
   isActive?: true
   maxPerUser?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ShopItemMaxAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  emoji?: true
   iconUrl?: true
-  priceKnuts?: true
+  price?: true
+  currency?: true
   category?: true
   isActive?: true
   maxPerUser?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ShopItemCountAggregateInputType = {
   id?: true
   name?: true
   description?: true
+  emoji?: true
   iconUrl?: true
-  priceKnuts?: true
+  price?: true
+  currency?: true
   category?: true
   isActive?: true
   maxPerUser?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -211,12 +229,15 @@ export type ShopItemGroupByOutputType = {
   id: string
   name: string
   description: string | null
+  emoji: string | null
   iconUrl: string | null
-  priceKnuts: number
+  price: number
+  currency: $Enums.ShopCurrency
   category: string
   isActive: boolean
   maxPerUser: number | null
   createdAt: Date
+  updatedAt: Date
   _count: ShopItemCountAggregateOutputType | null
   _avg: ShopItemAvgAggregateOutputType | null
   _sum: ShopItemSumAggregateOutputType | null
@@ -246,12 +267,15 @@ export type ShopItemWhereInput = {
   id?: Prisma.StringFilter<"ShopItem"> | string
   name?: Prisma.StringFilter<"ShopItem"> | string
   description?: Prisma.StringNullableFilter<"ShopItem"> | string | null
+  emoji?: Prisma.StringNullableFilter<"ShopItem"> | string | null
   iconUrl?: Prisma.StringNullableFilter<"ShopItem"> | string | null
-  priceKnuts?: Prisma.IntFilter<"ShopItem"> | number
+  price?: Prisma.IntFilter<"ShopItem"> | number
+  currency?: Prisma.EnumShopCurrencyFilter<"ShopItem"> | $Enums.ShopCurrency
   category?: Prisma.StringFilter<"ShopItem"> | string
   isActive?: Prisma.BoolFilter<"ShopItem"> | boolean
   maxPerUser?: Prisma.IntNullableFilter<"ShopItem"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
   playerInventory?: Prisma.InventoryItemListRelationFilter
   characterInventory?: Prisma.CharacterInventoryItemListRelationFilter
 }
@@ -260,12 +284,15 @@ export type ShopItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  emoji?: Prisma.SortOrderInput | Prisma.SortOrder
   iconUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   playerInventory?: Prisma.InventoryItemOrderByRelationAggregateInput
   characterInventory?: Prisma.CharacterInventoryItemOrderByRelationAggregateInput
 }
@@ -277,12 +304,15 @@ export type ShopItemWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ShopItemWhereInput | Prisma.ShopItemWhereInput[]
   name?: Prisma.StringFilter<"ShopItem"> | string
   description?: Prisma.StringNullableFilter<"ShopItem"> | string | null
+  emoji?: Prisma.StringNullableFilter<"ShopItem"> | string | null
   iconUrl?: Prisma.StringNullableFilter<"ShopItem"> | string | null
-  priceKnuts?: Prisma.IntFilter<"ShopItem"> | number
+  price?: Prisma.IntFilter<"ShopItem"> | number
+  currency?: Prisma.EnumShopCurrencyFilter<"ShopItem"> | $Enums.ShopCurrency
   category?: Prisma.StringFilter<"ShopItem"> | string
   isActive?: Prisma.BoolFilter<"ShopItem"> | boolean
   maxPerUser?: Prisma.IntNullableFilter<"ShopItem"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
   playerInventory?: Prisma.InventoryItemListRelationFilter
   characterInventory?: Prisma.CharacterInventoryItemListRelationFilter
 }, "id">
@@ -291,12 +321,15 @@ export type ShopItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  emoji?: Prisma.SortOrderInput | Prisma.SortOrder
   iconUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ShopItemCountOrderByAggregateInput
   _avg?: Prisma.ShopItemAvgOrderByAggregateInput
   _max?: Prisma.ShopItemMaxOrderByAggregateInput
@@ -311,24 +344,30 @@ export type ShopItemScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ShopItem"> | string
   name?: Prisma.StringWithAggregatesFilter<"ShopItem"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"ShopItem"> | string | null
+  emoji?: Prisma.StringNullableWithAggregatesFilter<"ShopItem"> | string | null
   iconUrl?: Prisma.StringNullableWithAggregatesFilter<"ShopItem"> | string | null
-  priceKnuts?: Prisma.IntWithAggregatesFilter<"ShopItem"> | number
+  price?: Prisma.IntWithAggregatesFilter<"ShopItem"> | number
+  currency?: Prisma.EnumShopCurrencyWithAggregatesFilter<"ShopItem"> | $Enums.ShopCurrency
   category?: Prisma.StringWithAggregatesFilter<"ShopItem"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"ShopItem"> | boolean
   maxPerUser?: Prisma.IntNullableWithAggregatesFilter<"ShopItem"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ShopItem"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ShopItem"> | Date | string
 }
 
 export type ShopItemCreateInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemCreateNestedManyWithoutShopItemInput
   characterInventory?: Prisma.CharacterInventoryItemCreateNestedManyWithoutShopItemInput
 }
@@ -337,12 +376,15 @@ export type ShopItemUncheckedCreateInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutShopItemInput
   characterInventory?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutShopItemInput
 }
@@ -351,12 +393,15 @@ export type ShopItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUpdateManyWithoutShopItemNestedInput
   characterInventory?: Prisma.CharacterInventoryItemUpdateManyWithoutShopItemNestedInput
 }
@@ -365,12 +410,15 @@ export type ShopItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
   characterInventory?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
 }
@@ -379,52 +427,64 @@ export type ShopItemCreateManyInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ShopItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ShopItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ShopItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  emoji?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrder
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ShopItemAvgOrderByAggregateInput = {
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
 }
 
@@ -432,34 +492,44 @@ export type ShopItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  emoji?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrder
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ShopItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  emoji?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrder
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ShopItemSumOrderByAggregateInput = {
-  priceKnuts?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
 }
 
 export type ShopItemScalarRelationFilter = {
   is?: Prisma.ShopItemWhereInput
   isNot?: Prisma.ShopItemWhereInput
+}
+
+export type EnumShopCurrencyFieldUpdateOperationsInput = {
+  set?: $Enums.ShopCurrency
 }
 
 export type ShopItemCreateNestedOneWithoutPlayerInventoryInput = {
@@ -494,12 +564,15 @@ export type ShopItemCreateWithoutPlayerInventoryInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   characterInventory?: Prisma.CharacterInventoryItemCreateNestedManyWithoutShopItemInput
 }
 
@@ -507,12 +580,15 @@ export type ShopItemUncheckedCreateWithoutPlayerInventoryInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   characterInventory?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutShopItemInput
 }
 
@@ -536,12 +612,15 @@ export type ShopItemUpdateWithoutPlayerInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   characterInventory?: Prisma.CharacterInventoryItemUpdateManyWithoutShopItemNestedInput
 }
 
@@ -549,12 +628,15 @@ export type ShopItemUncheckedUpdateWithoutPlayerInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   characterInventory?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
 }
 
@@ -562,12 +644,15 @@ export type ShopItemCreateWithoutCharacterInventoryInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemCreateNestedManyWithoutShopItemInput
 }
 
@@ -575,12 +660,15 @@ export type ShopItemUncheckedCreateWithoutCharacterInventoryInput = {
   id?: string
   name: string
   description?: string | null
+  emoji?: string | null
   iconUrl?: string | null
-  priceKnuts: number
+  price: number
+  currency?: $Enums.ShopCurrency
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutShopItemInput
 }
 
@@ -604,12 +692,15 @@ export type ShopItemUpdateWithoutCharacterInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUpdateManyWithoutShopItemNestedInput
 }
 
@@ -617,12 +708,15 @@ export type ShopItemUncheckedUpdateWithoutCharacterInventoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  priceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.EnumShopCurrencyFieldUpdateOperationsInput | $Enums.ShopCurrency
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
 }
 
@@ -670,12 +764,15 @@ export type ShopItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   name?: boolean
   description?: boolean
+  emoji?: boolean
   iconUrl?: boolean
-  priceKnuts?: boolean
+  price?: boolean
+  currency?: boolean
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   playerInventory?: boolean | Prisma.ShopItem$playerInventoryArgs<ExtArgs>
   characterInventory?: boolean | Prisma.ShopItem$characterInventoryArgs<ExtArgs>
   _count?: boolean | Prisma.ShopItemCountOutputTypeDefaultArgs<ExtArgs>
@@ -685,39 +782,48 @@ export type ShopItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   name?: boolean
   description?: boolean
+  emoji?: boolean
   iconUrl?: boolean
-  priceKnuts?: boolean
+  price?: boolean
+  currency?: boolean
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["shopItem"]>
 
 export type ShopItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   description?: boolean
+  emoji?: boolean
   iconUrl?: boolean
-  priceKnuts?: boolean
+  price?: boolean
+  currency?: boolean
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["shopItem"]>
 
 export type ShopItemSelectScalar = {
   id?: boolean
   name?: boolean
   description?: boolean
+  emoji?: boolean
   iconUrl?: boolean
-  priceKnuts?: boolean
+  price?: boolean
+  currency?: boolean
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ShopItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "iconUrl" | "priceKnuts" | "category" | "isActive" | "maxPerUser" | "createdAt", ExtArgs["result"]["shopItem"]>
+export type ShopItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "emoji" | "iconUrl" | "price" | "currency" | "category" | "isActive" | "maxPerUser" | "createdAt" | "updatedAt", ExtArgs["result"]["shopItem"]>
 export type ShopItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerInventory?: boolean | Prisma.ShopItem$playerInventoryArgs<ExtArgs>
   characterInventory?: boolean | Prisma.ShopItem$characterInventoryArgs<ExtArgs>
@@ -736,12 +842,15 @@ export type $ShopItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     name: string
     description: string | null
+    emoji: string | null
     iconUrl: string | null
-    priceKnuts: number
+    price: number
+    currency: $Enums.ShopCurrency
     category: string
     isActive: boolean
     maxPerUser: number | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["shopItem"]>
   composites: {}
 }
@@ -1170,12 +1279,15 @@ export interface ShopItemFieldRefs {
   readonly id: Prisma.FieldRef<"ShopItem", 'String'>
   readonly name: Prisma.FieldRef<"ShopItem", 'String'>
   readonly description: Prisma.FieldRef<"ShopItem", 'String'>
+  readonly emoji: Prisma.FieldRef<"ShopItem", 'String'>
   readonly iconUrl: Prisma.FieldRef<"ShopItem", 'String'>
-  readonly priceKnuts: Prisma.FieldRef<"ShopItem", 'Int'>
+  readonly price: Prisma.FieldRef<"ShopItem", 'Int'>
+  readonly currency: Prisma.FieldRef<"ShopItem", 'ShopCurrency'>
   readonly category: Prisma.FieldRef<"ShopItem", 'String'>
   readonly isActive: Prisma.FieldRef<"ShopItem", 'Boolean'>
   readonly maxPerUser: Prisma.FieldRef<"ShopItem", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ShopItem", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"ShopItem", 'DateTime'>
 }
     
 

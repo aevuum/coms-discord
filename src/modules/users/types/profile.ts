@@ -1,5 +1,7 @@
 import {
   Character,
+  InventoryItem,
+  ShopItem,
   UserAward,
   Wallet,
 } from "../../../database/generated/prisma/client.js";
@@ -25,6 +27,7 @@ export interface Profile {
   updatedAt: Date;
   wallet: Wallet;
   characters: Character[];
+  inventory?: (InventoryItem & { shopItem: ShopItem })[];
   userAwards?: UserAward[];
   selectedAward?: UserAward | null;
 }

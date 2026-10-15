@@ -27,6 +27,22 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Shop,
+    key: "manage.shop",
+    label: "Магазин",
+    emoji: "<:16874shopcyan:1518587268154134569>",
+    description: "Товары за комс-коины и инвентари игроков",
+    access: CommandAccess.Restricted,
+  },
+  {
+    id: ManageSectionId.Coins,
+    key: "manage.coins",
+    label: "Комс-коины",
+    emoji: "<:4197emeraldrankicon:1518587243143368835>",
+    description: "Еженедельные начисления по ролям и балансы игроков",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Permissions,
     key: "manage.permissions",
     label: "Доступ",

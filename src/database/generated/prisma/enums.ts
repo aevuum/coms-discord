@@ -61,3 +61,21 @@ export const SpellDifficulty = {
 } as const
 
 export type SpellDifficulty = (typeof SpellDifficulty)[keyof typeof SpellDifficulty]
+
+
+export const ShopCurrency = {
+  COMS_COINS: 'COMS_COINS',
+  KNUTS: 'KNUTS'
+} as const
+
+export type ShopCurrency = (typeof ShopCurrency)[keyof typeof ShopCurrency]
+
+
+export const CoinTransactionType = {
+  PURCHASE: 'PURCHASE',
+  STIPEND: 'STIPEND',
+  ADMIN_ADD: 'ADMIN_ADD',
+  ADMIN_REMOVE: 'ADMIN_REMOVE'
+} as const
+
+export type CoinTransactionType = (typeof CoinTransactionType)[keyof typeof CoinTransactionType]
