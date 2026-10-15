@@ -6,7 +6,7 @@ import {
 } from "../../../database/generated/prisma/client.js";
 
 import { PermissionService } from "../../permissions/service/permissionService.js";
-import type { AccessSubject } from "../../permissions/types/permissions.js";
+import type { BaseInteraction } from "discord.js";
 import { SpellCache } from "../cache/spellCache.js";
 import { SPELL_SEED } from "../data/spellSeed.js";
 import { GIF_CACHE_TTL_MS, MAX_SPELL_COST } from "../lib/spellConfig.js";
@@ -25,7 +25,7 @@ import { GifService } from "./gifService.js";
 export class SpellService {
   public static readonly PAGE_SIZE = 10;
 
-  public static readonly MANAGE_COMMAND = "spells";
+  public static readonly MANAGE_KEY = "manage.spells";
 
   private static readonly MAX_INCANTATIONS = 10;
 
@@ -39,8 +39,10 @@ export class SpellService {
     return SpellCache.all().length;
   }
 
-  public static async assertCanManage(subject: AccessSubject) {
-    if (!(await PermissionService.canUse(subject, this.MANAGE_COMMAND))) {
+  public static async assertCanManage(interaction: BaseInteraction) {
+    const subject = await PermissionService.resolveSubject(interaction);
+
+    if (!(await PermissionService.canUse(subject, this.MANAGE_KEY))) {
       throw new SpellError("У вас нет доступа к управлению заклинаниями.");
     }
   }

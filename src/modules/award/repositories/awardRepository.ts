@@ -57,6 +57,20 @@ export class AwardRepository {
     });
   }
 
+  public static findUserAwards(userId: string) {
+    return prisma.userAward.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        award: true,
+      },
+      orderBy: {
+        issuedAt: "desc",
+      },
+    });
+  }
+
   public static findUserAward(userId: string, awardId: string) {
     return prisma.userAward.findUnique({
       where: {

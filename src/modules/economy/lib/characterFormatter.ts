@@ -38,6 +38,18 @@ export class CharacterFormatter {
     }`;
   }
 
+  public static facultyLabel(faculty: CharacterFaculty) {
+    return facultyLabels[faculty] ?? "Нет факультета";
+  }
+
+  public static facultyEmoji(faculty: CharacterFaculty) {
+    return facultyEmojis[faculty] ?? "🎓";
+  }
+
+  public static statusLabel(status: CharacterStatus) {
+    return statusLabels[status] ?? "Неизвестно";
+  }
+
   public static status(status: CharacterStatus) {
     return `${statusEmojis[status] ?? "❓"} ${statusLabels[status] ?? "Неизвестно"}`;
   }

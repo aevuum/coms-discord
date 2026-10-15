@@ -37,4 +37,41 @@ export class PermissionRepository {
       }
     });
   }
+
+  public static async renameKeys(mapping: Record<string, string>) {
+    return prisma.$transaction(async (tx) => {
+      let moved = 0;
+
+      for (const [from, to] of Object.entries(mapping)) {
+        const rows = await tx.commandPermission.findMany({
+          where: {
+            commandName: from,
+          },
+        });
+
+        if (!rows.length) {
+          continue;
+        }
+
+        await tx.commandPermission.createMany({
+          data: rows.map((row) => ({
+            guildId: row.guildId,
+            commandName: to,
+            roleId: row.roleId,
+          })),
+          skipDuplicates: true,
+        });
+
+        await tx.commandPermission.deleteMany({
+          where: {
+            commandName: from,
+          },
+        });
+
+        moved += rows.length;
+      }
+
+      return moved;
+    });
+  }
 }

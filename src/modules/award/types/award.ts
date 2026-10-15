@@ -1,4 +1,11 @@
-import { AwardRarity } from "../../../database/generated/prisma/enums.js";
+import type { AwardRarity } from "../../../database/generated/prisma/enums.js";
+
+export class AwardError extends Error {
+  public constructor(message: string) {
+    super(message);
+    this.name = "AwardError";
+  }
+}
 
 export interface IAward {
   id: string;
@@ -10,21 +17,10 @@ export interface IAward {
   createdAt: Date;
 }
 
-export type AwardPanelState =
-  | "MAIN"
-  | "DELETE_SELECT"
-  | "GIVE_USER"
-  | "TAKE_USER"
-  | "TAKE_SELECT"
-  | "CREATE_RARITY";
-
-export interface IPanelSession {
-  state: AwardPanelState;
-  targetUserId?: string;
-  pendingAwardData?: {
-    label: string;
-    emoji: string;
-    description: string;
-    rewardComsCoins: number;
-  };
-}
+export type AwardInput = {
+  label: string;
+  emoji: string;
+  coins: string;
+  description: string;
+  rarity: string;
+};

@@ -5,7 +5,7 @@ import {
   StringSelectMenuBuilder,
 } from "discord.js";
 import { Award, UserAward } from "../../../database/generated/prisma/client.js";
-import { AwardPanelBuilder } from "../../award/lib/awardPanelBuilder.js";
+import { AwardFormatter } from "../../award/lib/awardFormatter.js";
 
 type UserAwardWithAward = UserAward & {
   award: Award;
@@ -30,7 +30,7 @@ export class ProfileSettingsModal {
         ? awardids.map((userAwardId) => ({
             label: userAwardId.award.label,
             value: userAwardId.award.id,
-            emoji: (AwardPanelBuilder as any).parseEmoji(
+            emoji: AwardFormatter.parseEmoji(
               userAwardId.award.emoji,
             ),
             default: userAwardId.award.id === selectedAwardIdId,

@@ -1,27 +1,32 @@
 export enum PermissionAction {
-  Command = "command",
+  Overview = "overview",
+  Target = "target",
   Roles = "roles",
+  RolePage = "role_page",
   Reset = "reset",
-  Back = "back",
 }
 
 export class PermissionCustomIds {
   private static readonly PREFIX = "permissions";
 
-  public static command() {
-    return `${this.PREFIX}:${PermissionAction.Command}`;
+  public static overview() {
+    return `${this.PREFIX}:${PermissionAction.Overview}`;
   }
 
-  public static roles(commandName: string) {
-    return `${this.PREFIX}:${PermissionAction.Roles}:${commandName}`;
+  public static target() {
+    return `${this.PREFIX}:${PermissionAction.Target}`;
   }
 
-  public static reset(commandName: string) {
-    return `${this.PREFIX}:${PermissionAction.Reset}:${commandName}`;
+  public static roles(key: string, page: number) {
+    return `${this.PREFIX}:${PermissionAction.Roles}:${key}:${page}`;
   }
 
-  public static back() {
-    return `${this.PREFIX}:${PermissionAction.Back}`;
+  public static rolePage(key: string, page: number) {
+    return `${this.PREFIX}:${PermissionAction.RolePage}:${key}:${page}`;
+  }
+
+  public static reset(key: string) {
+    return `${this.PREFIX}:${PermissionAction.Reset}:${key}`;
   }
 
   public static parse(customId: string) {

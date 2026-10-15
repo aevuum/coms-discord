@@ -5,15 +5,15 @@ import {
 
 import { MessageFlags, StringSelectMenuInteraction } from "discord.js";
 
+import { ManageResponder } from "../../manage/lib/manageResponder.js";
 import {
   PermissionAction,
   PermissionCustomIds,
 } from "../lib/permissionCustomIds.js";
 import { PermissionContainer } from "../lib/permissionContainer.js";
-import { PermissionResponder } from "../lib/permissionResponder.js";
 import { PermissionService } from "../service/permissionService.js";
 
-export class PermissionCommandSelectHandler extends InteractionHandler {
+export class PermissionSelectHandler extends InteractionHandler {
   public constructor(
     ctx: InteractionHandler.LoaderContext,
     options: InteractionHandler.Options,
@@ -27,38 +27,57 @@ export class PermissionCommandSelectHandler extends InteractionHandler {
   public override parse(interaction: StringSelectMenuInteraction) {
     const parsed = PermissionCustomIds.parse(interaction.customId);
 
-    if (!parsed || parsed.action !== PermissionAction.Command) {
+    if (
+      !parsed ||
+      (parsed.action !== PermissionAction.Target &&
+        parsed.action !== PermissionAction.Roles)
+    ) {
       return this.none();
     }
 
     return this.some({
-      commandName: interaction.values[0],
+      action: parsed.action,
+      args: parsed.args,
+      values: [...interaction.values],
     });
   }
 
   public override async run(
     interaction: StringSelectMenuInteraction,
     result: {
-      commandName: string;
+      action: PermissionAction;
+      args: string[];
+      values: string[];
     },
   ) {
     try {
-      PermissionService.assertAdmin(interaction);
+      const subject = await PermissionService.resolveSubject(interaction);
 
-      const command = await PermissionService.getCommandEntry(
-        interaction.guildId as string,
-        result.commandName,
-      );
+      let key = result.values[0];
+      let page = 0;
+
+      if (result.action === PermissionAction.Roles) {
+        key = result.args[0];
+        page = Number(result.args[1]) || 0;
+
+        await PermissionService.setRolesOnPage(
+          subject,
+          key,
+          page,
+          result.values,
+        );
+      }
+
+      const view = await PermissionService.getTargetView(subject, key, page);
 
       await interaction.update({
         flags: MessageFlags.IsComponentsV2,
         components: [
-          PermissionContainer.command(command, PermissionService.MAX_ROLES),
+          PermissionContainer.target(view.target, view.rolePage, view.roleNames),
         ],
-        allowedMentions: { parse: [] },
       });
     } catch (error) {
-      await PermissionResponder.error(interaction, error);
+      await ManageResponder.error(interaction, error);
     }
   }
 }

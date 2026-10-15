@@ -1,28 +1,23 @@
-import {
-  Character,
-  CharacterFaculty,
-  CharacterStatus,
-} from "../../../database/generated/prisma/client.js";
+import type { CharacterFaculty } from "../../../database/generated/prisma/client.js";
 
-export type ManageCharacterAction =
-  | "create"
-  | "delete"
-  | "freeze"
-  | "unfreeze"
-  | "kill";
+export class CharacterError extends Error {
+  public constructor(message: string) {
+    super(message);
+    this.name = "CharacterError";
+  }
+}
 
-export type CharacterCreateData = {
-  userId: string;
+export enum ManageCharacterAction {
+  Create = "create",
+  Delete = "delete",
+  Freeze = "freeze",
+  Unfreeze = "unfreeze",
+  Kill = "kill",
+}
+
+export type CharacterCreateInput = {
+  discordId: string;
   rpName: string;
-  avatarUrl?: string | null;
+  avatarUrl: string | null;
   faculty: CharacterFaculty;
-};
-
-export type CharacterSelectData = {
-  action: ManageCharacterAction;
-  userId: string;
-};
-
-export type ManagedCharacter = Character & {
-  status: CharacterStatus;
 };

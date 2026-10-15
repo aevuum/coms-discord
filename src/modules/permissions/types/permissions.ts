@@ -2,6 +2,7 @@ export enum CommandAccess {
   Public = "public",
   Restricted = "restricted",
   Admin = "admin",
+  Delegated = "delegated",
 }
 
 export class PermissionError extends Error {
@@ -17,11 +18,26 @@ export type AccessSubject = {
   memberPermissions: { has(permission: bigint): boolean } | null;
 };
 
-export type CommandPermissionEntry = {
-  name: string;
+export type PermissionTarget = {
+  key: string;
+  label: string;
   description: string;
   access: CommandAccess;
+};
+
+export type PermissionTargetEntry = PermissionTarget & {
   roleIds: string[];
+};
+
+export type GuildRoleOption = {
+  id: string;
+  name: string;
+};
+
+export type RolePage = {
+  roles: GuildRoleOption[];
+  page: number;
+  totalPages: number;
 };
 
 declare module "@sapphire/framework" {

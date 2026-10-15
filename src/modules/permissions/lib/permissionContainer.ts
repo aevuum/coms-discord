@@ -5,25 +5,31 @@ import {
   TextDisplayBuilder,
 } from "discord.js";
 
+import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import {
   CommandAccess,
-  type CommandPermissionEntry,
+  type PermissionTargetEntry,
+  type RolePage,
 } from "../types/permissions.js";
 import { PermissionComponents } from "./permissionComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
+const HEADER = "<:72943adminhexagon:1518587307945492480>";
 
 export class PermissionContainer {
-  public static overview(commands: CommandPermissionEntry[]) {
+  public static overview(
+    targets: PermissionTargetEntry[],
+    roleNames: Map<string, string>,
+  ) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          "# <:72943adminhexagon:1518587307945492480> Доступ к командам",
+          `# ${HEADER} Доступ`,
           "",
-          `${ARROW} Выберите команду, чтобы назначить роли, которым она доступна.`,
-          "-# Администраторы сервера имеют доступ ко всем командам.",
+          `${ARROW} Выберите команду или раздел управления, чтобы назначить роли.`,
+          "-# Администраторы сервера имеют доступ ко всему.",
         ].join("\n"),
       ),
     );
@@ -34,10 +40,10 @@ export class PermissionContainer {
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        commands
+        targets
           .map(
-            (command) =>
-              `${ARROW} **/${command.name}** — ${this.accessText(command)}`,
+            (target) =>
+              `${ARROW} **${target.label}** — ${this.accessText(target, roleNames)}`,
           )
           .join("\n"),
       ),
@@ -48,23 +54,29 @@ export class PermissionContainer {
     );
 
     container.addActionRowComponents(
-      PermissionComponents.commandSelect(commands),
+      PermissionComponents.targetSelect(targets),
     );
+
+    container.addActionRowComponents(ManageComponents.homeRow());
 
     return container;
   }
 
-  public static command(command: CommandPermissionEntry, maxRoles: number) {
+  public static target(
+    target: PermissionTargetEntry,
+    rolePage: RolePage,
+    roleNames: Map<string, string>,
+  ) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          `# <:72943adminhexagon:1518587307945492480> /${command.name}`,
+          `# ${HEADER} ${target.label}`,
           "",
-          `${ARROW} ${command.description || "Без описания"}`,
+          `${ARROW} ${target.description || "Без описания"}`,
           `${ARROW} Без назначенных ролей: **${
-            command.access === CommandAccess.Public
+            target.access === CommandAccess.Public
               ? "все участники"
               : "только администраторы"
           }**`,
@@ -81,11 +93,11 @@ export class PermissionContainer {
         [
           "## <:67793memberhexagon:1518587303218511892> Роли с доступом",
           "",
-          command.roleIds.length
-            ? command.roleIds.map((roleId) => `<@&${roleId}>`).join(" ")
+          target.roleIds.length
+            ? this.roleList(target.roleIds, roleNames)
             : `${ARROW} Роли не назначены.`,
           "",
-          "-# Если роли назначены, команду могут использовать только они и администраторы.",
+          "-# Если роли назначены, доступ есть только у них и у администраторов.",
         ].join("\n"),
       ),
     );
@@ -94,12 +106,20 @@ export class PermissionContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
-    container.addActionRowComponents(
-      PermissionComponents.roleSelect(command, maxRoles),
-    );
+    if (rolePage.roles.length) {
+      container.addActionRowComponents(
+        PermissionComponents.roleSelect(target, rolePage),
+      );
+    } else {
+      container.addTextDisplayComponents(
+        new TextDisplayBuilder().setContent(
+          "-# На сервере нет ролей, которые можно назначить.",
+        ),
+      );
+    }
 
     container.addActionRowComponents(
-      PermissionComponents.commandActions(command),
+      PermissionComponents.targetActions(target, rolePage),
     );
 
     return container;
@@ -121,12 +141,21 @@ export class PermissionContainer {
     return container;
   }
 
-  private static accessText(command: CommandPermissionEntry) {
-    if (command.roleIds.length) {
-      return command.roleIds.map((roleId) => `<@&${roleId}>`).join(" ");
+  private static roleList(roleIds: string[], roleNames: Map<string, string>) {
+    return roleIds
+      .map((roleId) => `\`@${roleNames.get(roleId) ?? "удалённая роль"}\``)
+      .join(" ");
+  }
+
+  private static accessText(
+    target: PermissionTargetEntry,
+    roleNames: Map<string, string>,
+  ) {
+    if (target.roleIds.length) {
+      return this.roleList(target.roleIds, roleNames);
     }
 
-    return command.access === CommandAccess.Public
+    return target.access === CommandAccess.Public
       ? "все участники"
       : "только администраторы";
   }

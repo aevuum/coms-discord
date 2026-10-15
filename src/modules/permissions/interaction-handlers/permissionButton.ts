@@ -5,17 +5,18 @@ import {
 
 import { ButtonInteraction, MessageFlags } from "discord.js";
 
+import { ManageResponder } from "../../manage/lib/manageResponder.js";
 import {
   PermissionAction,
   PermissionCustomIds,
 } from "../lib/permissionCustomIds.js";
 import { PermissionContainer } from "../lib/permissionContainer.js";
-import { PermissionResponder } from "../lib/permissionResponder.js";
 import { PermissionService } from "../service/permissionService.js";
 
 const BUTTON_ACTIONS = new Set<PermissionAction>([
+  PermissionAction.Overview,
+  PermissionAction.RolePage,
   PermissionAction.Reset,
-  PermissionAction.Back,
 ]);
 
 export class PermissionButtonHandler extends InteractionHandler {
@@ -47,37 +48,41 @@ export class PermissionButtonHandler extends InteractionHandler {
     },
   ) {
     try {
-      if (result.action === PermissionAction.Reset) {
-        const command = await PermissionService.setRoles(
-          interaction,
-          result.args[0],
-          [],
-        );
+      const subject = await PermissionService.resolveSubject(interaction);
+
+      if (result.action === PermissionAction.Overview) {
+        const overview = await PermissionService.getOverview(subject);
 
         await interaction.update({
           flags: MessageFlags.IsComponentsV2,
           components: [
-            PermissionContainer.command(command, PermissionService.MAX_ROLES),
+            PermissionContainer.overview(overview.targets, overview.roleNames),
           ],
-          allowedMentions: { parse: [] },
         });
 
         return;
       }
 
-      PermissionService.assertAdmin(interaction);
+      const [key, pageArg] = result.args;
 
-      const commands = await PermissionService.listCommands(
-        interaction.guildId as string,
+      if (result.action === PermissionAction.Reset) {
+        await PermissionService.setRoles(subject, key, []);
+      }
+
+      const view = await PermissionService.getTargetView(
+        subject,
+        key,
+        Number(pageArg) || 0,
       );
 
       await interaction.update({
         flags: MessageFlags.IsComponentsV2,
-        components: [PermissionContainer.overview(commands)],
-        allowedMentions: { parse: [] },
+        components: [
+          PermissionContainer.target(view.target, view.rolePage, view.roleNames),
+        ],
       });
     } catch (error) {
-      await PermissionResponder.error(interaction, error);
+      await ManageResponder.error(interaction, error);
     }
   }
 }

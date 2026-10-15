@@ -13,6 +13,7 @@ import {
 import type { Spell } from "../../../database/generated/prisma/client.js";
 
 import { SpellMode, type SpellPage } from "../types/spells.js";
+import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "./mana.js";
 import { DIFFICULTY_LABELS, DIFFICULTY_ORDER } from "./spellConfig.js";
 import { SpellCustomIds, SpellModalFields } from "./spellCustomIds.js";
@@ -58,6 +59,7 @@ export class SpellComponents {
 
     if (mode === SpellMode.Manage) {
       row.addComponents(
+        ManageComponents.homeButton(),
         new ButtonBuilder()
           .setCustomId(SpellCustomIds.create())
           .setLabel("Создать")
