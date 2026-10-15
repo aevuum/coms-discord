@@ -80,7 +80,7 @@ export class EconomyComponents {
       new ButtonBuilder()
         .setCustomId(EconomyCustomIds.main(senderId))
         .setLabel("Отмена")
-        .setEmoji("<:83987delete:1518587334218627072>")
+        .setEmoji("<:12138cross:1518587259669053591>")
         .setStyle(ButtonStyle.Secondary),
     );
   }

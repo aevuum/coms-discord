@@ -16,7 +16,7 @@ const facultyEmojis: Record<CharacterFaculty, string> = {
   [CharacterFaculty.SLYTHERIN]: "<:slytherincrest:1519583221988196392>",
   [CharacterFaculty.HUFFLEPUFF]: "<:hufflepuff:1519583218544676873>",
   [CharacterFaculty.RAVENCLAW]: "<:ravenclaw:1519583220327252048>",
-  [CharacterFaculty.ADULT]: "<:515636magicwandids:1518585028596563968>",
+  [CharacterFaculty.ADULT]: "<:515636magicwandids:1519585028596563968>",
 };
 
 const statusLabels: Record<CharacterStatus, string> = {

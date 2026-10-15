@@ -61,7 +61,7 @@ export class HelpContainer {
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          "# <:83987delete:1518587334218627072> Ошибка",
+          "# <:240191mark:1518581039172292688> Ошибка",
           "",
           `${ARROW} ${message}`,
         ].join("\n"),
