@@ -6,12 +6,18 @@ export enum CharacterPanelAction {
   Pick = "pick",
   Confirm = "confirm",
   CreateModal = "create_modal",
+  GiveModal = "give_modal",
+  TakeSelect = "take_select",
+  TakeModal = "take_modal",
 }
 
 export const CharacterModalFields = {
   Name: "character_name",
   Avatar: "character_avatar",
   Faculty: "character_faculty",
+  ItemName: "item_name",
+  ItemQuantity: "item_quantity",
+  ItemImage: "item_image",
 } as const;
 
 export class CharacterCustomIds {

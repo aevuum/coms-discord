@@ -528,6 +528,11 @@ export type ShopItemScalarRelationFilter = {
   isNot?: Prisma.ShopItemWhereInput
 }
 
+export type ShopItemNullableScalarRelationFilter = {
+  is?: Prisma.ShopItemWhereInput | null
+  isNot?: Prisma.ShopItemWhereInput | null
+}
+
 export type EnumShopCurrencyFieldUpdateOperationsInput = {
   set?: $Enums.ShopCurrency
 }
@@ -552,10 +557,12 @@ export type ShopItemCreateNestedOneWithoutCharacterInventoryInput = {
   connect?: Prisma.ShopItemWhereUniqueInput
 }
 
-export type ShopItemUpdateOneRequiredWithoutCharacterInventoryNestedInput = {
+export type ShopItemUpdateOneWithoutCharacterInventoryNestedInput = {
   create?: Prisma.XOR<Prisma.ShopItemCreateWithoutCharacterInventoryInput, Prisma.ShopItemUncheckedCreateWithoutCharacterInventoryInput>
   connectOrCreate?: Prisma.ShopItemCreateOrConnectWithoutCharacterInventoryInput
   upsert?: Prisma.ShopItemUpsertWithoutCharacterInventoryInput
+  disconnect?: Prisma.ShopItemWhereInput | boolean
+  delete?: Prisma.ShopItemWhereInput | boolean
   connect?: Prisma.ShopItemWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShopItemUpdateToOneWithWhereWithoutCharacterInventoryInput, Prisma.ShopItemUpdateWithoutCharacterInventoryInput>, Prisma.ShopItemUncheckedUpdateWithoutCharacterInventoryInput>
 }

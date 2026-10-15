@@ -3,6 +3,8 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ContainerBuilder,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
   SectionBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
@@ -28,8 +30,16 @@ type CardCharacter = Character & {
   tupper: CharacterTupper | null;
 };
 
+export type CardItem = {
+  name: string;
+  quantity: number;
+  attachmentName: string | null;
+};
+
+const MAX_GALLERY_ITEMS = 10;
+
 export class CharacterCardContainer {
-  public static build(character: CardCharacter) {
+  public static build(character: CardCharacter, items: CardItem[]) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const header = new TextDisplayBuilder().setContent(
@@ -81,10 +91,30 @@ export class CharacterCardContainer {
       new TextDisplayBuilder().setContent(
         [
           `### ${CHEST} Инвентарь`,
-          "-# Инвентарь персонажа скоро появится.",
+          items.length
+            ? items
+                .map((item) => `${ARROW} **${item.name}** × ${item.quantity}`)
+                .join("\n")
+            : "-# Инвентарь пуст.",
         ].join("\n"),
       ),
     );
+
+    const images = items
+      .filter((item) => item.attachmentName)
+      .slice(0, MAX_GALLERY_ITEMS);
+
+    if (images.length) {
+      container.addMediaGalleryComponents(
+        new MediaGalleryBuilder().addItems(
+          images.map((item) =>
+            new MediaGalleryItemBuilder()
+              .setURL(`attachment://${item.attachmentName}`)
+              .setDescription(item.name.slice(0, 1024)),
+          ),
+        ),
+      );
+    }
 
     container.addSeparatorComponents(
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),

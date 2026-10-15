@@ -20,6 +20,7 @@ import {
   ACTION_TITLES,
   ManageCharacterContainer,
 } from "../lib/manageCharacterContainer.js";
+import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterAction } from "../types/character.js";
 
@@ -40,7 +41,9 @@ export class CharacterModalHandler extends InteractionHandler {
     if (
       !parsed ||
       (parsed.action !== CharacterPanelAction.Search &&
-        parsed.action !== CharacterPanelAction.CreateModal)
+        parsed.action !== CharacterPanelAction.CreateModal &&
+        parsed.action !== CharacterPanelAction.GiveModal &&
+        parsed.action !== CharacterPanelAction.TakeModal)
     ) {
       return this.none();
     }
@@ -58,26 +61,47 @@ export class CharacterModalHandler extends InteractionHandler {
     try {
       await CharacterService.assertCanManage(interaction);
 
-      const container =
-        result.action === CharacterPanelAction.Search
-          ? await this.search(interaction, result.args[0] as ManageCharacterAction)
-          : await this.create(interaction, result.args[0]);
-
       if (interaction.isFromMessage()) {
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [container],
-        });
-
-        return;
+        await interaction.deferUpdate();
+      } else {
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
       }
 
-      await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+      const container = await this.resolve(interaction, result);
+
+      await interaction.editReply({
+        flags: MessageFlags.IsComponentsV2,
         components: [container],
       });
     } catch (error) {
       await ManageResponder.error(interaction, error);
+    }
+  }
+
+  private async resolve(
+    interaction: ModalSubmitInteraction,
+    result: {
+      action: CharacterPanelAction;
+      args: string[];
+    },
+  ) {
+    switch (result.action) {
+      case CharacterPanelAction.Search:
+        return this.search(interaction, result.args[0] as ManageCharacterAction);
+
+      case CharacterPanelAction.GiveModal:
+        return this.giveItem(interaction, result.args[0], result.args[1]);
+
+      case CharacterPanelAction.TakeModal:
+        return this.takeItem(
+          interaction,
+          result.args[0],
+          result.args[1],
+          result.args[2],
+        );
+
+      default:
+        return this.create(interaction, result.args[0]);
     }
   }
 
@@ -93,6 +117,46 @@ export class CharacterModalHandler extends InteractionHandler {
       await MemberSearchService.search(query),
       CharacterCustomIds.build(CharacterPanelAction.Member, action),
       CharacterCustomIds.build(CharacterPanelAction.Start, action),
+    );
+  }
+
+  private async giveItem(
+    interaction: ModalSubmitInteraction,
+    discordId: string,
+    characterId: string,
+  ) {
+    const files = interaction.fields.getUploadedFiles(CharacterModalFields.ItemImage);
+
+    const given = await CharacterInventoryService.give(
+      discordId,
+      characterId,
+      interaction.fields.getTextInputValue(CharacterModalFields.ItemName),
+      interaction.fields.getTextInputValue(CharacterModalFields.ItemQuantity),
+      files?.first() ?? null,
+    );
+
+    return ManageCharacterContainer.result(
+      ACTION_TITLES[ManageCharacterAction.GiveItem],
+      `Персонаж **${given.character.rpName}** получил **${given.item.name}** × ${given.quantity}. Теперь в инвентаре: ${given.item.quantity} шт.`,
+    );
+  }
+
+  private async takeItem(
+    interaction: ModalSubmitInteraction,
+    discordId: string,
+    characterId: string,
+    itemId: string,
+  ) {
+    const taken = await CharacterInventoryService.take(
+      discordId,
+      characterId,
+      itemId,
+      interaction.fields.getTextInputValue(CharacterModalFields.ItemQuantity),
+    );
+
+    return ManageCharacterContainer.result(
+      ACTION_TITLES[ManageCharacterAction.TakeItem],
+      `У персонажа **${taken.character.rpName}** забрано **${taken.item.name}** × ${taken.quantity}. Осталось: ${Math.max(taken.item.quantity, 0)} шт.`,
     );
   }
 

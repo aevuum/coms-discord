@@ -13,6 +13,7 @@ import {
 } from "../lib/characterCustomIds.js";
 import { ManageCharacterComponents } from "../lib/manageCharacterComponents.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
+import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { CharacterError, ManageCharacterAction } from "../types/character.js";
 
@@ -38,7 +39,8 @@ export class CharacterSelectHandler extends InteractionHandler {
     if (
       !parsed ||
       (parsed.action !== CharacterPanelAction.Member &&
-        parsed.action !== CharacterPanelAction.Pick)
+        parsed.action !== CharacterPanelAction.Pick &&
+        parsed.action !== CharacterPanelAction.TakeSelect)
     ) {
       return this.none();
     }
@@ -60,6 +62,21 @@ export class CharacterSelectHandler extends InteractionHandler {
     const action = result.args[0] as ManageCharacterAction;
 
     try {
+      if (result.action === CharacterPanelAction.TakeSelect) {
+        const [discordId, characterId] = result.args;
+
+        const item = await CharacterInventoryService.getItem(
+          characterId,
+          result.value,
+        );
+
+        await interaction.showModal(
+          ManageCharacterComponents.takeItemModal(discordId, characterId, item),
+        );
+
+        return;
+      }
+
       if (
         result.action === CharacterPanelAction.Member &&
         action === ManageCharacterAction.Create
@@ -97,6 +114,43 @@ export class CharacterSelectHandler extends InteractionHandler {
       }
 
       const discordId = result.args[1];
+
+      if (action === ManageCharacterAction.GiveItem) {
+        const character = await CharacterInventoryService.getOwnedCharacter(
+          discordId,
+          result.value,
+        );
+
+        await interaction.showModal(
+          ManageCharacterComponents.giveItemModal(
+            discordId,
+            character.id,
+            character.rpName,
+          ),
+        );
+
+        return;
+      }
+
+      if (action === ManageCharacterAction.TakeItem) {
+        const character = await CharacterInventoryService.getOwnedCharacter(
+          discordId,
+          result.value,
+        );
+
+        await interaction.update({
+          flags: MessageFlags.IsComponentsV2,
+          components: [
+            ManageCharacterContainer.takeSelection(
+              discordId,
+              character,
+              await CharacterInventoryService.list(character.id),
+            ),
+          ],
+        });
+
+        return;
+      }
 
       if (CONFIRMED_ACTIONS.has(action)) {
         const character = await CharacterService.getCharacterById(result.value);

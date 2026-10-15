@@ -38,24 +38,39 @@ export type CharacterInventoryItemMinAggregateOutputType = {
   id: string | null
   characterId: string | null
   shopItemId: string | null
+  name: string | null
+  nameKey: string | null
+  imageData: runtime.Bytes | null
+  imageMime: string | null
   quantity: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type CharacterInventoryItemMaxAggregateOutputType = {
   id: string | null
   characterId: string | null
   shopItemId: string | null
+  name: string | null
+  nameKey: string | null
+  imageData: runtime.Bytes | null
+  imageMime: string | null
   quantity: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type CharacterInventoryItemCountAggregateOutputType = {
   id: number
   characterId: number
   shopItemId: number
+  name: number
+  nameKey: number
+  imageData: number
+  imageMime: number
   quantity: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -72,24 +87,39 @@ export type CharacterInventoryItemMinAggregateInputType = {
   id?: true
   characterId?: true
   shopItemId?: true
+  name?: true
+  nameKey?: true
+  imageData?: true
+  imageMime?: true
   quantity?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type CharacterInventoryItemMaxAggregateInputType = {
   id?: true
   characterId?: true
   shopItemId?: true
+  name?: true
+  nameKey?: true
+  imageData?: true
+  imageMime?: true
   quantity?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type CharacterInventoryItemCountAggregateInputType = {
   id?: true
   characterId?: true
   shopItemId?: true
+  name?: true
+  nameKey?: true
+  imageData?: true
+  imageMime?: true
   quantity?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -182,9 +212,14 @@ export type CharacterInventoryItemGroupByArgs<ExtArgs extends runtime.Types.Exte
 export type CharacterInventoryItemGroupByOutputType = {
   id: string
   characterId: string
-  shopItemId: string
+  shopItemId: string | null
+  name: string
+  nameKey: string
+  imageData: runtime.Bytes | null
+  imageMime: string | null
   quantity: number
   createdAt: Date
+  updatedAt: Date
   _count: CharacterInventoryItemCountAggregateOutputType | null
   _avg: CharacterInventoryItemAvgAggregateOutputType | null
   _sum: CharacterInventoryItemSumAggregateOutputType | null
@@ -213,43 +248,63 @@ export type CharacterInventoryItemWhereInput = {
   NOT?: Prisma.CharacterInventoryItemWhereInput | Prisma.CharacterInventoryItemWhereInput[]
   id?: Prisma.StringFilter<"CharacterInventoryItem"> | string
   characterId?: Prisma.StringFilter<"CharacterInventoryItem"> | string
-  shopItemId?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  shopItemId?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
+  name?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  nameKey?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  imageData?: Prisma.BytesNullableFilter<"CharacterInventoryItem"> | runtime.Bytes | null
+  imageMime?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
-  shopItem?: Prisma.XOR<Prisma.ShopItemScalarRelationFilter, Prisma.ShopItemWhereInput>
+  shopItem?: Prisma.XOR<Prisma.ShopItemNullableScalarRelationFilter, Prisma.ShopItemWhereInput> | null
 }
 
 export type CharacterInventoryItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
-  shopItemId?: Prisma.SortOrder
+  shopItemId?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
+  nameKey?: Prisma.SortOrder
+  imageData?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageMime?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   character?: Prisma.CharacterOrderByWithRelationInput
   shopItem?: Prisma.ShopItemOrderByWithRelationInput
 }
 
 export type CharacterInventoryItemWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  characterId_shopItemId?: Prisma.CharacterInventoryItemCharacterIdShopItemIdCompoundUniqueInput
+  characterId_nameKey?: Prisma.CharacterInventoryItemCharacterIdNameKeyCompoundUniqueInput
   AND?: Prisma.CharacterInventoryItemWhereInput | Prisma.CharacterInventoryItemWhereInput[]
   OR?: Prisma.CharacterInventoryItemWhereInput[]
   NOT?: Prisma.CharacterInventoryItemWhereInput | Prisma.CharacterInventoryItemWhereInput[]
   characterId?: Prisma.StringFilter<"CharacterInventoryItem"> | string
-  shopItemId?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  shopItemId?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
+  name?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  nameKey?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  imageData?: Prisma.BytesNullableFilter<"CharacterInventoryItem"> | runtime.Bytes | null
+  imageMime?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
-  shopItem?: Prisma.XOR<Prisma.ShopItemScalarRelationFilter, Prisma.ShopItemWhereInput>
-}, "id" | "characterId_shopItemId">
+  shopItem?: Prisma.XOR<Prisma.ShopItemNullableScalarRelationFilter, Prisma.ShopItemWhereInput> | null
+}, "id" | "characterId_nameKey">
 
 export type CharacterInventoryItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
-  shopItemId?: Prisma.SortOrder
+  shopItemId?: Prisma.SortOrderInput | Prisma.SortOrder
+  name?: Prisma.SortOrder
+  nameKey?: Prisma.SortOrder
+  imageData?: Prisma.SortOrderInput | Prisma.SortOrder
+  imageMime?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.CharacterInventoryItemCountOrderByAggregateInput
   _avg?: Prisma.CharacterInventoryItemAvgOrderByAggregateInput
   _max?: Prisma.CharacterInventoryItemMaxOrderByAggregateInput
@@ -263,63 +318,103 @@ export type CharacterInventoryItemScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CharacterInventoryItemScalarWhereWithAggregatesInput | Prisma.CharacterInventoryItemScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CharacterInventoryItem"> | string
   characterId?: Prisma.StringWithAggregatesFilter<"CharacterInventoryItem"> | string
-  shopItemId?: Prisma.StringWithAggregatesFilter<"CharacterInventoryItem"> | string
+  shopItemId?: Prisma.StringNullableWithAggregatesFilter<"CharacterInventoryItem"> | string | null
+  name?: Prisma.StringWithAggregatesFilter<"CharacterInventoryItem"> | string
+  nameKey?: Prisma.StringWithAggregatesFilter<"CharacterInventoryItem"> | string
+  imageData?: Prisma.BytesNullableWithAggregatesFilter<"CharacterInventoryItem"> | runtime.Bytes | null
+  imageMime?: Prisma.StringNullableWithAggregatesFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntWithAggregatesFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterInventoryItem"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterInventoryItem"> | Date | string
 }
 
 export type CharacterInventoryItemCreateInput = {
   id?: string
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutInventoryItemsInput
-  shopItem: Prisma.ShopItemCreateNestedOneWithoutCharacterInventoryInput
+  shopItem?: Prisma.ShopItemCreateNestedOneWithoutCharacterInventoryInput
 }
 
 export type CharacterInventoryItemUncheckedCreateInput = {
   id?: string
   characterId: string
-  shopItemId: string
+  shopItemId?: string | null
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CharacterInventoryItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutInventoryItemsNestedInput
-  shopItem?: Prisma.ShopItemUpdateOneRequiredWithoutCharacterInventoryNestedInput
+  shopItem?: Prisma.ShopItemUpdateOneWithoutCharacterInventoryNestedInput
 }
 
 export type CharacterInventoryItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
-  shopItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  shopItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterInventoryItemCreateManyInput = {
   id?: string
   characterId: string
-  shopItemId: string
+  shopItemId?: string | null
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CharacterInventoryItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterInventoryItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
-  shopItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  shopItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterInventoryItemListRelationFilter = {
@@ -332,17 +427,22 @@ export type CharacterInventoryItemOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type CharacterInventoryItemCharacterIdShopItemIdCompoundUniqueInput = {
+export type CharacterInventoryItemCharacterIdNameKeyCompoundUniqueInput = {
   characterId: string
-  shopItemId: string
+  nameKey: string
 }
 
 export type CharacterInventoryItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   shopItemId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  nameKey?: Prisma.SortOrder
+  imageData?: Prisma.SortOrder
+  imageMime?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CharacterInventoryItemAvgOrderByAggregateInput = {
@@ -353,16 +453,26 @@ export type CharacterInventoryItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   shopItemId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  nameKey?: Prisma.SortOrder
+  imageData?: Prisma.SortOrder
+  imageMime?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CharacterInventoryItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   shopItemId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  nameKey?: Prisma.SortOrder
+  imageData?: Prisma.SortOrder
+  imageMime?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CharacterInventoryItemSumOrderByAggregateInput = {
@@ -453,18 +563,32 @@ export type CharacterInventoryItemUncheckedUpdateManyWithoutShopItemNestedInput 
   deleteMany?: Prisma.CharacterInventoryItemScalarWhereInput | Prisma.CharacterInventoryItemScalarWhereInput[]
 }
 
+export type NullableBytesFieldUpdateOperationsInput = {
+  set?: runtime.Bytes | null
+}
+
 export type CharacterInventoryItemCreateWithoutCharacterInput = {
   id?: string
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
-  shopItem: Prisma.ShopItemCreateNestedOneWithoutCharacterInventoryInput
+  updatedAt?: Date | string
+  shopItem?: Prisma.ShopItemCreateNestedOneWithoutCharacterInventoryInput
 }
 
 export type CharacterInventoryItemUncheckedCreateWithoutCharacterInput = {
   id?: string
-  shopItemId: string
+  shopItemId?: string | null
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CharacterInventoryItemCreateOrConnectWithoutCharacterInput = {
@@ -499,23 +623,38 @@ export type CharacterInventoryItemScalarWhereInput = {
   NOT?: Prisma.CharacterInventoryItemScalarWhereInput | Prisma.CharacterInventoryItemScalarWhereInput[]
   id?: Prisma.StringFilter<"CharacterInventoryItem"> | string
   characterId?: Prisma.StringFilter<"CharacterInventoryItem"> | string
-  shopItemId?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  shopItemId?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
+  name?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  nameKey?: Prisma.StringFilter<"CharacterInventoryItem"> | string
+  imageData?: Prisma.BytesNullableFilter<"CharacterInventoryItem"> | runtime.Bytes | null
+  imageMime?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
 }
 
 export type CharacterInventoryItemCreateWithoutShopItemInput = {
   id?: string
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutInventoryItemsInput
 }
 
 export type CharacterInventoryItemUncheckedCreateWithoutShopItemInput = {
   id?: string
   characterId: string
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CharacterInventoryItemCreateOrConnectWithoutShopItemInput = {
@@ -546,58 +685,98 @@ export type CharacterInventoryItemUpdateManyWithWhereWithoutShopItemInput = {
 
 export type CharacterInventoryItemCreateManyCharacterInput = {
   id?: string
-  shopItemId: string
+  shopItemId?: string | null
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CharacterInventoryItemUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  shopItem?: Prisma.ShopItemUpdateOneRequiredWithoutCharacterInventoryNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  shopItem?: Prisma.ShopItemUpdateOneWithoutCharacterInventoryNestedInput
 }
 
 export type CharacterInventoryItemUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shopItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  shopItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterInventoryItemUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  shopItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  shopItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterInventoryItemCreateManyShopItemInput = {
   id?: string
   characterId: string
+  name: string
+  nameKey: string
+  imageData?: runtime.Bytes | null
+  imageMime?: string | null
   quantity?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CharacterInventoryItemUpdateWithoutShopItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutInventoryItemsNestedInput
 }
 
 export type CharacterInventoryItemUncheckedUpdateWithoutShopItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterInventoryItemUncheckedUpdateManyWithoutShopItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  nameKey?: Prisma.StringFieldUpdateOperationsInput | string
+  imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
+  imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -606,66 +785,91 @@ export type CharacterInventoryItemSelect<ExtArgs extends runtime.Types.Extension
   id?: boolean
   characterId?: boolean
   shopItemId?: boolean
+  name?: boolean
+  nameKey?: boolean
+  imageData?: boolean
+  imageMime?: boolean
   quantity?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
-  shopItem?: boolean | Prisma.ShopItemDefaultArgs<ExtArgs>
+  shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
 }, ExtArgs["result"]["characterInventoryItem"]>
 
 export type CharacterInventoryItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   characterId?: boolean
   shopItemId?: boolean
+  name?: boolean
+  nameKey?: boolean
+  imageData?: boolean
+  imageMime?: boolean
   quantity?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
-  shopItem?: boolean | Prisma.ShopItemDefaultArgs<ExtArgs>
+  shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
 }, ExtArgs["result"]["characterInventoryItem"]>
 
 export type CharacterInventoryItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   characterId?: boolean
   shopItemId?: boolean
+  name?: boolean
+  nameKey?: boolean
+  imageData?: boolean
+  imageMime?: boolean
   quantity?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
-  shopItem?: boolean | Prisma.ShopItemDefaultArgs<ExtArgs>
+  shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
 }, ExtArgs["result"]["characterInventoryItem"]>
 
 export type CharacterInventoryItemSelectScalar = {
   id?: boolean
   characterId?: boolean
   shopItemId?: boolean
+  name?: boolean
+  nameKey?: boolean
+  imageData?: boolean
+  imageMime?: boolean
   quantity?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type CharacterInventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "shopItemId" | "quantity" | "createdAt", ExtArgs["result"]["characterInventoryItem"]>
+export type CharacterInventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "shopItemId" | "name" | "nameKey" | "imageData" | "imageMime" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["characterInventoryItem"]>
 export type CharacterInventoryItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
-  shopItem?: boolean | Prisma.ShopItemDefaultArgs<ExtArgs>
+  shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
 }
 export type CharacterInventoryItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
-  shopItem?: boolean | Prisma.ShopItemDefaultArgs<ExtArgs>
+  shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
 }
 export type CharacterInventoryItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
-  shopItem?: boolean | Prisma.ShopItemDefaultArgs<ExtArgs>
+  shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
 }
 
 export type $CharacterInventoryItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CharacterInventoryItem"
   objects: {
     character: Prisma.$CharacterPayload<ExtArgs>
-    shopItem: Prisma.$ShopItemPayload<ExtArgs>
+    shopItem: Prisma.$ShopItemPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     characterId: string
-    shopItemId: string
+    shopItemId: string | null
+    name: string
+    nameKey: string
+    imageData: runtime.Bytes | null
+    imageMime: string | null
     quantity: number
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["characterInventoryItem"]>
   composites: {}
 }
@@ -1061,7 +1265,7 @@ readonly fields: CharacterInventoryItemFieldRefs;
 export interface Prisma__CharacterInventoryItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   character<T extends Prisma.CharacterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CharacterDefaultArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  shopItem<T extends Prisma.ShopItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ShopItemDefaultArgs<ExtArgs>>): Prisma.Prisma__ShopItemClient<runtime.Types.Result.GetResult<Prisma.$ShopItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  shopItem<T extends Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>>): Prisma.Prisma__ShopItemClient<runtime.Types.Result.GetResult<Prisma.$ShopItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1094,8 +1298,13 @@ export interface CharacterInventoryItemFieldRefs {
   readonly id: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
   readonly characterId: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
   readonly shopItemId: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
+  readonly name: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
+  readonly nameKey: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
+  readonly imageData: Prisma.FieldRef<"CharacterInventoryItem", 'Bytes'>
+  readonly imageMime: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
   readonly quantity: Prisma.FieldRef<"CharacterInventoryItem", 'Int'>
   readonly createdAt: Prisma.FieldRef<"CharacterInventoryItem", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"CharacterInventoryItem", 'DateTime'>
 }
     
 
@@ -1494,6 +1703,25 @@ export type CharacterInventoryItemDeleteManyArgs<ExtArgs extends runtime.Types.E
    * Limit how many CharacterInventoryItems to delete.
    */
   limit?: number
+}
+
+/**
+ * CharacterInventoryItem.shopItem
+ */
+export type CharacterInventoryItem$shopItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ShopItem
+   */
+  select?: Prisma.ShopItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ShopItem
+   */
+  omit?: Prisma.ShopItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShopItemInclude<ExtArgs> | null
+  where?: Prisma.ShopItemWhereInput
 }
 
 /**

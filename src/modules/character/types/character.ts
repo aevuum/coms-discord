@@ -13,6 +13,8 @@ export enum ManageCharacterAction {
   Freeze = "freeze",
   Unfreeze = "unfreeze",
   Kill = "kill",
+  GiveItem = "give_item",
+  TakeItem = "take_item",
 }
 
 export type CharacterCreateInput = {
@@ -20,4 +22,13 @@ export type CharacterCreateInput = {
   rpName: string;
   avatarUrl: string | null;
   faculty: CharacterFaculty;
+};
+
+export type InventoryListItem = {
+  id: string;
+  characterId: string;
+  name: string;
+  quantity: number;
+  imageMime: string | null;
+  createdAt: Date;
 };

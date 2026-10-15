@@ -255,16 +255,24 @@ model CharacterInventoryItem {
   id String @id @default(cuid())
 
   characterId String
-  shopItemId  String
+  shopItemId  String?
+
+  name    String
+  nameKey String
+
+  imageData Bytes?
+  imageMime String?
 
   quantity Int @default(1)
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
-  shopItem  ShopItem  @relation(fields: [shopItemId], references: [id])
+  shopItem  ShopItem? @relation(fields: [shopItemId], references: [id], onDelete: SetNull)
 
-  @@unique([characterId, shopItemId])
+  @@unique([characterId, nameKey])
+  @@index([characterId])
 }
 
 model CommandPermission {

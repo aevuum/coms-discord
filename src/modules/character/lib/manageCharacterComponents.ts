@@ -18,7 +18,10 @@ import {
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
-import { ManageCharacterAction } from "../types/character.js";
+import {
+  ManageCharacterAction,
+  type InventoryListItem,
+} from "../types/character.js";
 import {
   CharacterCustomIds,
   CharacterModalFields,
@@ -181,6 +184,135 @@ export class ManageCharacterComponents {
         new LabelBuilder()
           .setLabel("Факультет")
           .setStringSelectMenuComponent(faculty),
+      );
+  }
+
+  public static itemActions() {
+    return new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId(
+          CharacterCustomIds.build(
+            CharacterPanelAction.Start,
+            ManageCharacterAction.GiveItem,
+          ),
+        )
+        .setLabel("Выдать предмет")
+        .setEmoji("<:527877discordlegendchest:1518587359136972930>")
+        .setStyle(ButtonStyle.Success),
+
+      new ButtonBuilder()
+        .setCustomId(
+          CharacterCustomIds.build(
+            CharacterPanelAction.Start,
+            ManageCharacterAction.TakeItem,
+          ),
+        )
+        .setLabel("Забрать предмет")
+        .setEmoji("<:12138cross:1518587259669053591>")
+        .setStyle(ButtonStyle.Secondary),
+    );
+  }
+
+  public static itemSelect(
+    discordId: string,
+    characterId: string,
+    items: InventoryListItem[],
+  ) {
+    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(
+          CharacterCustomIds.build(
+            CharacterPanelAction.TakeSelect,
+            discordId,
+            characterId,
+          ),
+        )
+        .setPlaceholder("Выберите предмет")
+        .addOptions(
+          items.slice(0, 25).map((item) =>
+            new StringSelectMenuOptionBuilder()
+              .setLabel(item.name.slice(0, 100))
+              .setDescription(`В наличии: ${item.quantity} шт.`)
+              .setValue(item.id),
+          ),
+        ),
+    );
+  }
+
+  public static giveItemModal(
+    discordId: string,
+    characterId: string,
+    characterName: string,
+  ) {
+    return new ModalBuilder()
+      .setCustomId(
+        CharacterCustomIds.build(
+          CharacterPanelAction.GiveModal,
+          discordId,
+          characterId,
+        ),
+      )
+      .setTitle(`Предмет для ${characterName}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Название предмета")
+          .setDescription("Если предмет с таким названием уже есть, количество сложится")
+          .setTextInputComponent(
+            new TextInputBuilder()
+              .setCustomId(CharacterModalFields.ItemName)
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+              .setMaxLength(80)
+              .setPlaceholder("Волшебная палочка"),
+          ),
+        new LabelBuilder()
+          .setLabel("Количество")
+          .setTextInputComponent(
+            new TextInputBuilder()
+              .setCustomId(CharacterModalFields.ItemQuantity)
+              .setStyle(TextInputStyle.Short)
+              .setRequired(false)
+              .setMaxLength(5)
+              .setPlaceholder("1"),
+          ),
+        new LabelBuilder()
+          .setLabel("Фото предмета")
+          .setDescription("PNG, JPG, GIF или WEBP до 4 МБ")
+          .setFileUploadComponent(
+            new FileUploadBuilder()
+              .setCustomId(CharacterModalFields.ItemImage)
+              .setRequired(false),
+          ),
+      );
+  }
+
+  public static takeItemModal(
+    discordId: string,
+    characterId: string,
+    item: InventoryListItem,
+  ) {
+    return new ModalBuilder()
+      .setCustomId(
+        CharacterCustomIds.build(
+          CharacterPanelAction.TakeModal,
+          discordId,
+          characterId,
+          item.id,
+        ),
+      )
+      .setTitle(`Забрать: ${item.name}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Количество")
+          .setDescription(`В наличии: ${item.quantity} шт.`)
+          .setTextInputComponent(
+            new TextInputBuilder()
+              .setCustomId(CharacterModalFields.ItemQuantity)
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+              .setMaxLength(5)
+              .setValue(String(item.quantity)),
+          ),
       );
   }
 

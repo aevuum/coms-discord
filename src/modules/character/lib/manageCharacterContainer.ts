@@ -9,7 +9,10 @@ import type { Character } from "../../../database/generated/prisma/client.js";
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
-import { ManageCharacterAction } from "../types/character.js";
+import {
+  ManageCharacterAction,
+  type InventoryListItem,
+} from "../types/character.js";
 import { ManageCharacterComponents } from "./manageCharacterComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
@@ -21,6 +24,8 @@ export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Freeze]: "Заморозка персонажа",
   [ManageCharacterAction.Unfreeze]: "Разморозка персонажа",
   [ManageCharacterAction.Kill]: "Умерщвление персонажа",
+  [ManageCharacterAction.GiveItem]: "Выдача предмета",
+  [ManageCharacterAction.TakeItem]: "Изъятие предмета",
 };
 
 const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
@@ -29,6 +34,8 @@ const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Freeze]: "заморожен",
   [ManageCharacterAction.Unfreeze]: "разморожен",
   [ManageCharacterAction.Kill]: "мёртв",
+  [ManageCharacterAction.GiveItem]: "получил предмет",
+  [ManageCharacterAction.TakeItem]: "лишился предмета",
 };
 
 export class ManageCharacterContainer {
@@ -41,6 +48,7 @@ export class ManageCharacterContainer {
           `# ${HEADER} Управление персонажами`,
           "",
           `${ARROW} Выберите действие, затем найдите игрока по нику или ID.`,
+          "-# Предметы выдаются конкретному персонажу и видны в его карточке в ЛС.",
         ].join("\n"),
       ),
     );
@@ -50,6 +58,8 @@ export class ManageCharacterContainer {
     );
 
     container.addActionRowComponents(ManageCharacterComponents.actions());
+
+    container.addActionRowComponents(ManageCharacterComponents.itemActions());
 
     container.addActionRowComponents(ManageComponents.homeRow());
 
@@ -130,6 +140,45 @@ export class ManageCharacterContainer {
       ACTION_TITLES[action],
       `Персонаж **${characterName}** ${ACTION_RESULTS[action]}.`,
     );
+  }
+
+  public static takeSelection(
+    discordId: string,
+    character: Character,
+    items: InventoryListItem[],
+  ) {
+    if (!items.length) {
+      return this.result(
+        ACTION_TITLES[ManageCharacterAction.TakeItem],
+        `В инвентаре **${character.rpName}** нет предметов.`,
+      );
+    }
+
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          `# ${HEADER} ${ACTION_TITLES[ManageCharacterAction.TakeItem]}`,
+          "",
+          `${ARROW} Персонаж: **${character.rpName}**`,
+          "",
+          items.map((item) => `${ARROW} **${item.name}** × ${item.quantity}`).join("\n"),
+        ].join("\n"),
+      ),
+    );
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addActionRowComponents(
+      ManageCharacterComponents.itemSelect(discordId, character.id, items),
+    );
+
+    container.addActionRowComponents(ManageCharacterComponents.backRow());
+
+    return container;
   }
 
   public static result(title: string, message: string) {

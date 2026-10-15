@@ -1713,8 +1713,13 @@ export const CharacterInventoryItemScalarFieldEnum = {
   id: 'id',
   characterId: 'characterId',
   shopItemId: 'shopItemId',
+  name: 'name',
+  nameKey: 'nameKey',
+  imageData: 'imageData',
+  imageMime: 'imageMime',
   quantity: 'quantity',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type CharacterInventoryItemScalarFieldEnum = (typeof CharacterInventoryItemScalarFieldEnum)[keyof typeof CharacterInventoryItemScalarFieldEnum]
@@ -1929,6 +1934,20 @@ export type EnumShopCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'ShopCurrency[]'
  */
 export type ListEnumShopCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShopCurrency[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Bytes'
+ */
+export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+/**
+ * Reference to a field of type 'Bytes[]'
+ */
+export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 

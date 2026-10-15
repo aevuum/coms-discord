@@ -230,8 +230,13 @@ export const CharacterInventoryItemScalarFieldEnum = {
   id: 'id',
   characterId: 'characterId',
   shopItemId: 'shopItemId',
+  name: 'name',
+  nameKey: 'nameKey',
+  imageData: 'imageData',
+  imageMime: 'imageMime',
   quantity: 'quantity',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type CharacterInventoryItemScalarFieldEnum = (typeof CharacterInventoryItemScalarFieldEnum)[keyof typeof CharacterInventoryItemScalarFieldEnum]
