@@ -1,26 +1,8 @@
-import {
-  Character,
-  CharacterStatus,
-  CharacterFaculty,
-} from "../../../database/generated/prisma/client.js";
+import { Character } from "../../../database/generated/prisma/client.js";
 import { UserRepository } from "../repositories/userRepository.js";
-import { Mana } from "../../spells/lib/mana.js";
-
-const facultyLabels: Record<CharacterFaculty, string> = {
-  [CharacterFaculty.GRYFFINDOR]: "Гриффиндор",
-  [CharacterFaculty.SLYTHERIN]: "Слизерин",
-  [CharacterFaculty.HUFFLEPUFF]: "Пуффендуй",
-  [CharacterFaculty.RAVENCLAW]: "Когтевран",
-  [CharacterFaculty.ADULT]: "Взрослый",
-};
-
-const facultyEmojis: Record<CharacterFaculty, string> = {
-  [CharacterFaculty.GRYFFINDOR]: "<:grifinoria:1519583216992784567>",
-  [CharacterFaculty.SLYTHERIN]: "<:slytherincrest:1519583221988196392>",
-  [CharacterFaculty.HUFFLEPUFF]: "<:hufflepuff:1519583218544676873>",
-  [CharacterFaculty.RAVENCLAW]: "<:ravenclaw:1519583220327252048>",
-  [CharacterFaculty.ADULT]: "<:515636magicwandids:1519585028596563968>",
-};
+import { CharacterRepository } from "../../character/repositories/characterRepository.js";
+import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
+import { ProfileError } from "../types/profile.js";
 
 export class ProfileService {
   public static async getProfile(discordId: string) {
@@ -47,23 +29,34 @@ export class ProfileService {
   public static getFormattedCharactersList(
     characters: Character[],
   ): { text: string; avatarUrl: string | null }[] {
-    const statusMap: Record<CharacterStatus, string> = {
-      ALIVE: "<:172841lastmeadowbadge:1518587343378976779>",
-      DEAD: "<:633509a:1518587362513256458>",
-      FROZEN: "<:97970trialmoderator:1518587338513715260>",
-    };
+    return characters.map((character) => ({
+      text: [
+        `**${character.rpName}**`,
+        `> ${CharacterFormatter.faculty(character.faculty)}`,
+        `> ${CharacterFormatter.status(character.status)}`,
+      ].join("\n"),
+      avatarUrl: character.avatarUrl,
+    }));
+  }
 
-    return characters.map((character) => {
-      const status = statusMap[character.status] ?? "❓";
+  public static async getOwnedCharacter(
+    discordId: string,
+    characterId: string,
+  ) {
+    const character = characterId
+      ? await CharacterRepository.getById(characterId)
+      : null;
 
-      const faculty = facultyLabels[character.faculty] ?? "Нет факультета";
+    if (!character) {
+      throw new ProfileError("Персонаж не найден.");
+    }
 
-      const facultyEmoji = facultyEmojis[character.faculty] ?? "🎓";
+    if (character.user.discordId !== discordId) {
+      throw new ProfileError(
+        "Карточку персонажа может открыть только его владелец.",
+      );
+    }
 
-      return {
-        text: `${status} ${character.rpName}\n> ${facultyEmoji} ${faculty}\n> Мана: ${Mana.format(Mana.current(character), character.maxMana)}`,
-        avatarUrl: character.avatarUrl,
-      };
-    });
+    return character;
   }
 }

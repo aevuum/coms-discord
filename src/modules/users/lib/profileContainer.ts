@@ -4,6 +4,9 @@ import {
   ThumbnailBuilder,
   MediaGalleryBuilder,
   MediaGalleryItemBuilder,
+  SeparatorBuilder,
+  SeparatorSpacingSize,
+  TextDisplayBuilder,
   type User,
 } from "discord.js";
 import { ProfileService } from "../service/profileService.js";
@@ -124,30 +127,49 @@ export class ProfileContainer {
     container.addSectionComponents(mainSection);
 
     if (tab === "characters" && profile?.characters) {
+      container.addSeparatorComponents(
+        new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
+      );
+
       if (profile.characters.length === 0) {
-        const emptySection = new SectionBuilder().addTextDisplayComponents(
-          (b) => b.setContent("*Персонажи отсутствуют*"),
+        container.addTextDisplayComponents(
+          new TextDisplayBuilder().setContent("*Персонажи отсутствуют*"),
         );
-        container.addSectionComponents(emptySection);
       } else {
         const formattedCharacters = ProfileService.getFormattedCharactersList(
           profile.characters,
         );
 
         for (const char of formattedCharacters) {
-          const charSection = new SectionBuilder().addTextDisplayComponents(
-            (b) => b.setContent(char.text),
-          );
+          const text = new TextDisplayBuilder().setContent(char.text);
 
           if (char.avatarUrl) {
-            charSection.setThumbnailAccessory(
-              new ThumbnailBuilder().setURL(char.avatarUrl),
+            container.addSectionComponents(
+              new SectionBuilder()
+                .addTextDisplayComponents(text)
+                .setThumbnailAccessory(
+                  new ThumbnailBuilder().setURL(char.avatarUrl),
+                ),
             );
+          } else {
+            container.addTextDisplayComponents(text);
           }
-
-          container.addSectionComponents(charSection);
         }
+
+        container.addTextDisplayComponents(
+          new TextDisplayBuilder().setContent(
+            "-# Выберите своего персонажа ниже — карточка с маной и инвентарём придёт вам в личные сообщения.",
+          ),
+        );
+
+        container.addActionRowComponents(
+          ProfileComponents.characterSelect(discordUser.id, profile.characters),
+        );
       }
+
+      container.addSeparatorComponents(
+        new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
+      );
     }
 
     const interactiveRows = ProfileComponents.createMenu(discordUser.id);

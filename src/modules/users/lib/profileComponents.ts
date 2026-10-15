@@ -6,6 +6,10 @@ import {
   ButtonStyle,
 } from "discord.js";
 
+import type { Character } from "../../../database/generated/prisma/client.js";
+
+const MAX_SELECT_OPTIONS = 25;
+
 export class ProfileComponents {
   public static createMenu(targetUserId: string): ActionRowBuilder<any>[] {
     const menuRow = new ActionRowBuilder<any>().addComponents(
@@ -46,13 +50,24 @@ export class ProfileComponents {
         .setLabel("Настроить профиль")
         .setStyle(ButtonStyle.Secondary)
         .setEmoji("<:479873settingsna:1518581042456432791>"),
-      new ButtonBuilder()
-        .setCustomId(`character_settings_${targetUserId}`)
-        .setLabel("Управление персонажем")
-        .setStyle(ButtonStyle.Danger)
-        .setEmoji("<:61835category:1518587300928426005>"),
     );
 
     return [menuRow, buttonRow];
+  }
+
+  public static characterSelect(targetUserId: string, characters: Character[]) {
+    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(`profile_character_${targetUserId}`)
+        .setPlaceholder("Открыть карточку персонажа (придёт в ЛС)")
+        .addOptions(
+          characters.slice(0, MAX_SELECT_OPTIONS).map((character) =>
+            new StringSelectMenuOptionBuilder()
+              .setLabel(character.rpName.slice(0, 100))
+              .setValue(character.id)
+              .setEmoji("<:928205membericon:1518581050555633674>"),
+          ),
+        ),
+    );
   }
 }

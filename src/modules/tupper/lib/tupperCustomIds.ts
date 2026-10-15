@@ -1,6 +1,7 @@
 export enum TupperAction {
   Select = "select",
   Back = "back",
+  Open = "open",
   Name = "name",
   Prefix = "prefix",
   NameModal = "name_modal",
@@ -21,6 +22,10 @@ export class TupperCustomIds {
 
   public static back() {
     return `${this.PREFIX}:${TupperAction.Back}`;
+  }
+
+  public static open(characterId: string) {
+    return `${this.PREFIX}:${TupperAction.Open}:${characterId}`;
   }
 
   public static name(characterId: string) {

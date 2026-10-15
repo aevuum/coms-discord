@@ -28,3 +28,10 @@ export interface Profile {
   userAwards?: UserAward[];
   selectedAward?: UserAward | null;
 }
+
+export class ProfileError extends Error {
+  public constructor(message: string) {
+    super(message);
+    this.name = "ProfileError";
+  }
+}

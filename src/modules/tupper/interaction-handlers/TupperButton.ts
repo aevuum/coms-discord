@@ -12,6 +12,7 @@ import { TupperResponder } from "../lib/tupperResponder.js";
 
 const BUTTON_ACTIONS = new Set<TupperAction>([
   TupperAction.Back,
+  TupperAction.Open,
   TupperAction.Name,
   TupperAction.Prefix,
 ]);
@@ -62,6 +63,15 @@ export class TupperButton extends InteractionHandler {
         interaction.user.id,
         result.args[0],
       );
+
+      if (result.action === TupperAction.Open) {
+        await interaction.reply({
+          flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+          components: [TupperComponents.settings(character, false)],
+        });
+
+        return;
+      }
 
       await interaction.showModal(
         result.action === TupperAction.Name
