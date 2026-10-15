@@ -58,6 +58,19 @@ export class CharacterRepository {
     });
   }
 
+  public static async updateMana(id: string, mana: number, maxMana: number) {
+    return prisma.character.update({
+      where: {
+        id,
+      },
+      data: {
+        mana,
+        maxMana,
+        manaUpdatedAt: new Date(),
+      },
+    });
+  }
+
   public static async updateStatus(id: string, status: CharacterStatus) {
     return prisma.character.update({
       where: {

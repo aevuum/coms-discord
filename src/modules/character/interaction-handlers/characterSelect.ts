@@ -132,6 +132,19 @@ export class CharacterSelectHandler extends InteractionHandler {
         return;
       }
 
+      if (action === ManageCharacterAction.SetMana) {
+        const character = await CharacterInventoryService.getOwnedCharacter(
+          discordId,
+          result.value,
+        );
+
+        await interaction.showModal(
+          ManageCharacterComponents.manaModal(discordId, character),
+        );
+
+        return;
+      }
+
       if (action === ManageCharacterAction.TakeItem) {
         const character = await CharacterInventoryService.getOwnedCharacter(
           discordId,

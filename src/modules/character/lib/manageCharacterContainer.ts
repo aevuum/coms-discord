@@ -13,7 +13,10 @@ import {
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
-import { ManageCharacterComponents } from "./manageCharacterComponents.js";
+import {
+  CHARACTER_CATEGORIES,
+  ManageCharacterComponents,
+} from "./manageCharacterComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const HEADER = "<:563621mod8:1518587360886128661>";
@@ -26,6 +29,7 @@ export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Kill]: "Умерщвление персонажа",
   [ManageCharacterAction.GiveItem]: "Выдача предмета",
   [ManageCharacterAction.TakeItem]: "Изъятие предмета",
+  [ManageCharacterAction.SetMana]: "Установка маны",
 };
 
 const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
@@ -36,6 +40,7 @@ const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Kill]: "мёртв",
   [ManageCharacterAction.GiveItem]: "получил предмет",
   [ManageCharacterAction.TakeItem]: "лишился предмета",
+  [ManageCharacterAction.SetMana]: "получил новую ману",
 };
 
 export class ManageCharacterContainer {
@@ -47,8 +52,7 @@ export class ManageCharacterContainer {
         [
           `# ${HEADER} Управление персонажами`,
           "",
-          `${ARROW} Выберите действие, затем найдите игрока по нику или ID.`,
-          "-# Предметы выдаются конкретному персонажу и видны в его карточке в ЛС.",
+          `${ARROW} Выберите категорию действий.`,
         ].join("\n"),
       ),
     );
@@ -57,11 +61,49 @@ export class ManageCharacterContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
-    container.addActionRowComponents(ManageCharacterComponents.actions());
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        CHARACTER_CATEGORIES.map(
+          (category) =>
+            `${category.emoji} **${category.label}**\n-# ${category.description}`,
+        ).join("\n"),
+      ),
+    );
 
-    container.addActionRowComponents(ManageCharacterComponents.itemActions());
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addActionRowComponents(ManageCharacterComponents.categoryButtons());
 
     container.addActionRowComponents(ManageComponents.homeRow());
+
+    return container;
+  }
+
+  public static category(category: (typeof CHARACTER_CATEGORIES)[number]) {
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          `# ${category.emoji} ${category.label}`,
+          "",
+          `${ARROW} ${category.description}.`,
+          "-# Выберите действие, затем найдите игрока по нику или ID.",
+        ].join("\n"),
+      ),
+    );
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addActionRowComponents(
+      ManageCharacterComponents.categoryActions(category),
+    );
+
+    container.addActionRowComponents(ManageCharacterComponents.backRow());
 
     return container;
   }

@@ -22,6 +22,7 @@ import {
 } from "../lib/manageCharacterContainer.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { Mana } from "../../spells/lib/mana.js";
 import { ManageCharacterAction } from "../types/character.js";
 
 export class CharacterModalHandler extends InteractionHandler {
@@ -43,7 +44,8 @@ export class CharacterModalHandler extends InteractionHandler {
       (parsed.action !== CharacterPanelAction.Search &&
         parsed.action !== CharacterPanelAction.CreateModal &&
         parsed.action !== CharacterPanelAction.GiveModal &&
-        parsed.action !== CharacterPanelAction.TakeModal)
+        parsed.action !== CharacterPanelAction.TakeModal &&
+        parsed.action !== CharacterPanelAction.ManaModal)
     ) {
       return this.none();
     }
@@ -59,13 +61,13 @@ export class CharacterModalHandler extends InteractionHandler {
     },
   ) {
     try {
-      await CharacterService.assertCanManage(interaction);
-
       if (interaction.isFromMessage()) {
         await interaction.deferUpdate();
       } else {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
       }
+
+      await CharacterService.assertCanManage(interaction);
 
       const container = await this.resolve(interaction, result);
 
@@ -99,6 +101,20 @@ export class CharacterModalHandler extends InteractionHandler {
           result.args[1],
           result.args[2],
         );
+
+      case CharacterPanelAction.ManaModal: {
+        const character = await CharacterService.setMana(
+          result.args[0],
+          result.args[1],
+          interaction.fields.getTextInputValue(CharacterModalFields.ManaCurrent),
+          interaction.fields.getTextInputValue(CharacterModalFields.ManaMax),
+        );
+
+        return ManageCharacterContainer.result(
+          ACTION_TITLES[ManageCharacterAction.SetMana],
+          `Мана персонажа **${character.rpName}**: ${Mana.format(character.mana, character.maxMana)}`,
+        );
+      }
 
       default:
         return this.create(interaction, result.args[0]);

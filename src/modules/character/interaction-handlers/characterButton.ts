@@ -15,6 +15,7 @@ import {
   ACTION_TITLES,
   ManageCharacterContainer,
 } from "../lib/manageCharacterContainer.js";
+import { getCharacterCategory } from "../lib/manageCharacterComponents.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterAction } from "../types/character.js";
 
@@ -22,6 +23,7 @@ const BUTTON_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.Root,
   CharacterPanelAction.Start,
   CharacterPanelAction.Confirm,
+  CharacterPanelAction.Category,
 ]);
 
 export class CharacterButtonHandler extends InteractionHandler {
@@ -67,6 +69,21 @@ export class CharacterButtonHandler extends InteractionHandler {
       }
 
       await CharacterService.assertCanManage(interaction);
+
+      if (result.action === CharacterPanelAction.Category) {
+        const category = getCharacterCategory(result.args[0]);
+
+        await interaction.update({
+          flags: MessageFlags.IsComponentsV2,
+          components: [
+            category
+              ? ManageCharacterContainer.category(category)
+              : ManageCharacterContainer.root(),
+          ],
+        });
+
+        return;
+      }
 
       if (result.action === CharacterPanelAction.Confirm) {
         const [action, discordId, characterId] = result.args;

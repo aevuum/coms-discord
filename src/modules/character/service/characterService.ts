@@ -14,6 +14,8 @@ import { CharacterError, ManageCharacterAction } from "../types/character.js";
 export class CharacterService {
   public static readonly MANAGE_KEY = "manage.characters";
 
+  private static readonly MAX_MANA = 10_000;
+
   public static async assertCanManage(interaction: BaseInteraction) {
     const subject = await PermissionService.resolveSubject(interaction);
 
@@ -118,5 +120,46 @@ export class CharacterService {
     }
 
     return character;
+  }
+
+  public static async setMana(
+    discordId: string,
+    characterId: string,
+    currentInput: string,
+    maxInput: string,
+  ) {
+    const character = await CharacterRepository.getById(characterId);
+
+    if (!character || character.user.discordId !== discordId) {
+      throw new CharacterError("Персонаж не найден.");
+    }
+
+    const maxMana = this.parseInteger(maxInput, "Максимальная мана");
+
+    if (maxMana < 1 || maxMana > this.MAX_MANA) {
+      throw new CharacterError(
+        `Максимальная мана должна быть от 1 до ${this.MAX_MANA}.`,
+      );
+    }
+
+    const mana = this.parseInteger(currentInput, "Текущая мана");
+
+    if (mana > maxMana || mana < -this.MAX_MANA) {
+      throw new CharacterError(
+        `Текущая мана должна быть от −${this.MAX_MANA} до максимальной (${maxMana}).`,
+      );
+    }
+
+    return CharacterRepository.updateMana(character.id, mana, maxMana);
+  }
+
+  private static parseInteger(input: string, label: string) {
+    const text = input.trim().replace("−", "-");
+
+    if (!/^-?\d+$/.test(text)) {
+      throw new CharacterError(`Поле «${label}» должно быть целым числом.`);
+    }
+
+    return Number(text);
   }
 }

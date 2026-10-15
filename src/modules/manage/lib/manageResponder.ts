@@ -2,6 +2,7 @@ import { container } from "@sapphire/framework";
 
 import {
   ChatInputCommandInteraction,
+  ContainerBuilder,
   MessageComponentInteraction,
   MessageFlags,
   ModalSubmitInteraction,
@@ -47,7 +48,16 @@ export class ManageResponder {
     const components = [ManageContainer.error(this.message(error))];
 
     try {
-      if (interaction.replied || interaction.deferred) {
+      if (interaction.deferred && !interaction.replied) {
+        await interaction.editReply({
+          flags: MessageFlags.IsComponentsV2,
+          components,
+        });
+
+        return;
+      }
+
+      if (interaction.replied) {
         await interaction.followUp({
           flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
           components,
@@ -81,5 +91,24 @@ export class ManageResponder {
     } catch (replyError) {
       container.logger.error(replyError);
     }
+  }
+
+  public static async defer(interaction: ModalSubmitInteraction) {
+    if (interaction.isFromMessage()) {
+      await interaction.deferUpdate();
+      return;
+    }
+
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+  }
+
+  public static async send(
+    interaction: ModalSubmitInteraction,
+    container: ContainerBuilder,
+  ) {
+    await interaction.editReply({
+      flags: MessageFlags.IsComponentsV2,
+      components: [container],
+    });
   }
 }

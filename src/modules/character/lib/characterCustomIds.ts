@@ -9,6 +9,8 @@ export enum CharacterPanelAction {
   GiveModal = "give_modal",
   TakeSelect = "take_select",
   TakeModal = "take_modal",
+  Category = "category",
+  ManaModal = "mana_modal",
 }
 
 export const CharacterModalFields = {
@@ -18,6 +20,8 @@ export const CharacterModalFields = {
   ItemName: "item_name",
   ItemQuantity: "item_quantity",
   ItemImage: "item_image",
+  ManaCurrent: "mana_current",
+  ManaMax: "mana_max",
 } as const;
 
 export class CharacterCustomIds {

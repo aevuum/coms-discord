@@ -52,23 +52,13 @@ export class ShopAdminModalHandler extends InteractionHandler {
     },
   ) {
     try {
+      await ManageResponder.defer(interaction);
+
       await ShopService.assertCanManage(interaction);
 
       const container = await this.resolve(interaction, result);
 
-      if (interaction.isFromMessage()) {
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [container],
-        });
-
-        return;
-      }
-
-      await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components: [container],
-      });
+      await ManageResponder.send(interaction, container);
     } catch (error) {
       await ManageResponder.error(interaction, error);
     }

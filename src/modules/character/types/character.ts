@@ -15,6 +15,14 @@ export enum ManageCharacterAction {
   Kill = "kill",
   GiveItem = "give_item",
   TakeItem = "take_item",
+  SetMana = "mana",
+}
+
+export enum CharacterCategory {
+  Characters = "characters",
+  Status = "status",
+  Inventory = "inventory",
+  Mana = "mana",
 }
 
 export type CharacterCreateInput = {

@@ -54,23 +54,13 @@ export class CoinsAdminModalHandler extends InteractionHandler {
     },
   ) {
     try {
+      await ManageResponder.defer(interaction);
+
       const guildId = await CoinService.assertCanManage(interaction);
 
       const container = await this.resolve(interaction, guildId, result);
 
-      if (interaction.isFromMessage()) {
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [container],
-        });
-
-        return;
-      }
-
-      await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components: [container],
-      });
+      await ManageResponder.send(interaction, container);
     } catch (error) {
       await ManageResponder.error(interaction, error);
     }
