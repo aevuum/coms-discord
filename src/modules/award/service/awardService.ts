@@ -115,10 +115,7 @@ export class AwardService {
       throw new AwardError("У игрока уже есть эта награда.");
     }
 
-    await AwardRepository.transaction([
-      AwardRepository.createUserAward(user.id, award.id),
-      AwardRepository.addCoins(user.walletId, award.rewardComsCoins),
-    ]);
+    await AwardRepository.grant(user.id, user.walletId, award);
 
     return award;
   }
@@ -136,11 +133,11 @@ export class AwardService {
       throw new AwardError("У игрока нет этой награды.");
     }
 
-    await AwardRepository.transaction([
-      AwardRepository.deleteUserAward(user.id, award.id),
-      AwardRepository.removeCoins(user.walletId, award.rewardComsCoins),
-    ]);
+    const deducted = await AwardRepository.revoke(user.id, user.walletId, award);
 
-    return award;
+    return {
+      ...award,
+      deducted,
+    };
   }
 }

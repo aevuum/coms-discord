@@ -7,6 +7,8 @@ const transactionLabels: Record<CoinTransactionType, string> = {
   [CoinTransactionType.STIPEND]: "Еженедельное начисление",
   [CoinTransactionType.ADMIN_ADD]: "Начисление администрацией",
   [CoinTransactionType.ADMIN_REMOVE]: "Списание администрацией",
+  [CoinTransactionType.AWARD_GRANT]: "Награда",
+  [CoinTransactionType.AWARD_REVOKE]: "Снятие награды",
 };
 
 export class CoinFormatter {

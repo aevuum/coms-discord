@@ -1,4 +1,9 @@
-import { AwardRarity } from "../../../database/generated/prisma/enums.js";
+import {
+  AwardRarity,
+  CoinTransactionType,
+} from "../../../database/generated/prisma/enums.js";
+import type { Award } from "../../../database/generated/prisma/client.js";
+import { CoinRepository } from "../../coins/repositories/coinRepository.js";
 import prisma from "../../../database/prisma.js";
 
 export class AwardRepository {
@@ -82,53 +87,67 @@ export class AwardRepository {
     });
   }
 
-  public static createUserAward(userId: string, awardId: string) {
-    return prisma.userAward.create({
-      data: {
-        userId,
-        awardId,
-      },
-    });
-  }
-
-  public static deleteUserAward(userId: string, awardId: string) {
-    return prisma.userAward.delete({
-      where: {
-        userId_awardId: {
+  public static grant(
+    userId: string,
+    walletId: string,
+    award: Pick<Award, "id" | "label" | "rewardComsCoins">,
+  ) {
+    return prisma.$transaction(async (tx) => {
+      await tx.userAward.create({
+        data: {
           userId,
-          awardId,
+          awardId: award.id,
         },
-      },
+      });
+
+      if (award.rewardComsCoins > 0) {
+        await CoinRepository.applyInTransaction(
+          tx,
+          userId,
+          walletId,
+          award.rewardComsCoins,
+          CoinTransactionType.AWARD_GRANT,
+          `Награда: ${award.label}`,
+        );
+      }
     });
   }
 
-  public static addCoins(walletId: string, amount: number) {
-    return prisma.wallet.update({
-      where: {
-        id: walletId,
-      },
-      data: {
-        comsCoins: {
-          increment: amount,
+  public static revoke(
+    userId: string,
+    walletId: string,
+    award: Pick<Award, "id" | "label" | "rewardComsCoins">,
+  ) {
+    return prisma.$transaction(async (tx) => {
+      await tx.userAward.delete({
+        where: {
+          userId_awardId: {
+            userId,
+            awardId: award.id,
+          },
         },
-      },
-    });
-  }
+      });
 
-  public static removeCoins(walletId: string, amount: number) {
-    return prisma.wallet.update({
-      where: {
-        id: walletId,
-      },
-      data: {
-        comsCoins: {
-          decrement: amount,
+      const wallet = await tx.wallet.findUniqueOrThrow({
+        where: {
+          id: walletId,
         },
-      },
-    });
-  }
+      });
 
-  public static transaction(queries: any[]) {
-    return prisma.$transaction(queries);
+      const deducted = Math.min(wallet.comsCoins, award.rewardComsCoins);
+
+      if (deducted > 0) {
+        await CoinRepository.applyInTransaction(
+          tx,
+          userId,
+          walletId,
+          -deducted,
+          CoinTransactionType.AWARD_REVOKE,
+          `Снятие награды: ${award.label}`,
+        );
+      }
+
+      return deducted;
+    });
   }
 }

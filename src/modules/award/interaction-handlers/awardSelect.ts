@@ -117,7 +117,7 @@ export class AwardSelectHandler extends InteractionHandler {
 
         return AwardContainer.result(
           "Награда снята",
-          `${award.emoji} **${award.label}** снята с игрока **${await this.memberName(discordId)}** (−${award.rewardComsCoins} COMS).`,
+          `${award.emoji} **${award.label}** снята с игрока **${await this.memberName(discordId)}** (−${award.deducted} COMS${award.deducted < award.rewardComsCoins ? `, на балансе было меньше ${award.rewardComsCoins}` : ""}).`,
         );
       }
 

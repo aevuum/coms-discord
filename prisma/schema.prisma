@@ -299,6 +299,8 @@ enum CoinTransactionType {
   STIPEND
   ADMIN_ADD
   ADMIN_REMOVE
+  AWARD_GRANT
+  AWARD_REVOKE
 }
 
 model CoinTransaction {
