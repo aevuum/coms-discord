@@ -43,10 +43,6 @@ export class ProfileComponents {
             .setLabel("Инвентарь")
             .setValue("inventory")
             .setEmoji("<:29865potionwhite:1518587289989550100>"),
-          new StringSelectMenuOptionBuilder()
-            .setLabel("Статистика")
-            .setValue("stats")
-            .setEmoji("<:1821serversfolder:1518587234163622040>"),
         ),
     );
 

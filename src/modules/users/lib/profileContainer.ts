@@ -10,6 +10,7 @@ import {
   type User,
 } from "discord.js";
 import { ProfileService } from "../service/profileService.js";
+import { VoiceTracker } from "./voiceTracker.js";
 import type { Profile } from "../types/profile.js";
 import { ProfileComponents } from "./profileComponents.js";
 import { CoinFormatter } from "../../coins/lib/coinFormatter.js";
@@ -44,16 +45,6 @@ export class ProfileContainer {
             "",
             `Комс-коины: ${CoinFormatter.amount(balance)}`,
             "-# Потратить их можно в /shop.",
-          ].join("\n");
-          break;
-        }
-
-        case "stats": {
-          contentText = [
-            "## <:67793memberhexagon:1518587303218511892> Статистика",
-            "",
-            `<:70956comment:1518587304808284290> Сообщений: **${profile.messagesCount.toLocaleString()}**`,
-            `<:988044dots:1518581053642772621> В голосовых: **${ProfileService.formatVoice(profile.voiceSeconds)}**`,
           ].join("\n");
           break;
         }
@@ -105,6 +96,10 @@ export class ProfileContainer {
             "## <:928205membericon:1518581050555633674> Главная страница профиля",
             "",
             "Добро пожаловать в личный кабинет! Используйте меню ниже, чтобы переключаться между разделами.",
+            "",
+            "### <:67793memberhexagon:1518587303218511892> Статистика",
+            `<:70956comment:1518587304808284290> Сообщений: **${profile.messagesCount.toLocaleString("ru-RU")}**`,
+            `<:988044dots:1518581053642772621> В голосовых: **${ProfileService.formatVoice(profile.voiceSeconds + VoiceTracker.pending(discordUser.id))}**`,
           ].join("\n");
           break;
         }

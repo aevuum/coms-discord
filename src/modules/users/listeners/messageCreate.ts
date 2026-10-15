@@ -22,7 +22,7 @@ export class MessageCreateListener extends Listener {
 
     const handled = await TupperMessageService.handle(message);
 
-    if (handled) {
+    if (handled || message.guildId !== process.env.GUILD_ID) {
       return;
     }
 
