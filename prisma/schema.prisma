@@ -200,6 +200,19 @@ model CharacterInventoryItem {
   @@unique([characterId, shopItemId])
 }
 
+model CommandPermission {
+  id String @id @default(cuid())
+
+  guildId     String
+  commandName String
+  roleId      String
+
+  createdAt DateTime @default(now())
+
+  @@unique([guildId, commandName, roleId])
+  @@index([guildId])
+}
+
 model CharacterTupper {
   id String @id @default(cuid())
 

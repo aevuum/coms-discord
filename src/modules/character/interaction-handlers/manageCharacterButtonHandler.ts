@@ -4,6 +4,7 @@ import {
 } from "@sapphire/framework";
 import { ButtonInteraction, MessageFlags } from "discord.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
+import { PermissionService } from "../../permissions/service/permissionService.js";
 
 export class ManageCharacterButtonHandler extends InteractionHandler {
   public constructor(
@@ -32,6 +33,16 @@ export class ManageCharacterButtonHandler extends InteractionHandler {
       action: "create" | "delete" | "freeze" | "unfreeze" | "kill";
     },
   ) {
+    if (!(await PermissionService.canUse(interaction, "manage-character"))) {
+      await interaction.reply({
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          ManageCharacterContainer.createError("У вас нет доступа к этой команде."),
+        ],
+      });
+      return;
+    }
+
     const states = {
       create: "select_user_create",
       delete: "select_user_delete",

@@ -2,13 +2,10 @@ import {
   InteractionHandler,
   InteractionHandlerTypes,
 } from "@sapphire/framework";
-import type { ButtonInteraction } from "discord.js";
+import { MessageFlags, type ButtonInteraction } from "discord.js";
 import { RaceService } from "../service/raceService.js";
-
-const ALLOWED_ROLES = (process.env.RACE_ALLOWED_ROLE_IDS || "")
-  .split(",")
-  .map((id) => id.trim())
-  .filter(Boolean);
+import { PermissionService } from "../../permissions/service/permissionService.js";
+import { PermissionContainer } from "../../permissions/lib/permissionContainer.js";
 
 export class RaceRerollButton extends InteractionHandler {
   public constructor(
@@ -29,26 +26,14 @@ export class RaceRerollButton extends InteractionHandler {
   }
 
   public override async run(interaction: ButtonInteraction) {
-    const member = interaction.member;
-
-    if (!member || typeof member === "string") {
+    if (!(await PermissionService.canUse(interaction, "race"))) {
       await interaction.reply({
-        content: "Эта команда доступна только на сервере.",
-        ephemeral: true,
-      });
-      return;
-    }
-
-    const roleIds =
-      "cache" in member.roles ? [...member.roles.cache.keys()] : member.roles;
-
-    if (
-      ALLOWED_ROLES.length > 0 &&
-      !ALLOWED_ROLES.some((role) => roleIds.includes(role))
-    ) {
-      await interaction.reply({
-        content: "У вас нет прав для использования кнопки перекрута!",
-        ephemeral: true,
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          PermissionContainer.error(
+            "У вас нет прав для использования кнопки перекрута.",
+          ),
+        ],
       });
       return;
     }

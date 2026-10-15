@@ -5,6 +5,7 @@ import {
 import { StringSelectMenuInteraction, MessageFlags } from "discord.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
+import { PermissionService } from "../../permissions/service/permissionService.js";
 
 export class ManageCharacterSelectHandler extends InteractionHandler {
   public constructor(
@@ -53,6 +54,16 @@ export class ManageCharacterSelectHandler extends InteractionHandler {
       userId: string;
     },
   ) {
+    if (!(await PermissionService.canUse(interaction, "manage-character"))) {
+      await interaction.reply({
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          ManageCharacterContainer.createError("У вас нет доступа к этой команде."),
+        ],
+      });
+      return;
+    }
+
     const characterId = interaction.values[0];
 
     switch (result.action) {

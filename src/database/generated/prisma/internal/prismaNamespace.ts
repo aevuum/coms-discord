@@ -393,6 +393,7 @@ export const ModelName = {
   ShopItem: 'ShopItem',
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
+  CommandPermission: 'CommandPermission',
   CharacterTupper: 'CharacterTupper'
 } as const
 
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "characterTupper"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1079,6 +1080,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CommandPermission: {
+      payload: Prisma.$CommandPermissionPayload<ExtArgs>
+      fields: Prisma.CommandPermissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CommandPermissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CommandPermissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>
+        }
+        findFirst: {
+          args: Prisma.CommandPermissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CommandPermissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>
+        }
+        findMany: {
+          args: Prisma.CommandPermissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>[]
+        }
+        create: {
+          args: Prisma.CommandPermissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>
+        }
+        createMany: {
+          args: Prisma.CommandPermissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CommandPermissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>[]
+        }
+        delete: {
+          args: Prisma.CommandPermissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>
+        }
+        update: {
+          args: Prisma.CommandPermissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CommandPermissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CommandPermissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CommandPermissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CommandPermissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommandPermissionPayload>
+        }
+        aggregate: {
+          args: Prisma.CommandPermissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCommandPermission>
+        }
+        groupBy: {
+          args: Prisma.CommandPermissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommandPermissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CommandPermissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommandPermissionCountAggregateOutputType> | number
+        }
+      }
+    }
     CharacterTupper: {
       payload: Prisma.$CharacterTupperPayload<ExtArgs>
       fields: Prisma.CharacterTupperFieldRefs
@@ -1303,6 +1378,17 @@ export const CharacterInventoryItemScalarFieldEnum = {
 } as const
 
 export type CharacterInventoryItemScalarFieldEnum = (typeof CharacterInventoryItemScalarFieldEnum)[keyof typeof CharacterInventoryItemScalarFieldEnum]
+
+
+export const CommandPermissionScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  commandName: 'commandName',
+  roleId: 'roleId',
+  createdAt: 'createdAt'
+} as const
+
+export type CommandPermissionScalarFieldEnum = (typeof CommandPermissionScalarFieldEnum)[keyof typeof CommandPermissionScalarFieldEnum]
 
 
 export const CharacterTupperScalarFieldEnum = {
@@ -1584,6 +1670,7 @@ export type GlobalOmitConfig = {
   shopItem?: Prisma.ShopItemOmit
   inventoryItem?: Prisma.InventoryItemOmit
   characterInventoryItem?: Prisma.CharacterInventoryItemOmit
+  commandPermission?: Prisma.CommandPermissionOmit
   characterTupper?: Prisma.CharacterTupperOmit
 }
 

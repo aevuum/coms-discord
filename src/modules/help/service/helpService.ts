@@ -8,6 +8,7 @@ import {
   type ChatInputCommandInteraction,
 } from "discord.js";
 
+import { PermissionService } from "../../permissions/service/permissionService.js";
 import { HELP_CATEGORIES, HELP_FALLBACK_CATEGORY } from "../lib/helpCategories.js";
 import type {
   HelpCategoryDefinition,
@@ -79,14 +80,11 @@ export class HelpService {
     interaction: ChatInputCommandInteraction,
     command: ChatInputCommand,
   ) {
-    const permissions =
-      this.getApplicationCommand(command)?.defaultMemberPermissions;
-
-    if (permissions && !interaction.memberPermissions?.has(permissions)) {
-      return false;
-    }
-
     try {
+      if (!(await PermissionService.canUse(interaction, command.name))) {
+        return false;
+      }
+
       const result = await command.preconditions.chatInputRun(
         interaction,
         command,

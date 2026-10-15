@@ -19,8 +19,8 @@ export const HELP_CATEGORIES: HelpCategoryDefinition[] = [
     id: "admin",
     label: "Администрирование",
     emoji: "<:563621mod8:1518587360886128661>",
-    description: "Управление персонажами и наградами.",
-    modules: ["character", "award"],
+    description: "Управление персонажами, наградами и доступом к командам.",
+    modules: ["character", "award", "permissions"],
   },
 ];
 

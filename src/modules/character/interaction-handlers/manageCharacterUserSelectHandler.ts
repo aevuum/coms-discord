@@ -14,6 +14,7 @@ import {
 } from "discord.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
+import { PermissionService } from "../../permissions/service/permissionService.js";
 
 export class ManageCharacterUserSelectHandler extends InteractionHandler {
   public constructor(
@@ -44,6 +45,16 @@ export class ManageCharacterUserSelectHandler extends InteractionHandler {
       action: "create" | "delete" | "freeze" | "unfreeze" | "kill";
     },
   ) {
+    if (!(await PermissionService.canUse(interaction, "manage-character"))) {
+      await interaction.reply({
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          ManageCharacterContainer.createError("У вас нет доступа к этой команде."),
+        ],
+      });
+      return;
+    }
+
     const userId = interaction.values[0];
 
     if (result.action === "create") {

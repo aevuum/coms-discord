@@ -1,6 +1,7 @@
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
+import { CommandAccess } from "../../permissions/types/permissions.js";
 
 export class ManageCharacterCommand extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -8,7 +9,7 @@ export class ManageCharacterCommand extends Command {
       ...options,
       name: "manage-character",
       description: "Управление персонажами",
-      preconditions: ["RaceRoller"],
+      access: CommandAccess.Restricted,
     });
   }
 

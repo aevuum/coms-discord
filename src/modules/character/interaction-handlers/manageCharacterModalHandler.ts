@@ -6,6 +6,7 @@ import { ModalSubmitInteraction, MessageFlags } from "discord.js";
 import { CharacterFaculty } from "../../../database/generated/prisma/client.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterContainer } from "../lib/manageCharacterContainer.js";
+import { PermissionService } from "../../permissions/service/permissionService.js";
 
 export class ManageCharacterModalHandler extends InteractionHandler {
   public constructor(
@@ -36,6 +37,16 @@ export class ManageCharacterModalHandler extends InteractionHandler {
       userId: string;
     },
   ) {
+    if (!(await PermissionService.canUse(interaction, "manage-character"))) {
+      await interaction.reply({
+        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        components: [
+          ManageCharacterContainer.createError("У вас нет доступа к этой команде."),
+        ],
+      });
+      return;
+    }
+
     const rpName = interaction.fields.getTextInputValue("character_name");
     const faculty = interaction.fields.getStringSelectValues(
       "character_faculty",

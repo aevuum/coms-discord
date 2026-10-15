@@ -1,12 +1,12 @@
 import { Command } from "@sapphire/framework";
 import {
   ChatInputCommandInteraction,
-  PermissionFlagsBits,
   MessageComponentInteraction,
 } from "discord.js";
 import { AwardPanelBuilder } from "../lib/awardPanelBuilder.js";
 import { AwardPanelController } from "../lib/awardPanelController.js";
 import { IPanelSession } from "../types/award.js";
+import { CommandAccess } from "../../permissions/types/permissions.js";
 
 export class AwardCommand extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -14,6 +14,7 @@ export class AwardCommand extends Command {
       ...options,
       name: "award",
       description: "Управление наградами через интерактивную панель",
+      access: CommandAccess.Restricted,
     });
   }
 
@@ -21,8 +22,7 @@ export class AwardCommand extends Command {
     registry.registerChatInputCommand((builder) =>
       builder
         .setName("award")
-        .setDescription("Открыть панель наград")
-        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+        .setDescription("Открыть панель наград"),
     );
   }
 

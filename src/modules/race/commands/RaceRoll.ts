@@ -1,6 +1,7 @@
 import { Command } from "@sapphire/framework";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { RaceService } from "../service/raceService.js";
+import { CommandAccess } from "../../permissions/types/permissions.js";
 
 export class RaceRoll extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -8,7 +9,7 @@ export class RaceRoll extends Command {
       ...options,
       name: "race",
       description: "Бросок кубика расы",
-      preconditions: ["RaceRoller"],
+      access: CommandAccess.Restricted,
     });
   }
 
