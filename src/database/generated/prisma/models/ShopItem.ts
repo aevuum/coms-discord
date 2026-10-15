@@ -462,18 +462,6 @@ export type ShopItemScalarRelationFilter = {
   isNot?: Prisma.ShopItemWhereInput
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ShopItemCreateNestedOneWithoutPlayerInventoryInput = {
   create?: Prisma.XOR<Prisma.ShopItemCreateWithoutPlayerInventoryInput, Prisma.ShopItemUncheckedCreateWithoutPlayerInventoryInput>
   connectOrCreate?: Prisma.ShopItemCreateOrConnectWithoutPlayerInventoryInput

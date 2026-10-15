@@ -4,6 +4,7 @@ import {
   CharacterFaculty,
 } from "../../../database/generated/prisma/client.js";
 import { UserRepository } from "../repositories/userRepository.js";
+import { Mana } from "../../spells/lib/mana.js";
 
 const facultyLabels: Record<CharacterFaculty, string> = {
   [CharacterFaculty.GRYFFINDOR]: "Гриффиндор",
@@ -60,7 +61,7 @@ export class ProfileService {
       const facultyEmoji = facultyEmojis[character.faculty] ?? "🎓";
 
       return {
-        text: `${status} ${character.rpName}\n> ${facultyEmoji} ${faculty}`,
+        text: `${status} ${character.rpName}\n> ${facultyEmoji} ${faculty}\n> Мана: ${Mana.format(Mana.current(character), character.maxMana)}`,
         avatarUrl: character.avatarUrl,
       };
     });

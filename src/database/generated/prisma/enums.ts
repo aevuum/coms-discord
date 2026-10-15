@@ -50,3 +50,14 @@ export const TransactionType = {
 } as const
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
+
+
+export const SpellDifficulty = {
+  BASIC: 'BASIC',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED',
+  MASTER: 'MASTER',
+  UNFORGIVABLE: 'UNFORGIVABLE'
+} as const
+
+export type SpellDifficulty = (typeof SpellDifficulty)[keyof typeof SpellDifficulty]

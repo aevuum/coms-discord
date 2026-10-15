@@ -56,6 +56,8 @@ export const ModelName = {
   UserAward: 'UserAward',
   Wallet: 'Wallet',
   Character: 'Character',
+  Spell: 'Spell',
+  SpellCast: 'SpellCast',
   CharacterTransaction: 'CharacterTransaction',
   ShopItem: 'ShopItem',
   InventoryItem: 'InventoryItem',
@@ -135,12 +137,49 @@ export const CharacterScalarFieldEnum = {
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
+  mana: 'mana',
+  maxMana: 'maxMana',
+  manaUpdatedAt: 'manaUpdatedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
 
 export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
+
+
+export const SpellScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  incantations: 'incantations',
+  description: 'description',
+  difficulty: 'difficulty',
+  manaCost: 'manaCost',
+  imageUrl: 'imageUrl',
+  gifQuery: 'gifQuery',
+  gifUrls: 'gifUrls',
+  gifFetchedAt: 'gifFetchedAt',
+  isCustom: 'isCustom',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpellScalarFieldEnum = (typeof SpellScalarFieldEnum)[keyof typeof SpellScalarFieldEnum]
+
+
+export const SpellCastScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  spellId: 'spellId',
+  spellName: 'spellName',
+  manaCost: 'manaCost',
+  manaAfter: 'manaAfter',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  createdAt: 'createdAt'
+} as const
+
+export type SpellCastScalarFieldEnum = (typeof SpellCastScalarFieldEnum)[keyof typeof SpellCastScalarFieldEnum]
 
 
 export const CharacterTransactionScalarFieldEnum = {

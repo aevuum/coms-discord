@@ -4,6 +4,7 @@ import type { Message } from "discord.js";
 import { TupperCache } from "../cache/tupperCache.js";
 import { MessageFormatter } from "../lib/messageFormatter.js";
 import { WebhookService } from "./webhookService.js";
+import { SpellCastService } from "../../spells/service/spellCastService.js";
 
 const MAX_CONTENT_LENGTH = 2000;
 
@@ -36,8 +37,10 @@ export class TupperMessageService {
 
     const formatted = await MessageFormatter.format(message, content);
 
+    let sent: Message | null;
+
     try {
-      const sent = await WebhookService.send(message.channel, {
+      sent = await WebhookService.send(message.channel, {
         content:
           (formatted.length <= MAX_CONTENT_LENGTH ? formatted : content) ||
           undefined,
@@ -58,6 +61,12 @@ export class TupperMessageService {
     }
 
     await message.delete().catch(() => {});
+
+    if (content.length) {
+      await SpellCastService.handle(tupper.character.id, content, sent).catch(
+        (error) => container.logger.error(error),
+      );
+    }
 
     return true;
   }

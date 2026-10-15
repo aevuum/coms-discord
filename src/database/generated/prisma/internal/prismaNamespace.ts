@@ -389,6 +389,8 @@ export const ModelName = {
   UserAward: 'UserAward',
   Wallet: 'Wallet',
   Character: 'Character',
+  Spell: 'Spell',
+  SpellCast: 'SpellCast',
   CharacterTransaction: 'CharacterTransaction',
   ShopItem: 'ShopItem',
   InventoryItem: 'InventoryItem',
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -781,6 +783,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CharacterCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CharacterCountAggregateOutputType> | number
+        }
+      }
+    }
+    Spell: {
+      payload: Prisma.$SpellPayload<ExtArgs>
+      fields: Prisma.SpellFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpellFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpellFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>
+        }
+        findFirst: {
+          args: Prisma.SpellFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpellFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>
+        }
+        findMany: {
+          args: Prisma.SpellFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>[]
+        }
+        create: {
+          args: Prisma.SpellCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>
+        }
+        createMany: {
+          args: Prisma.SpellCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpellCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>[]
+        }
+        delete: {
+          args: Prisma.SpellDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>
+        }
+        update: {
+          args: Prisma.SpellUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpellDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpellUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpellUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpellUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellPayload>
+        }
+        aggregate: {
+          args: Prisma.SpellAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpell>
+        }
+        groupBy: {
+          args: Prisma.SpellGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpellGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpellCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpellCountAggregateOutputType> | number
+        }
+      }
+    }
+    SpellCast: {
+      payload: Prisma.$SpellCastPayload<ExtArgs>
+      fields: Prisma.SpellCastFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpellCastFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpellCastFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>
+        }
+        findFirst: {
+          args: Prisma.SpellCastFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpellCastFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>
+        }
+        findMany: {
+          args: Prisma.SpellCastFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>[]
+        }
+        create: {
+          args: Prisma.SpellCastCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>
+        }
+        createMany: {
+          args: Prisma.SpellCastCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpellCastCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>[]
+        }
+        delete: {
+          args: Prisma.SpellCastDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>
+        }
+        update: {
+          args: Prisma.SpellCastUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpellCastDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpellCastUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpellCastUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpellCastUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpellCastPayload>
+        }
+        aggregate: {
+          args: Prisma.SpellCastAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpellCast>
+        }
+        groupBy: {
+          args: Prisma.SpellCastGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpellCastGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpellCastCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpellCastCountAggregateOutputType> | number
         }
       }
     }
@@ -1322,12 +1472,49 @@ export const CharacterScalarFieldEnum = {
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
+  mana: 'mana',
+  maxMana: 'maxMana',
+  manaUpdatedAt: 'manaUpdatedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
 } as const
 
 export type CharacterScalarFieldEnum = (typeof CharacterScalarFieldEnum)[keyof typeof CharacterScalarFieldEnum]
+
+
+export const SpellScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  incantations: 'incantations',
+  description: 'description',
+  difficulty: 'difficulty',
+  manaCost: 'manaCost',
+  imageUrl: 'imageUrl',
+  gifQuery: 'gifQuery',
+  gifUrls: 'gifUrls',
+  gifFetchedAt: 'gifFetchedAt',
+  isCustom: 'isCustom',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpellScalarFieldEnum = (typeof SpellScalarFieldEnum)[keyof typeof SpellScalarFieldEnum]
+
+
+export const SpellCastScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  spellId: 'spellId',
+  spellName: 'spellName',
+  manaCost: 'manaCost',
+  manaAfter: 'manaAfter',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  createdAt: 'createdAt'
+} as const
+
+export type SpellCastScalarFieldEnum = (typeof SpellCastScalarFieldEnum)[keyof typeof SpellCastScalarFieldEnum]
 
 
 export const CharacterTransactionScalarFieldEnum = {
@@ -1518,6 +1705,27 @@ export type ListEnumCharacterStatusFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
+ * Reference to a field of type 'SpellDifficulty'
+ */
+export type EnumSpellDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpellDifficulty'>
+    
+
+
+/**
+ * Reference to a field of type 'SpellDifficulty[]'
+ */
+export type ListEnumSpellDifficultyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpellDifficulty[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'TransactionType'
  */
 export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
@@ -1528,13 +1736,6 @@ export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'TransactionType[]'
  */
 export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1666,6 +1867,8 @@ export type GlobalOmitConfig = {
   userAward?: Prisma.UserAwardOmit
   wallet?: Prisma.WalletOmit
   character?: Prisma.CharacterOmit
+  spell?: Prisma.SpellOmit
+  spellCast?: Prisma.SpellCastOmit
   characterTransaction?: Prisma.CharacterTransactionOmit
   shopItem?: Prisma.ShopItemOmit
   inventoryItem?: Prisma.InventoryItemOmit

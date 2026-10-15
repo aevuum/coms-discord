@@ -67,6 +67,16 @@ export type Wallet = Prisma.WalletModel
  */
 export type Character = Prisma.CharacterModel
 /**
+ * Model Spell
+ * 
+ */
+export type Spell = Prisma.SpellModel
+/**
+ * Model SpellCast
+ * 
+ */
+export type SpellCast = Prisma.SpellCastModel
+/**
  * Model CharacterTransaction
  * 
  */

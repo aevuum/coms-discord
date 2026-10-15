@@ -39,11 +39,11 @@ export class WebhookService {
     const target = this.resolveTarget(channel);
 
     if (!target) {
-      return false;
+      return null;
     }
 
     try {
-      await this.sendTo(target, payload);
+      return await this.sendTo(target, payload);
     } catch (error) {
       if (
         !(error instanceof DiscordAPIError) ||
@@ -54,16 +54,14 @@ export class WebhookService {
 
       WebhookCache.remove(target.parent.id);
 
-      await this.sendTo(target, payload);
+      return this.sendTo(target, payload);
     }
-
-    return true;
   }
 
   private static async sendTo(target: WebhookTarget, payload: ProxyPayload) {
     const webhook = await this.get(target.parent);
 
-    await webhook.send({
+    return webhook.send({
       ...payload,
       threadId: target.threadId,
     });

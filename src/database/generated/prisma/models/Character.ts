@@ -28,10 +28,14 @@ export type AggregateCharacter = {
 
 export type CharacterAvgAggregateOutputType = {
   balanceKnuts: number | null
+  mana: number | null
+  maxMana: number | null
 }
 
 export type CharacterSumAggregateOutputType = {
   balanceKnuts: number | null
+  mana: number | null
+  maxMana: number | null
 }
 
 export type CharacterMinAggregateOutputType = {
@@ -41,6 +45,9 @@ export type CharacterMinAggregateOutputType = {
   faculty: $Enums.CharacterFaculty | null
   status: $Enums.CharacterStatus | null
   balanceKnuts: number | null
+  mana: number | null
+  maxMana: number | null
+  manaUpdatedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -53,6 +60,9 @@ export type CharacterMaxAggregateOutputType = {
   faculty: $Enums.CharacterFaculty | null
   status: $Enums.CharacterStatus | null
   balanceKnuts: number | null
+  mana: number | null
+  maxMana: number | null
+  manaUpdatedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -65,6 +75,9 @@ export type CharacterCountAggregateOutputType = {
   faculty: number
   status: number
   balanceKnuts: number
+  mana: number
+  maxMana: number
+  manaUpdatedAt: number
   createdAt: number
   updatedAt: number
   userId: number
@@ -74,10 +87,14 @@ export type CharacterCountAggregateOutputType = {
 
 export type CharacterAvgAggregateInputType = {
   balanceKnuts?: true
+  mana?: true
+  maxMana?: true
 }
 
 export type CharacterSumAggregateInputType = {
   balanceKnuts?: true
+  mana?: true
+  maxMana?: true
 }
 
 export type CharacterMinAggregateInputType = {
@@ -87,6 +104,9 @@ export type CharacterMinAggregateInputType = {
   faculty?: true
   status?: true
   balanceKnuts?: true
+  mana?: true
+  maxMana?: true
+  manaUpdatedAt?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -99,6 +119,9 @@ export type CharacterMaxAggregateInputType = {
   faculty?: true
   status?: true
   balanceKnuts?: true
+  mana?: true
+  maxMana?: true
+  manaUpdatedAt?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -111,6 +134,9 @@ export type CharacterCountAggregateInputType = {
   faculty?: true
   status?: true
   balanceKnuts?: true
+  mana?: true
+  maxMana?: true
+  manaUpdatedAt?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -210,6 +236,9 @@ export type CharacterGroupByOutputType = {
   faculty: $Enums.CharacterFaculty
   status: $Enums.CharacterStatus
   balanceKnuts: number
+  mana: number
+  maxMana: number
+  manaUpdatedAt: Date
   createdAt: Date
   updatedAt: Date
   userId: string
@@ -245,6 +274,9 @@ export type CharacterWhereInput = {
   faculty?: Prisma.EnumCharacterFacultyFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
+  mana?: Prisma.IntFilter<"Character"> | number
+  maxMana?: Prisma.IntFilter<"Character"> | number
+  manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   userId?: Prisma.StringFilter<"Character"> | string
@@ -252,6 +284,7 @@ export type CharacterWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transactions?: Prisma.CharacterTransactionListRelationFilter
   inventoryItems?: Prisma.CharacterInventoryItemListRelationFilter
+  spellCasts?: Prisma.SpellCastListRelationFilter
 }
 
 export type CharacterOrderByWithRelationInput = {
@@ -261,6 +294,9 @@ export type CharacterOrderByWithRelationInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
+  manaUpdatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -268,6 +304,7 @@ export type CharacterOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   transactions?: Prisma.CharacterTransactionOrderByRelationAggregateInput
   inventoryItems?: Prisma.CharacterInventoryItemOrderByRelationAggregateInput
+  spellCasts?: Prisma.SpellCastOrderByRelationAggregateInput
 }
 
 export type CharacterWhereUniqueInput = Prisma.AtLeast<{
@@ -280,6 +317,9 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   faculty?: Prisma.EnumCharacterFacultyFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
+  mana?: Prisma.IntFilter<"Character"> | number
+  maxMana?: Prisma.IntFilter<"Character"> | number
+  manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   userId?: Prisma.StringFilter<"Character"> | string
@@ -287,6 +327,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transactions?: Prisma.CharacterTransactionListRelationFilter
   inventoryItems?: Prisma.CharacterInventoryItemListRelationFilter
+  spellCasts?: Prisma.SpellCastListRelationFilter
 }, "id">
 
 export type CharacterOrderByWithAggregationInput = {
@@ -296,6 +337,9 @@ export type CharacterOrderByWithAggregationInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
+  manaUpdatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -316,6 +360,9 @@ export type CharacterScalarWhereWithAggregatesInput = {
   faculty?: Prisma.EnumCharacterFacultyWithAggregatesFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusWithAggregatesFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntWithAggregatesFilter<"Character"> | number
+  mana?: Prisma.IntWithAggregatesFilter<"Character"> | number
+  maxMana?: Prisma.IntWithAggregatesFilter<"Character"> | number
+  manaUpdatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   userId?: Prisma.StringWithAggregatesFilter<"Character"> | string
@@ -328,12 +375,16 @@ export type CharacterCreateInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUncheckedCreateInput = {
@@ -343,12 +394,16 @@ export type CharacterUncheckedCreateInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
   tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUpdateInput = {
@@ -358,12 +413,16 @@ export type CharacterUpdateInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateInput = {
@@ -373,12 +432,16 @@ export type CharacterUncheckedUpdateInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterCreateManyInput = {
@@ -388,6 +451,9 @@ export type CharacterCreateManyInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
@@ -400,6 +466,9 @@ export type CharacterUpdateManyMutationInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -411,6 +480,9 @@ export type CharacterUncheckedUpdateManyInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -433,6 +505,9 @@ export type CharacterCountOrderByAggregateInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
+  manaUpdatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -440,6 +515,8 @@ export type CharacterCountOrderByAggregateInput = {
 
 export type CharacterAvgOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
 }
 
 export type CharacterMaxOrderByAggregateInput = {
@@ -449,6 +526,9 @@ export type CharacterMaxOrderByAggregateInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
+  manaUpdatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -461,6 +541,9 @@ export type CharacterMinOrderByAggregateInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
+  manaUpdatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -468,6 +551,8 @@ export type CharacterMinOrderByAggregateInput = {
 
 export type CharacterSumOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
+  mana?: Prisma.SortOrder
+  maxMana?: Prisma.SortOrder
 }
 
 export type CharacterScalarRelationFilter = {
@@ -525,6 +610,20 @@ export type EnumCharacterStatusFieldUpdateOperationsInput = {
   set?: $Enums.CharacterStatus
 }
 
+export type CharacterCreateNestedOneWithoutSpellCastsInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutSpellCastsInput, Prisma.CharacterUncheckedCreateWithoutSpellCastsInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutSpellCastsInput
+  connect?: Prisma.CharacterWhereUniqueInput
+}
+
+export type CharacterUpdateOneRequiredWithoutSpellCastsNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutSpellCastsInput, Prisma.CharacterUncheckedCreateWithoutSpellCastsInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutSpellCastsInput
+  upsert?: Prisma.CharacterUpsertWithoutSpellCastsInput
+  connect?: Prisma.CharacterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutSpellCastsInput, Prisma.CharacterUpdateWithoutSpellCastsInput>, Prisma.CharacterUncheckedUpdateWithoutSpellCastsInput>
+}
+
 export type CharacterCreateNestedOneWithoutTransactionsInput = {
   create?: Prisma.XOR<Prisma.CharacterCreateWithoutTransactionsInput, Prisma.CharacterUncheckedCreateWithoutTransactionsInput>
   connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTransactionsInput
@@ -574,11 +673,15 @@ export type CharacterCreateWithoutUserInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUncheckedCreateWithoutUserInput = {
@@ -588,11 +691,15 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterCreateOrConnectWithoutUserInput = {
@@ -631,9 +738,100 @@ export type CharacterScalarWhereInput = {
   faculty?: Prisma.EnumCharacterFacultyFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
+  mana?: Prisma.IntFilter<"Character"> | number
+  maxMana?: Prisma.IntFilter<"Character"> | number
+  manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   userId?: Prisma.StringFilter<"Character"> | string
+}
+
+export type CharacterCreateWithoutSpellCastsInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
+  user: Prisma.UserCreateNestedOneWithoutCharactersInput
+  transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
+  inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterUncheckedCreateWithoutSpellCastsInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
+  transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
+  inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterCreateOrConnectWithoutSpellCastsInput = {
+  where: Prisma.CharacterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutSpellCastsInput, Prisma.CharacterUncheckedCreateWithoutSpellCastsInput>
+}
+
+export type CharacterUpsertWithoutSpellCastsInput = {
+  update: Prisma.XOR<Prisma.CharacterUpdateWithoutSpellCastsInput, Prisma.CharacterUncheckedUpdateWithoutSpellCastsInput>
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutSpellCastsInput, Prisma.CharacterUncheckedCreateWithoutSpellCastsInput>
+  where?: Prisma.CharacterWhereInput
+}
+
+export type CharacterUpdateToOneWithWhereWithoutSpellCastsInput = {
+  where?: Prisma.CharacterWhereInput
+  data: Prisma.XOR<Prisma.CharacterUpdateWithoutSpellCastsInput, Prisma.CharacterUncheckedUpdateWithoutSpellCastsInput>
+}
+
+export type CharacterUpdateWithoutSpellCastsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
+  transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
+  inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterUncheckedUpdateWithoutSpellCastsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
+  transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
+  inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterCreateWithoutTransactionsInput = {
@@ -643,11 +841,15 @@ export type CharacterCreateWithoutTransactionsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUncheckedCreateWithoutTransactionsInput = {
@@ -657,11 +859,15 @@ export type CharacterUncheckedCreateWithoutTransactionsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
   tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterCreateOrConnectWithoutTransactionsInput = {
@@ -687,11 +893,15 @@ export type CharacterUpdateWithoutTransactionsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateWithoutTransactionsInput = {
@@ -701,11 +911,15 @@ export type CharacterUncheckedUpdateWithoutTransactionsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterCreateWithoutInventoryItemsInput = {
@@ -715,11 +929,15 @@ export type CharacterCreateWithoutInventoryItemsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUncheckedCreateWithoutInventoryItemsInput = {
@@ -729,11 +947,15 @@ export type CharacterUncheckedCreateWithoutInventoryItemsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
   tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterCreateOrConnectWithoutInventoryItemsInput = {
@@ -759,11 +981,15 @@ export type CharacterUpdateWithoutInventoryItemsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateWithoutInventoryItemsInput = {
@@ -773,11 +999,15 @@ export type CharacterUncheckedUpdateWithoutInventoryItemsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterCreateWithoutTupperInput = {
@@ -787,11 +1017,15 @@ export type CharacterCreateWithoutTupperInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterUncheckedCreateWithoutTupperInput = {
@@ -801,11 +1035,15 @@ export type CharacterUncheckedCreateWithoutTupperInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId: string
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
 
 export type CharacterCreateOrConnectWithoutTupperInput = {
@@ -831,11 +1069,15 @@ export type CharacterUpdateWithoutTupperInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateWithoutTupperInput = {
@@ -845,11 +1087,15 @@ export type CharacterUncheckedUpdateWithoutTupperInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterCreateManyUserInput = {
@@ -859,6 +1105,9 @@ export type CharacterCreateManyUserInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -870,11 +1119,15 @@ export type CharacterUpdateWithoutUserInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateWithoutUserInput = {
@@ -884,11 +1137,15 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
 export type CharacterUncheckedUpdateManyWithoutUserInput = {
@@ -898,6 +1155,9 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -910,11 +1170,13 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
 export type CharacterCountOutputType = {
   transactions: number
   inventoryItems: number
+  spellCasts: number
 }
 
 export type CharacterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   transactions?: boolean | CharacterCountOutputTypeCountTransactionsArgs
   inventoryItems?: boolean | CharacterCountOutputTypeCountInventoryItemsArgs
+  spellCasts?: boolean | CharacterCountOutputTypeCountSpellCastsArgs
 }
 
 /**
@@ -941,6 +1203,13 @@ export type CharacterCountOutputTypeCountInventoryItemsArgs<ExtArgs extends runt
   where?: Prisma.CharacterInventoryItemWhereInput
 }
 
+/**
+ * CharacterCountOutputType without action
+ */
+export type CharacterCountOutputTypeCountSpellCastsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SpellCastWhereInput
+}
+
 
 export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -949,6 +1218,9 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  mana?: boolean
+  maxMana?: boolean
+  manaUpdatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -956,6 +1228,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Character$transactionsArgs<ExtArgs>
   inventoryItems?: boolean | Prisma.Character$inventoryItemsArgs<ExtArgs>
+  spellCasts?: boolean | Prisma.Character$spellCastsArgs<ExtArgs>
   _count?: boolean | Prisma.CharacterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
 
@@ -966,6 +1239,9 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  mana?: boolean
+  maxMana?: boolean
+  manaUpdatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -979,6 +1255,9 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  mana?: boolean
+  maxMana?: boolean
+  manaUpdatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
@@ -992,17 +1271,21 @@ export type CharacterSelectScalar = {
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  mana?: boolean
+  maxMana?: boolean
+  manaUpdatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rpName" | "avatarUrl" | "faculty" | "status" | "balanceKnuts" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rpName" | "avatarUrl" | "faculty" | "status" | "balanceKnuts" | "mana" | "maxMana" | "manaUpdatedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tupper?: boolean | Prisma.Character$tupperArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Character$transactionsArgs<ExtArgs>
   inventoryItems?: boolean | Prisma.Character$inventoryItemsArgs<ExtArgs>
+  spellCasts?: boolean | Prisma.Character$spellCastsArgs<ExtArgs>
   _count?: boolean | Prisma.CharacterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CharacterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1019,6 +1302,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     user: Prisma.$UserPayload<ExtArgs>
     transactions: Prisma.$CharacterTransactionPayload<ExtArgs>[]
     inventoryItems: Prisma.$CharacterInventoryItemPayload<ExtArgs>[]
+    spellCasts: Prisma.$SpellCastPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1027,6 +1311,9 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     faculty: $Enums.CharacterFaculty
     status: $Enums.CharacterStatus
     balanceKnuts: number
+    mana: number
+    maxMana: number
+    manaUpdatedAt: Date
     createdAt: Date
     updatedAt: Date
     userId: string
@@ -1428,6 +1715,7 @@ export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtim
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   transactions<T extends Prisma.Character$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   inventoryItems<T extends Prisma.Character$inventoryItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$inventoryItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterInventoryItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  spellCasts<T extends Prisma.Character$spellCastsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$spellCastsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SpellCastPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1463,6 +1751,9 @@ export interface CharacterFieldRefs {
   readonly faculty: Prisma.FieldRef<"Character", 'CharacterFaculty'>
   readonly status: Prisma.FieldRef<"Character", 'CharacterStatus'>
   readonly balanceKnuts: Prisma.FieldRef<"Character", 'Int'>
+  readonly mana: Prisma.FieldRef<"Character", 'Int'>
+  readonly maxMana: Prisma.FieldRef<"Character", 'Int'>
+  readonly manaUpdatedAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Character", 'String'>
@@ -1931,6 +2222,30 @@ export type Character$inventoryItemsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.CharacterInventoryItemScalarFieldEnum | Prisma.CharacterInventoryItemScalarFieldEnum[]
+}
+
+/**
+ * Character.spellCasts
+ */
+export type Character$spellCastsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SpellCast
+   */
+  select?: Prisma.SpellCastSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SpellCast
+   */
+  omit?: Prisma.SpellCastOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SpellCastInclude<ExtArgs> | null
+  where?: Prisma.SpellCastWhereInput
+  orderBy?: Prisma.SpellCastOrderByWithRelationInput | Prisma.SpellCastOrderByWithRelationInput[]
+  cursor?: Prisma.SpellCastWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SpellCastScalarFieldEnum | Prisma.SpellCastScalarFieldEnum[]
 }
 
 /**

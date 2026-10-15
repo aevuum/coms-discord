@@ -12,8 +12,8 @@ export const HELP_CATEGORIES: HelpCategoryDefinition[] = [
     id: "roleplay",
     label: "Ролеплей",
     emoji: "<:515636magicwandids:1519585028596563968>",
-    description: "Персонажи, экономика и игровые механики.",
-    modules: ["economy", "race", "tupper"],
+    description: "Персонажи, экономика, заклинания и игровые механики.",
+    modules: ["economy", "race", "tupper", "spells"],
   },
   {
     id: "admin",

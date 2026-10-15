@@ -117,6 +117,10 @@ model Character {
 
   balanceKnuts Int
 
+  mana          Int      @default(100)
+  maxMana       Int      @default(100)
+  manaUpdatedAt DateTime @default(now())
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -125,8 +129,61 @@ model Character {
 
   transactions   CharacterTransaction[]
   inventoryItems CharacterInventoryItem[]
+  spellCasts     SpellCast[]
 
   @@index([userId])
+}
+
+enum SpellDifficulty {
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+  MASTER
+  UNFORGIVABLE
+}
+
+model Spell {
+  id String @id @default(cuid())
+
+  name         String
+  incantations String[]
+  description  String?
+
+  difficulty SpellDifficulty @default(BASIC)
+  manaCost   Int?
+
+  imageUrl     String?
+  gifQuery     String?
+  gifUrls      String[]
+  gifFetchedAt DateTime?
+
+  isCustom Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  casts SpellCast[]
+}
+
+model SpellCast {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  spellId   String?
+  spell     Spell?  @relation(fields: [spellId], references: [id], onDelete: SetNull)
+  spellName String
+
+  manaCost  Int
+  manaAfter Int
+
+  channelId String
+  messageId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([characterId, createdAt])
 }
 
 model CharacterTransaction {
