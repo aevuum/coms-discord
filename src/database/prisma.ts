@@ -6,7 +6,7 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({
   adapter: adapter,
-  log: ["query", "info", "warn", "error"],
+  log: ["info", "warn", "error"],
   errorFormat: "pretty",
 });
 
