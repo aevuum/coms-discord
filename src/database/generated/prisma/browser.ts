@@ -92,3 +92,8 @@ export type CoinTransaction = Prisma.CoinTransactionModel
  * 
  */
 export type RoleStipend = Prisma.RoleStipendModel
+/**
+ * Model Ticket
+ * 
+ */
+export type Ticket = Prisma.TicketModel

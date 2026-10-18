@@ -81,3 +81,11 @@ export const CoinTransactionType = {
 } as const
 
 export type CoinTransactionType = (typeof CoinTransactionType)[keyof typeof CoinTransactionType]
+
+
+export const TicketStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+} as const
+
+export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]

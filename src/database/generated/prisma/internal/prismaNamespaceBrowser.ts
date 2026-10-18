@@ -65,7 +65,8 @@ export const ModelName = {
   CommandPermission: 'CommandPermission',
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
-  RoleStipend: 'RoleStipend'
+  RoleStipend: 'RoleStipend',
+  Ticket: 'Ticket'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -289,6 +290,26 @@ export const RoleStipendScalarFieldEnum = {
 } as const
 
 export type RoleStipendScalarFieldEnum = (typeof RoleStipendScalarFieldEnum)[keyof typeof RoleStipendScalarFieldEnum]
+
+
+export const TicketScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  channelId: 'channelId',
+  ownerId: 'ownerId',
+  staffMessageId: 'staffMessageId',
+  reviewerId: 'reviewerId',
+  tagId: 'tagId',
+  subject: 'subject',
+  status: 'status',
+  lastCalledAt: 'lastCalledAt',
+  closedById: 'closedById',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
 
 
 export const SortOrder = {

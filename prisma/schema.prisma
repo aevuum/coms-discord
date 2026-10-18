@@ -341,3 +341,33 @@ model RoleStipend {
 
   @@unique([guildId, roleId])
 }
+
+enum TicketStatus {
+  OPEN
+  CLOSED
+}
+
+model Ticket {
+  id String @id @default(cuid())
+
+  guildId   String
+  channelId String @unique
+  ownerId   String
+
+  staffMessageId String?
+  reviewerId     String?
+
+  tagId   String
+  subject String
+
+  status TicketStatus @default(OPEN)
+
+  lastCalledAt DateTime?
+  closedById   String?
+  closedAt     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId, tagId, status])
+}
