@@ -95,6 +95,7 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   messagesCount: 'messagesCount',
+  characterSlots: 'characterSlots',
   voiceSeconds: 'voiceSeconds',
   selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
@@ -213,6 +214,7 @@ export const ShopItemScalarFieldEnum = {
   category: 'category',
   isActive: 'isActive',
   maxPerUser: 'maxPerUser',
+  grantsCharacterSlot: 'grantsCharacterSlot',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -305,6 +307,7 @@ export const TicketScalarFieldEnum = {
   reviewerId: 'reviewerId',
   tagId: 'tagId',
   subject: 'subject',
+  paidSlot: 'paidSlot',
   status: 'status',
   lastCalledAt: 'lastCalledAt',
   closedById: 'closedById',

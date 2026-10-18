@@ -47,6 +47,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   messagesCount Int @default(0)
+
+  characterSlots Int @default(0)
   voiceSeconds  Int @default(0)
 
   selectedAwardId String?
@@ -228,6 +230,8 @@ model ShopItem {
 
   maxPerUser Int?
 
+  grantsCharacterSlot Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
@@ -359,6 +363,8 @@ model Ticket {
 
   tagId   String
   subject String
+
+  paidSlot Boolean @default(false)
 
   status TicketStatus @default(OPEN)
 

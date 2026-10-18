@@ -33,6 +33,7 @@ export type TicketMinAggregateOutputType = {
   reviewerId: string | null
   tagId: string | null
   subject: string | null
+  paidSlot: boolean | null
   status: $Enums.TicketStatus | null
   lastCalledAt: Date | null
   closedById: string | null
@@ -50,6 +51,7 @@ export type TicketMaxAggregateOutputType = {
   reviewerId: string | null
   tagId: string | null
   subject: string | null
+  paidSlot: boolean | null
   status: $Enums.TicketStatus | null
   lastCalledAt: Date | null
   closedById: string | null
@@ -67,6 +69,7 @@ export type TicketCountAggregateOutputType = {
   reviewerId: number
   tagId: number
   subject: number
+  paidSlot: number
   status: number
   lastCalledAt: number
   closedById: number
@@ -86,6 +89,7 @@ export type TicketMinAggregateInputType = {
   reviewerId?: true
   tagId?: true
   subject?: true
+  paidSlot?: true
   status?: true
   lastCalledAt?: true
   closedById?: true
@@ -103,6 +107,7 @@ export type TicketMaxAggregateInputType = {
   reviewerId?: true
   tagId?: true
   subject?: true
+  paidSlot?: true
   status?: true
   lastCalledAt?: true
   closedById?: true
@@ -120,6 +125,7 @@ export type TicketCountAggregateInputType = {
   reviewerId?: true
   tagId?: true
   subject?: true
+  paidSlot?: true
   status?: true
   lastCalledAt?: true
   closedById?: true
@@ -210,6 +216,7 @@ export type TicketGroupByOutputType = {
   reviewerId: string | null
   tagId: string
   subject: string
+  paidSlot: boolean
   status: $Enums.TicketStatus
   lastCalledAt: Date | null
   closedById: string | null
@@ -248,6 +255,7 @@ export type TicketWhereInput = {
   reviewerId?: Prisma.StringNullableFilter<"Ticket"> | string | null
   tagId?: Prisma.StringFilter<"Ticket"> | string
   subject?: Prisma.StringFilter<"Ticket"> | string
+  paidSlot?: Prisma.BoolFilter<"Ticket"> | boolean
   status?: Prisma.EnumTicketStatusFilter<"Ticket"> | $Enums.TicketStatus
   lastCalledAt?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   closedById?: Prisma.StringNullableFilter<"Ticket"> | string | null
@@ -265,6 +273,7 @@ export type TicketOrderByWithRelationInput = {
   reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   tagId?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  paidSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastCalledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -285,6 +294,7 @@ export type TicketWhereUniqueInput = Prisma.AtLeast<{
   reviewerId?: Prisma.StringNullableFilter<"Ticket"> | string | null
   tagId?: Prisma.StringFilter<"Ticket"> | string
   subject?: Prisma.StringFilter<"Ticket"> | string
+  paidSlot?: Prisma.BoolFilter<"Ticket"> | boolean
   status?: Prisma.EnumTicketStatusFilter<"Ticket"> | $Enums.TicketStatus
   lastCalledAt?: Prisma.DateTimeNullableFilter<"Ticket"> | Date | string | null
   closedById?: Prisma.StringNullableFilter<"Ticket"> | string | null
@@ -302,6 +312,7 @@ export type TicketOrderByWithAggregationInput = {
   reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   tagId?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  paidSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastCalledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   closedById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -325,6 +336,7 @@ export type TicketScalarWhereWithAggregatesInput = {
   reviewerId?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
   tagId?: Prisma.StringWithAggregatesFilter<"Ticket"> | string
   subject?: Prisma.StringWithAggregatesFilter<"Ticket"> | string
+  paidSlot?: Prisma.BoolWithAggregatesFilter<"Ticket"> | boolean
   status?: Prisma.EnumTicketStatusWithAggregatesFilter<"Ticket"> | $Enums.TicketStatus
   lastCalledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
   closedById?: Prisma.StringNullableWithAggregatesFilter<"Ticket"> | string | null
@@ -342,6 +354,7 @@ export type TicketCreateInput = {
   reviewerId?: string | null
   tagId: string
   subject: string
+  paidSlot?: boolean
   status?: $Enums.TicketStatus
   lastCalledAt?: Date | string | null
   closedById?: string | null
@@ -359,6 +372,7 @@ export type TicketUncheckedCreateInput = {
   reviewerId?: string | null
   tagId: string
   subject: string
+  paidSlot?: boolean
   status?: $Enums.TicketStatus
   lastCalledAt?: Date | string | null
   closedById?: string | null
@@ -376,6 +390,7 @@ export type TicketUpdateInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  paidSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
   lastCalledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -393,6 +408,7 @@ export type TicketUncheckedUpdateInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  paidSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
   lastCalledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -410,6 +426,7 @@ export type TicketCreateManyInput = {
   reviewerId?: string | null
   tagId: string
   subject: string
+  paidSlot?: boolean
   status?: $Enums.TicketStatus
   lastCalledAt?: Date | string | null
   closedById?: string | null
@@ -427,6 +444,7 @@ export type TicketUpdateManyMutationInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  paidSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
   lastCalledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -444,6 +462,7 @@ export type TicketUncheckedUpdateManyInput = {
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
   subject?: Prisma.StringFieldUpdateOperationsInput | string
+  paidSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
   lastCalledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   closedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -461,6 +480,7 @@ export type TicketCountOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  paidSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastCalledAt?: Prisma.SortOrder
   closedById?: Prisma.SortOrder
@@ -478,6 +498,7 @@ export type TicketMaxOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  paidSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastCalledAt?: Prisma.SortOrder
   closedById?: Prisma.SortOrder
@@ -495,6 +516,7 @@ export type TicketMinOrderByAggregateInput = {
   reviewerId?: Prisma.SortOrder
   tagId?: Prisma.SortOrder
   subject?: Prisma.SortOrder
+  paidSlot?: Prisma.SortOrder
   status?: Prisma.SortOrder
   lastCalledAt?: Prisma.SortOrder
   closedById?: Prisma.SortOrder
@@ -518,6 +540,7 @@ export type TicketSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   reviewerId?: boolean
   tagId?: boolean
   subject?: boolean
+  paidSlot?: boolean
   status?: boolean
   lastCalledAt?: boolean
   closedById?: boolean
@@ -535,6 +558,7 @@ export type TicketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   reviewerId?: boolean
   tagId?: boolean
   subject?: boolean
+  paidSlot?: boolean
   status?: boolean
   lastCalledAt?: boolean
   closedById?: boolean
@@ -552,6 +576,7 @@ export type TicketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   reviewerId?: boolean
   tagId?: boolean
   subject?: boolean
+  paidSlot?: boolean
   status?: boolean
   lastCalledAt?: boolean
   closedById?: boolean
@@ -569,6 +594,7 @@ export type TicketSelectScalar = {
   reviewerId?: boolean
   tagId?: boolean
   subject?: boolean
+  paidSlot?: boolean
   status?: boolean
   lastCalledAt?: boolean
   closedById?: boolean
@@ -577,7 +603,7 @@ export type TicketSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "channelId" | "ownerId" | "staffMessageId" | "reviewerId" | "tagId" | "subject" | "status" | "lastCalledAt" | "closedById" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["ticket"]>
+export type TicketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "channelId" | "ownerId" | "staffMessageId" | "reviewerId" | "tagId" | "subject" | "paidSlot" | "status" | "lastCalledAt" | "closedById" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["ticket"]>
 
 export type $TicketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Ticket"
@@ -591,6 +617,7 @@ export type $TicketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     reviewerId: string | null
     tagId: string
     subject: string
+    paidSlot: boolean
     status: $Enums.TicketStatus
     lastCalledAt: Date | null
     closedById: string | null
@@ -1028,6 +1055,7 @@ export interface TicketFieldRefs {
   readonly reviewerId: Prisma.FieldRef<"Ticket", 'String'>
   readonly tagId: Prisma.FieldRef<"Ticket", 'String'>
   readonly subject: Prisma.FieldRef<"Ticket", 'String'>
+  readonly paidSlot: Prisma.FieldRef<"Ticket", 'Boolean'>
   readonly status: Prisma.FieldRef<"Ticket", 'TicketStatus'>
   readonly lastCalledAt: Prisma.FieldRef<"Ticket", 'DateTime'>
   readonly closedById: Prisma.FieldRef<"Ticket", 'String'>

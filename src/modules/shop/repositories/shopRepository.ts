@@ -48,6 +48,18 @@ export class ShopRepository {
     });
   }
 
+  public static async setCharacterSlot(id: string, grantsCharacterSlot: boolean) {
+    return prisma.shopItem.update({
+      where: {
+        id,
+      },
+
+      data: {
+        grantsCharacterSlot,
+      },
+    });
+  }
+
   public static async setActive(id: string, isActive: boolean) {
     return prisma.shopItem.update({
       where: {
@@ -171,6 +183,7 @@ export class ShopRepository {
     discordId: string,
     itemId: string,
     delta: number,
+    grantCharacterSlot = false,
   ) {
     return prisma.$transaction(async (tx) => {
       const user = await CoinRepository.ensureUser(tx, discordId);
@@ -218,6 +231,20 @@ export class ShopRepository {
 
       if (updated.count === 0) {
         throw new ShopError("У игрока нет этого предмета.");
+      }
+
+      if (grantCharacterSlot) {
+        await tx.user.update({
+          where: {
+            id: user.id,
+          },
+
+          data: {
+            characterSlots: {
+              increment: -delta,
+            },
+          },
+        });
       }
 
       const inventory = await tx.inventoryItem.findUniqueOrThrow({

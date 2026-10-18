@@ -29,6 +29,7 @@ export class TicketRepository {
     ownerId: string;
     tagId: string;
     subject: string;
+    paidSlot: boolean;
   }) {
     return prisma.ticket.create({ data });
   }

@@ -82,11 +82,17 @@ export class ShopService {
   public static async useItem(discordId: string, itemId: string) {
     const item = await this.getItem(itemId);
 
-    const remaining = await ShopRepository.changeQuantity(discordId, item.id, -1);
+    const remaining = await ShopRepository.changeQuantity(
+      discordId,
+      item.id,
+      -1,
+      item.grantsCharacterSlot,
+    );
 
     return {
       item,
       remaining,
+      slotGranted: item.grantsCharacterSlot,
     };
   }
 
@@ -116,6 +122,12 @@ export class ShopService {
     const item = await this.getItem(itemId);
 
     return ShopRepository.updateItem(item.id, this.parseInput(input));
+  }
+
+  public static async toggleCharacterSlot(itemId: string) {
+    const item = await this.getItem(itemId);
+
+    return ShopRepository.setCharacterSlot(item.id, !item.grantsCharacterSlot);
   }
 
   public static async toggleItem(itemId: string) {

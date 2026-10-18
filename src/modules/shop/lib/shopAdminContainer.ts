@@ -94,6 +94,10 @@ export class ShopAdminContainer {
       `${ARROW} Цена: ${CoinFormatter.amount(item.price)}`,
       `${ARROW} Лимит на игрока: **${item.maxPerUser ?? "нет"}**`,
       `${ARROW} В магазине: **${item.isActive ? "продаётся" : "скрыт"}**`,
+      `${ARROW} Слот для доп. персонажа: **${item.grantsCharacterSlot ? "даёт" : "нет"}**`,
+      item.grantsCharacterSlot
+        ? "-# После использования игрок может открыть тикет на ещё одного персонажа."
+        : null,
     ]);
 
     container.addActionRowComponents(
@@ -107,6 +111,12 @@ export class ShopAdminContainer {
         new ButtonBuilder()
           .setCustomId(ShopCustomIds.admin(ShopAdminAction.Toggle, item.id))
           .setLabel(item.isActive ? "Скрыть" : "Вернуть в продажу")
+          .setStyle(ButtonStyle.Secondary),
+
+        new ButtonBuilder()
+          .setCustomId(ShopCustomIds.admin(ShopAdminAction.ToggleSlot, item.id))
+          .setLabel(item.grantsCharacterSlot ? "Не давать слот" : "Даёт слот персонажа")
+          .setEmoji("<:928205membericon:1518581050555633674>")
           .setStyle(ButtonStyle.Secondary),
 
         new ButtonBuilder()

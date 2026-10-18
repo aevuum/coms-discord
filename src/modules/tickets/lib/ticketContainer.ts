@@ -120,7 +120,12 @@ export class TicketContainer {
           templateUrl
             ? `${ARROW} Шаблон анкеты: ${templateUrl}`
             : `${ARROW} Шаблон анкеты ищите в форуме с шаблонами.`,
-        ].join("\n"),
+          ticket.paidSlot
+            ? `${ARROW} Для этого тикета использован слот дополнительного персонажа. Если персонаж не будет создан, слот вернётся при закрытии тикета.`
+            : null,
+        ]
+          .filter((line) => line !== null)
+          .join("\n"),
       ),
     );
 
@@ -289,11 +294,17 @@ export class TicketContainer {
     );
   }
 
-  public static closedDm(subject: string) {
+  public static closedDm(subject: string, slotRefunded = false) {
     return this.notice(
-      [`## ${TICKET} Тикет закрыт`, `${ARROW} Ваш тикет «${subject}» закрыт.`].join(
-        "\n",
-      ),
+      [
+        `## ${TICKET} Тикет закрыт`,
+        `${ARROW} Ваш тикет «${subject}» закрыт.`,
+        slotRefunded
+          ? `${ARROW} Персонаж по этому тикету не был создан, поэтому слот для доп. персонажа вернулся к вам.`
+          : null,
+      ]
+        .filter((line) => line !== null)
+        .join("\n"),
     );
   }
 

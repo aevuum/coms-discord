@@ -14,11 +14,13 @@ import {
 
 import type { Ticket } from "../../../database/generated/prisma/client.js";
 
+import { CharacterSlotRepository } from "../../character/repositories/characterSlotRepository.js";
 import { TicketRepository } from "../repositories/ticketRepository.js";
 import { TicketError, type TicketSubject } from "../types/ticket.js";
 import {
   TICKET_CALL_COOLDOWN_MS,
   TICKET_CATEGORY_ID,
+  TICKET_CHARACTER_TAG_ID,
   TICKET_DELETE_DELAY_MS,
   TICKET_PANEL_CHANNEL_ID,
   TICKET_PANEL_IMAGE_NAME,
@@ -163,32 +165,19 @@ export class TicketService {
         return { url: channel.url, subject };
       }
 
-      await TicketRepository.close(existing.id, null);
+      if (await TicketRepository.close(existing.id, null)) {
+        await this.refundUnusedSlot(existing);
+      }
     }
 
-    const channel = await guild.channels.create({
-      name: this.channelName(subject.name, member.user.username),
-      type: ChannelType.GuildText,
-      parent: TICKET_CATEGORY_ID,
-      topic: `Регистрация: ${subject.name} · Игрок: ${member.user.tag} (${member.id})`,
-      reason: `Тикет: ${subject.name}`,
-      permissionOverwrites: [
-        {
-          id: guild.roles.everyone.id,
-          type: OverwriteType.Role,
-          deny: [PermissionFlagsBits.ViewChannel],
-        },
-        {
-          id: member.id,
-          type: OverwriteType.Member,
-          allow: MEMBER_PERMISSIONS,
-        },
-        {
-          id: client.user.id,
-          type: OverwriteType.Member,
-          allow: [...MEMBER_PERMISSIONS, PermissionFlagsBits.ManageChannels],
-        },
-      ],
+    const paidSlot = await this.claimCharacterSlot(member.id, tagId);
+
+    const channel = await this.createChannel(member, subject.name).catch(async (error) => {
+      if (paidSlot) {
+        await CharacterSlotRepository.refund(member.id);
+      }
+
+      throw error;
     });
 
     try {
@@ -198,6 +187,7 @@ export class TicketService {
         ownerId: member.id,
         tagId,
         subject: subject.name,
+        paidSlot,
       });
 
       const templateUrl = await this.findTemplateUrl(await this.getForum(client), tagId).catch(
@@ -216,8 +206,77 @@ export class TicketService {
     } catch (error) {
       await channel.delete("Не удалось создать тикет").catch(() => null);
 
+      if (paidSlot) {
+        await CharacterSlotRepository.refund(member.id);
+      }
+
       throw error;
     }
+  }
+
+  private static async claimCharacterSlot(discordId: string, tagId: string) {
+    if (tagId !== TICKET_CHARACTER_TAG_ID) {
+      return false;
+    }
+
+    if (!(await CharacterSlotRepository.countActiveCharacters(discordId))) {
+      return false;
+    }
+
+    if (await CharacterSlotRepository.claim(discordId)) {
+      return true;
+    }
+
+    const item = await CharacterSlotRepository.getSlotItem();
+
+    throw new TicketError(
+      item
+        ? `У вас уже есть персонаж. Чтобы зарегистрировать ещё одного, купите в /shop «${item.name}» за ${item.price} комс-коинов: один предмет — один новый персонаж.`
+        : "У вас уже есть персонаж. Регистрация дополнительных персонажей сейчас недоступна.",
+    );
+  }
+
+  private static async refundUnusedSlot(ticket: Ticket) {
+    if (!ticket.paidSlot) {
+      return false;
+    }
+
+    if (await CharacterSlotRepository.countCreatedSince(ticket.ownerId, ticket.createdAt)) {
+      return false;
+    }
+
+    await CharacterSlotRepository.refund(ticket.ownerId);
+
+    return true;
+  }
+
+  private static createChannel(member: GuildMember, subject: string) {
+    const { client, guild } = member;
+
+    return guild.channels.create({
+      name: this.channelName(subject, member.user.username),
+      type: ChannelType.GuildText,
+      parent: TICKET_CATEGORY_ID,
+      topic: `Регистрация: ${subject} · Игрок: ${member.user.tag} (${member.id})`,
+      reason: `Тикет: ${subject}`,
+      permissionOverwrites: [
+        {
+          id: guild.roles.everyone.id,
+          type: OverwriteType.Role,
+          deny: [PermissionFlagsBits.ViewChannel],
+        },
+        {
+          id: member.id,
+          type: OverwriteType.Member,
+          allow: MEMBER_PERMISSIONS,
+        },
+        {
+          id: client.user.id,
+          type: OverwriteType.Member,
+          allow: [...MEMBER_PERMISSIONS, PermissionFlagsBits.ManageChannels],
+        },
+      ],
+    });
   }
 
   public static async call(member: GuildMember, channelId: string) {
@@ -364,12 +423,14 @@ export class TicketService {
 
     await this.refreshStaffMessage(client, guild, { ...ticket, status: "CLOSED" });
 
+    const refunded = await this.refundUnusedSlot(ticket);
+
     const owner = await client.users.fetch(ticket.ownerId).catch(() => null);
 
     await owner
       ?.send({
         flags: MessageFlags.IsComponentsV2,
-        components: [TicketContainer.closedDm(ticket.subject)],
+        components: [TicketContainer.closedDm(ticket.subject, refunded)],
       })
       .catch(() => null);
 

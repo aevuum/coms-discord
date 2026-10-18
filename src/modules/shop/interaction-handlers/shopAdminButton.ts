@@ -17,6 +17,7 @@ const BUTTON_ACTIONS = new Set<ShopAdminAction>([
   ShopAdminAction.Create,
   ShopAdminAction.Edit,
   ShopAdminAction.Toggle,
+  ShopAdminAction.ToggleSlot,
   ShopAdminAction.Delete,
   ShopAdminAction.DeleteConfirm,
   ShopAdminAction.Inventory,
@@ -92,6 +93,9 @@ export class ShopAdminButtonHandler extends InteractionHandler {
     switch (action) {
       case ShopAdminAction.Toggle:
         return ShopAdminContainer.item(await ShopService.toggleItem(itemId));
+
+      case ShopAdminAction.ToggleSlot:
+        return ShopAdminContainer.item(await ShopService.toggleCharacterSlot(itemId));
 
       case ShopAdminAction.Delete:
         return ShopAdminContainer.deleteConfirm(await ShopService.getItem(itemId));

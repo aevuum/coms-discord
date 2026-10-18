@@ -47,6 +47,7 @@ export type ShopItemMinAggregateOutputType = {
   category: string | null
   isActive: boolean | null
   maxPerUser: number | null
+  grantsCharacterSlot: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +63,7 @@ export type ShopItemMaxAggregateOutputType = {
   category: string | null
   isActive: boolean | null
   maxPerUser: number | null
+  grantsCharacterSlot: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,6 +79,7 @@ export type ShopItemCountAggregateOutputType = {
   category: number
   isActive: number
   maxPerUser: number
+  grantsCharacterSlot: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -104,6 +107,7 @@ export type ShopItemMinAggregateInputType = {
   category?: true
   isActive?: true
   maxPerUser?: true
+  grantsCharacterSlot?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -119,6 +123,7 @@ export type ShopItemMaxAggregateInputType = {
   category?: true
   isActive?: true
   maxPerUser?: true
+  grantsCharacterSlot?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -134,6 +139,7 @@ export type ShopItemCountAggregateInputType = {
   category?: true
   isActive?: true
   maxPerUser?: true
+  grantsCharacterSlot?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -236,6 +242,7 @@ export type ShopItemGroupByOutputType = {
   category: string
   isActive: boolean
   maxPerUser: number | null
+  grantsCharacterSlot: boolean
   createdAt: Date
   updatedAt: Date
   _count: ShopItemCountAggregateOutputType | null
@@ -274,6 +281,7 @@ export type ShopItemWhereInput = {
   category?: Prisma.StringFilter<"ShopItem"> | string
   isActive?: Prisma.BoolFilter<"ShopItem"> | boolean
   maxPerUser?: Prisma.IntNullableFilter<"ShopItem"> | number | null
+  grantsCharacterSlot?: Prisma.BoolFilter<"ShopItem"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
   playerInventory?: Prisma.InventoryItemListRelationFilter
@@ -291,6 +299,7 @@ export type ShopItemOrderByWithRelationInput = {
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrderInput | Prisma.SortOrder
+  grantsCharacterSlot?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   playerInventory?: Prisma.InventoryItemOrderByRelationAggregateInput
@@ -311,6 +320,7 @@ export type ShopItemWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.StringFilter<"ShopItem"> | string
   isActive?: Prisma.BoolFilter<"ShopItem"> | boolean
   maxPerUser?: Prisma.IntNullableFilter<"ShopItem"> | number | null
+  grantsCharacterSlot?: Prisma.BoolFilter<"ShopItem"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ShopItem"> | Date | string
   playerInventory?: Prisma.InventoryItemListRelationFilter
@@ -328,6 +338,7 @@ export type ShopItemOrderByWithAggregationInput = {
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrderInput | Prisma.SortOrder
+  grantsCharacterSlot?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ShopItemCountOrderByAggregateInput
@@ -351,6 +362,7 @@ export type ShopItemScalarWhereWithAggregatesInput = {
   category?: Prisma.StringWithAggregatesFilter<"ShopItem"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"ShopItem"> | boolean
   maxPerUser?: Prisma.IntNullableWithAggregatesFilter<"ShopItem"> | number | null
+  grantsCharacterSlot?: Prisma.BoolWithAggregatesFilter<"ShopItem"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ShopItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ShopItem"> | Date | string
 }
@@ -366,6 +378,7 @@ export type ShopItemCreateInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemCreateNestedManyWithoutShopItemInput
@@ -383,6 +396,7 @@ export type ShopItemUncheckedCreateInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutShopItemInput
@@ -400,6 +414,7 @@ export type ShopItemUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUpdateManyWithoutShopItemNestedInput
@@ -417,6 +432,7 @@ export type ShopItemUncheckedUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
@@ -434,6 +450,7 @@ export type ShopItemCreateManyInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -449,6 +466,7 @@ export type ShopItemUpdateManyMutationInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -464,6 +482,7 @@ export type ShopItemUncheckedUpdateManyInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -479,6 +498,7 @@ export type ShopItemCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
+  grantsCharacterSlot?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -499,6 +519,7 @@ export type ShopItemMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
+  grantsCharacterSlot?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -514,6 +535,7 @@ export type ShopItemMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   maxPerUser?: Prisma.SortOrder
+  grantsCharacterSlot?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -578,6 +600,7 @@ export type ShopItemCreateWithoutPlayerInventoryInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   characterInventory?: Prisma.CharacterInventoryItemCreateNestedManyWithoutShopItemInput
@@ -594,6 +617,7 @@ export type ShopItemUncheckedCreateWithoutPlayerInventoryInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   characterInventory?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutShopItemInput
@@ -626,6 +650,7 @@ export type ShopItemUpdateWithoutPlayerInventoryInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   characterInventory?: Prisma.CharacterInventoryItemUpdateManyWithoutShopItemNestedInput
@@ -642,6 +667,7 @@ export type ShopItemUncheckedUpdateWithoutPlayerInventoryInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   characterInventory?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
@@ -658,6 +684,7 @@ export type ShopItemCreateWithoutCharacterInventoryInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemCreateNestedManyWithoutShopItemInput
@@ -674,6 +701,7 @@ export type ShopItemUncheckedCreateWithoutCharacterInventoryInput = {
   category?: string
   isActive?: boolean
   maxPerUser?: number | null
+  grantsCharacterSlot?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   playerInventory?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutShopItemInput
@@ -706,6 +734,7 @@ export type ShopItemUpdateWithoutCharacterInventoryInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUpdateManyWithoutShopItemNestedInput
@@ -722,6 +751,7 @@ export type ShopItemUncheckedUpdateWithoutCharacterInventoryInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   maxPerUser?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  grantsCharacterSlot?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   playerInventory?: Prisma.InventoryItemUncheckedUpdateManyWithoutShopItemNestedInput
@@ -778,6 +808,7 @@ export type ShopItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
+  grantsCharacterSlot?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   playerInventory?: boolean | Prisma.ShopItem$playerInventoryArgs<ExtArgs>
@@ -796,6 +827,7 @@ export type ShopItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
+  grantsCharacterSlot?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["shopItem"]>
@@ -811,6 +843,7 @@ export type ShopItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
+  grantsCharacterSlot?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["shopItem"]>
@@ -826,11 +859,12 @@ export type ShopItemSelectScalar = {
   category?: boolean
   isActive?: boolean
   maxPerUser?: boolean
+  grantsCharacterSlot?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ShopItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "emoji" | "iconUrl" | "price" | "currency" | "category" | "isActive" | "maxPerUser" | "createdAt" | "updatedAt", ExtArgs["result"]["shopItem"]>
+export type ShopItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "emoji" | "iconUrl" | "price" | "currency" | "category" | "isActive" | "maxPerUser" | "grantsCharacterSlot" | "createdAt" | "updatedAt", ExtArgs["result"]["shopItem"]>
 export type ShopItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   playerInventory?: boolean | Prisma.ShopItem$playerInventoryArgs<ExtArgs>
   characterInventory?: boolean | Prisma.ShopItem$characterInventoryArgs<ExtArgs>
@@ -856,6 +890,7 @@ export type $ShopItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     category: string
     isActive: boolean
     maxPerUser: number | null
+    grantsCharacterSlot: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["shopItem"]>
@@ -1293,6 +1328,7 @@ export interface ShopItemFieldRefs {
   readonly category: Prisma.FieldRef<"ShopItem", 'String'>
   readonly isActive: Prisma.FieldRef<"ShopItem", 'Boolean'>
   readonly maxPerUser: Prisma.FieldRef<"ShopItem", 'Int'>
+  readonly grantsCharacterSlot: Prisma.FieldRef<"ShopItem", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"ShopItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ShopItem", 'DateTime'>
 }

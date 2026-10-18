@@ -70,8 +70,13 @@ export class ProfileItemUse extends InteractionHandler {
           [
             "### <:527877discordlegendchest:1518587359136972930> Предмет использован",
             `<@${interaction.user.id}> использует ${ShopFormatter.title(used.item)}`,
+            used.slotGranted
+              ? "Получен слот для нового персонажа — теперь можно открыть тикет на регистрацию персонажа."
+              : null,
             `-# Осталось: ${used.remaining} шт.`,
-          ].join("\n"),
+          ]
+            .filter((line) => line !== null)
+            .join("\n"),
         ),
       );
 

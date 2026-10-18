@@ -28,11 +28,13 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   messagesCount: number | null
+  characterSlots: number | null
   voiceSeconds: number | null
 }
 
 export type UserSumAggregateOutputType = {
   messagesCount: number | null
+  characterSlots: number | null
   voiceSeconds: number | null
 }
 
@@ -42,6 +44,7 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   messagesCount: number | null
+  characterSlots: number | null
   voiceSeconds: number | null
   selectedAwardId: string | null
   profileBannerUrl: string | null
@@ -54,6 +57,7 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   messagesCount: number | null
+  characterSlots: number | null
   voiceSeconds: number | null
   selectedAwardId: string | null
   profileBannerUrl: string | null
@@ -66,6 +70,7 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   messagesCount: number
+  characterSlots: number
   voiceSeconds: number
   selectedAwardId: number
   profileBannerUrl: number
@@ -76,11 +81,13 @@ export type UserCountAggregateOutputType = {
 
 export type UserAvgAggregateInputType = {
   messagesCount?: true
+  characterSlots?: true
   voiceSeconds?: true
 }
 
 export type UserSumAggregateInputType = {
   messagesCount?: true
+  characterSlots?: true
   voiceSeconds?: true
 }
 
@@ -90,6 +97,7 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   messagesCount?: true
+  characterSlots?: true
   voiceSeconds?: true
   selectedAwardId?: true
   profileBannerUrl?: true
@@ -102,6 +110,7 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   messagesCount?: true
+  characterSlots?: true
   voiceSeconds?: true
   selectedAwardId?: true
   profileBannerUrl?: true
@@ -114,6 +123,7 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   messagesCount?: true
+  characterSlots?: true
   voiceSeconds?: true
   selectedAwardId?: true
   profileBannerUrl?: true
@@ -213,6 +223,7 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   messagesCount: number
+  characterSlots: number
   voiceSeconds: number
   selectedAwardId: string | null
   profileBannerUrl: string | null
@@ -248,6 +259,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   messagesCount?: Prisma.IntFilter<"User"> | number
+  characterSlots?: Prisma.IntFilter<"User"> | number
   voiceSeconds?: Prisma.IntFilter<"User"> | number
   selectedAwardId?: Prisma.StringNullableFilter<"User"> | string | null
   profileBannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
@@ -265,6 +277,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
   selectedAwardId?: Prisma.SortOrderInput | Prisma.SortOrder
   profileBannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -286,6 +299,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   messagesCount?: Prisma.IntFilter<"User"> | number
+  characterSlots?: Prisma.IntFilter<"User"> | number
   voiceSeconds?: Prisma.IntFilter<"User"> | number
   selectedAwardId?: Prisma.StringNullableFilter<"User"> | string | null
   profileBannerUrl?: Prisma.StringNullableFilter<"User"> | string | null
@@ -302,6 +316,7 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
   selectedAwardId?: Prisma.SortOrderInput | Prisma.SortOrder
   profileBannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -322,6 +337,7 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   messagesCount?: Prisma.IntWithAggregatesFilter<"User"> | number
+  characterSlots?: Prisma.IntWithAggregatesFilter<"User"> | number
   voiceSeconds?: Prisma.IntWithAggregatesFilter<"User"> | number
   selectedAwardId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   profileBannerUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -334,6 +350,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -350,6 +367,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -366,6 +384,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -382,6 +401,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -398,6 +418,7 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -410,6 +431,7 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -421,6 +443,7 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -433,6 +456,7 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
   selectedAwardId?: Prisma.SortOrder
   profileBannerUrl?: Prisma.SortOrder
@@ -441,6 +465,7 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserAvgOrderByAggregateInput = {
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
 }
 
@@ -450,6 +475,7 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
   selectedAwardId?: Prisma.SortOrder
   profileBannerUrl?: Prisma.SortOrder
@@ -462,6 +488,7 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
   selectedAwardId?: Prisma.SortOrder
   profileBannerUrl?: Prisma.SortOrder
@@ -470,6 +497,7 @@ export type UserMinOrderByAggregateInput = {
 
 export type UserSumOrderByAggregateInput = {
   messagesCount?: Prisma.SortOrder
+  characterSlots?: Prisma.SortOrder
   voiceSeconds?: Prisma.SortOrder
 }
 
@@ -597,6 +625,7 @@ export type UserCreateWithoutAwardsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -612,6 +641,7 @@ export type UserUncheckedCreateWithoutAwardsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -643,6 +673,7 @@ export type UserUpdateWithoutAwardsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -658,6 +689,7 @@ export type UserUncheckedUpdateWithoutAwardsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -673,6 +705,7 @@ export type UserCreateWithoutWalletInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -688,6 +721,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -719,6 +753,7 @@ export type UserUpdateWithoutWalletInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -734,6 +769,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -749,6 +785,7 @@ export type UserCreateWithoutCharactersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -764,6 +801,7 @@ export type UserUncheckedCreateWithoutCharactersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -795,6 +833,7 @@ export type UserUpdateWithoutCharactersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -810,6 +849,7 @@ export type UserUncheckedUpdateWithoutCharactersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -825,6 +865,7 @@ export type UserCreateWithoutInventoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -840,6 +881,7 @@ export type UserUncheckedCreateWithoutInventoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -871,6 +913,7 @@ export type UserUpdateWithoutInventoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -886,6 +929,7 @@ export type UserUncheckedUpdateWithoutInventoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -901,6 +945,7 @@ export type UserCreateWithoutCoinTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -916,6 +961,7 @@ export type UserUncheckedCreateWithoutCoinTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   messagesCount?: number
+  characterSlots?: number
   voiceSeconds?: number
   selectedAwardId?: string | null
   profileBannerUrl?: string | null
@@ -947,6 +993,7 @@ export type UserUpdateWithoutCoinTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -962,6 +1009,7 @@ export type UserUncheckedUpdateWithoutCoinTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   messagesCount?: Prisma.IntFieldUpdateOperationsInput | number
+  characterSlots?: Prisma.IntFieldUpdateOperationsInput | number
   voiceSeconds?: Prisma.IntFieldUpdateOperationsInput | number
   selectedAwardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileBannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1035,6 +1083,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   messagesCount?: boolean
+  characterSlots?: boolean
   voiceSeconds?: boolean
   selectedAwardId?: boolean
   profileBannerUrl?: boolean
@@ -1053,6 +1102,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   messagesCount?: boolean
+  characterSlots?: boolean
   voiceSeconds?: boolean
   selectedAwardId?: boolean
   profileBannerUrl?: boolean
@@ -1066,6 +1116,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   messagesCount?: boolean
+  characterSlots?: boolean
   voiceSeconds?: boolean
   selectedAwardId?: boolean
   profileBannerUrl?: boolean
@@ -1079,13 +1130,14 @@ export type UserSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   messagesCount?: boolean
+  characterSlots?: boolean
   voiceSeconds?: boolean
   selectedAwardId?: boolean
   profileBannerUrl?: boolean
   walletId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "discordId" | "createdAt" | "updatedAt" | "messagesCount" | "voiceSeconds" | "selectedAwardId" | "profileBannerUrl" | "walletId", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "discordId" | "createdAt" | "updatedAt" | "messagesCount" | "characterSlots" | "voiceSeconds" | "selectedAwardId" | "profileBannerUrl" | "walletId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   awards?: boolean | Prisma.User$awardsArgs<ExtArgs>
   wallet?: boolean | Prisma.WalletDefaultArgs<ExtArgs>
@@ -1116,6 +1168,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     updatedAt: Date
     messagesCount: number
+    characterSlots: number
     voiceSeconds: number
     selectedAwardId: string | null
     profileBannerUrl: string | null
@@ -1553,6 +1606,7 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly messagesCount: Prisma.FieldRef<"User", 'Int'>
+  readonly characterSlots: Prisma.FieldRef<"User", 'Int'>
   readonly voiceSeconds: Prisma.FieldRef<"User", 'Int'>
   readonly selectedAwardId: Prisma.FieldRef<"User", 'String'>
   readonly profileBannerUrl: Prisma.FieldRef<"User", 'String'>

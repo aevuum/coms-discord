@@ -12,6 +12,7 @@ export enum ShopAdminAction {
   Edit = "edit",
   EditModal = "edit_modal",
   Toggle = "toggle",
+  ToggleSlot = "toggle_slot",
   Delete = "delete",
   DeleteConfirm = "delete_confirm",
   Inventory = "inv",
