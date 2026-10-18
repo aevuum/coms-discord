@@ -3,8 +3,6 @@ import { randomUUID } from "node:crypto";
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import type { Attachment } from "discord.js";
 
-export const MEDIA_URL_PREFIX = "https://s3.animori.tv/coms-discord";
-
 const MAX_BYTES = 8 * 1024 * 1024;
 
 const EXTENSIONS: Record<string, string> = {
@@ -25,7 +23,9 @@ export class Storage {
   private static client: S3Client | null = null;
 
   public static url(path: string | null | undefined) {
-    return path ? `${MEDIA_URL_PREFIX}${path}` : null;
+    const prefix = process.env.S3_PUBLIC_URL?.replace(/\/+$/, "");
+
+    return path && prefix ? `${prefix}${path}` : null;
   }
 
   public static media(path: string | null | undefined, legacyUrl?: string | null) {
