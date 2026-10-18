@@ -5,6 +5,7 @@
   "main": "client.ts",
   "scripts": {
     "dev": "tsx watch src/client.ts",
+    "serve": "tsx src/client.ts",
     "start": "node dist/client.js",
     "build": "tsc",
     "prisma:generate": "prisma generate",

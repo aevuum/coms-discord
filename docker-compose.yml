@@ -15,7 +15,7 @@ services:
       watch:
         - path: ./src
           target: /app/src
-          action: sync
+          action: sync+restart
 
         - path: ./prisma
           target: /app/prisma

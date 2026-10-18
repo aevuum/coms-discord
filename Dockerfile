@@ -12,4 +12,4 @@ RUN npx prisma generate
 
 COPY . .
 
-CMD ["sh", "-c", "npx prisma generate && npm run dev"]
+CMD ["sh", "-c", "npx prisma generate && exec npm run serve"]
