@@ -121,6 +121,8 @@ model Character {
 
   balanceKnuts Int
 
+  age Int?
+
   mana          Int      @default(100)
   maxMana       Int      @default(100)
   manaUpdatedAt DateTime @default(now())
@@ -459,4 +461,28 @@ model LocationSettings {
   travelRoleId     String?
 
   updatedAt DateTime @updatedAt
+}
+
+enum RollKind {
+  RACE
+  TRAIT
+}
+
+model RollEntry {
+  id String @id @default(cuid())
+
+  kind RollKind
+
+  name        String
+  description String?
+  emoji       String?
+  imageUrl    String?
+
+  chance    Int     @default(0)
+  isDefault Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([kind])
 }

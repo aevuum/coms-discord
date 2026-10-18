@@ -145,6 +145,21 @@ export class CharacterSelectHandler extends InteractionHandler {
         return;
       }
 
+      if (action === ManageCharacterAction.SetBalance || action === ManageCharacterAction.SetAge) {
+        const character = await CharacterInventoryService.getOwnedCharacter(
+          discordId,
+          result.value,
+        );
+
+        await interaction.showModal(
+          action === ManageCharacterAction.SetBalance
+            ? ManageCharacterComponents.balanceModal(discordId, character)
+            : ManageCharacterComponents.ageModal(discordId, character),
+        );
+
+        return;
+      }
+
       if (action === ManageCharacterAction.TakeItem) {
         const character = await CharacterInventoryService.getOwnedCharacter(
           discordId,

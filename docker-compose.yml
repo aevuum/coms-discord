@@ -2,8 +2,7 @@ services:
   bot:
     build: .
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     env_file:
       - .env
     environment:
@@ -37,12 +36,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:?set POSTGRES_DB in .env}
     restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - coms-postgres-data:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+  coms-postgres-data:
+    name: coms-postgres-data

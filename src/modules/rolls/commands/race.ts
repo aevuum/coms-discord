@@ -1,9 +1,11 @@
 import { Command } from "@sapphire/framework";
-import type { ChatInputCommandInteraction } from "discord.js";
-import { RaceService } from "../service/raceService.js";
-import { CommandAccess } from "../../permissions/types/permissions.js";
+import { MessageFlags, type ChatInputCommandInteraction } from "discord.js";
 
-export class RaceRoll extends Command {
+import { CommandAccess } from "../../permissions/types/permissions.js";
+import { RollResponder } from "../lib/rollResponder.js";
+import { RollKind } from "../types/rolls.js";
+
+export class RaceCommand extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
     super(context, {
       ...options,
@@ -20,13 +22,13 @@ export class RaceRoll extends Command {
   }
 
   public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-    const race = RaceService.rollRace();
-    const embed = RaceService.createEmbed(race);
-    const row = RaceService.createButtonRow();
-
-    await interaction.reply({
-      embeds: [embed],
-      components: [row],
-    });
+    try {
+      await interaction.reply({
+        flags: MessageFlags.IsComponentsV2,
+        components: [await RollResponder.build(RollKind.RACE)],
+      });
+    } catch (error) {
+      await RollResponder.error(interaction, error);
+    }
   }
 }

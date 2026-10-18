@@ -45,8 +45,11 @@ export class CharacterCardContainer {
         `# ${MEMBER} ${character.rpName}`,
         `${ARROW} ${CharacterFormatter.faculty(character.faculty)}`,
         `${ARROW} ${CharacterFormatter.status(character.status)}`,
+        character.age !== null ? `${ARROW} Возраст: ${CharacterFormatter.age(character.age)}` : null,
         "-# Эта карточка видна только вам.",
-      ].join("\n"),
+      ]
+        .filter((line) => line !== null)
+        .join("\n"),
     );
 
     if (character.avatarUrl) {

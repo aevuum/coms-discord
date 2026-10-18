@@ -58,6 +58,49 @@ export class CharacterRepository {
     });
   }
 
+  public static async setBalance(
+    id: string,
+    balanceKnuts: number,
+    change: number,
+    reason: string | null,
+  ) {
+    return prisma.$transaction(async (tx) => {
+      const character = await tx.character.update({
+        where: {
+          id,
+        },
+        data: {
+          balanceKnuts,
+        },
+      });
+
+      if (change !== 0) {
+        await tx.characterTransaction.create({
+          data: {
+            characterId: id,
+            type: change > 0 ? "ADMIN_ADD" : "ADMIN_REMOVE",
+            amountKnuts: Math.abs(change),
+            balanceAfterKnuts: balanceKnuts,
+            reason,
+          },
+        });
+      }
+
+      return character;
+    });
+  }
+
+  public static async updateAge(id: string, age: number | null) {
+    return prisma.character.update({
+      where: {
+        id,
+      },
+      data: {
+        age,
+      },
+    });
+  }
+
   public static async updateMana(id: string, mana: number, maxMana: number) {
     return prisma.character.update({
       where: {

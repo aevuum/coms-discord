@@ -70,7 +70,8 @@ export const ModelName = {
   Location: 'Location',
   LocationRoute: 'LocationRoute',
   Travel: 'Travel',
-  LocationSettings: 'LocationSettings'
+  LocationSettings: 'LocationSettings',
+  RollEntry: 'RollEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -145,6 +146,7 @@ export const CharacterScalarFieldEnum = {
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
+  age: 'age',
   mana: 'mana',
   maxMana: 'maxMana',
   manaUpdatedAt: 'manaUpdatedAt',
@@ -379,6 +381,22 @@ export const LocationSettingsScalarFieldEnum = {
 } as const
 
 export type LocationSettingsScalarFieldEnum = (typeof LocationSettingsScalarFieldEnum)[keyof typeof LocationSettingsScalarFieldEnum]
+
+
+export const RollEntryScalarFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  name: 'name',
+  description: 'description',
+  emoji: 'emoji',
+  imageUrl: 'imageUrl',
+  chance: 'chance',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RollEntryScalarFieldEnum = (typeof RollEntryScalarFieldEnum)[keyof typeof RollEntryScalarFieldEnum]
 
 
 export const SortOrder = {

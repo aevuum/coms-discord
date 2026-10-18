@@ -7,6 +7,7 @@ export enum ManageSectionId {
   Shop = "shop",
   Coins = "coins",
   Locations = "locations",
+  Rolls = "rolls",
   Permissions = "permissions",
 }
 

@@ -117,3 +117,8 @@ export type Travel = Prisma.TravelModel
  * 
  */
 export type LocationSettings = Prisma.LocationSettingsModel
+/**
+ * Model RollEntry
+ * 
+ */
+export type RollEntry = Prisma.RollEntryModel

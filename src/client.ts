@@ -7,6 +7,7 @@ import { GatewayIntentBits } from "discord.js";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
+import { waitForDatabase } from "./lib/database.js";
 import { hasGuildMembersIntent } from "./lib/intents.js";
 import { registerModulePaths } from "./lib/moduleLoader.js";
 
@@ -37,5 +38,7 @@ const client = new SapphireClient({
 });
 
 registerModulePaths(client, join(__dirname, "modules"));
+
+await waitForDatabase();
 
 await client.login(process.env.DISCORD_TOKEN);

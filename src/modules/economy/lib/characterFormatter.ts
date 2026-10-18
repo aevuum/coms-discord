@@ -32,6 +32,22 @@ const statusEmojis: Record<CharacterStatus, string> = {
 };
 
 export class CharacterFormatter {
+  public static age(age: number) {
+    const lastTwo = age % 100;
+    const last = age % 10;
+
+    const word =
+      lastTwo >= 11 && lastTwo <= 14
+        ? "лет"
+        : last === 1
+          ? "год"
+          : last >= 2 && last <= 4
+            ? "года"
+            : "лет";
+
+    return `${age} ${word}`;
+  }
+
   public static faculty(faculty: CharacterFaculty) {
     return `${facultyEmojis[faculty] ?? "🎓"} ${
       facultyLabels[faculty] ?? "Нет факультета"

@@ -17,6 +17,7 @@ import {
 } from "../../../database/generated/prisma/client.js";
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
+import { Currency } from "../../economy/lib/currency.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "../../spells/lib/mana.js";
 import {
@@ -121,6 +122,26 @@ export const CHARACTER_CATEGORIES: {
         label: "Установить ману",
         emoji: "<:29865potionwhite:1518587289989550100>",
         style: ButtonStyle.Primary,
+      },
+    ],
+  },
+  {
+    id: CharacterCategory.Details,
+    label: "Данные",
+    emoji: "<:6335settingsinfo:1518587246205337720>",
+    description: "Баланс в галлеонах, сиклах и кнатах и возраст персонажа",
+    actions: [
+      {
+        action: ManageCharacterAction.SetBalance,
+        label: "Баланс",
+        emoji: "<:galleon:1521547045268099242>",
+        style: ButtonStyle.Primary,
+      },
+      {
+        action: ManageCharacterAction.SetAge,
+        label: "Возраст",
+        emoji: "<:6335settingsinfo:1518587246205337720>",
+        style: ButtonStyle.Secondary,
       },
     ],
   },
@@ -400,6 +421,75 @@ export class ManageCharacterComponents {
               .setMaxLength(5)
               .setValue(String(character.maxMana)),
           ),
+      );
+  }
+
+  public static balanceModal(discordId: string, character: Character) {
+    const balance = Currency.fromKnuts(character.balanceKnuts);
+
+    const amount = (customId: string, label: string, value: number, description?: string) => {
+      const field = new LabelBuilder()
+        .setLabel(label)
+        .setTextInputComponent(
+          new TextInputBuilder()
+            .setCustomId(customId)
+            .setStyle(TextInputStyle.Short)
+            .setRequired(false)
+            .setMaxLength(9)
+            .setValue(String(value)),
+        );
+
+      return description ? field.setDescription(description) : field;
+    };
+
+    return new ModalBuilder()
+      .setCustomId(
+        CharacterCustomIds.build(CharacterPanelAction.BalanceModal, discordId, character.id),
+      )
+      .setTitle(`Баланс · ${character.rpName}`.slice(0, 45))
+      .addLabelComponents(
+        amount(
+          CharacterModalFields.Galleons,
+          "Галлеоны",
+          balance.galleons,
+          "Новый баланс целиком. 1 галлеон = 17 сиклей, 1 сикль = 29 кнатов",
+        ),
+        amount(CharacterModalFields.Sickles, "Сикли", balance.sickles),
+        amount(CharacterModalFields.Knuts, "Кнаты", balance.knuts),
+        new LabelBuilder()
+          .setLabel("Причина")
+          .setDescription("Попадёт в историю операций персонажа")
+          .setTextInputComponent(
+            new TextInputBuilder()
+              .setCustomId(CharacterModalFields.Reason)
+              .setStyle(TextInputStyle.Short)
+              .setRequired(false)
+              .setMaxLength(200),
+          ),
+      );
+  }
+
+  public static ageModal(discordId: string, character: Character) {
+    const input = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.Age)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false)
+      .setMaxLength(4);
+
+    if (character.age !== null) {
+      input.setValue(String(character.age));
+    }
+
+    return new ModalBuilder()
+      .setCustomId(
+        CharacterCustomIds.build(CharacterPanelAction.AgeModal, discordId, character.id),
+      )
+      .setTitle(`Возраст · ${character.rpName}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Возраст, лет")
+          .setDescription("Оставьте пустым, чтобы убрать возраст")
+          .setTextInputComponent(input),
       );
   }
 

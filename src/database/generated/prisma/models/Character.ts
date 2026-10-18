@@ -28,12 +28,14 @@ export type AggregateCharacter = {
 
 export type CharacterAvgAggregateOutputType = {
   balanceKnuts: number | null
+  age: number | null
   mana: number | null
   maxMana: number | null
 }
 
 export type CharacterSumAggregateOutputType = {
   balanceKnuts: number | null
+  age: number | null
   mana: number | null
   maxMana: number | null
 }
@@ -45,6 +47,7 @@ export type CharacterMinAggregateOutputType = {
   faculty: $Enums.CharacterFaculty | null
   status: $Enums.CharacterStatus | null
   balanceKnuts: number | null
+  age: number | null
   mana: number | null
   maxMana: number | null
   manaUpdatedAt: Date | null
@@ -60,6 +63,7 @@ export type CharacterMaxAggregateOutputType = {
   faculty: $Enums.CharacterFaculty | null
   status: $Enums.CharacterStatus | null
   balanceKnuts: number | null
+  age: number | null
   mana: number | null
   maxMana: number | null
   manaUpdatedAt: Date | null
@@ -75,6 +79,7 @@ export type CharacterCountAggregateOutputType = {
   faculty: number
   status: number
   balanceKnuts: number
+  age: number
   mana: number
   maxMana: number
   manaUpdatedAt: number
@@ -87,12 +92,14 @@ export type CharacterCountAggregateOutputType = {
 
 export type CharacterAvgAggregateInputType = {
   balanceKnuts?: true
+  age?: true
   mana?: true
   maxMana?: true
 }
 
 export type CharacterSumAggregateInputType = {
   balanceKnuts?: true
+  age?: true
   mana?: true
   maxMana?: true
 }
@@ -104,6 +111,7 @@ export type CharacterMinAggregateInputType = {
   faculty?: true
   status?: true
   balanceKnuts?: true
+  age?: true
   mana?: true
   maxMana?: true
   manaUpdatedAt?: true
@@ -119,6 +127,7 @@ export type CharacterMaxAggregateInputType = {
   faculty?: true
   status?: true
   balanceKnuts?: true
+  age?: true
   mana?: true
   maxMana?: true
   manaUpdatedAt?: true
@@ -134,6 +143,7 @@ export type CharacterCountAggregateInputType = {
   faculty?: true
   status?: true
   balanceKnuts?: true
+  age?: true
   mana?: true
   maxMana?: true
   manaUpdatedAt?: true
@@ -236,6 +246,7 @@ export type CharacterGroupByOutputType = {
   faculty: $Enums.CharacterFaculty
   status: $Enums.CharacterStatus
   balanceKnuts: number
+  age: number | null
   mana: number
   maxMana: number
   manaUpdatedAt: Date
@@ -274,6 +285,7 @@ export type CharacterWhereInput = {
   faculty?: Prisma.EnumCharacterFacultyFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
+  age?: Prisma.IntNullableFilter<"Character"> | number | null
   mana?: Prisma.IntFilter<"Character"> | number
   maxMana?: Prisma.IntFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -294,6 +306,7 @@ export type CharacterOrderByWithRelationInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrderInput | Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -317,6 +330,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   faculty?: Prisma.EnumCharacterFacultyFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
+  age?: Prisma.IntNullableFilter<"Character"> | number | null
   mana?: Prisma.IntFilter<"Character"> | number
   maxMana?: Prisma.IntFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -337,6 +351,7 @@ export type CharacterOrderByWithAggregationInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrderInput | Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -360,6 +375,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   faculty?: Prisma.EnumCharacterFacultyWithAggregatesFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusWithAggregatesFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntWithAggregatesFilter<"Character"> | number
+  age?: Prisma.IntNullableWithAggregatesFilter<"Character"> | number | null
   mana?: Prisma.IntWithAggregatesFilter<"Character"> | number
   maxMana?: Prisma.IntWithAggregatesFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
@@ -375,6 +391,7 @@ export type CharacterCreateInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -394,6 +411,7 @@ export type CharacterUncheckedCreateInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -413,6 +431,7 @@ export type CharacterUpdateInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,6 +451,7 @@ export type CharacterUncheckedUpdateInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -451,6 +471,7 @@ export type CharacterCreateManyInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -466,6 +487,7 @@ export type CharacterUpdateManyMutationInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -480,6 +502,7 @@ export type CharacterUncheckedUpdateManyInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -505,6 +528,7 @@ export type CharacterCountOrderByAggregateInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -515,6 +539,7 @@ export type CharacterCountOrderByAggregateInput = {
 
 export type CharacterAvgOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
 }
@@ -526,6 +551,7 @@ export type CharacterMaxOrderByAggregateInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -541,6 +567,7 @@ export type CharacterMinOrderByAggregateInput = {
   faculty?: Prisma.SortOrder
   status?: Prisma.SortOrder
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -551,6 +578,7 @@ export type CharacterMinOrderByAggregateInput = {
 
 export type CharacterSumOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
 }
@@ -608,6 +636,14 @@ export type EnumCharacterFacultyFieldUpdateOperationsInput = {
 
 export type EnumCharacterStatusFieldUpdateOperationsInput = {
   set?: $Enums.CharacterStatus
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type CharacterCreateNestedOneWithoutSpellCastsInput = {
@@ -673,6 +709,7 @@ export type CharacterCreateWithoutUserInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -691,6 +728,7 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -738,6 +776,7 @@ export type CharacterScalarWhereInput = {
   faculty?: Prisma.EnumCharacterFacultyFilter<"Character"> | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFilter<"Character"> | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
+  age?: Prisma.IntNullableFilter<"Character"> | number | null
   mana?: Prisma.IntFilter<"Character"> | number
   maxMana?: Prisma.IntFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -753,6 +792,7 @@ export type CharacterCreateWithoutSpellCastsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -771,6 +811,7 @@ export type CharacterUncheckedCreateWithoutSpellCastsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -805,6 +846,7 @@ export type CharacterUpdateWithoutSpellCastsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -823,6 +865,7 @@ export type CharacterUncheckedUpdateWithoutSpellCastsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -841,6 +884,7 @@ export type CharacterCreateWithoutTransactionsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -859,6 +903,7 @@ export type CharacterUncheckedCreateWithoutTransactionsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -893,6 +938,7 @@ export type CharacterUpdateWithoutTransactionsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -911,6 +957,7 @@ export type CharacterUncheckedUpdateWithoutTransactionsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -929,6 +976,7 @@ export type CharacterCreateWithoutInventoryItemsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -947,6 +995,7 @@ export type CharacterUncheckedCreateWithoutInventoryItemsInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -981,6 +1030,7 @@ export type CharacterUpdateWithoutInventoryItemsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -999,6 +1049,7 @@ export type CharacterUncheckedUpdateWithoutInventoryItemsInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1017,6 +1068,7 @@ export type CharacterCreateWithoutTupperInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1035,6 +1087,7 @@ export type CharacterUncheckedCreateWithoutTupperInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1069,6 +1122,7 @@ export type CharacterUpdateWithoutTupperInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1087,6 +1141,7 @@ export type CharacterUncheckedUpdateWithoutTupperInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1105,6 +1160,7 @@ export type CharacterCreateManyUserInput = {
   faculty: $Enums.CharacterFaculty
   status?: $Enums.CharacterStatus
   balanceKnuts: number
+  age?: number | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1119,6 +1175,7 @@ export type CharacterUpdateWithoutUserInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1137,6 +1194,7 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1155,6 +1213,7 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
   faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
   status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1218,6 +1277,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  age?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
@@ -1239,6 +1299,7 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  age?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
@@ -1255,6 +1316,7 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  age?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
@@ -1271,6 +1333,7 @@ export type CharacterSelectScalar = {
   faculty?: boolean
   status?: boolean
   balanceKnuts?: boolean
+  age?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
@@ -1279,7 +1342,7 @@ export type CharacterSelectScalar = {
   userId?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rpName" | "avatarUrl" | "faculty" | "status" | "balanceKnuts" | "mana" | "maxMana" | "manaUpdatedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rpName" | "avatarUrl" | "faculty" | "status" | "balanceKnuts" | "age" | "mana" | "maxMana" | "manaUpdatedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tupper?: boolean | Prisma.Character$tupperArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1311,6 +1374,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     faculty: $Enums.CharacterFaculty
     status: $Enums.CharacterStatus
     balanceKnuts: number
+    age: number | null
     mana: number
     maxMana: number
     manaUpdatedAt: Date
@@ -1751,6 +1815,7 @@ export interface CharacterFieldRefs {
   readonly faculty: Prisma.FieldRef<"Character", 'CharacterFaculty'>
   readonly status: Prisma.FieldRef<"Character", 'CharacterStatus'>
   readonly balanceKnuts: Prisma.FieldRef<"Character", 'Int'>
+  readonly age: Prisma.FieldRef<"Character", 'Int'>
   readonly mana: Prisma.FieldRef<"Character", 'Int'>
   readonly maxMana: Prisma.FieldRef<"Character", 'Int'>
   readonly manaUpdatedAt: Prisma.FieldRef<"Character", 'DateTime'>

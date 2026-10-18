@@ -7,6 +7,7 @@ import {
 
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { UserRepository } from "../../users/repositories/userRepository.js";
+import { Currency, MAX_BALANCE_KNUTS } from "../../economy/lib/currency.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { TupperService } from "../../tupper/service/tupperService.js";
 import { CharacterError, ManageCharacterAction } from "../types/character.js";
@@ -15,6 +16,8 @@ export class CharacterService {
   public static readonly MANAGE_KEY = "manage.characters";
 
   private static readonly MAX_MANA = 10_000;
+
+  private static readonly MAX_AGE = 1000;
 
   public static async assertCanManage(interaction: BaseInteraction) {
     const subject = await PermissionService.resolveSubject(interaction);
@@ -151,6 +154,73 @@ export class CharacterService {
     }
 
     return CharacterRepository.updateMana(character.id, mana, maxMana);
+  }
+
+  public static async setBalance(
+    discordId: string,
+    characterId: string,
+    input: { galleons: string; sickles: string; knuts: string; reason: string },
+  ) {
+    const character = await this.getOwned(discordId, characterId);
+
+    const galleons = this.parseAmount(input.galleons, "Галлеоны");
+    const sickles = this.parseAmount(input.sickles, "Сикли");
+    const knuts = this.parseAmount(input.knuts, "Кнаты");
+
+    const total = Currency.toKnuts(galleons, sickles, knuts);
+
+    if (total > MAX_BALANCE_KNUTS) {
+      throw new CharacterError("Баланс слишком большой.");
+    }
+
+    const change = total - character.balanceKnuts;
+
+    const updated = await CharacterRepository.setBalance(
+      character.id,
+      total,
+      change,
+      input.reason.trim().slice(0, 200) || "Изменение куратором",
+    );
+
+    return { character: updated, change };
+  }
+
+  public static async setAge(discordId: string, characterId: string, input: string) {
+    const character = await this.getOwned(discordId, characterId);
+
+    const text = input.trim();
+
+    if (!text) {
+      return CharacterRepository.updateAge(character.id, null);
+    }
+
+    const age = this.parseInteger(text, "Возраст");
+
+    if (age < 1 || age > this.MAX_AGE) {
+      throw new CharacterError(`Возраст должен быть от 1 до ${this.MAX_AGE} лет.`);
+    }
+
+    return CharacterRepository.updateAge(character.id, age);
+  }
+
+  private static async getOwned(discordId: string, characterId: string) {
+    const character = await CharacterRepository.getById(characterId);
+
+    if (!character || character.user.discordId !== discordId) {
+      throw new CharacterError("Персонаж не найден.");
+    }
+
+    return character;
+  }
+
+  private static parseAmount(input: string, label: string) {
+    const text = input.trim() || "0";
+
+    if (!/^\d+$/.test(text)) {
+      throw new CharacterError(`Поле «${label}» должно быть целым неотрицательным числом.`);
+    }
+
+    return Number(text);
   }
 
   private static parseInteger(input: string, label: string) {

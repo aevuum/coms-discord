@@ -105,3 +105,11 @@ export const TravelStatus = {
 } as const
 
 export type TravelStatus = (typeof TravelStatus)[keyof typeof TravelStatus]
+
+
+export const RollKind = {
+  RACE: 'RACE',
+  TRAIT: 'TRAIT'
+} as const
+
+export type RollKind = (typeof RollKind)[keyof typeof RollKind]

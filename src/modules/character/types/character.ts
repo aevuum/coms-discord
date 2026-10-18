@@ -16,6 +16,8 @@ export enum ManageCharacterAction {
   GiveItem = "give_item",
   TakeItem = "take_item",
   SetMana = "mana",
+  SetBalance = "balance",
+  SetAge = "age",
 }
 
 export enum CharacterCategory {
@@ -23,6 +25,7 @@ export enum CharacterCategory {
   Status = "status",
   Inventory = "inventory",
   Mana = "mana",
+  Details = "details",
 }
 
 export type CharacterCreateInput = {

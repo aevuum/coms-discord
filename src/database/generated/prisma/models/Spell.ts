@@ -550,14 +550,6 @@ export type EnumSpellDifficultyFieldUpdateOperationsInput = {
   set?: $Enums.SpellDifficulty
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type SpellUpdategifUrlsInput = {
   set?: string[]
   push?: string | string[]

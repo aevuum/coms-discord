@@ -51,6 +51,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Rolls,
+    key: "manage.rolls",
+    label: "Расы и трейты",
+    emoji: "<:82269sailormoonkaleidomoon:1519585023555010732>",
+    description: "Что может выпасть по /race и /trait и с каким шансом",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Permissions,
     key: "manage.permissions",
     label: "Доступ",

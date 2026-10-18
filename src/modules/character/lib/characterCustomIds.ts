@@ -11,6 +11,8 @@ export enum CharacterPanelAction {
   TakeModal = "take_modal",
   Category = "category",
   ManaModal = "mana_modal",
+  BalanceModal = "balance_modal",
+  AgeModal = "age_modal",
 }
 
 export const CharacterModalFields = {
@@ -22,6 +24,11 @@ export const CharacterModalFields = {
   ItemImage: "item_image",
   ManaCurrent: "mana_current",
   ManaMax: "mana_max",
+  Galleons: "galleons",
+  Sickles: "sickles",
+  Knuts: "knuts",
+  Reason: "reason",
+  Age: "age",
 } as const;
 
 export class CharacterCustomIds {

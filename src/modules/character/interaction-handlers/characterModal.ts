@@ -23,6 +23,8 @@ import {
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { Mana } from "../../spells/lib/mana.js";
+import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
+import { Currency } from "../../economy/lib/currency.js";
 import { ManageCharacterAction } from "../types/character.js";
 
 export class CharacterModalHandler extends InteractionHandler {
@@ -45,7 +47,9 @@ export class CharacterModalHandler extends InteractionHandler {
         parsed.action !== CharacterPanelAction.CreateModal &&
         parsed.action !== CharacterPanelAction.GiveModal &&
         parsed.action !== CharacterPanelAction.TakeModal &&
-        parsed.action !== CharacterPanelAction.ManaModal)
+        parsed.action !== CharacterPanelAction.ManaModal &&
+        parsed.action !== CharacterPanelAction.BalanceModal &&
+        parsed.action !== CharacterPanelAction.AgeModal)
     ) {
       return this.none();
     }
@@ -113,6 +117,46 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterContainer.result(
           ACTION_TITLES[ManageCharacterAction.SetMana],
           `Мана персонажа **${character.rpName}**: ${Mana.format(character.mana, character.maxMana)}`,
+        );
+      }
+
+      case CharacterPanelAction.BalanceModal: {
+        const field = (id: string) => interaction.fields.getTextInputValue(id);
+
+        const { character, change } = await CharacterService.setBalance(
+          result.args[0],
+          result.args[1],
+          {
+            galleons: field(CharacterModalFields.Galleons),
+            sickles: field(CharacterModalFields.Sickles),
+            knuts: field(CharacterModalFields.Knuts),
+            reason: field(CharacterModalFields.Reason),
+          },
+        );
+
+        return ManageCharacterContainer.result(
+          ACTION_TITLES[ManageCharacterAction.SetBalance],
+          [
+            `Баланс **${character.rpName}**: ${Currency.inline(character.balanceKnuts)}`,
+            change
+              ? `изменение: ${change > 0 ? "+" : "−"}${Currency.inline(Math.abs(change))}`
+              : "Баланс не изменился.",
+          ].join(" · "),
+        );
+      }
+
+      case CharacterPanelAction.AgeModal: {
+        const character = await CharacterService.setAge(
+          result.args[0],
+          result.args[1],
+          interaction.fields.getTextInputValue(CharacterModalFields.Age),
+        );
+
+        return ManageCharacterContainer.result(
+          ACTION_TITLES[ManageCharacterAction.SetAge],
+          character.age === null
+            ? `Возраст персонажа **${character.rpName}** убран.`
+            : `Возраст персонажа **${character.rpName}**: ${CharacterFormatter.age(character.age)}.`,
         );
       }
 

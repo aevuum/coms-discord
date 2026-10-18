@@ -19,6 +19,7 @@ const USER_ERRORS = new Set([
   "ShopError",
   "CoinsError",
   "LocationError",
+  "RollError",
 ]);
 
 export class ManageError extends Error {

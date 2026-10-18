@@ -403,7 +403,8 @@ export const ModelName = {
   Location: 'Location',
   LocationRoute: 'LocationRoute',
   Travel: 'Travel',
-  LocationSettings: 'LocationSettings'
+  LocationSettings: 'LocationSettings',
+  RollEntry: 'RollEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1903,6 +1904,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RollEntry: {
+      payload: Prisma.$RollEntryPayload<ExtArgs>
+      fields: Prisma.RollEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RollEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RollEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.RollEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RollEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>
+        }
+        findMany: {
+          args: Prisma.RollEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>[]
+        }
+        create: {
+          args: Prisma.RollEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>
+        }
+        createMany: {
+          args: Prisma.RollEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RollEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.RollEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>
+        }
+        update: {
+          args: Prisma.RollEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.RollEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RollEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RollEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.RollEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RollEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.RollEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRollEntry>
+        }
+        groupBy: {
+          args: Prisma.RollEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RollEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RollEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RollEntryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1998,6 +2073,7 @@ export const CharacterScalarFieldEnum = {
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
+  age: 'age',
   mana: 'mana',
   maxMana: 'maxMana',
   manaUpdatedAt: 'manaUpdatedAt',
@@ -2234,6 +2310,22 @@ export const LocationSettingsScalarFieldEnum = {
 export type LocationSettingsScalarFieldEnum = (typeof LocationSettingsScalarFieldEnum)[keyof typeof LocationSettingsScalarFieldEnum]
 
 
+export const RollEntryScalarFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  name: 'name',
+  description: 'description',
+  emoji: 'emoji',
+  imageUrl: 'imageUrl',
+  chance: 'chance',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RollEntryScalarFieldEnum = (typeof RollEntryScalarFieldEnum)[keyof typeof RollEntryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2468,6 +2560,20 @@ export type ListEnumTravelStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'RollKind'
+ */
+export type EnumRollKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RollKind'>
+    
+
+
+/**
+ * Reference to a field of type 'RollKind[]'
+ */
+export type ListEnumRollKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RollKind[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2610,6 +2716,7 @@ export type GlobalOmitConfig = {
   locationRoute?: Prisma.LocationRouteOmit
   travel?: Prisma.TravelOmit
   locationSettings?: Prisma.LocationSettingsOmit
+  rollEntry?: Prisma.RollEntryOmit
 }
 
 /* Types for Logging */
