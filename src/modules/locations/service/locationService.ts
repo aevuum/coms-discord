@@ -79,6 +79,7 @@ export class LocationService {
         itemKey: route.itemName ? route.itemName.toLocaleLowerCase("ru") : null,
         itemQuantity: route.itemQuantity ?? 1,
         adultOnly: route.adultOnly ?? false,
+        magical: route.magical ?? false,
       });
     }
 
@@ -178,6 +179,7 @@ export class LocationService {
       itemName: string;
       itemQuantity: string;
       adultOnly: boolean;
+      magical: boolean;
       reverse: boolean;
     },
   ) {
@@ -213,6 +215,7 @@ export class LocationService {
       itemKey: itemName ? itemName.toLocaleLowerCase("ru") : null,
       itemQuantity,
       adultOnly: input.adultOnly,
+      magical: input.magical,
     };
 
     if (from.routesFrom.length >= this.MAX_ROUTES) {

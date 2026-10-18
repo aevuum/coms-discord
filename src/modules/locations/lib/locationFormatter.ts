@@ -22,6 +22,10 @@ export class LocationFormatter {
       .join(" ");
   }
 
+  public static needsApproval(route: Pick<RouteWithTarget, "magical" | "to">) {
+    return route.magical && route.to.access === "APPROVAL";
+  }
+
   public static item(route: Pick<RouteWithTarget, "itemName" | "itemQuantity">) {
     return route.itemName ? `${route.itemName} ×${route.itemQuantity}` : null;
   }
@@ -31,7 +35,7 @@ export class LocationFormatter {
       this.duration(route.travelMinutes),
       this.item(route) ? `нужно: ${this.item(route)}` : null,
       route.adultOnly ? "только взрослые" : null,
-      route.to.access === "APPROVAL" ? "по разрешению куратора" : null,
+      this.needsApproval(route) ? "по разрешению куратора" : null,
     ].filter((part): part is string => Boolean(part));
   }
 
@@ -40,7 +44,7 @@ export class LocationFormatter {
   }
 
   public static access(location: Pick<Location, "access">) {
-    return location.access === "APPROVAL" ? "🔒 по разрешению куратора" : "🔓 свободный вход";
+    return location.access === "APPROVAL" ? "🔒 магией — по разрешению куратора" : "🔓 свободный вход";
   }
 
   public static selectEmoji(emoji: string | null) {

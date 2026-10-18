@@ -59,7 +59,7 @@ export class LocationAdminContainer {
   public static root(locations: LocationWithRoutes[], roleName: (roleId: string) => string) {
     const container = this.base("Локации", [
       `${ARROW} Локация — это роль, которая открывает игроку каналы места. Игроки перемещаются по путям между локациями через /travel.`,
-      "-# Особые места пускают только с разрешения куратора.",
+      "-# В особые места пешком можно свободно, а аппарацией или камином — только с разрешения куратора.",
     ]);
 
     container.addTextDisplayComponents(
@@ -140,7 +140,7 @@ export class LocationAdminContainer {
           .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setCustomId(LocationCustomIds.build(LocationAdminAction.ToggleAccess, location.id))
-          .setLabel(location.access === "APPROVAL" ? "Сделать свободной" : "Только по разрешению")
+          .setLabel(location.access === "APPROVAL" ? "Пускать магией свободно" : "Магией по разрешению")
           .setEmoji(location.access === "APPROVAL" ? "🔓" : "🔒")
           .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
@@ -448,14 +448,18 @@ export class LocationAdminContainer {
           ),
         new LabelBuilder()
           .setLabel("Дополнительно")
-          .setDescription("«Только взрослые» — например, для аппарации. Обратный путь получит те же условия")
+          .setDescription("Магический путь в особое место требует разрешения куратора. Обратный путь получит те же условия")
           .setStringSelectMenuComponent(
             new StringSelectMenuBuilder()
               .setCustomId(LocationModalFields.Options)
               .setRequired(false)
               .setMinValues(0)
-              .setMaxValues(2)
+              .setMaxValues(3)
               .addOptions(
+                new StringSelectMenuOptionBuilder()
+                  .setLabel("Магический способ")
+                  .setDescription("Аппарация, камин, портключ")
+                  .setValue("magical"),
                 new StringSelectMenuOptionBuilder().setLabel("Только взрослые").setValue("adult"),
                 new StringSelectMenuOptionBuilder()
                   .setLabel("Создать обратный путь")

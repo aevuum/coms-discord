@@ -113,7 +113,7 @@ export class TravelContainer {
           `# ${MAP} Путеводитель`,
           "",
           `${ARROW} Здесь можно узнать, где находится ваш персонаж, какие места есть в мире и как до них добраться.`,
-          `${ARROW} Обычные места открыты для всех, в особые (например, Хогвартс или Министерство) пускают только с разрешения куратора.`,
+          `${ARROW} Пешком можно дойти куда угодно. А вот аппарировать или переместиться камином в особые места (например, Хогвартс или Министерство) можно только с разрешения куратора.`,
           `${ARROW} Для некоторых путей нужны предметы из инвентаря персонажа — например, летучий порох для камина.`,
           "-# Путеводитель также открывается командой /travel.",
         ].join("\n"),
@@ -148,8 +148,8 @@ export class TravelContainer {
       plan.payer
         ? `${ARROW} Будет потрачено: **${LocationFormatter.item(route)}** у персонажа **${plan.payer.characterName}**`
         : null,
-      route.to.access === "APPROVAL"
-        ? `${ARROW} Это особое место: заявка уйдёт кураторам, предмет спишется после одобрения.`
+      LocationFormatter.needsApproval(route)
+        ? `${ARROW} Это особое место: попасть сюда магией можно только с разрешения куратора. Заявка уйдёт кураторам, предмет спишется после одобрения.`
         : null,
       route.travelMinutes > 0
         ? "-# В пути вы не будете видеть ни одну локацию."
@@ -168,7 +168,7 @@ export class TravelContainer {
       new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId(TravelCustomIds.build(TravelAction.Confirm, route.id))
-          .setLabel(route.to.access === "APPROVAL" ? "Отправить заявку" : "Отправиться")
+          .setLabel(LocationFormatter.needsApproval(route) ? "Отправить заявку" : "Отправиться")
           .setEmoji("<:83888settingsanimation:1518587313817653329>")
           .setStyle(ButtonStyle.Success),
         new ButtonBuilder()

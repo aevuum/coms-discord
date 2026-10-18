@@ -98,7 +98,7 @@ export class TravelService {
   public static async start(member: GuildMember, routeId: string) {
     const plan = await this.plan(member, routeId);
 
-    if (plan.route.to.access === "APPROVAL") {
+    if (LocationFormatter.needsApproval(plan.route)) {
       await this.requestApproval(member, plan);
 
       return TravelContainer.success(

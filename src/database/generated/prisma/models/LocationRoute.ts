@@ -46,6 +46,7 @@ export type LocationRouteMinAggregateOutputType = {
   itemKey: string | null
   itemQuantity: number | null
   adultOnly: boolean | null
+  magical: boolean | null
   createdAt: Date | null
 }
 
@@ -59,6 +60,7 @@ export type LocationRouteMaxAggregateOutputType = {
   itemKey: string | null
   itemQuantity: number | null
   adultOnly: boolean | null
+  magical: boolean | null
   createdAt: Date | null
 }
 
@@ -72,6 +74,7 @@ export type LocationRouteCountAggregateOutputType = {
   itemKey: number
   itemQuantity: number
   adultOnly: number
+  magical: number
   createdAt: number
   _all: number
 }
@@ -97,6 +100,7 @@ export type LocationRouteMinAggregateInputType = {
   itemKey?: true
   itemQuantity?: true
   adultOnly?: true
+  magical?: true
   createdAt?: true
 }
 
@@ -110,6 +114,7 @@ export type LocationRouteMaxAggregateInputType = {
   itemKey?: true
   itemQuantity?: true
   adultOnly?: true
+  magical?: true
   createdAt?: true
 }
 
@@ -123,6 +128,7 @@ export type LocationRouteCountAggregateInputType = {
   itemKey?: true
   itemQuantity?: true
   adultOnly?: true
+  magical?: true
   createdAt?: true
   _all?: true
 }
@@ -223,6 +229,7 @@ export type LocationRouteGroupByOutputType = {
   itemKey: string | null
   itemQuantity: number
   adultOnly: boolean
+  magical: boolean
   createdAt: Date
   _count: LocationRouteCountAggregateOutputType | null
   _avg: LocationRouteAvgAggregateOutputType | null
@@ -259,6 +266,7 @@ export type LocationRouteWhereInput = {
   itemKey?: Prisma.StringNullableFilter<"LocationRoute"> | string | null
   itemQuantity?: Prisma.IntFilter<"LocationRoute"> | number
   adultOnly?: Prisma.BoolFilter<"LocationRoute"> | boolean
+  magical?: Prisma.BoolFilter<"LocationRoute"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LocationRoute"> | Date | string
   from?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   to?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
@@ -274,6 +282,7 @@ export type LocationRouteOrderByWithRelationInput = {
   itemKey?: Prisma.SortOrderInput | Prisma.SortOrder
   itemQuantity?: Prisma.SortOrder
   adultOnly?: Prisma.SortOrder
+  magical?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   from?: Prisma.LocationOrderByWithRelationInput
   to?: Prisma.LocationOrderByWithRelationInput
@@ -292,6 +301,7 @@ export type LocationRouteWhereUniqueInput = Prisma.AtLeast<{
   itemKey?: Prisma.StringNullableFilter<"LocationRoute"> | string | null
   itemQuantity?: Prisma.IntFilter<"LocationRoute"> | number
   adultOnly?: Prisma.BoolFilter<"LocationRoute"> | boolean
+  magical?: Prisma.BoolFilter<"LocationRoute"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LocationRoute"> | Date | string
   from?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   to?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
@@ -307,6 +317,7 @@ export type LocationRouteOrderByWithAggregationInput = {
   itemKey?: Prisma.SortOrderInput | Prisma.SortOrder
   itemQuantity?: Prisma.SortOrder
   adultOnly?: Prisma.SortOrder
+  magical?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.LocationRouteCountOrderByAggregateInput
   _avg?: Prisma.LocationRouteAvgOrderByAggregateInput
@@ -328,6 +339,7 @@ export type LocationRouteScalarWhereWithAggregatesInput = {
   itemKey?: Prisma.StringNullableWithAggregatesFilter<"LocationRoute"> | string | null
   itemQuantity?: Prisma.IntWithAggregatesFilter<"LocationRoute"> | number
   adultOnly?: Prisma.BoolWithAggregatesFilter<"LocationRoute"> | boolean
+  magical?: Prisma.BoolWithAggregatesFilter<"LocationRoute"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LocationRoute"> | Date | string
 }
 
@@ -339,6 +351,7 @@ export type LocationRouteCreateInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
   from: Prisma.LocationCreateNestedOneWithoutRoutesFromInput
   to: Prisma.LocationCreateNestedOneWithoutRoutesToInput
@@ -354,6 +367,7 @@ export type LocationRouteUncheckedCreateInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
 }
 
@@ -365,6 +379,7 @@ export type LocationRouteUpdateInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   from?: Prisma.LocationUpdateOneRequiredWithoutRoutesFromNestedInput
   to?: Prisma.LocationUpdateOneRequiredWithoutRoutesToNestedInput
@@ -380,6 +395,7 @@ export type LocationRouteUncheckedUpdateInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -393,6 +409,7 @@ export type LocationRouteCreateManyInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
 }
 
@@ -404,6 +421,7 @@ export type LocationRouteUpdateManyMutationInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -417,6 +435,7 @@ export type LocationRouteUncheckedUpdateManyInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -440,6 +459,7 @@ export type LocationRouteCountOrderByAggregateInput = {
   itemKey?: Prisma.SortOrder
   itemQuantity?: Prisma.SortOrder
   adultOnly?: Prisma.SortOrder
+  magical?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -458,6 +478,7 @@ export type LocationRouteMaxOrderByAggregateInput = {
   itemKey?: Prisma.SortOrder
   itemQuantity?: Prisma.SortOrder
   adultOnly?: Prisma.SortOrder
+  magical?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -471,6 +492,7 @@ export type LocationRouteMinOrderByAggregateInput = {
   itemKey?: Prisma.SortOrder
   itemQuantity?: Prisma.SortOrder
   adultOnly?: Prisma.SortOrder
+  magical?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -571,6 +593,7 @@ export type LocationRouteCreateWithoutFromInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
   to: Prisma.LocationCreateNestedOneWithoutRoutesToInput
 }
@@ -584,6 +607,7 @@ export type LocationRouteUncheckedCreateWithoutFromInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
 }
 
@@ -605,6 +629,7 @@ export type LocationRouteCreateWithoutToInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
   from: Prisma.LocationCreateNestedOneWithoutRoutesFromInput
 }
@@ -618,6 +643,7 @@ export type LocationRouteUncheckedCreateWithoutToInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
 }
 
@@ -660,6 +686,7 @@ export type LocationRouteScalarWhereInput = {
   itemKey?: Prisma.StringNullableFilter<"LocationRoute"> | string | null
   itemQuantity?: Prisma.IntFilter<"LocationRoute"> | number
   adultOnly?: Prisma.BoolFilter<"LocationRoute"> | boolean
+  magical?: Prisma.BoolFilter<"LocationRoute"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LocationRoute"> | Date | string
 }
 
@@ -688,6 +715,7 @@ export type LocationRouteCreateManyFromInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
 }
 
@@ -700,6 +728,7 @@ export type LocationRouteCreateManyToInput = {
   itemKey?: string | null
   itemQuantity?: number
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: Date | string
 }
 
@@ -711,6 +740,7 @@ export type LocationRouteUpdateWithoutFromInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.LocationUpdateOneRequiredWithoutRoutesToNestedInput
 }
@@ -724,6 +754,7 @@ export type LocationRouteUncheckedUpdateWithoutFromInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -736,6 +767,7 @@ export type LocationRouteUncheckedUpdateManyWithoutFromInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -747,6 +779,7 @@ export type LocationRouteUpdateWithoutToInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   from?: Prisma.LocationUpdateOneRequiredWithoutRoutesFromNestedInput
 }
@@ -760,6 +793,7 @@ export type LocationRouteUncheckedUpdateWithoutToInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -772,6 +806,7 @@ export type LocationRouteUncheckedUpdateManyWithoutToInput = {
   itemKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itemQuantity?: Prisma.IntFieldUpdateOperationsInput | number
   adultOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  magical?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -787,6 +822,7 @@ export type LocationRouteSelect<ExtArgs extends runtime.Types.Extensions.Interna
   itemKey?: boolean
   itemQuantity?: boolean
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: boolean
   from?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   to?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
@@ -802,6 +838,7 @@ export type LocationRouteSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   itemKey?: boolean
   itemQuantity?: boolean
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: boolean
   from?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   to?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
@@ -817,6 +854,7 @@ export type LocationRouteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   itemKey?: boolean
   itemQuantity?: boolean
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: boolean
   from?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   to?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
@@ -832,10 +870,11 @@ export type LocationRouteSelectScalar = {
   itemKey?: boolean
   itemQuantity?: boolean
   adultOnly?: boolean
+  magical?: boolean
   createdAt?: boolean
 }
 
-export type LocationRouteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fromId" | "toId" | "method" | "travelMinutes" | "itemName" | "itemKey" | "itemQuantity" | "adultOnly" | "createdAt", ExtArgs["result"]["locationRoute"]>
+export type LocationRouteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fromId" | "toId" | "method" | "travelMinutes" | "itemName" | "itemKey" | "itemQuantity" | "adultOnly" | "magical" | "createdAt", ExtArgs["result"]["locationRoute"]>
 export type LocationRouteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   from?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   to?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
@@ -865,6 +904,7 @@ export type $LocationRoutePayload<ExtArgs extends runtime.Types.Extensions.Inter
     itemKey: string | null
     itemQuantity: number
     adultOnly: boolean
+    magical: boolean
     createdAt: Date
   }, ExtArgs["result"]["locationRoute"]>
   composites: {}
@@ -1300,6 +1340,7 @@ export interface LocationRouteFieldRefs {
   readonly itemKey: Prisma.FieldRef<"LocationRoute", 'String'>
   readonly itemQuantity: Prisma.FieldRef<"LocationRoute", 'Int'>
   readonly adultOnly: Prisma.FieldRef<"LocationRoute", 'Boolean'>
+  readonly magical: Prisma.FieldRef<"LocationRoute", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"LocationRoute", 'DateTime'>
 }
     

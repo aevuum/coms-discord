@@ -343,6 +343,7 @@ export const LocationRouteScalarFieldEnum = {
   itemKey: 'itemKey',
   itemQuantity: 'itemQuantity',
   adultOnly: 'adultOnly',
+  magical: 'magical',
   createdAt: 'createdAt'
 } as const
 

@@ -419,6 +419,7 @@ model LocationRoute {
   itemKey       String?
   itemQuantity  Int     @default(1)
   adultOnly     Boolean @default(false)
+  magical       Boolean @default(false)
 
   createdAt DateTime @default(now())
 

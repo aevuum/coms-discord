@@ -90,6 +90,7 @@ export class LocationRepository {
     itemKey: string | null;
     itemQuantity: number;
     adultOnly: boolean;
+    magical: boolean;
   }) {
     return prisma.locationRoute.create({ data });
   }

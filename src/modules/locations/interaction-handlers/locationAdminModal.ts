@@ -103,6 +103,7 @@ export class LocationAdminModalHandler extends InteractionHandler {
           itemName: text(LocationModalFields.ItemName),
           itemQuantity: text(LocationModalFields.ItemQuantity),
           adultOnly: options.includes("adult"),
+          magical: options.includes("magical"),
           reverse: options.includes("reverse"),
         });
 
