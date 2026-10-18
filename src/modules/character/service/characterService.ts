@@ -8,6 +8,7 @@ import {
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { UserRepository } from "../../users/repositories/userRepository.js";
 import { Currency, MAX_BALANCE_KNUTS } from "../../economy/lib/currency.js";
+import { Storage } from "../../../lib/storage.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { TupperService } from "../../tupper/service/tupperService.js";
 import {
@@ -40,18 +41,24 @@ export class CharacterService {
       user = await UserRepository.create(discordId);
     }
 
+    const avatarPath = input.avatar ? await Storage.uploadAttachment(input.avatar) : null;
+
     const character = await CharacterRepository.create(
       user.id,
       name,
-      input.avatarUrl,
+      avatarPath,
       faculty,
       age,
-    );
+    ).catch(async (error) => {
+      await Storage.delete(avatarPath);
+      throw error;
+    });
 
     try {
       await TupperService.createForCharacter(character.id, character.rpName);
     } catch (error) {
       await CharacterRepository.delete(character.id);
+      await Storage.delete(avatarPath);
       throw error;
     }
 
@@ -87,6 +94,7 @@ export class CharacterService {
       case ManageCharacterAction.Delete:
         await TupperService.removeForCharacter(character.id);
         await CharacterRepository.delete(character.id);
+        await Storage.delete(character.avatarPath);
         break;
 
       case ManageCharacterAction.Freeze:
@@ -182,12 +190,18 @@ export class CharacterService {
 
     const { name, age, faculty } = this.parseForm(input);
 
+    const avatarPath = input.avatar ? await Storage.uploadAttachment(input.avatar) : null;
+
     const updated = await CharacterRepository.updateDetails(character.id, {
       rpName: name,
       age,
       faculty,
-      ...(input.avatarUrl ? { avatarUrl: input.avatarUrl } : {}),
+      ...(avatarPath ? { avatarPath } : {}),
     });
+
+    if (avatarPath) {
+      await Storage.delete(character.avatarPath);
+    }
 
     await TupperService.syncCharacter(character.id, character.rpName, name);
 

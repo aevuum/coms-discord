@@ -100,6 +100,7 @@ export const UserScalarFieldEnum = {
   voiceSeconds: 'voiceSeconds',
   selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
+  profileBannerPath: 'profileBannerPath',
   walletId: 'walletId'
 } as const
 
@@ -143,6 +144,7 @@ export const CharacterScalarFieldEnum = {
   id: 'id',
   rpName: 'rpName',
   avatarUrl: 'avatarUrl',
+  avatarPath: 'avatarPath',
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
@@ -243,6 +245,7 @@ export const CharacterInventoryItemScalarFieldEnum = {
   nameKey: 'nameKey',
   imageData: 'imageData',
   imageMime: 'imageMime',
+  imagePath: 'imagePath',
   quantity: 'quantity',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

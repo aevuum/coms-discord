@@ -1,29 +1,11 @@
 import type { Attachment } from "discord.js";
 
-import {
-  CharacterInventoryRepository,
-  type ItemImage,
-} from "../repositories/characterInventoryRepository.js";
+import { Storage } from "../../../lib/storage.js";
+import { CharacterInventoryRepository } from "../repositories/characterInventoryRepository.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { CharacterError } from "../types/character.js";
 
-const ALLOWED_MIME = new Set([
-  "image/png",
-  "image/jpeg",
-  "image/gif",
-  "image/webp",
-]);
-
-const MIME_EXTENSIONS: Record<string, string> = {
-  "image/png": "png",
-  "image/jpeg": "jpg",
-  "image/gif": "gif",
-  "image/webp": "webp",
-};
-
 export class CharacterInventoryService {
-  public static readonly MAX_IMAGE_BYTES = 4 * 1024 * 1024;
-
   public static readonly MAX_QUANTITY = 10_000;
 
   public static async getOwnedCharacter(discordId: string, characterId: string) {
@@ -38,10 +20,6 @@ export class CharacterInventoryService {
 
   public static async list(characterId: string) {
     return CharacterInventoryRepository.list(characterId);
-  }
-
-  public static async listWithImages(characterId: string) {
-    return CharacterInventoryRepository.listWithImages(characterId);
   }
 
   public static async getItem(characterId: string, itemId: string) {
@@ -71,15 +49,28 @@ export class CharacterInventoryService {
 
     const quantity = this.parseQuantity(quantityInput);
 
-    const image = attachment ? await this.downloadImage(attachment) : null;
+    const nameKey = name.toLocaleLowerCase("ru");
+
+    const imagePath = attachment ? await Storage.uploadAttachment(attachment) : null;
+
+    const previous = imagePath
+      ? await CharacterInventoryRepository.findByKey(character.id, nameKey)
+      : null;
 
     const item = await CharacterInventoryRepository.give(
       character.id,
       name,
-      name.toLocaleLowerCase("ru"),
+      nameKey,
       quantity,
-      image,
-    );
+      imagePath,
+    ).catch(async (error) => {
+      await Storage.delete(imagePath);
+      throw error;
+    });
+
+    if (previous?.imagePath && previous.imagePath !== imagePath) {
+      await Storage.delete(previous.imagePath);
+    }
 
     return {
       character,
@@ -102,15 +93,15 @@ export class CharacterInventoryService {
 
     const item = await CharacterInventoryRepository.take(itemId, quantity);
 
+    if (item.quantity <= 0) {
+      await Storage.delete(item.imagePath);
+    }
+
     return {
       character,
       item,
       quantity,
     };
-  }
-
-  public static attachmentName(itemId: string, mime: string | null) {
-    return `item-${itemId}.${MIME_EXTENSIONS[mime ?? ""] ?? "png"}`;
   }
 
   private static parseQuantity(input: string) {
@@ -129,36 +120,5 @@ export class CharacterInventoryService {
     }
 
     return quantity;
-  }
-
-  private static async downloadImage(attachment: Attachment): Promise<ItemImage> {
-    const mime = (attachment.contentType ?? "").split(";")[0].trim();
-
-    if (!ALLOWED_MIME.has(mime)) {
-      throw new CharacterError("Фото должно быть в формате PNG, JPG, GIF или WEBP.");
-    }
-
-    if (attachment.size > this.MAX_IMAGE_BYTES) {
-      throw new CharacterError("Фото должно быть не больше 4 МБ.");
-    }
-
-    const response = await fetch(attachment.url, {
-      signal: AbortSignal.timeout(15_000),
-    }).catch(() => null);
-
-    if (!response?.ok) {
-      throw new CharacterError("Не удалось загрузить фото. Попробуйте ещё раз.");
-    }
-
-    const buffer = new Uint8Array(await response.arrayBuffer());
-
-    if (buffer.byteLength > this.MAX_IMAGE_BYTES) {
-      throw new CharacterError("Фото должно быть не больше 4 МБ.");
-    }
-
-    return {
-      data: buffer,
-      mime,
-    };
   }
 }

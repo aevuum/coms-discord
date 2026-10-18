@@ -5,6 +5,7 @@ import { TupperCache } from "../cache/tupperCache.js";
 import { MessageFormatter } from "../lib/messageFormatter.js";
 import { WebhookService } from "./webhookService.js";
 import { SpellCastService } from "../../spells/service/spellCastService.js";
+import { Storage } from "../../../lib/storage.js";
 
 const MAX_CONTENT_LENGTH = 2000;
 
@@ -45,7 +46,8 @@ export class TupperMessageService {
           (formatted.length <= MAX_CONTENT_LENGTH ? formatted : content) ||
           undefined,
         username: tupper.name,
-        avatarURL: tupper.character.avatarUrl ?? undefined,
+        avatarURL:
+          Storage.media(tupper.character.avatarPath, tupper.character.avatarUrl) ?? undefined,
         files,
         allowedMentions: {
           parse: ["users"],

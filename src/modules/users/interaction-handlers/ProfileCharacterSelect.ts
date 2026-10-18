@@ -51,12 +51,11 @@ export class ProfileCharacterSelect extends InteractionHandler {
         result.characterId,
       );
 
-      const inventory = await ProfileService.getCharacterInventory(character.id);
+      const items = await ProfileService.getCharacterInventory(character.id);
 
       const message = await interaction.user.send({
         flags: MessageFlags.IsComponentsV2,
-        components: [CharacterCardContainer.build(character, inventory.items)],
-        files: inventory.files,
+        components: [CharacterCardContainer.build(character, items)],
       });
 
       await interaction.editReply({

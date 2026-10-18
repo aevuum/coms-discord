@@ -9,7 +9,7 @@ export class CharacterRepository {
   public static async create(
     userId: string,
     rpName: string,
-    avatarUrl: string | null,
+    avatarPath: string | null,
     faculty: CharacterFaculty,
     age: number | null,
   ) {
@@ -17,7 +17,7 @@ export class CharacterRepository {
       data: {
         userId,
         rpName,
-        avatarUrl,
+        avatarPath,
         faculty,
         age,
         balanceKnuts: Currency.START_BALANCE,
@@ -98,7 +98,7 @@ export class CharacterRepository {
       rpName: string;
       age: number | null;
       faculty: CharacterFaculty;
-      avatarUrl?: string;
+      avatarPath?: string;
     },
   ) {
     return prisma.character.update({

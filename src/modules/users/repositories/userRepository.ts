@@ -75,16 +75,14 @@ export class UserRepository {
     });
   }
 
-  public static async updateBanner(
-    discordId: string,
-    bannerUrl: string | null,
-  ) {
+  public static async updateBanner(discordId: string, bannerPath: string) {
     return prisma.user.update({
       where: {
         discordId,
       },
       data: {
-        profileBannerUrl: bannerUrl,
+        profileBannerPath: bannerPath,
+        profileBannerUrl: null,
       },
     });
   }

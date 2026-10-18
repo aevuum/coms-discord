@@ -1,15 +1,11 @@
-import { AttachmentBuilder } from "discord.js";
-
 import { Character } from "../../../database/generated/prisma/client.js";
 import { UserRepository } from "../repositories/userRepository.js";
 import { CharacterRepository } from "../../character/repositories/characterRepository.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { ProfileError } from "../types/profile.js";
 import { CharacterInventoryService } from "../../character/service/characterInventoryService.js";
-import {
-  MAX_IMAGE_ITEMS,
-  type CardItem,
-} from "../lib/characterCardContainer.js";
+import type { CardItem } from "../lib/characterCardContainer.js";
+import { Storage } from "../../../lib/storage.js";
 
 export class ProfileService {
   public static async getProfile(discordId: string) {
@@ -42,7 +38,7 @@ export class ProfileService {
         `> ${CharacterFormatter.faculty(character.faculty)}`,
         `> ${CharacterFormatter.status(character.status)}`,
       ].join("\n"),
-      avatarUrl: character.avatarUrl,
+      avatarUrl: Storage.media(character.avatarPath, character.avatarUrl),
     }));
   }
 
@@ -67,34 +63,13 @@ export class ProfileService {
     return character;
   }
 
-  public static async getCharacterInventory(characterId: string) {
-    const items = await CharacterInventoryService.listWithImages(characterId);
+  public static async getCharacterInventory(characterId: string): Promise<CardItem[]> {
+    const items = await CharacterInventoryService.list(characterId);
 
-    const files: AttachmentBuilder[] = [];
-
-    const cardItems: CardItem[] = items.map((item) => {
-      if (!item.imageData || files.length >= MAX_IMAGE_ITEMS) {
-        return {
-          name: item.name,
-          quantity: item.quantity,
-          attachmentName: null,
-        };
-      }
-
-      const name = CharacterInventoryService.attachmentName(item.id, item.imageMime);
-
-      files.push(new AttachmentBuilder(Buffer.from(item.imageData), { name }));
-
-      return {
-        name: item.name,
-        quantity: item.quantity,
-        attachmentName: name,
-      };
-    });
-
-    return {
-      items: cardItems,
-      files,
-    };
+    return items.map((item) => ({
+      name: item.name,
+      quantity: item.quantity,
+      imageUrl: Storage.url(item.imagePath),
+    }));
   }
 }

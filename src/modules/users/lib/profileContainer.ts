@@ -16,6 +16,7 @@ import { ProfileComponents } from "./profileComponents.js";
 import { CoinFormatter } from "../../coins/lib/coinFormatter.js";
 import { ShopFormatter } from "../../shop/lib/shopFormatter.js";
 import { AwardFormatter } from "../../award/lib/awardFormatter.js";
+import { Storage } from "../../../lib/storage.js";
 
 export class ProfileContainer {
   public static build(
@@ -26,9 +27,11 @@ export class ProfileContainer {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
     const avatarUrl = discordUser.displayAvatarURL({ size: 512 });
 
-    if (profile?.profileBannerUrl) {
+    const banner = Storage.media(profile?.profileBannerPath, profile?.profileBannerUrl);
+
+    if (banner) {
       const bannerGallery = new MediaGalleryBuilder().addItems(
-        new MediaGalleryItemBuilder().setURL(profile.profileBannerUrl),
+        new MediaGalleryItemBuilder().setURL(banner),
       );
       container.addMediaGalleryComponents(bannerGallery);
     }

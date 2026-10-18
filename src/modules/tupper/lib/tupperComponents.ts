@@ -18,6 +18,7 @@ import {
 
 import type { TupperCharacter } from "../types/tupper.js";
 import { TupperCustomIds, TupperModalFields } from "./tupperCustomIds.js";
+import { Storage } from "../../../lib/storage.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const GREEN_ARROW = "<a:83918animatedarrowgreen:1518587316879495249>";
@@ -84,12 +85,14 @@ export class TupperComponents {
       ].join("\n"),
     );
 
-    if (character.avatarUrl) {
+    const avatar = Storage.media(character.avatarPath, character.avatarUrl);
+
+    if (avatar) {
       container.addSectionComponents(
         new SectionBuilder()
           .addTextDisplayComponents(header)
           .setThumbnailAccessory(
-            new ThumbnailBuilder().setURL(character.avatarUrl),
+            new ThumbnailBuilder().setURL(avatar),
           ),
       );
     } else {

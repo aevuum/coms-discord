@@ -22,6 +22,7 @@ export interface Profile {
   messagesCount: number;
   voiceSeconds: number;
   profileBannerUrl: string | null;
+  profileBannerPath: string | null;
   walletId: string;
   createdAt: Date;
   updatedAt: Date;

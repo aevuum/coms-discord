@@ -226,7 +226,7 @@ export class CharacterModalHandler extends InteractionHandler {
     return {
       name: interaction.fields.getTextInputValue(CharacterModalFields.Name),
       age: interaction.fields.getTextInputValue(CharacterModalFields.Age),
-      avatarUrl: avatar?.contentType?.startsWith("image/") ? avatar.url : null,
+      avatar: avatar ?? null,
       faculty: interaction.fields.getStringSelectValues(
         CharacterModalFields.Faculty,
       )[0] as CharacterFaculty,

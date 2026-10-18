@@ -2,17 +2,12 @@ import prisma from "../../../database/prisma.js";
 
 import { CharacterError } from "../types/character.js";
 
-export type ItemImage = {
-  data: Uint8Array<ArrayBuffer>;
-  mime: string;
-};
-
 const LIST_SELECT = {
   id: true,
   characterId: true,
   name: true,
   quantity: true,
-  imageMime: true,
+  imagePath: true,
   createdAt: true,
 } as const;
 
@@ -34,25 +29,23 @@ export class CharacterInventoryRepository {
     });
   }
 
-  public static async listWithImages(characterId: string) {
-    return prisma.characterInventoryItem.findMany({
-      where: {
-        characterId,
-        quantity: {
-          gt: 0,
-        },
-      },
-
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-  }
-
   public static async getById(id: string) {
     return prisma.characterInventoryItem.findUnique({
       where: {
         id,
+      },
+
+      select: LIST_SELECT,
+    });
+  }
+
+  public static async findByKey(characterId: string, nameKey: string) {
+    return prisma.characterInventoryItem.findUnique({
+      where: {
+        characterId_nameKey: {
+          characterId,
+          nameKey,
+        },
       },
 
       select: LIST_SELECT,
@@ -64,14 +57,9 @@ export class CharacterInventoryRepository {
     name: string,
     nameKey: string,
     quantity: number,
-    image: ItemImage | null,
+    imagePath: string | null,
   ) {
-    const imageData = image
-      ? {
-          imageData: image.data,
-          imageMime: image.mime,
-        }
-      : {};
+    const image = imagePath ? { imagePath } : {};
 
     return prisma.characterInventoryItem.upsert({
       where: {
@@ -85,7 +73,7 @@ export class CharacterInventoryRepository {
         quantity: {
           increment: quantity,
         },
-        ...imageData,
+        ...image,
       },
 
       create: {
@@ -93,7 +81,7 @@ export class CharacterInventoryRepository {
         name,
         nameKey,
         quantity,
-        ...imageData,
+        ...image,
       },
 
       select: LIST_SELECT,

@@ -42,6 +42,7 @@ export type CharacterInventoryItemMinAggregateOutputType = {
   nameKey: string | null
   imageData: runtime.Bytes | null
   imageMime: string | null
+  imagePath: string | null
   quantity: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +56,7 @@ export type CharacterInventoryItemMaxAggregateOutputType = {
   nameKey: string | null
   imageData: runtime.Bytes | null
   imageMime: string | null
+  imagePath: string | null
   quantity: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -68,6 +70,7 @@ export type CharacterInventoryItemCountAggregateOutputType = {
   nameKey: number
   imageData: number
   imageMime: number
+  imagePath: number
   quantity: number
   createdAt: number
   updatedAt: number
@@ -91,6 +94,7 @@ export type CharacterInventoryItemMinAggregateInputType = {
   nameKey?: true
   imageData?: true
   imageMime?: true
+  imagePath?: true
   quantity?: true
   createdAt?: true
   updatedAt?: true
@@ -104,6 +108,7 @@ export type CharacterInventoryItemMaxAggregateInputType = {
   nameKey?: true
   imageData?: true
   imageMime?: true
+  imagePath?: true
   quantity?: true
   createdAt?: true
   updatedAt?: true
@@ -117,6 +122,7 @@ export type CharacterInventoryItemCountAggregateInputType = {
   nameKey?: true
   imageData?: true
   imageMime?: true
+  imagePath?: true
   quantity?: true
   createdAt?: true
   updatedAt?: true
@@ -217,6 +223,7 @@ export type CharacterInventoryItemGroupByOutputType = {
   nameKey: string
   imageData: runtime.Bytes | null
   imageMime: string | null
+  imagePath: string | null
   quantity: number
   createdAt: Date
   updatedAt: Date
@@ -253,6 +260,7 @@ export type CharacterInventoryItemWhereInput = {
   nameKey?: Prisma.StringFilter<"CharacterInventoryItem"> | string
   imageData?: Prisma.BytesNullableFilter<"CharacterInventoryItem"> | runtime.Bytes | null
   imageMime?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
@@ -268,6 +276,7 @@ export type CharacterInventoryItemOrderByWithRelationInput = {
   nameKey?: Prisma.SortOrder
   imageData?: Prisma.SortOrderInput | Prisma.SortOrder
   imageMime?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePath?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -287,6 +296,7 @@ export type CharacterInventoryItemWhereUniqueInput = Prisma.AtLeast<{
   nameKey?: Prisma.StringFilter<"CharacterInventoryItem"> | string
   imageData?: Prisma.BytesNullableFilter<"CharacterInventoryItem"> | runtime.Bytes | null
   imageMime?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
@@ -302,6 +312,7 @@ export type CharacterInventoryItemOrderByWithAggregationInput = {
   nameKey?: Prisma.SortOrder
   imageData?: Prisma.SortOrderInput | Prisma.SortOrder
   imageMime?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePath?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -323,6 +334,7 @@ export type CharacterInventoryItemScalarWhereWithAggregatesInput = {
   nameKey?: Prisma.StringWithAggregatesFilter<"CharacterInventoryItem"> | string
   imageData?: Prisma.BytesNullableWithAggregatesFilter<"CharacterInventoryItem"> | runtime.Bytes | null
   imageMime?: Prisma.StringNullableWithAggregatesFilter<"CharacterInventoryItem"> | string | null
+  imagePath?: Prisma.StringNullableWithAggregatesFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntWithAggregatesFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterInventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterInventoryItem"> | Date | string
@@ -334,6 +346,7 @@ export type CharacterInventoryItemCreateInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -349,6 +362,7 @@ export type CharacterInventoryItemUncheckedCreateInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -360,6 +374,7 @@ export type CharacterInventoryItemUpdateInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,6 +390,7 @@ export type CharacterInventoryItemUncheckedUpdateInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,6 +404,7 @@ export type CharacterInventoryItemCreateManyInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -399,6 +416,7 @@ export type CharacterInventoryItemUpdateManyMutationInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -412,6 +430,7 @@ export type CharacterInventoryItemUncheckedUpdateManyInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -440,6 +459,7 @@ export type CharacterInventoryItemCountOrderByAggregateInput = {
   nameKey?: Prisma.SortOrder
   imageData?: Prisma.SortOrder
   imageMime?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -457,6 +477,7 @@ export type CharacterInventoryItemMaxOrderByAggregateInput = {
   nameKey?: Prisma.SortOrder
   imageData?: Prisma.SortOrder
   imageMime?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -470,6 +491,7 @@ export type CharacterInventoryItemMinOrderByAggregateInput = {
   nameKey?: Prisma.SortOrder
   imageData?: Prisma.SortOrder
   imageMime?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -573,6 +595,7 @@ export type CharacterInventoryItemCreateWithoutCharacterInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -586,6 +609,7 @@ export type CharacterInventoryItemUncheckedCreateWithoutCharacterInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -628,6 +652,7 @@ export type CharacterInventoryItemScalarWhereInput = {
   nameKey?: Prisma.StringFilter<"CharacterInventoryItem"> | string
   imageData?: Prisma.BytesNullableFilter<"CharacterInventoryItem"> | runtime.Bytes | null
   imageMime?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"CharacterInventoryItem"> | string | null
   quantity?: Prisma.IntFilter<"CharacterInventoryItem"> | number
   createdAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterInventoryItem"> | Date | string
@@ -639,6 +664,7 @@ export type CharacterInventoryItemCreateWithoutShopItemInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -652,6 +678,7 @@ export type CharacterInventoryItemUncheckedCreateWithoutShopItemInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -690,6 +717,7 @@ export type CharacterInventoryItemCreateManyCharacterInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -701,6 +729,7 @@ export type CharacterInventoryItemUpdateWithoutCharacterInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,6 +743,7 @@ export type CharacterInventoryItemUncheckedUpdateWithoutCharacterInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -726,6 +756,7 @@ export type CharacterInventoryItemUncheckedUpdateManyWithoutCharacterInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -738,6 +769,7 @@ export type CharacterInventoryItemCreateManyShopItemInput = {
   nameKey: string
   imageData?: runtime.Bytes | null
   imageMime?: string | null
+  imagePath?: string | null
   quantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -749,6 +781,7 @@ export type CharacterInventoryItemUpdateWithoutShopItemInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -762,6 +795,7 @@ export type CharacterInventoryItemUncheckedUpdateWithoutShopItemInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -774,6 +808,7 @@ export type CharacterInventoryItemUncheckedUpdateManyWithoutShopItemInput = {
   nameKey?: Prisma.StringFieldUpdateOperationsInput | string
   imageData?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   imageMime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -789,6 +824,7 @@ export type CharacterInventoryItemSelect<ExtArgs extends runtime.Types.Extension
   nameKey?: boolean
   imageData?: boolean
   imageMime?: boolean
+  imagePath?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -804,6 +840,7 @@ export type CharacterInventoryItemSelectCreateManyAndReturn<ExtArgs extends runt
   nameKey?: boolean
   imageData?: boolean
   imageMime?: boolean
+  imagePath?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -819,6 +856,7 @@ export type CharacterInventoryItemSelectUpdateManyAndReturn<ExtArgs extends runt
   nameKey?: boolean
   imageData?: boolean
   imageMime?: boolean
+  imagePath?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -834,12 +872,13 @@ export type CharacterInventoryItemSelectScalar = {
   nameKey?: boolean
   imageData?: boolean
   imageMime?: boolean
+  imagePath?: boolean
   quantity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CharacterInventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "shopItemId" | "name" | "nameKey" | "imageData" | "imageMime" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["characterInventoryItem"]>
+export type CharacterInventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "shopItemId" | "name" | "nameKey" | "imageData" | "imageMime" | "imagePath" | "quantity" | "createdAt" | "updatedAt", ExtArgs["result"]["characterInventoryItem"]>
 export type CharacterInventoryItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
   shopItem?: boolean | Prisma.CharacterInventoryItem$shopItemArgs<ExtArgs>
@@ -867,6 +906,7 @@ export type $CharacterInventoryItemPayload<ExtArgs extends runtime.Types.Extensi
     nameKey: string
     imageData: runtime.Bytes | null
     imageMime: string | null
+    imagePath: string | null
     quantity: number
     createdAt: Date
     updatedAt: Date
@@ -1302,6 +1342,7 @@ export interface CharacterInventoryItemFieldRefs {
   readonly nameKey: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
   readonly imageData: Prisma.FieldRef<"CharacterInventoryItem", 'Bytes'>
   readonly imageMime: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
+  readonly imagePath: Prisma.FieldRef<"CharacterInventoryItem", 'String'>
   readonly quantity: Prisma.FieldRef<"CharacterInventoryItem", 'Int'>
   readonly createdAt: Prisma.FieldRef<"CharacterInventoryItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CharacterInventoryItem", 'DateTime'>

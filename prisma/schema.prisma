@@ -54,7 +54,8 @@ model User {
   selectedAwardId String?
   awards          UserAward[]
 
-  profileBannerUrl String?
+  profileBannerUrl  String?
+  profileBannerPath String?
 
   wallet   Wallet @relation(fields: [walletId], references: [id])
   walletId String @unique
@@ -113,8 +114,9 @@ model Character {
 
   tupper CharacterTupper?
 
-  rpName    String
-  avatarUrl String?
+  rpName     String
+  avatarUrl  String?
+  avatarPath String?
   faculty   CharacterFaculty
 
   status CharacterStatus @default(ALIVE)
@@ -268,6 +270,7 @@ model CharacterInventoryItem {
 
   imageData Bytes?
   imageMime String?
+  imagePath String?
 
   quantity Int @default(1)
 

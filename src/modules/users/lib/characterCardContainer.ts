@@ -15,6 +15,7 @@ import type {
   CharacterTupper,
 } from "../../../database/generated/prisma/client.js";
 
+import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { Mana } from "../../spells/lib/mana.js";
 import { TupperCustomIds } from "../../tupper/lib/tupperCustomIds.js";
@@ -31,7 +32,7 @@ type CardCharacter = Character & {
 export type CardItem = {
   name: string;
   quantity: number;
-  attachmentName: string | null;
+  imageUrl: string | null;
 };
 
 export const MAX_IMAGE_ITEMS = 8;
@@ -52,12 +53,14 @@ export class CharacterCardContainer {
         .join("\n"),
     );
 
-    if (character.avatarUrl) {
+    const avatar = Storage.media(character.avatarPath, character.avatarUrl);
+
+    if (avatar) {
       container.addSectionComponents(
         new SectionBuilder()
           .addTextDisplayComponents(header)
           .setThumbnailAccessory(
-            new ThumbnailBuilder().setURL(character.avatarUrl),
+            new ThumbnailBuilder().setURL(avatar),
           ),
       );
     } else {
@@ -100,7 +103,7 @@ export class CharacterCardContainer {
     );
 
     const withImages = items
-      .filter((item) => item.attachmentName)
+      .filter((item) => item.imageUrl)
       .slice(0, MAX_IMAGE_ITEMS);
 
     for (const item of withImages) {
@@ -111,7 +114,7 @@ export class CharacterCardContainer {
           )
           .setThumbnailAccessory(
             new ThumbnailBuilder()
-              .setURL(`attachment://${item.attachmentName}`)
+              .setURL(item.imageUrl!)
               .setDescription(item.name.slice(0, 1024)),
           ),
       );

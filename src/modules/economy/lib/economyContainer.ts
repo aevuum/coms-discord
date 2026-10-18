@@ -23,6 +23,7 @@ import { Currency } from "./currency.js";
 import { EconomyComponents } from "./economyComponents.js";
 import { CharacterFormatter } from "./characterFormatter.js";
 import { TransactionFormatter } from "./transactionFormatter.js";
+import { Storage } from "../../../lib/storage.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 
@@ -70,7 +71,7 @@ export class EconomyContainer {
         `${ARROW} Факультет: ${CharacterFormatter.faculty(character.faculty)}`,
         `${ARROW} Статус: ${CharacterFormatter.status(character.status)}`,
       ].join("\n"),
-      character.avatarUrl,
+      Storage.media(character.avatarPath, character.avatarUrl),
     );
 
     container.addSeparatorComponents(

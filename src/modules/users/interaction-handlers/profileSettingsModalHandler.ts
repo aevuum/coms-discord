@@ -9,6 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 
+import { Storage, StorageError } from "../../../lib/storage.js";
 import { UserRepository } from "../repositories/userRepository.js";
 
 export class ProfileSettingsModalHandler extends InteractionHandler {
@@ -40,16 +41,14 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
         .getUploadedFiles("profile_banner_file")
         ?.first();
 
-      if (attachment && !attachment.contentType?.startsWith("image/")) {
-        await this.reply(
-          interaction,
-          "<:240191mark:1518581039172292688> Разрешено загружать только изображения.",
-        );
-        return;
-      }
-
       if (attachment) {
-        await UserRepository.updateBanner(discordId, attachment.url);
+        const previous = await UserRepository.getByDiscordId(discordId);
+
+        const bannerPath = await Storage.uploadAttachment(attachment);
+
+        await UserRepository.updateBanner(discordId, bannerPath);
+
+        await Storage.delete(previous?.profileBannerPath);
       }
 
       const selectedAwardId =
@@ -66,11 +65,17 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
         "<:312537mark:1518581040548024430> Настройки профиля успешно обновлены.",
       );
     } catch (error) {
-      this.container.logger.error(error);
+      const userError = error instanceof StorageError;
+
+      if (!userError) {
+        this.container.logger.error(error);
+      }
 
       await this.reply(
         interaction,
-        "<:240191mark:1518581039172292688> Не удалось сохранить настройки профиля. Попробуйте позже.",
+        `<:240191mark:1518581039172292688> ${
+          userError ? error.message : "Не удалось сохранить настройки профиля. Попробуйте позже."
+        }`,
       );
     }
   }
