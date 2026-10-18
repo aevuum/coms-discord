@@ -55,6 +55,16 @@ export class TupperService {
     );
   }
 
+  public static async syncCharacter(characterId: string, oldName: string, newName: string) {
+    const tupper = await TupperRepository.findByCharacter(characterId);
+
+    if (tupper && oldName !== newName && tupper.name === this.sanitizeName(oldName)) {
+      await TupperRepository.updateName(characterId, this.sanitizeName(newName));
+    }
+
+    await this.loadCache();
+  }
+
   public static async removeForCharacter(characterId: string) {
     return TupperRepository.delete(characterId);
   }

@@ -31,6 +31,14 @@ export class TupperRepository {
     return tupper;
   }
 
+  public static async findByCharacter(characterId: string) {
+    return prisma.characterTupper.findUnique({
+      where: {
+        characterId,
+      },
+    });
+  }
+
   public static async getByPrefix(prefix: string) {
     return prisma.characterTupper.findUnique({
       where: {

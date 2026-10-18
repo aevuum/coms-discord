@@ -49,13 +49,19 @@ export const CHARACTER_CATEGORIES: {
     id: CharacterCategory.Characters,
     label: "Персонажи",
     emoji: "<:928205membericon:1518581050555633674>",
-    description: "Создание и удаление персонажей",
+    description: "Создание, изменение и удаление персонажей",
     actions: [
       {
         action: ManageCharacterAction.Create,
         label: "Создать",
         emoji: "<:6509addguild:1518587247769817088>",
         style: ButtonStyle.Success,
+      },
+      {
+        action: ManageCharacterAction.Edit,
+        label: "Изменить",
+        emoji: "<:984149edit:1518587370474176612>",
+        style: ButtonStyle.Primary,
       },
       {
         action: ManageCharacterAction.Delete,
@@ -126,22 +132,16 @@ export const CHARACTER_CATEGORIES: {
     ],
   },
   {
-    id: CharacterCategory.Details,
-    label: "Данные",
-    emoji: "<:6335settingsinfo:1518587246205337720>",
-    description: "Баланс в галлеонах, сиклах и кнатах и возраст персонажа",
+    id: CharacterCategory.Economy,
+    label: "Экономика",
+    emoji: "<:galleon:1521547045268099242>",
+    description: "Баланс персонажа в галлеонах, сиклах и кнатах",
     actions: [
       {
         action: ManageCharacterAction.SetBalance,
-        label: "Баланс",
+        label: "Изменить баланс",
         emoji: "<:galleon:1521547045268099242>",
         style: ButtonStyle.Primary,
-      },
-      {
-        action: ManageCharacterAction.SetAge,
-        label: "Возраст",
-        emoji: "<:6335settingsinfo:1518587246205337720>",
-        style: ButtonStyle.Secondary,
       },
     ],
   },
@@ -243,6 +243,22 @@ export class ManageCharacterComponents {
   }
 
   public static createModal(discordId: string, memberName: string) {
+    return this.characterModal(
+      CharacterCustomIds.build(CharacterPanelAction.CreateModal, discordId),
+      `Новый персонаж · ${memberName}`,
+      null,
+    );
+  }
+
+  public static editModal(discordId: string, character: Character) {
+    return this.characterModal(
+      CharacterCustomIds.build(CharacterPanelAction.EditModal, discordId, character.id),
+      `Изменить · ${character.rpName}`,
+      character,
+    );
+  }
+
+  private static characterModal(customId: string, title: string, character: Character | null) {
     const faculty = new StringSelectMenuBuilder()
       .setCustomId(CharacterModalFields.Faculty)
       .setPlaceholder("Выберите факультет")
@@ -252,29 +268,48 @@ export class ManageCharacterComponents {
           new StringSelectMenuOptionBuilder()
             .setLabel(CharacterFormatter.facultyLabel(item))
             .setValue(item)
-            .setEmoji(CharacterFormatter.facultyEmoji(item)),
+            .setEmoji(CharacterFormatter.facultyEmoji(item))
+            .setDefault(character?.faculty === item),
         ),
       );
 
+    const name = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.Name)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(true)
+      .setMinLength(2)
+      .setMaxLength(80);
+
+    const age = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.Age)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false)
+      .setMaxLength(4);
+
+    if (character) {
+      name.setValue(character.rpName);
+
+      if (character.age !== null) {
+        age.setValue(String(character.age));
+      }
+    }
+
     return new ModalBuilder()
-      .setCustomId(
-        CharacterCustomIds.build(CharacterPanelAction.CreateModal, discordId),
-      )
-      .setTitle(`Новый персонаж · ${memberName}`.slice(0, 45))
+      .setCustomId(customId)
+      .setTitle(title.slice(0, 45))
       .addLabelComponents(
+        new LabelBuilder().setLabel("Имя персонажа").setTextInputComponent(name),
         new LabelBuilder()
-          .setLabel("Имя персонажа")
-          .setTextInputComponent(
-            new TextInputBuilder()
-              .setCustomId(CharacterModalFields.Name)
-              .setStyle(TextInputStyle.Short)
-              .setRequired(true)
-              .setMinLength(2)
-              .setMaxLength(80),
-          ),
+          .setLabel("Возраст, лет")
+          .setDescription("Можно оставить пустым")
+          .setTextInputComponent(age),
         new LabelBuilder()
           .setLabel("Аватар персонажа")
-          .setDescription("Загрузите изображение персонажа")
+          .setDescription(
+            character
+              ? "Загрузите новое изображение или оставьте пустым, чтобы не менять"
+              : "Загрузите изображение персонажа",
+          )
           .setFileUploadComponent(
             new FileUploadBuilder()
               .setCustomId(CharacterModalFields.Avatar)
@@ -466,30 +501,6 @@ export class ManageCharacterComponents {
               .setRequired(false)
               .setMaxLength(200),
           ),
-      );
-  }
-
-  public static ageModal(discordId: string, character: Character) {
-    const input = new TextInputBuilder()
-      .setCustomId(CharacterModalFields.Age)
-      .setStyle(TextInputStyle.Short)
-      .setRequired(false)
-      .setMaxLength(4);
-
-    if (character.age !== null) {
-      input.setValue(String(character.age));
-    }
-
-    return new ModalBuilder()
-      .setCustomId(
-        CharacterCustomIds.build(CharacterPanelAction.AgeModal, discordId, character.id),
-      )
-      .setTitle(`Возраст · ${character.rpName}`.slice(0, 45))
-      .addLabelComponents(
-        new LabelBuilder()
-          .setLabel("Возраст, лет")
-          .setDescription("Оставьте пустым, чтобы убрать возраст")
-          .setTextInputComponent(input),
       );
   }
 

@@ -78,6 +78,7 @@ export class UserRepository {
   public static async updateBanner(
     discordId: string,
     bannerUrl: string | null,
+    bannerImageId: string | null,
   ) {
     return prisma.user.update({
       where: {
@@ -85,6 +86,7 @@ export class UserRepository {
       },
       data: {
         profileBannerUrl: bannerUrl,
+        profileBannerImageId: bannerImageId,
       },
     });
   }

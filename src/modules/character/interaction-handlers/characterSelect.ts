@@ -145,7 +145,7 @@ export class CharacterSelectHandler extends InteractionHandler {
         return;
       }
 
-      if (action === ManageCharacterAction.SetBalance || action === ManageCharacterAction.SetAge) {
+      if (action === ManageCharacterAction.SetBalance || action === ManageCharacterAction.Edit) {
         const character = await CharacterInventoryService.getOwnedCharacter(
           discordId,
           result.value,
@@ -154,7 +154,7 @@ export class CharacterSelectHandler extends InteractionHandler {
         await interaction.showModal(
           action === ManageCharacterAction.SetBalance
             ? ManageCharacterComponents.balanceModal(discordId, character)
-            : ManageCharacterComponents.ageModal(discordId, character),
+            : ManageCharacterComponents.editModal(discordId, character),
         );
 
         return;

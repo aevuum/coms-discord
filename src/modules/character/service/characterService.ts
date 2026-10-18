@@ -8,9 +8,14 @@ import {
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { UserRepository } from "../../users/repositories/userRepository.js";
 import { Currency, MAX_BALANCE_KNUTS } from "../../economy/lib/currency.js";
+import { MediaService } from "../../media/service/mediaService.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { TupperService } from "../../tupper/service/tupperService.js";
-import { CharacterError, ManageCharacterAction } from "../types/character.js";
+import {
+  CharacterError,
+  ManageCharacterAction,
+  type CharacterFormInput,
+} from "../types/character.js";
 
 export class CharacterService {
   public static readonly MANAGE_KEY = "manage.characters";
@@ -27,21 +32,8 @@ export class CharacterService {
     }
   }
 
-  public static async create(
-    discordId: string,
-    rpName: string,
-    avatarUrl: string | null,
-    faculty: CharacterFaculty,
-  ) {
-    const name = rpName.trim();
-
-    if (name.length < 2 || name.length > 80) {
-      throw new CharacterError("Имя персонажа должно быть от 2 до 80 символов.");
-    }
-
-    if (!Object.values(CharacterFaculty).includes(faculty)) {
-      throw new CharacterError("Выберите факультет персонажа.");
-    }
+  public static async create(discordId: string, input: CharacterFormInput) {
+    const { name, age, faculty } = this.parseForm(input);
 
     let user = await UserRepository.getByDiscordId(discordId);
 
@@ -49,17 +41,24 @@ export class CharacterService {
       user = await UserRepository.create(discordId);
     }
 
+    const avatar = input.avatar ? await MediaService.saveAttachment(input.avatar) : null;
+
     const character = await CharacterRepository.create(
       user.id,
       name,
-      avatarUrl,
+      avatar,
       faculty,
-    );
+      age,
+    ).catch(async (error) => {
+      await MediaService.delete(avatar?.id);
+      throw error;
+    });
 
     try {
       await TupperService.createForCharacter(character.id, character.rpName);
     } catch (error) {
       await CharacterRepository.delete(character.id);
+      await MediaService.delete(avatar?.id);
       throw error;
     }
 
@@ -95,6 +94,7 @@ export class CharacterService {
       case ManageCharacterAction.Delete:
         await TupperService.removeForCharacter(character.id);
         await CharacterRepository.delete(character.id);
+        await MediaService.delete(character.avatarImageId);
         break;
 
       case ManageCharacterAction.Freeze:
@@ -185,13 +185,48 @@ export class CharacterService {
     return { character: updated, change };
   }
 
-  public static async setAge(discordId: string, characterId: string, input: string) {
+  public static async edit(discordId: string, characterId: string, input: CharacterFormInput) {
     const character = await this.getOwned(discordId, characterId);
 
+    const { name, age, faculty } = this.parseForm(input);
+
+    const avatar = input.avatar ? await MediaService.saveAttachment(input.avatar) : null;
+
+    const updated = await CharacterRepository.updateDetails(character.id, {
+      rpName: name,
+      age,
+      faculty,
+      ...(avatar ? { avatarUrl: avatar.url, avatarImageId: avatar.id } : {}),
+    });
+
+    if (avatar) {
+      await MediaService.delete(character.avatarImageId);
+    }
+
+    await TupperService.syncCharacter(character.id, character.rpName, name);
+
+    return updated;
+  }
+
+  private static parseForm(input: CharacterFormInput) {
+    const name = input.name.trim();
+
+    if (name.length < 2 || name.length > 80) {
+      throw new CharacterError("Имя персонажа должно быть от 2 до 80 символов.");
+    }
+
+    if (!Object.values(CharacterFaculty).includes(input.faculty)) {
+      throw new CharacterError("Выберите факультет персонажа.");
+    }
+
+    return { name, age: this.parseAge(input.age), faculty: input.faculty };
+  }
+
+  private static parseAge(input: string) {
     const text = input.trim();
 
     if (!text) {
-      return CharacterRepository.updateAge(character.id, null);
+      return null;
     }
 
     const age = this.parseInteger(text, "Возраст");
@@ -200,7 +235,7 @@ export class CharacterService {
       throw new CharacterError(`Возраст должен быть от 1 до ${this.MAX_AGE} лет.`);
     }
 
-    return CharacterRepository.updateAge(character.id, age);
+    return age;
   }
 
   private static async getOwned(discordId: string, characterId: string) {

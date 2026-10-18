@@ -8,7 +8,10 @@ import {
   TextDisplayBuilder,
   MessageFlags,
 } from "discord.js";
+
+import { MediaService } from "../../media/service/mediaService.js";
 import { UserRepository } from "../repositories/userRepository.js";
+import { ProfileService } from "../service/profileService.js";
 
 export class ProfileSettingsModalHandler extends InteractionHandler {
   public constructor(
@@ -26,65 +29,66 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
       return this.none();
     }
 
-    const targetDiscordId = interaction.customId.replace(
-      "profile_settings_modal_",
-      "",
-    );
-    return this.some({ targetDiscordId });
+    return this.some();
   }
 
-  public override async run(
-    interaction: ModalSubmitInteraction,
-    result: { targetDiscordId: string },
-  ) {
-    const uploadedFiles = (interaction.fields as any).getUploadedFiles(
-      "profile_banner_file",
-    );
-    const attachment = uploadedFiles?.first();
-    const bannerUrl = attachment?.url ?? null;
+  public override async run(interaction: ModalSubmitInteraction) {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
-    const selectedAwardId =
-      interaction.fields
-        .getStringSelectValues("profile_primary_awardid")
-        ?.at(0) ?? null;
+    const discordId = interaction.user.id;
 
-    if (bannerUrl && !attachment.contentType?.startsWith("image/")) {
-      const errorContainer = new ContainerBuilder().addTextDisplayComponents(
-        new TextDisplayBuilder().setContent(
-          "<:240191mark:1518581039172292688> Разрешено загружать только изображения.",
-        ),
-      );
+    try {
+      const attachment = interaction.fields
+        .getUploadedFiles("profile_banner_file")
+        ?.first();
 
-      await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components: [errorContainer],
-      });
-      return;
-    }
+      if (attachment) {
+        const profile = await ProfileService.getOrCreateProfile(discordId);
 
-    if (bannerUrl) {
-      await UserRepository.updateBanner(result.targetDiscordId, bannerUrl);
-    }
+        const banner = await MediaService.saveAttachment(attachment);
 
-    if (selectedAwardId) {
-      const user = await UserRepository.getByDiscordId(result.targetDiscordId);
-      if (user) {
-        await (UserRepository as any).updateSelectedAward(
-          result.targetDiscordId,
-          selectedAwardId,
-        );
+        await UserRepository.updateBanner(discordId, banner.url, banner.id);
+
+        await MediaService.delete(profile.profileBannerImageId);
       }
-    }
 
-    const successContainer = new ContainerBuilder().addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
+      const selectedAwardId =
+        interaction.fields
+          .getStringSelectValues("profile_primary_awardid")
+          ?.at(0) ?? null;
+
+      if (selectedAwardId) {
+        await UserRepository.updateSelectedAward(discordId, selectedAwardId);
+      }
+
+      await this.reply(
+        interaction,
         "<:312537mark:1518581040548024430> Настройки профиля успешно обновлены.",
-      ),
-    );
+      );
+    } catch (error) {
+      if (!(error instanceof Error && error.name === "MediaError")) {
+        this.container.logger.error(error);
+      }
 
-    await interaction.reply({
-      flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-      components: [successContainer],
+      await this.reply(
+        interaction,
+        `<:240191mark:1518581039172292688> ${
+          error instanceof Error && error.name === "MediaError"
+            ? error.message
+            : "Не удалось сохранить настройки профиля. Попробуйте позже."
+        }`,
+      );
+    }
+  }
+
+  private async reply(interaction: ModalSubmitInteraction, text: string) {
+    await interaction.editReply({
+      flags: MessageFlags.IsComponentsV2,
+      components: [
+        new ContainerBuilder().addTextDisplayComponents(
+          new TextDisplayBuilder().setContent(text),
+        ),
+      ],
     });
   }
 }

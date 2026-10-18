@@ -31,7 +31,7 @@ export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.TakeItem]: "Изъятие предмета",
   [ManageCharacterAction.SetMana]: "Установка маны",
   [ManageCharacterAction.SetBalance]: "Баланс персонажа",
-  [ManageCharacterAction.SetAge]: "Возраст персонажа",
+  [ManageCharacterAction.Edit]: "Изменение персонажа",
 };
 
 const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
@@ -44,7 +44,7 @@ const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.TakeItem]: "лишился предмета",
   [ManageCharacterAction.SetMana]: "получил новую ману",
   [ManageCharacterAction.SetBalance]: "получил новый баланс",
-  [ManageCharacterAction.SetAge]: "получил новый возраст",
+  [ManageCharacterAction.Edit]: "изменён",
 };
 
 export class ManageCharacterContainer {

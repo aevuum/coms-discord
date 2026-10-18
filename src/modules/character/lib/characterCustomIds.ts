@@ -12,7 +12,7 @@ export enum CharacterPanelAction {
   Category = "category",
   ManaModal = "mana_modal",
   BalanceModal = "balance_modal",
-  AgeModal = "age_modal",
+  EditModal = "edit_modal",
 }
 
 export const CharacterModalFields = {

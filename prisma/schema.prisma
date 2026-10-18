@@ -54,7 +54,8 @@ model User {
   selectedAwardId String?
   awards          UserAward[]
 
-  profileBannerUrl String?
+  profileBannerUrl     String?
+  profileBannerImageId String?
 
   wallet   Wallet @relation(fields: [walletId], references: [id])
   walletId String @unique
@@ -113,8 +114,9 @@ model Character {
 
   tupper CharacterTupper?
 
-  rpName    String
-  avatarUrl String?
+  rpName        String
+  avatarUrl     String?
+  avatarImageId String?
   faculty   CharacterFaculty
 
   status CharacterStatus @default(ALIVE)
@@ -485,4 +487,18 @@ model RollEntry {
   updatedAt DateTime @updatedAt
 
   @@index([kind])
+}
+
+model StoredImage {
+  id String @id @default(cuid())
+
+  data Bytes
+  mime String
+
+  messageId    String?
+  url          String?
+  urlExpiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

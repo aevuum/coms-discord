@@ -9,15 +9,18 @@ export class CharacterRepository {
   public static async create(
     userId: string,
     rpName: string,
-    avatarUrl: string | null,
+    avatar: { id: string; url: string } | null,
     faculty: CharacterFaculty,
+    age: number | null,
   ) {
     return prisma.character.create({
       data: {
         userId,
         rpName,
-        avatarUrl,
+        avatarUrl: avatar?.url ?? null,
+        avatarImageId: avatar?.id ?? null,
         faculty,
+        age,
         balanceKnuts: Currency.START_BALANCE,
       },
     });
@@ -90,14 +93,21 @@ export class CharacterRepository {
     });
   }
 
-  public static async updateAge(id: string, age: number | null) {
+  public static async updateDetails(
+    id: string,
+    data: {
+      rpName: string;
+      age: number | null;
+      faculty: CharacterFaculty;
+      avatarUrl?: string;
+      avatarImageId?: string;
+    },
+  ) {
     return prisma.character.update({
       where: {
         id,
       },
-      data: {
-        age,
-      },
+      data,
     });
   }
 

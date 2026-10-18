@@ -122,3 +122,8 @@ export type LocationSettings = Prisma.LocationSettingsModel
  * 
  */
 export type RollEntry = Prisma.RollEntryModel
+/**
+ * Model StoredImage
+ * 
+ */
+export type StoredImage = Prisma.StoredImageModel

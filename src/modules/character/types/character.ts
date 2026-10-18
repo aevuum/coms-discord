@@ -1,3 +1,5 @@
+import type { Attachment } from "discord.js";
+
 import type { CharacterFaculty } from "../../../database/generated/prisma/client.js";
 
 export class CharacterError extends Error {
@@ -17,7 +19,7 @@ export enum ManageCharacterAction {
   TakeItem = "take_item",
   SetMana = "mana",
   SetBalance = "balance",
-  SetAge = "age",
+  Edit = "edit",
 }
 
 export enum CharacterCategory {
@@ -25,8 +27,15 @@ export enum CharacterCategory {
   Status = "status",
   Inventory = "inventory",
   Mana = "mana",
-  Details = "details",
+  Economy = "economy",
 }
+
+export type CharacterFormInput = {
+  name: string;
+  age: string;
+  avatar: Attachment | null;
+  faculty: CharacterFaculty;
+};
 
 export type CharacterCreateInput = {
   discordId: string;

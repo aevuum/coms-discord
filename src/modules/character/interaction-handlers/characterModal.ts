@@ -49,7 +49,7 @@ export class CharacterModalHandler extends InteractionHandler {
         parsed.action !== CharacterPanelAction.TakeModal &&
         parsed.action !== CharacterPanelAction.ManaModal &&
         parsed.action !== CharacterPanelAction.BalanceModal &&
-        parsed.action !== CharacterPanelAction.AgeModal)
+        parsed.action !== CharacterPanelAction.EditModal)
     ) {
       return this.none();
     }
@@ -145,18 +145,18 @@ export class CharacterModalHandler extends InteractionHandler {
         );
       }
 
-      case CharacterPanelAction.AgeModal: {
-        const character = await CharacterService.setAge(
-          result.args[0],
-          result.args[1],
-          interaction.fields.getTextInputValue(CharacterModalFields.Age),
-        );
+      case CharacterPanelAction.EditModal: {
+        const character = await CharacterService.edit(result.args[0], result.args[1], {
+          ...this.characterFields(interaction),
+        });
 
         return ManageCharacterContainer.result(
-          ACTION_TITLES[ManageCharacterAction.SetAge],
-          character.age === null
-            ? `Возраст персонажа **${character.rpName}** убран.`
-            : `Возраст персонажа **${character.rpName}**: ${CharacterFormatter.age(character.age)}.`,
+          ACTION_TITLES[ManageCharacterAction.Edit],
+          [
+            `Персонаж **${character.rpName}** изменён`,
+            CharacterFormatter.facultyLabel(character.faculty),
+            character.age === null ? "возраст не указан" : CharacterFormatter.age(character.age),
+          ].join(" · "),
         );
       }
 
@@ -220,19 +220,21 @@ export class CharacterModalHandler extends InteractionHandler {
     );
   }
 
-  private async create(interaction: ModalSubmitInteraction, discordId: string) {
-    const files = interaction.fields.getUploadedFiles(CharacterModalFields.Avatar);
+  private characterFields(interaction: ModalSubmitInteraction) {
+    const avatar = interaction.fields.getUploadedFiles(CharacterModalFields.Avatar)?.first();
 
-    const avatar = files?.first();
-
-    const character = await CharacterService.create(
-      discordId,
-      interaction.fields.getTextInputValue(CharacterModalFields.Name),
-      avatar?.contentType?.startsWith("image/") ? avatar.url : null,
-      interaction.fields.getStringSelectValues(
+    return {
+      name: interaction.fields.getTextInputValue(CharacterModalFields.Name),
+      age: interaction.fields.getTextInputValue(CharacterModalFields.Age),
+      avatar: avatar ?? null,
+      faculty: interaction.fields.getStringSelectValues(
         CharacterModalFields.Faculty,
       )[0] as CharacterFaculty,
-    );
+    };
+  }
+
+  private async create(interaction: ModalSubmitInteraction, discordId: string) {
+    const character = await CharacterService.create(discordId, this.characterFields(interaction));
 
     const member = await MemberSearchService.getMember(discordId);
 
