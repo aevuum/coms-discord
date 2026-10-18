@@ -15,6 +15,7 @@ import type { Profile } from "../types/profile.js";
 import { ProfileComponents } from "./profileComponents.js";
 import { CoinFormatter } from "../../coins/lib/coinFormatter.js";
 import { ShopFormatter } from "../../shop/lib/shopFormatter.js";
+import { AwardFormatter } from "../../award/lib/awardFormatter.js";
 
 export class ProfileContainer {
   public static build(
@@ -82,7 +83,7 @@ export class ProfileContainer {
               ? awards
                   .map(
                     (ua: any) =>
-                      `${ua.award?.emoji ?? "🏆"} **${ua.award?.label ?? "Награда"}**\n${ua.award?.description ?? ""}`,
+                      `${ua.award?.emoji ?? "🏆"} **${ua.award?.label ?? "Награда"}** ${ua.award ? AwardFormatter.stars(ua.award.rarity) : ""}\n${ua.award?.description ?? ""}`,
                   )
                   .join("\n\n")
               : "*У пользователя нет наград*",
@@ -118,7 +119,7 @@ export class ProfileContainer {
       );
       if (selectedAwardObj?.award) {
         const award = selectedAwardObj.award;
-        nicknameBlock = `**__${discordUser.displayName}__**\n${award.emoji} **${award.label} (\`${award.rarity}**\`)`;
+        nicknameBlock = `**__${discordUser.displayName}__**\n${award.emoji} **${award.label}** ${AwardFormatter.stars(award.rarity)}`;
       }
     }
 

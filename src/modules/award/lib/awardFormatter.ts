@@ -26,6 +26,16 @@ export class AwardFormatter {
     return `${rarityEmojis[rarity] ?? ""} ${rarityLabels[rarity] ?? rarity}`.trim();
   }
 
+  public static stars(rarity: AwardRarity) {
+    const filled = RARITY_ORDER.indexOf(rarity) + 1;
+
+    if (filled <= 0) {
+      return "";
+    }
+
+    return "★".repeat(filled) + "☆".repeat(RARITY_ORDER.length - filled);
+  }
+
   public static rarityLabel(rarity: AwardRarity) {
     return rarityLabels[rarity] ?? rarity;
   }
