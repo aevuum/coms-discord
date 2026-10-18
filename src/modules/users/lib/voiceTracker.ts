@@ -4,10 +4,6 @@ import { UserRepository } from "../repositories/userRepository.js";
 
 export const VOICE_FLUSH_INTERVAL_MS = 60_000;
 
-/**
- * Tracks time spent in voice channels. Active sessions live in memory and are
- * flushed to the database every minute, so a restart loses at most a minute.
- */
 export class VoiceTracker {
   private static readonly sessions = new Map<string, number>();
 
@@ -36,7 +32,6 @@ export class VoiceTracker {
     }
   }
 
-  /** Seconds of the current, not yet flushed session. */
   public static pending(discordId: string) {
     const startedAt = this.sessions.get(discordId);
 
@@ -55,7 +50,6 @@ export class VoiceTracker {
         continue;
       }
 
-      // Only the whole seconds are credited, the remainder stays in the session.
       this.sessions.set(discordId, startedAt + seconds * 1000);
 
       await UserRepository.addVoiceSeconds(discordId, seconds);

@@ -41,10 +41,6 @@ export class PingRolesService {
     };
   }
 
-  /**
-   * Updates the existing panel in the channel to the current layout,
-   * or posts a new one when it is missing.
-   */
   public static async syncPanel(client: Client<true>) {
     const channel = await client.channels.fetch(PING_ROLES_CHANNEL_ID);
 
