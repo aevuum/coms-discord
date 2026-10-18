@@ -1,5 +1,3 @@
-import type { Attachment } from "discord.js";
-
 import type { CharacterFaculty } from "../../../database/generated/prisma/client.js";
 
 export class CharacterError extends Error {
@@ -33,7 +31,7 @@ export enum CharacterCategory {
 export type CharacterFormInput = {
   name: string;
   age: string;
-  avatar: Attachment | null;
+  avatarUrl: string | null;
   faculty: CharacterFaculty;
 };
 

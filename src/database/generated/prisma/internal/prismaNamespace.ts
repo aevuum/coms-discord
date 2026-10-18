@@ -404,8 +404,7 @@ export const ModelName = {
   LocationRoute: 'LocationRoute',
   Travel: 'Travel',
   LocationSettings: 'LocationSettings',
-  RollEntry: 'RollEntry',
-  StoredImage: 'StoredImage'
+  RollEntry: 'RollEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -421,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "storedImage"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1979,80 +1978,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    StoredImage: {
-      payload: Prisma.$StoredImagePayload<ExtArgs>
-      fields: Prisma.StoredImageFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.StoredImageFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.StoredImageFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>
-        }
-        findFirst: {
-          args: Prisma.StoredImageFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.StoredImageFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>
-        }
-        findMany: {
-          args: Prisma.StoredImageFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>[]
-        }
-        create: {
-          args: Prisma.StoredImageCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>
-        }
-        createMany: {
-          args: Prisma.StoredImageCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.StoredImageCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>[]
-        }
-        delete: {
-          args: Prisma.StoredImageDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>
-        }
-        update: {
-          args: Prisma.StoredImageUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>
-        }
-        deleteMany: {
-          args: Prisma.StoredImageDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.StoredImageUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.StoredImageUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>[]
-        }
-        upsert: {
-          args: Prisma.StoredImageUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$StoredImagePayload>
-        }
-        aggregate: {
-          args: Prisma.StoredImageAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateStoredImage>
-        }
-        groupBy: {
-          args: Prisma.StoredImageGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.StoredImageGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.StoredImageCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.StoredImageCountAggregateOutputType> | number
-        }
-      }
-    }
   }
 } & {
   other: {
@@ -2102,7 +2027,6 @@ export const UserScalarFieldEnum = {
   voiceSeconds: 'voiceSeconds',
   selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
-  profileBannerImageId: 'profileBannerImageId',
   walletId: 'walletId'
 } as const
 
@@ -2146,7 +2070,6 @@ export const CharacterScalarFieldEnum = {
   id: 'id',
   rpName: 'rpName',
   avatarUrl: 'avatarUrl',
-  avatarImageId: 'avatarImageId',
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
@@ -2401,20 +2324,6 @@ export const RollEntryScalarFieldEnum = {
 } as const
 
 export type RollEntryScalarFieldEnum = (typeof RollEntryScalarFieldEnum)[keyof typeof RollEntryScalarFieldEnum]
-
-
-export const StoredImageScalarFieldEnum = {
-  id: 'id',
-  data: 'data',
-  mime: 'mime',
-  messageId: 'messageId',
-  url: 'url',
-  urlExpiresAt: 'urlExpiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StoredImageScalarFieldEnum = (typeof StoredImageScalarFieldEnum)[keyof typeof StoredImageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2808,7 +2717,6 @@ export type GlobalOmitConfig = {
   travel?: Prisma.TravelOmit
   locationSettings?: Prisma.LocationSettingsOmit
   rollEntry?: Prisma.RollEntryOmit
-  storedImage?: Prisma.StoredImageOmit
 }
 
 /* Types for Logging */

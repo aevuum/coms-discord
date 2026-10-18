@@ -9,9 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 
-import { MediaService } from "../../media/service/mediaService.js";
 import { UserRepository } from "../repositories/userRepository.js";
-import { ProfileService } from "../service/profileService.js";
 
 export class ProfileSettingsModalHandler extends InteractionHandler {
   public constructor(
@@ -42,14 +40,16 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
         .getUploadedFiles("profile_banner_file")
         ?.first();
 
+      if (attachment && !attachment.contentType?.startsWith("image/")) {
+        await this.reply(
+          interaction,
+          "<:240191mark:1518581039172292688> Разрешено загружать только изображения.",
+        );
+        return;
+      }
+
       if (attachment) {
-        const profile = await ProfileService.getOrCreateProfile(discordId);
-
-        const banner = await MediaService.saveAttachment(attachment);
-
-        await UserRepository.updateBanner(discordId, banner.url, banner.id);
-
-        await MediaService.delete(profile.profileBannerImageId);
+        await UserRepository.updateBanner(discordId, attachment.url);
       }
 
       const selectedAwardId =
@@ -66,17 +66,11 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
         "<:312537mark:1518581040548024430> Настройки профиля успешно обновлены.",
       );
     } catch (error) {
-      if (!(error instanceof Error && error.name === "MediaError")) {
-        this.container.logger.error(error);
-      }
+      this.container.logger.error(error);
 
       await this.reply(
         interaction,
-        `<:240191mark:1518581039172292688> ${
-          error instanceof Error && error.name === "MediaError"
-            ? error.message
-            : "Не удалось сохранить настройки профиля. Попробуйте позже."
-        }`,
+        "<:240191mark:1518581039172292688> Не удалось сохранить настройки профиля. Попробуйте позже.",
       );
     }
   }

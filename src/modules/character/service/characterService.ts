@@ -8,7 +8,6 @@ import {
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { UserRepository } from "../../users/repositories/userRepository.js";
 import { Currency, MAX_BALANCE_KNUTS } from "../../economy/lib/currency.js";
-import { MediaService } from "../../media/service/mediaService.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { TupperService } from "../../tupper/service/tupperService.js";
 import {
@@ -41,24 +40,18 @@ export class CharacterService {
       user = await UserRepository.create(discordId);
     }
 
-    const avatar = input.avatar ? await MediaService.saveAttachment(input.avatar) : null;
-
     const character = await CharacterRepository.create(
       user.id,
       name,
-      avatar,
+      input.avatarUrl,
       faculty,
       age,
-    ).catch(async (error) => {
-      await MediaService.delete(avatar?.id);
-      throw error;
-    });
+    );
 
     try {
       await TupperService.createForCharacter(character.id, character.rpName);
     } catch (error) {
       await CharacterRepository.delete(character.id);
-      await MediaService.delete(avatar?.id);
       throw error;
     }
 
@@ -94,7 +87,6 @@ export class CharacterService {
       case ManageCharacterAction.Delete:
         await TupperService.removeForCharacter(character.id);
         await CharacterRepository.delete(character.id);
-        await MediaService.delete(character.avatarImageId);
         break;
 
       case ManageCharacterAction.Freeze:
@@ -190,18 +182,12 @@ export class CharacterService {
 
     const { name, age, faculty } = this.parseForm(input);
 
-    const avatar = input.avatar ? await MediaService.saveAttachment(input.avatar) : null;
-
     const updated = await CharacterRepository.updateDetails(character.id, {
       rpName: name,
       age,
       faculty,
-      ...(avatar ? { avatarUrl: avatar.url, avatarImageId: avatar.id } : {}),
+      ...(input.avatarUrl ? { avatarUrl: input.avatarUrl } : {}),
     });
-
-    if (avatar) {
-      await MediaService.delete(character.avatarImageId);
-    }
 
     await TupperService.syncCharacter(character.id, character.rpName, name);
 

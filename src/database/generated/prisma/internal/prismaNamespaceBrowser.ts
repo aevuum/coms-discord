@@ -71,8 +71,7 @@ export const ModelName = {
   LocationRoute: 'LocationRoute',
   Travel: 'Travel',
   LocationSettings: 'LocationSettings',
-  RollEntry: 'RollEntry',
-  StoredImage: 'StoredImage'
+  RollEntry: 'RollEntry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -101,7 +100,6 @@ export const UserScalarFieldEnum = {
   voiceSeconds: 'voiceSeconds',
   selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
-  profileBannerImageId: 'profileBannerImageId',
   walletId: 'walletId'
 } as const
 
@@ -145,7 +143,6 @@ export const CharacterScalarFieldEnum = {
   id: 'id',
   rpName: 'rpName',
   avatarUrl: 'avatarUrl',
-  avatarImageId: 'avatarImageId',
   faculty: 'faculty',
   status: 'status',
   balanceKnuts: 'balanceKnuts',
@@ -400,20 +397,6 @@ export const RollEntryScalarFieldEnum = {
 } as const
 
 export type RollEntryScalarFieldEnum = (typeof RollEntryScalarFieldEnum)[keyof typeof RollEntryScalarFieldEnum]
-
-
-export const StoredImageScalarFieldEnum = {
-  id: 'id',
-  data: 'data',
-  mime: 'mime',
-  messageId: 'messageId',
-  url: 'url',
-  urlExpiresAt: 'urlExpiresAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StoredImageScalarFieldEnum = (typeof StoredImageScalarFieldEnum)[keyof typeof StoredImageScalarFieldEnum]
 
 
 export const SortOrder = {
