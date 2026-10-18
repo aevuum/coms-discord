@@ -43,12 +43,27 @@ export class AwardRepository {
     });
   }
 
-  public static delete(id: string) {
-    return prisma.award.delete({
-      where: {
-        id,
-      },
-    });
+  public static async delete(id: string) {
+    await prisma.$transaction([
+      prisma.userAward.deleteMany({
+        where: {
+          awardId: id,
+        },
+      }),
+      prisma.user.updateMany({
+        where: {
+          selectedAwardId: id,
+        },
+        data: {
+          selectedAwardId: null,
+        },
+      }),
+      prisma.award.delete({
+        where: {
+          id,
+        },
+      }),
+    ]);
   }
 
   public static findUserByDiscordId(discordId: string) {
