@@ -66,7 +66,11 @@ export const ModelName = {
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
   RoleStipend: 'RoleStipend',
-  Ticket: 'Ticket'
+  Ticket: 'Ticket',
+  Location: 'Location',
+  LocationRoute: 'LocationRoute',
+  Travel: 'Travel',
+  LocationSettings: 'LocationSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -310,6 +314,67 @@ export const TicketScalarFieldEnum = {
 } as const
 
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
+
+
+export const LocationScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  roleId: 'roleId',
+  name: 'name',
+  emoji: 'emoji',
+  description: 'description',
+  access: 'access',
+  arrivalChannelId: 'arrivalChannelId',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
+export const LocationRouteScalarFieldEnum = {
+  id: 'id',
+  fromId: 'fromId',
+  toId: 'toId',
+  method: 'method',
+  travelMinutes: 'travelMinutes',
+  itemName: 'itemName',
+  itemKey: 'itemKey',
+  itemQuantity: 'itemQuantity',
+  adultOnly: 'adultOnly',
+  createdAt: 'createdAt'
+} as const
+
+export type LocationRouteScalarFieldEnum = (typeof LocationRouteScalarFieldEnum)[keyof typeof LocationRouteScalarFieldEnum]
+
+
+export const TravelScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  userId: 'userId',
+  fromId: 'fromId',
+  toId: 'toId',
+  routeId: 'routeId',
+  status: 'status',
+  arrivesAt: 'arrivesAt',
+  requestMessageId: 'requestMessageId',
+  createdAt: 'createdAt'
+} as const
+
+export type TravelScalarFieldEnum = (typeof TravelScalarFieldEnum)[keyof typeof TravelScalarFieldEnum]
+
+
+export const LocationSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  requestChannelId: 'requestChannelId',
+  logChannelId: 'logChannelId',
+  guideChannelId: 'guideChannelId',
+  travelRoleId: 'travelRoleId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationSettingsScalarFieldEnum = (typeof LocationSettingsScalarFieldEnum)[keyof typeof LocationSettingsScalarFieldEnum]
 
 
 export const SortOrder = {

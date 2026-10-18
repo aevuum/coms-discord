@@ -355,6 +355,40 @@ export type EnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTicketStatusFilter<$PrismaModel>
 }
 
+export type EnumLocationAccessFilter<$PrismaModel = never> = {
+  equals?: $Enums.LocationAccess | Prisma.EnumLocationAccessFieldRefInput<$PrismaModel>
+  in?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLocationAccessFilter<$PrismaModel> | $Enums.LocationAccess
+}
+
+export type EnumLocationAccessWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LocationAccess | Prisma.EnumLocationAccessFieldRefInput<$PrismaModel>
+  in?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLocationAccessWithAggregatesFilter<$PrismaModel> | $Enums.LocationAccess
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLocationAccessFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLocationAccessFilter<$PrismaModel>
+}
+
+export type EnumTravelStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TravelStatus | Prisma.EnumTravelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTravelStatusFilter<$PrismaModel> | $Enums.TravelStatus
+}
+
+export type EnumTravelStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TravelStatus | Prisma.EnumTravelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTravelStatusWithAggregatesFilter<$PrismaModel> | $Enums.TravelStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTravelStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTravelStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -707,6 +741,40 @@ export type NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTicketStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTicketStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLocationAccessFilter<$PrismaModel = never> = {
+  equals?: $Enums.LocationAccess | Prisma.EnumLocationAccessFieldRefInput<$PrismaModel>
+  in?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLocationAccessFilter<$PrismaModel> | $Enums.LocationAccess
+}
+
+export type NestedEnumLocationAccessWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LocationAccess | Prisma.EnumLocationAccessFieldRefInput<$PrismaModel>
+  in?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LocationAccess[] | Prisma.ListEnumLocationAccessFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLocationAccessWithAggregatesFilter<$PrismaModel> | $Enums.LocationAccess
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLocationAccessFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLocationAccessFilter<$PrismaModel>
+}
+
+export type NestedEnumTravelStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TravelStatus | Prisma.EnumTravelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTravelStatusFilter<$PrismaModel> | $Enums.TravelStatus
+}
+
+export type NestedEnumTravelStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TravelStatus | Prisma.EnumTravelStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TravelStatus[] | Prisma.ListEnumTravelStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTravelStatusWithAggregatesFilter<$PrismaModel> | $Enums.TravelStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTravelStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTravelStatusFilter<$PrismaModel>
 }
 
 

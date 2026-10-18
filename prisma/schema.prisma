@@ -371,3 +371,85 @@ model Ticket {
 
   @@index([ownerId, tagId, status])
 }
+
+enum LocationAccess {
+  OPEN
+  APPROVAL
+}
+
+enum TravelStatus {
+  PENDING
+  TRAVELING
+}
+
+model Location {
+  id String @id @default(cuid())
+
+  guildId String
+  roleId  String
+
+  name        String
+  emoji       String?
+  description String?
+
+  access           LocationAccess @default(OPEN)
+  arrivalChannelId String?
+  sortOrder        Int            @default(0)
+
+  routesFrom LocationRoute[] @relation("RouteFrom")
+  routesTo   LocationRoute[] @relation("RouteTo")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([guildId, roleId])
+}
+
+model LocationRoute {
+  id String @id @default(cuid())
+
+  fromId String
+  from   Location @relation("RouteFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  toId   String
+  to     Location @relation("RouteTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  method        String
+  travelMinutes Int     @default(0)
+  itemName      String?
+  itemKey       String?
+  itemQuantity  Int     @default(1)
+  adultOnly     Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([fromId])
+}
+
+model Travel {
+  id String @id @default(cuid())
+
+  guildId String
+  userId  String @unique
+
+  fromId  String?
+  toId    String
+  routeId String
+
+  status    TravelStatus
+  arrivesAt DateTime?
+
+  requestMessageId String?
+
+  createdAt DateTime @default(now())
+}
+
+model LocationSettings {
+  guildId String @id
+
+  requestChannelId String?
+  logChannelId     String?
+  guideChannelId   String?
+  travelRoleId     String?
+
+  updatedAt DateTime @updatedAt
+}

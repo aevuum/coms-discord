@@ -89,3 +89,19 @@ export const TicketStatus = {
 } as const
 
 export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
+
+
+export const LocationAccess = {
+  OPEN: 'OPEN',
+  APPROVAL: 'APPROVAL'
+} as const
+
+export type LocationAccess = (typeof LocationAccess)[keyof typeof LocationAccess]
+
+
+export const TravelStatus = {
+  PENDING: 'PENDING',
+  TRAVELING: 'TRAVELING'
+} as const
+
+export type TravelStatus = (typeof TravelStatus)[keyof typeof TravelStatus]

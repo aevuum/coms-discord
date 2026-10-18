@@ -43,6 +43,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Locations,
+    key: "manage.locations",
+    label: "Локации",
+    emoji: "<:3124journeys:1518587239276478546>",
+    description: "Места, пути между ними, доступ и заявки на перемещение",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Permissions,
     key: "manage.permissions",
     label: "Доступ",

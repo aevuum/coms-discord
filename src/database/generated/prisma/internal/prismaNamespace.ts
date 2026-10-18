@@ -399,7 +399,11 @@ export const ModelName = {
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
   RoleStipend: 'RoleStipend',
-  Ticket: 'Ticket'
+  Ticket: 'Ticket',
+  Location: 'Location',
+  LocationRoute: 'LocationRoute',
+  Travel: 'Travel',
+  LocationSettings: 'LocationSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1603,6 +1607,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Location: {
+      payload: Prisma.$LocationPayload<ExtArgs>
+      fields: Prisma.LocationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LocationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LocationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>
+        }
+        findFirst: {
+          args: Prisma.LocationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LocationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>
+        }
+        findMany: {
+          args: Prisma.LocationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>[]
+        }
+        create: {
+          args: Prisma.LocationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>
+        }
+        createMany: {
+          args: Prisma.LocationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LocationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>[]
+        }
+        delete: {
+          args: Prisma.LocationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>
+        }
+        update: {
+          args: Prisma.LocationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>
+        }
+        deleteMany: {
+          args: Prisma.LocationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LocationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LocationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>[]
+        }
+        upsert: {
+          args: Prisma.LocationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationPayload>
+        }
+        aggregate: {
+          args: Prisma.LocationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLocation>
+        }
+        groupBy: {
+          args: Prisma.LocationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LocationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocationCountAggregateOutputType> | number
+        }
+      }
+    }
+    LocationRoute: {
+      payload: Prisma.$LocationRoutePayload<ExtArgs>
+      fields: Prisma.LocationRouteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LocationRouteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LocationRouteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>
+        }
+        findFirst: {
+          args: Prisma.LocationRouteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LocationRouteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>
+        }
+        findMany: {
+          args: Prisma.LocationRouteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>[]
+        }
+        create: {
+          args: Prisma.LocationRouteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>
+        }
+        createMany: {
+          args: Prisma.LocationRouteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LocationRouteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>[]
+        }
+        delete: {
+          args: Prisma.LocationRouteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>
+        }
+        update: {
+          args: Prisma.LocationRouteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>
+        }
+        deleteMany: {
+          args: Prisma.LocationRouteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LocationRouteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LocationRouteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>[]
+        }
+        upsert: {
+          args: Prisma.LocationRouteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationRoutePayload>
+        }
+        aggregate: {
+          args: Prisma.LocationRouteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLocationRoute>
+        }
+        groupBy: {
+          args: Prisma.LocationRouteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocationRouteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LocationRouteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocationRouteCountAggregateOutputType> | number
+        }
+      }
+    }
+    Travel: {
+      payload: Prisma.$TravelPayload<ExtArgs>
+      fields: Prisma.TravelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TravelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TravelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>
+        }
+        findFirst: {
+          args: Prisma.TravelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TravelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>
+        }
+        findMany: {
+          args: Prisma.TravelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>[]
+        }
+        create: {
+          args: Prisma.TravelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>
+        }
+        createMany: {
+          args: Prisma.TravelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TravelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>[]
+        }
+        delete: {
+          args: Prisma.TravelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>
+        }
+        update: {
+          args: Prisma.TravelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>
+        }
+        deleteMany: {
+          args: Prisma.TravelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TravelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TravelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>[]
+        }
+        upsert: {
+          args: Prisma.TravelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TravelPayload>
+        }
+        aggregate: {
+          args: Prisma.TravelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTravel>
+        }
+        groupBy: {
+          args: Prisma.TravelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TravelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TravelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TravelCountAggregateOutputType> | number
+        }
+      }
+    }
+    LocationSettings: {
+      payload: Prisma.$LocationSettingsPayload<ExtArgs>
+      fields: Prisma.LocationSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LocationSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LocationSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.LocationSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LocationSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.LocationSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.LocationSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.LocationSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LocationSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.LocationSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>
+        }
+        update: {
+          args: Prisma.LocationSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.LocationSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LocationSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LocationSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.LocationSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocationSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.LocationSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLocationSettings>
+        }
+        groupBy: {
+          args: Prisma.LocationSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocationSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LocationSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocationSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1869,6 +2169,67 @@ export const TicketScalarFieldEnum = {
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
 
 
+export const LocationScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  roleId: 'roleId',
+  name: 'name',
+  emoji: 'emoji',
+  description: 'description',
+  access: 'access',
+  arrivalChannelId: 'arrivalChannelId',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
+
+
+export const LocationRouteScalarFieldEnum = {
+  id: 'id',
+  fromId: 'fromId',
+  toId: 'toId',
+  method: 'method',
+  travelMinutes: 'travelMinutes',
+  itemName: 'itemName',
+  itemKey: 'itemKey',
+  itemQuantity: 'itemQuantity',
+  adultOnly: 'adultOnly',
+  createdAt: 'createdAt'
+} as const
+
+export type LocationRouteScalarFieldEnum = (typeof LocationRouteScalarFieldEnum)[keyof typeof LocationRouteScalarFieldEnum]
+
+
+export const TravelScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  userId: 'userId',
+  fromId: 'fromId',
+  toId: 'toId',
+  routeId: 'routeId',
+  status: 'status',
+  arrivesAt: 'arrivesAt',
+  requestMessageId: 'requestMessageId',
+  createdAt: 'createdAt'
+} as const
+
+export type TravelScalarFieldEnum = (typeof TravelScalarFieldEnum)[keyof typeof TravelScalarFieldEnum]
+
+
+export const LocationSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  requestChannelId: 'requestChannelId',
+  logChannelId: 'logChannelId',
+  guideChannelId: 'guideChannelId',
+  travelRoleId: 'travelRoleId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocationSettingsScalarFieldEnum = (typeof LocationSettingsScalarFieldEnum)[keyof typeof LocationSettingsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2075,6 +2436,34 @@ export type ListEnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'LocationAccess'
+ */
+export type EnumLocationAccessFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LocationAccess'>
+    
+
+
+/**
+ * Reference to a field of type 'LocationAccess[]'
+ */
+export type ListEnumLocationAccessFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LocationAccess[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TravelStatus'
+ */
+export type EnumTravelStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TravelStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TravelStatus[]'
+ */
+export type ListEnumTravelStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TravelStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2213,6 +2602,10 @@ export type GlobalOmitConfig = {
   coinTransaction?: Prisma.CoinTransactionOmit
   roleStipend?: Prisma.RoleStipendOmit
   ticket?: Prisma.TicketOmit
+  location?: Prisma.LocationOmit
+  locationRoute?: Prisma.LocationRouteOmit
+  travel?: Prisma.TravelOmit
+  locationSettings?: Prisma.LocationSettingsOmit
 }
 
 /* Types for Logging */

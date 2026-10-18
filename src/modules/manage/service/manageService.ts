@@ -12,6 +12,7 @@ import { CoinsAdminContainer } from "../../coins/lib/coinsAdminContainer.js";
 import { StipendService } from "../../coins/service/stipendService.js";
 import { ShopAdminContainer } from "../../shop/lib/shopAdminContainer.js";
 import { ShopService } from "../../shop/service/shopService.js";
+import { LocationAdminViews } from "../../locations/lib/locationAdminViews.js";
 import { ManageContainer } from "../lib/manageContainer.js";
 import { ManageError } from "../lib/manageResponder.js";
 import { getManageSection } from "../lib/manageSections.js";
@@ -67,6 +68,9 @@ export class ManageService {
         return CoinsAdminContainer.root(
           await StipendService.list(subject.guildId as string),
         );
+
+      case ManageSectionId.Locations:
+        return LocationAdminViews.root(interaction.client, subject.guildId as string);
 
       case ManageSectionId.Permissions: {
         const overview = await PermissionService.getOverview(subject);

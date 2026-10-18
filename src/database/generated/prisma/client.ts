@@ -121,3 +121,23 @@ export type RoleStipend = Prisma.RoleStipendModel
  * 
  */
 export type Ticket = Prisma.TicketModel
+/**
+ * Model Location
+ * 
+ */
+export type Location = Prisma.LocationModel
+/**
+ * Model LocationRoute
+ * 
+ */
+export type LocationRoute = Prisma.LocationRouteModel
+/**
+ * Model Travel
+ * 
+ */
+export type Travel = Prisma.TravelModel
+/**
+ * Model LocationSettings
+ * 
+ */
+export type LocationSettings = Prisma.LocationSettingsModel
