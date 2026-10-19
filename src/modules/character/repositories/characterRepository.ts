@@ -4,6 +4,7 @@ import {
   CharacterStatus,
 } from "../../../database/generated/prisma/client.js";
 import { Currency } from "../../economy/lib/currency.js";
+import { StarterItems } from "../lib/starterItems.js";
 
 export class CharacterRepository {
   public static async create(
@@ -21,6 +22,9 @@ export class CharacterRepository {
         faculty,
         age,
         balanceKnuts: Currency.START_BALANCE,
+        inventoryItems: {
+          create: StarterItems.records(),
+        },
       },
     });
   }
