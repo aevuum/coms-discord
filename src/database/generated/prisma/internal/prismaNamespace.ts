@@ -408,7 +408,8 @@ export const ModelName = {
   ActivitySettings: 'ActivitySettings',
   Report: 'Report',
   StaffApplication: 'StaffApplication',
-  StaffApplicationVote: 'StaffApplicationVote'
+  StaffApplicationVote: 'StaffApplicationVote',
+  StaffApplicationRole: 'StaffApplicationRole'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2278,6 +2279,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StaffApplicationRole: {
+      payload: Prisma.$StaffApplicationRolePayload<ExtArgs>
+      fields: Prisma.StaffApplicationRoleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StaffApplicationRoleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StaffApplicationRoleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>
+        }
+        findFirst: {
+          args: Prisma.StaffApplicationRoleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StaffApplicationRoleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>
+        }
+        findMany: {
+          args: Prisma.StaffApplicationRoleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>[]
+        }
+        create: {
+          args: Prisma.StaffApplicationRoleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>
+        }
+        createMany: {
+          args: Prisma.StaffApplicationRoleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StaffApplicationRoleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>[]
+        }
+        delete: {
+          args: Prisma.StaffApplicationRoleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>
+        }
+        update: {
+          args: Prisma.StaffApplicationRoleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>
+        }
+        deleteMany: {
+          args: Prisma.StaffApplicationRoleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StaffApplicationRoleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StaffApplicationRoleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>[]
+        }
+        upsert: {
+          args: Prisma.StaffApplicationRoleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationRolePayload>
+        }
+        aggregate: {
+          args: Prisma.StaffApplicationRoleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStaffApplicationRole>
+        }
+        groupBy: {
+          args: Prisma.StaffApplicationRoleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffApplicationRoleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StaffApplicationRoleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffApplicationRoleCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2699,6 +2774,16 @@ export const StaffApplicationVoteScalarFieldEnum = {
 export type StaffApplicationVoteScalarFieldEnum = (typeof StaffApplicationVoteScalarFieldEnum)[keyof typeof StaffApplicationVoteScalarFieldEnum]
 
 
+export const StaffApplicationRoleScalarFieldEnum = {
+  tagId: 'tagId',
+  open: 'open',
+  questions: 'questions',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffApplicationRoleScalarFieldEnum = (typeof StaffApplicationRoleScalarFieldEnum)[keyof typeof StaffApplicationRoleScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2712,6 +2797,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -3152,6 +3245,7 @@ export type GlobalOmitConfig = {
   report?: Prisma.ReportOmit
   staffApplication?: Prisma.StaffApplicationOmit
   staffApplicationVote?: Prisma.StaffApplicationVoteOmit
+  staffApplicationRole?: Prisma.StaffApplicationRoleOmit
 }
 
 /* Types for Logging */

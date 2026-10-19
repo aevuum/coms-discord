@@ -19,5 +19,7 @@ export type ApplicationRole = {
   tagId: string;
   name: string;
   roleId: string | null;
+  open: boolean;
+  customQuestions: boolean;
   emoji: { id: string; name: string } | { unicode: string } | null;
 };

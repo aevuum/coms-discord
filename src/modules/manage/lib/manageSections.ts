@@ -59,6 +59,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Applications,
+    key: "manage.applications",
+    label: "Набор в команду",
+    emoji: "<:12784editor:1518587261707616407>",
+    description: "Открытие и закрытие набора на стафф-роли, пункты анкеты",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Permissions,
     key: "manage.permissions",
     label: "Доступ",

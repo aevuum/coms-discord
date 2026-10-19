@@ -21,7 +21,7 @@ import { ApplicationAction, ApplicationCustomIds } from "./applicationCustomIds.
 import { TemplateParser } from "./templateParser.js";
 
 const ARROW = "<:383438arrowright:1518587353390907473>";
-const HEADER = "<:MemberIcon:1518579287001665587>";
+const HEADER = "<:928205membericon:1518581050555633674>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const ERROR = "<:240191mark:1518581039172292688>";
 
@@ -61,19 +61,33 @@ export class ApplicationContainer {
       new TextDisplayBuilder().setContent(
         roles.length
           ? [
-              "### Открытые должности",
-              roles.map((role) => `${this.emoji(role)} **${role.name}**`).join("\n"),
+              "### Должности",
+              roles
+                .map((role) =>
+                  role.open
+                    ? `${this.emoji(role)} **${role.name}**`
+                    : `${this.emoji(role)} ~~${role.name}~~ · набор закрыт`,
+                )
+                .join("\n"),
             ].join("\n")
           : "-# Сейчас набор закрыт.",
       ),
     );
 
-    if (roles.length) {
+    const open = roles.filter((role) => role.open);
+
+    if (!open.length && roles.length) {
+      container.addTextDisplayComponents(
+        new TextDisplayBuilder().setContent("-# Сейчас набор закрыт на все должности."),
+      );
+    }
+
+    if (open.length) {
       const select = new StringSelectMenuBuilder()
         .setCustomId(ApplicationCustomIds.build(ApplicationAction.Open))
         .setPlaceholder("Выберите должность")
         .addOptions(
-          roles.slice(0, 25).map((role) => {
+          open.slice(0, 25).map((role) => {
             const option = new StringSelectMenuOptionBuilder()
               .setLabel(role.name)
               .setValue(role.tagId);

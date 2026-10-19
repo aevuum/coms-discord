@@ -594,3 +594,12 @@ model StaffApplicationVote {
 
   @@id([applicationId, userId])
 }
+
+model StaffApplicationRole {
+  tagId String @id
+
+  open      Boolean @default(true)
+  questions Json?
+
+  updatedAt DateTime @updatedAt
+}

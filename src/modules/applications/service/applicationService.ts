@@ -61,6 +61,10 @@ export class ApplicationService {
   public static async prepare(member: GuildMember, tagId: string) {
     const role = await ApplicationTemplates.getRole(member.client, tagId);
 
+    if (!role.open) {
+      throw new ApplicationError(`Набор на должность «${role.name}» сейчас закрыт.`);
+    }
+
     if (role.roleId && member.roles.cache.has(role.roleId)) {
       throw new ApplicationError(`У вас уже есть должность «${role.name}».`);
     }

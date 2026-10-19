@@ -12,6 +12,7 @@ import {
   APPLICATION_TEMPLATES_FORUM_ID,
 } from "../lib/applicationConfig.js";
 import { TemplateParser } from "../lib/templateParser.js";
+import { ApplicationRoleRepository } from "../repositories/applicationRoleRepository.js";
 import {
   ApplicationError,
   type ApplicationQuestion,
@@ -34,13 +35,20 @@ export class ApplicationTemplates {
   public static async getRoles(client: Client): Promise<ApplicationRole[]> {
     const forum = await this.getForum(client);
 
+    const settings = new Map(
+      (await ApplicationRoleRepository.list()).map((entry) => [entry.tagId, entry]),
+    );
+
     return forum.availableTags.map((tag) => {
       const custom = tag.emoji?.id ? client.emojis.cache.get(tag.emoji.id) : null;
+      const setting = settings.get(tag.id);
 
       return {
         tagId: tag.id,
         name: tag.name,
         roleId: this.resolveRoleId(forum.guild, tag.name),
+        open: setting?.open ?? true,
+        customQuestions: Array.isArray(setting?.questions),
         emoji: custom?.name
           ? { id: custom.id, name: custom.name }
           : tag.emoji?.name
@@ -60,7 +68,17 @@ export class ApplicationTemplates {
     return role;
   }
 
-  public static async getQuestions(client: Client, tagId: string) {
+  public static async getQuestions(client: Client, tagId: string): Promise<ApplicationQuestion[]> {
+    const setting = await ApplicationRoleRepository.find(tagId);
+
+    if (Array.isArray(setting?.questions)) {
+      return setting.questions as ApplicationQuestion[];
+    }
+
+    return this.getTemplateQuestions(client, tagId);
+  }
+
+  public static async getTemplateQuestions(client: Client, tagId: string) {
     const cached = this.cache.get(tagId);
 
     if (cached && Date.now() - cached.createdAt < APPLICATION_TEMPLATE_CACHE_MS) {
@@ -93,7 +111,7 @@ export class ApplicationTemplates {
   public static async warm(client: Client) {
     const roles = await this.getRoles(client);
 
-    await Promise.all(roles.map((role) => this.getQuestions(client, role.tagId).catch(() => null)));
+    await Promise.all(roles.map((role) => this.getTemplateQuestions(client, role.tagId).catch(() => null)));
   }
 
   public static clear() {
