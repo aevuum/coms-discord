@@ -35,6 +35,24 @@ export class RollCustomIds {
     return prefix === "roll" && action === "reroll" && slug ? slug : null;
   }
 
+  public static catalog(slug: string) {
+    return `rollinfo:list:${slug}`;
+  }
+
+  public static catalogEntry(slug: string) {
+    return `rollinfo:view:${slug}`;
+  }
+
+  public static parseCatalog(customId: string) {
+    const [prefix, action, slug] = customId.split(":");
+
+    if (prefix !== "rollinfo" || (action !== "list" && action !== "view") || !slug) {
+      return null;
+    }
+
+    return { action: action as "list" | "view", slug };
+  }
+
   public static admin(action: RollAdminAction, ...args: string[]) {
     return ["rolladm", action, ...args].join(":");
   }
