@@ -666,3 +666,12 @@ model GiveawaySettings {
 
   updatedAt DateTime @updatedAt
 }
+
+model TermsAcceptance {
+  discordId String @id
+
+  version    String
+  acceptedAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}

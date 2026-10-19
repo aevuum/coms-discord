@@ -167,3 +167,8 @@ export type GiveawayEntry = Prisma.GiveawayEntryModel
  * 
  */
 export type GiveawaySettings = Prisma.GiveawaySettingsModel
+/**
+ * Model TermsAcceptance
+ * 
+ */
+export type TermsAcceptance = Prisma.TermsAcceptanceModel

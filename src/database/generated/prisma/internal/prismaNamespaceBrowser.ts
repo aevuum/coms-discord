@@ -80,7 +80,8 @@ export const ModelName = {
   ReportSettings: 'ReportSettings',
   Giveaway: 'Giveaway',
   GiveawayEntry: 'GiveawayEntry',
-  GiveawaySettings: 'GiveawaySettings'
+  GiveawaySettings: 'GiveawaySettings',
+  TermsAcceptance: 'TermsAcceptance'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -539,6 +540,16 @@ export const GiveawaySettingsScalarFieldEnum = {
 } as const
 
 export type GiveawaySettingsScalarFieldEnum = (typeof GiveawaySettingsScalarFieldEnum)[keyof typeof GiveawaySettingsScalarFieldEnum]
+
+
+export const TermsAcceptanceScalarFieldEnum = {
+  discordId: 'discordId',
+  version: 'version',
+  acceptedAt: 'acceptedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TermsAcceptanceScalarFieldEnum = (typeof TermsAcceptanceScalarFieldEnum)[keyof typeof TermsAcceptanceScalarFieldEnum]
 
 
 export const SortOrder = {
