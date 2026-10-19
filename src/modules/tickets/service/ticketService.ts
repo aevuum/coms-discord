@@ -29,6 +29,7 @@ import {
   TICKET_STAFF_CHANNEL_ID,
   TICKET_TEMPLATES_FORUM_ID,
 } from "../lib/ticketConfig.js";
+import { SelectReset } from "../../../lib/selectReset.js";
 import { TicketContainer } from "../lib/ticketContainer.js";
 import { TicketAction, TicketCustomIds } from "../lib/ticketCustomIds.js";
 
@@ -52,6 +53,11 @@ const REVIEWER_OVERWRITE = {
   UseExternalEmojis: true,
   ManageMessages: true,
 };
+
+SelectReset.register(TicketCustomIds.build(TicketAction.Open), async (interaction) => ({
+  ...(await TicketService.panelPayload(interaction.client)),
+  attachments: [],
+}));
 
 export class TicketService {
   private static readonly opening = new Set<string>();
@@ -109,12 +115,7 @@ export class TicketService {
       throw new Error(`Ticket panel channel ${TICKET_PANEL_CHANNEL_ID} is not a text channel`);
     }
 
-    const payload = {
-      flags: MessageFlags.IsComponentsV2 as const,
-      components: [TicketContainer.panel(await this.getSubjects(client))],
-      files: [new AttachmentBuilder(TICKET_PANEL_IMAGE_PATH, { name: TICKET_PANEL_IMAGE_NAME })],
-      allowedMentions: { parse: [] },
-    };
+    const payload = await this.panelPayload(client);
 
     const messages = await channel.messages.fetch({ limit: 50 });
 
@@ -129,6 +130,15 @@ export class TicketService {
     }
 
     return { message: await channel.send(payload), created: true };
+  }
+
+  public static async panelPayload(client: Client) {
+    return {
+      flags: MessageFlags.IsComponentsV2 as const,
+      components: [TicketContainer.panel(await this.getSubjects(client))],
+      files: [new AttachmentBuilder(TICKET_PANEL_IMAGE_PATH, { name: TICKET_PANEL_IMAGE_NAME })],
+      allowedMentions: { parse: [] },
+    };
   }
 
   public static async open(member: GuildMember, tagId: string) {

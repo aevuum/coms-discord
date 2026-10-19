@@ -6,6 +6,7 @@ import {
   type RepliableInteraction,
 } from "discord.js";
 
+import { SelectReset } from "../../../lib/selectReset.js";
 import { TermsAction, TermsCustomIds } from "../lib/termsConfig.js";
 import { TermsContainer } from "../lib/termsContainer.js";
 import { TermsService } from "../service/termsService.js";
@@ -73,12 +74,25 @@ export class TermsInteractionGateListener extends Listener<typeof Events.Interac
   }
 
   private async prompt(interaction: RepliableInteraction) {
-    await interaction
-      .reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components: [TermsContainer.prompt()],
-      })
-      .catch((error) => this.container.logger.error(error));
+    const payload = {
+      flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral] as const,
+      components: [TermsContainer.prompt()],
+    };
+
+    try {
+      if (interaction.isAnySelectMenu() && (await SelectReset.reset(interaction))) {
+        await interaction.followUp(payload);
+        return;
+      }
+
+      await interaction.reply(payload);
+    } catch (error) {
+      this.container.logger.error(error);
+
+      if (interaction.deferred || interaction.replied) {
+        await interaction.followUp(payload).catch(() => null);
+      }
+    }
   }
 
   private async handleTermsButton(interaction: ButtonInteraction, action: TermsAction) {
