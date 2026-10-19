@@ -81,7 +81,10 @@ export const ModelName = {
   Giveaway: 'Giveaway',
   GiveawayEntry: 'GiveawayEntry',
   GiveawaySettings: 'GiveawaySettings',
-  TermsAcceptance: 'TermsAcceptance'
+  TermsAcceptance: 'TermsAcceptance',
+  Suggestion: 'Suggestion',
+  SuggestionReaction: 'SuggestionReaction',
+  SuggestionRating: 'SuggestionRating'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -550,6 +553,50 @@ export const TermsAcceptanceScalarFieldEnum = {
 } as const
 
 export type TermsAcceptanceScalarFieldEnum = (typeof TermsAcceptanceScalarFieldEnum)[keyof typeof TermsAcceptanceScalarFieldEnum]
+
+
+export const SuggestionScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  guildId: 'guildId',
+  authorId: 'authorId',
+  title: 'title',
+  category: 'category',
+  description: 'description',
+  benefit: 'benefit',
+  messageId: 'messageId',
+  threadId: 'threadId',
+  status: 'status',
+  decidedById: 'decidedById',
+  decidedAt: 'decidedAt',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SuggestionScalarFieldEnum = (typeof SuggestionScalarFieldEnum)[keyof typeof SuggestionScalarFieldEnum]
+
+
+export const SuggestionReactionScalarFieldEnum = {
+  suggestionId: 'suggestionId',
+  userId: 'userId',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SuggestionReactionScalarFieldEnum = (typeof SuggestionReactionScalarFieldEnum)[keyof typeof SuggestionReactionScalarFieldEnum]
+
+
+export const SuggestionRatingScalarFieldEnum = {
+  suggestionId: 'suggestionId',
+  userId: 'userId',
+  stars: 'stars',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SuggestionRatingScalarFieldEnum = (typeof SuggestionRatingScalarFieldEnum)[keyof typeof SuggestionRatingScalarFieldEnum]
 
 
 export const SortOrder = {

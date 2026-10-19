@@ -414,7 +414,10 @@ export const ModelName = {
   Giveaway: 'Giveaway',
   GiveawayEntry: 'GiveawayEntry',
   GiveawaySettings: 'GiveawaySettings',
-  TermsAcceptance: 'TermsAcceptance'
+  TermsAcceptance: 'TermsAcceptance',
+  Suggestion: 'Suggestion',
+  SuggestionReaction: 'SuggestionReaction',
+  SuggestionRating: 'SuggestionRating'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2728,6 +2731,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Suggestion: {
+      payload: Prisma.$SuggestionPayload<ExtArgs>
+      fields: Prisma.SuggestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SuggestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SuggestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        findFirst: {
+          args: Prisma.SuggestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SuggestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        findMany: {
+          args: Prisma.SuggestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>[]
+        }
+        create: {
+          args: Prisma.SuggestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        createMany: {
+          args: Prisma.SuggestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SuggestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>[]
+        }
+        delete: {
+          args: Prisma.SuggestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        update: {
+          args: Prisma.SuggestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SuggestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SuggestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SuggestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SuggestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionPayload>
+        }
+        aggregate: {
+          args: Prisma.SuggestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSuggestion>
+        }
+        groupBy: {
+          args: Prisma.SuggestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SuggestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionCountAggregateOutputType> | number
+        }
+      }
+    }
+    SuggestionReaction: {
+      payload: Prisma.$SuggestionReactionPayload<ExtArgs>
+      fields: Prisma.SuggestionReactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SuggestionReactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SuggestionReactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>
+        }
+        findFirst: {
+          args: Prisma.SuggestionReactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SuggestionReactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>
+        }
+        findMany: {
+          args: Prisma.SuggestionReactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>[]
+        }
+        create: {
+          args: Prisma.SuggestionReactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>
+        }
+        createMany: {
+          args: Prisma.SuggestionReactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SuggestionReactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>[]
+        }
+        delete: {
+          args: Prisma.SuggestionReactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>
+        }
+        update: {
+          args: Prisma.SuggestionReactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SuggestionReactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SuggestionReactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SuggestionReactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SuggestionReactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionReactionPayload>
+        }
+        aggregate: {
+          args: Prisma.SuggestionReactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSuggestionReaction>
+        }
+        groupBy: {
+          args: Prisma.SuggestionReactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionReactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SuggestionReactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionReactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    SuggestionRating: {
+      payload: Prisma.$SuggestionRatingPayload<ExtArgs>
+      fields: Prisma.SuggestionRatingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SuggestionRatingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SuggestionRatingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>
+        }
+        findFirst: {
+          args: Prisma.SuggestionRatingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SuggestionRatingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>
+        }
+        findMany: {
+          args: Prisma.SuggestionRatingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>[]
+        }
+        create: {
+          args: Prisma.SuggestionRatingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>
+        }
+        createMany: {
+          args: Prisma.SuggestionRatingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SuggestionRatingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>[]
+        }
+        delete: {
+          args: Prisma.SuggestionRatingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>
+        }
+        update: {
+          args: Prisma.SuggestionRatingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>
+        }
+        deleteMany: {
+          args: Prisma.SuggestionRatingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SuggestionRatingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SuggestionRatingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>[]
+        }
+        upsert: {
+          args: Prisma.SuggestionRatingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SuggestionRatingPayload>
+        }
+        aggregate: {
+          args: Prisma.SuggestionRatingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSuggestionRating>
+        }
+        groupBy: {
+          args: Prisma.SuggestionRatingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionRatingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SuggestionRatingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SuggestionRatingCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3219,6 +3444,50 @@ export const TermsAcceptanceScalarFieldEnum = {
 export type TermsAcceptanceScalarFieldEnum = (typeof TermsAcceptanceScalarFieldEnum)[keyof typeof TermsAcceptanceScalarFieldEnum]
 
 
+export const SuggestionScalarFieldEnum = {
+  id: 'id',
+  number: 'number',
+  guildId: 'guildId',
+  authorId: 'authorId',
+  title: 'title',
+  category: 'category',
+  description: 'description',
+  benefit: 'benefit',
+  messageId: 'messageId',
+  threadId: 'threadId',
+  status: 'status',
+  decidedById: 'decidedById',
+  decidedAt: 'decidedAt',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SuggestionScalarFieldEnum = (typeof SuggestionScalarFieldEnum)[keyof typeof SuggestionScalarFieldEnum]
+
+
+export const SuggestionReactionScalarFieldEnum = {
+  suggestionId: 'suggestionId',
+  userId: 'userId',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SuggestionReactionScalarFieldEnum = (typeof SuggestionReactionScalarFieldEnum)[keyof typeof SuggestionReactionScalarFieldEnum]
+
+
+export const SuggestionRatingScalarFieldEnum = {
+  suggestionId: 'suggestionId',
+  userId: 'userId',
+  stars: 'stars',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SuggestionRatingScalarFieldEnum = (typeof SuggestionRatingScalarFieldEnum)[keyof typeof SuggestionRatingScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3547,6 +3816,20 @@ export type ListEnumGiveawayStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'SuggestionStatus'
+ */
+export type EnumSuggestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SuggestionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SuggestionStatus[]'
+ */
+export type ListEnumSuggestionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SuggestionStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3700,6 +3983,9 @@ export type GlobalOmitConfig = {
   giveawayEntry?: Prisma.GiveawayEntryOmit
   giveawaySettings?: Prisma.GiveawaySettingsOmit
   termsAcceptance?: Prisma.TermsAcceptanceOmit
+  suggestion?: Prisma.SuggestionOmit
+  suggestionReaction?: Prisma.SuggestionReactionOmit
+  suggestionRating?: Prisma.SuggestionRatingOmit
 }
 
 /* Types for Logging */

@@ -172,3 +172,18 @@ export type GiveawaySettings = Prisma.GiveawaySettingsModel
  * 
  */
 export type TermsAcceptance = Prisma.TermsAcceptanceModel
+/**
+ * Model Suggestion
+ * 
+ */
+export type Suggestion = Prisma.SuggestionModel
+/**
+ * Model SuggestionReaction
+ * 
+ */
+export type SuggestionReaction = Prisma.SuggestionReactionModel
+/**
+ * Model SuggestionRating
+ * 
+ */
+export type SuggestionRating = Prisma.SuggestionRatingModel

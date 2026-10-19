@@ -675,3 +675,64 @@ model TermsAcceptance {
 
   updatedAt DateTime @updatedAt
 }
+
+enum SuggestionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model Suggestion {
+  id     String @id @default(cuid())
+  number Int    @unique @default(autoincrement())
+
+  guildId  String
+  authorId String
+
+  title       String
+  category    String
+  description String
+  benefit     String?
+
+  messageId String?
+  threadId  String?
+
+  status      SuggestionStatus @default(PENDING)
+  decidedById String?
+  decidedAt   DateTime?
+  reason      String?
+
+  reactions SuggestionReaction[]
+  ratings   SuggestionRating[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId, createdAt])
+}
+
+model SuggestionReaction {
+  suggestionId String
+  userId       String
+  value        Int
+
+  suggestion Suggestion @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([suggestionId, userId])
+}
+
+model SuggestionRating {
+  suggestionId String
+  userId       String
+  stars        Int
+
+  suggestion Suggestion @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([suggestionId, userId])
+}

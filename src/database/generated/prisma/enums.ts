@@ -144,3 +144,12 @@ export const GiveawayStatus = {
 } as const
 
 export type GiveawayStatus = (typeof GiveawayStatus)[keyof typeof GiveawayStatus]
+
+
+export const SuggestionStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type SuggestionStatus = (typeof SuggestionStatus)[keyof typeof SuggestionStatus]
