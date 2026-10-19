@@ -11,6 +11,7 @@ import {
 import { ShopContainer } from "../lib/shopContainer.js";
 import { ShopAction, ShopCustomIds } from "../lib/shopCustomIds.js";
 import { ShopResponder } from "../lib/shopResponder.js";
+import { ShopOwner } from "../lib/shopOwner.js";
 import { ShopService } from "../service/shopService.js";
 
 export class ShopButtonHandler extends InteractionHandler {
@@ -44,6 +45,10 @@ export class ShopButtonHandler extends InteractionHandler {
       args: string[];
     },
   ) {
+    if (!(await ShopOwner.guard(interaction))) {
+      return;
+    }
+
     try {
       if (result.action === ShopAction.Buy) {
         const purchase = await ShopService.purchase(

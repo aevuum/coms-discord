@@ -18,11 +18,13 @@ import {
 } from "../lib/coinsCustomIds.js";
 import { CoinService } from "../service/coinService.js";
 import { StipendService } from "../service/stipendService.js";
+import { ActivityService } from "../../activity/service/activityService.js";
 
 const MODAL_ACTIONS = new Set<CoinsAdminAction>([
   CoinsAdminAction.AmountModal,
   CoinsAdminAction.BalanceSearch,
   CoinsAdminAction.AdjustModal,
+  CoinsAdminAction.ActivityModal,
 ]);
 
 export class CoinsAdminModalHandler extends InteractionHandler {
@@ -82,6 +84,18 @@ export class CoinsAdminModalHandler extends InteractionHandler {
       );
 
       return CoinsAdminContainer.root(await StipendService.list(guildId));
+    }
+
+    if (result.action === CoinsAdminAction.ActivityModal) {
+      const field = (id: string) => interaction.fields.getTextInputValue(id);
+
+      return CoinsAdminContainer.activity(
+        await ActivityService.setRewards([
+          field(CoinsModalFields.First),
+          field(CoinsModalFields.Second),
+          field(CoinsModalFields.Third),
+        ]),
+      );
     }
 
     if (result.action === CoinsAdminAction.BalanceSearch) {

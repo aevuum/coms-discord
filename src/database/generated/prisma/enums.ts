@@ -77,7 +77,8 @@ export const CoinTransactionType = {
   ADMIN_ADD: 'ADMIN_ADD',
   ADMIN_REMOVE: 'ADMIN_REMOVE',
   AWARD_GRANT: 'AWARD_GRANT',
-  AWARD_REVOKE: 'AWARD_REVOKE'
+  AWARD_REVOKE: 'AWARD_REVOKE',
+  ACTIVITY_REWARD: 'ACTIVITY_REWARD'
 } as const
 
 export type CoinTransactionType = (typeof CoinTransactionType)[keyof typeof CoinTransactionType]

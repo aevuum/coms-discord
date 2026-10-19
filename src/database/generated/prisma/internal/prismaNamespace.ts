@@ -404,7 +404,8 @@ export const ModelName = {
   LocationRoute: 'LocationRoute',
   Travel: 'Travel',
   LocationSettings: 'LocationSettings',
-  RollEntry: 'RollEntry'
+  RollEntry: 'RollEntry',
+  ActivitySettings: 'ActivitySettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1978,6 +1979,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ActivitySettings: {
+      payload: Prisma.$ActivitySettingsPayload<ExtArgs>
+      fields: Prisma.ActivitySettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActivitySettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActivitySettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.ActivitySettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActivitySettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>
+        }
+        findMany: {
+          args: Prisma.ActivitySettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>[]
+        }
+        create: {
+          args: Prisma.ActivitySettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>
+        }
+        createMany: {
+          args: Prisma.ActivitySettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ActivitySettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.ActivitySettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>
+        }
+        update: {
+          args: Prisma.ActivitySettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActivitySettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActivitySettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ActivitySettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.ActivitySettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivitySettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.ActivitySettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActivitySettings>
+        }
+        groupBy: {
+          args: Prisma.ActivitySettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivitySettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActivitySettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivitySettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2024,6 +2099,8 @@ export const UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   messagesCount: 'messagesCount',
   characterSlots: 'characterSlots',
+  weeklyMessages: 'weeklyMessages',
+  weeklyVoiceSeconds: 'weeklyVoiceSeconds',
   voiceSeconds: 'voiceSeconds',
   selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
@@ -2327,6 +2404,18 @@ export const RollEntryScalarFieldEnum = {
 } as const
 
 export type RollEntryScalarFieldEnum = (typeof RollEntryScalarFieldEnum)[keyof typeof RollEntryScalarFieldEnum]
+
+
+export const ActivitySettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  rewardFirst: 'rewardFirst',
+  rewardSecond: 'rewardSecond',
+  rewardThird: 'rewardThird',
+  lastResetAt: 'lastResetAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ActivitySettingsScalarFieldEnum = (typeof ActivitySettingsScalarFieldEnum)[keyof typeof ActivitySettingsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2720,6 +2809,7 @@ export type GlobalOmitConfig = {
   travel?: Prisma.TravelOmit
   locationSettings?: Prisma.LocationSettingsOmit
   rollEntry?: Prisma.RollEntryOmit
+  activitySettings?: Prisma.ActivitySettingsOmit
 }
 
 /* Types for Logging */

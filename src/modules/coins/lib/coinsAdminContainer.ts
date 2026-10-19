@@ -87,6 +87,12 @@ export class CoinsAdminContainer {
           "Баланс игрока",
         ),
 
+        new ButtonBuilder()
+          .setCustomId(CoinsCustomIds.build(CoinsAdminAction.Activity))
+          .setLabel("Награды за активность")
+          .setEmoji("<:835596rank:1518581047636525086>")
+          .setStyle(ButtonStyle.Secondary),
+
         ManageComponents.homeButton(),
       ),
     );
@@ -256,6 +262,59 @@ export class CoinsAdminContainer {
     );
 
     return container;
+  }
+
+  public static activity(rewards: [number, number, number]) {
+    const next = Math.floor(StipendSchedule.nextPayout().getTime() / 1000);
+
+    const container = this.base("Награды за активность", [
+      `${ARROW} Тройка самых активных игроков недели (/top) получает комс-коины, после чего рейтинг обнуляется.`,
+      `${ARROW} Очки: 1 сообщение = 1 очко, 1 минута в голосовом = 1 очко.`,
+      `${ARROW} Подведение итогов: ${StipendSchedule.LABEL}, ближайшее <t:${next}:R>.`,
+      "",
+      ...["🥇 1 место", "🥈 2 место", "🥉 3 место"].map(
+        (label, index) =>
+          `${label}: ${rewards[index] > 0 ? CoinFormatter.amount(rewards[index]) : "без награды"}`,
+      ),
+    ]);
+
+    container.addActionRowComponents(
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId(CoinsCustomIds.build(CoinsAdminAction.ActivityEdit))
+          .setLabel("Изменить награды")
+          .setEmoji("<:479873settingsna:1518581042456432791>")
+          .setStyle(ButtonStyle.Primary),
+
+        this.backButton(),
+      ),
+    );
+
+    return container;
+  }
+
+  public static activityModal(rewards: [number, number, number]) {
+    const field = (customId: string, label: string, value: number) =>
+      new LabelBuilder()
+        .setLabel(label)
+        .setDescription("Комс-коины. Пусто или 0 — без награды")
+        .setTextInputComponent(
+          new TextInputBuilder()
+            .setCustomId(customId)
+            .setStyle(TextInputStyle.Short)
+            .setRequired(false)
+            .setMaxLength(7)
+            .setValue(String(value)),
+        );
+
+    return new ModalBuilder()
+      .setCustomId(CoinsCustomIds.build(CoinsAdminAction.ActivityModal))
+      .setTitle("Награды за активность")
+      .addLabelComponents(
+        field(CoinsModalFields.First, "1 место", rewards[0]),
+        field(CoinsModalFields.Second, "2 место", rewards[1]),
+        field(CoinsModalFields.Third, "3 место", rewards[2]),
+      );
   }
 
   public static amountModal(roleId: string) {

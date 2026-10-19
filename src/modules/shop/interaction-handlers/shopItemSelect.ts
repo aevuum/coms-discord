@@ -11,6 +11,7 @@ import {
 import { ShopContainer } from "../lib/shopContainer.js";
 import { ShopAction, ShopCustomIds } from "../lib/shopCustomIds.js";
 import { ShopResponder } from "../lib/shopResponder.js";
+import { ShopOwner } from "../lib/shopOwner.js";
 import { ShopService } from "../service/shopService.js";
 
 export class ShopItemSelectHandler extends InteractionHandler {
@@ -42,6 +43,10 @@ export class ShopItemSelectHandler extends InteractionHandler {
       itemId: string;
     },
   ) {
+    if (!(await ShopOwner.guard(interaction))) {
+      return;
+    }
+
     try {
       const view = await ShopService.getItemView(
         interaction.user.id,

@@ -13,11 +13,17 @@ export enum CoinsAdminAction {
   BalanceMember = "balance_member",
   Adjust = "adjust",
   AdjustModal = "adjust_modal",
+  Activity = "activity",
+  ActivityEdit = "activity_edit",
+  ActivityModal = "activity_modal",
 }
 
 export const CoinsModalFields = {
   Amount: "amount",
   Reason: "reason",
+  First: "reward_first",
+  Second: "reward_second",
+  Third: "reward_third",
 } as const;
 
 export class CoinsCustomIds {

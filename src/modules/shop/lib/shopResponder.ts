@@ -23,15 +23,6 @@ export class ShopResponder {
     }
 
     try {
-      if (interaction.isMessageComponent() && !interaction.replied && !interaction.deferred) {
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [ShopContainer.error(message)],
-        });
-
-        return;
-      }
-
       const payload = {
         flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral] as const,
         components: [ShopContainer.error(message)],

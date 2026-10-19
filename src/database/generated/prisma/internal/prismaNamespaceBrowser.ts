@@ -71,7 +71,8 @@ export const ModelName = {
   LocationRoute: 'LocationRoute',
   Travel: 'Travel',
   LocationSettings: 'LocationSettings',
-  RollEntry: 'RollEntry'
+  RollEntry: 'RollEntry',
+  ActivitySettings: 'ActivitySettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -97,6 +98,8 @@ export const UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   messagesCount: 'messagesCount',
   characterSlots: 'characterSlots',
+  weeklyMessages: 'weeklyMessages',
+  weeklyVoiceSeconds: 'weeklyVoiceSeconds',
   voiceSeconds: 'voiceSeconds',
   selectedAwardId: 'selectedAwardId',
   profileBannerUrl: 'profileBannerUrl',
@@ -400,6 +403,18 @@ export const RollEntryScalarFieldEnum = {
 } as const
 
 export type RollEntryScalarFieldEnum = (typeof RollEntryScalarFieldEnum)[keyof typeof RollEntryScalarFieldEnum]
+
+
+export const ActivitySettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  rewardFirst: 'rewardFirst',
+  rewardSecond: 'rewardSecond',
+  rewardThird: 'rewardThird',
+  lastResetAt: 'lastResetAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ActivitySettingsScalarFieldEnum = (typeof ActivitySettingsScalarFieldEnum)[keyof typeof ActivitySettingsScalarFieldEnum]
 
 
 export const SortOrder = {

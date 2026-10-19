@@ -104,8 +104,8 @@ export class UserRepository {
   public static async incrementMessageCount(discordId: string): Promise<void> {
     await prisma.user.upsert({
       where: { discordId },
-      update: { messagesCount: { increment: 1 } },
-      create: { discordId, messagesCount: 1, wallet: { create: {} } },
+      update: { messagesCount: { increment: 1 }, weeklyMessages: { increment: 1 } },
+      create: { discordId, messagesCount: 1, weeklyMessages: 1, wallet: { create: {} } },
     });
   }
 
@@ -115,8 +115,16 @@ export class UserRepository {
   ): Promise<void> {
     await prisma.user.upsert({
       where: { discordId },
-      update: { voiceSeconds: { increment: seconds } },
-      create: { discordId, voiceSeconds: seconds, wallet: { create: {} } },
+      update: {
+        voiceSeconds: { increment: seconds },
+        weeklyVoiceSeconds: { increment: seconds },
+      },
+      create: {
+        discordId,
+        voiceSeconds: seconds,
+        weeklyVoiceSeconds: seconds,
+        wallet: { create: {} },
+      },
     });
   }
 }

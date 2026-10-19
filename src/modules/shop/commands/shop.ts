@@ -30,7 +30,7 @@ export class ShopCommand extends Command {
       const storefront = await ShopService.getStorefront(interaction.user.id);
 
       await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
+        flags: MessageFlags.IsComponentsV2,
         components: [
           ShopContainer.storefront(storefront.items, storefront.balance),
         ],

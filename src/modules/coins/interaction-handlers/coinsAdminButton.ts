@@ -12,6 +12,7 @@ import { CoinsAdminContainer } from "../lib/coinsAdminContainer.js";
 import { CoinsAdminAction, CoinsCustomIds } from "../lib/coinsCustomIds.js";
 import { CoinService } from "../service/coinService.js";
 import { StipendService } from "../service/stipendService.js";
+import { ActivityService } from "../../activity/service/activityService.js";
 
 const BUTTON_ACTIONS = new Set<CoinsAdminAction>([
   CoinsAdminAction.Root,
@@ -22,6 +23,8 @@ const BUTTON_ACTIONS = new Set<CoinsAdminAction>([
   CoinsAdminAction.DeleteConfirm,
   CoinsAdminAction.Balance,
   CoinsAdminAction.Adjust,
+  CoinsAdminAction.Activity,
+  CoinsAdminAction.ActivityEdit,
 ]);
 
 export class CoinsAdminButtonHandler extends InteractionHandler {
@@ -57,6 +60,12 @@ export class CoinsAdminButtonHandler extends InteractionHandler {
         case CoinsAdminAction.Edit:
           await interaction.showModal(
             CoinsAdminContainer.amountModal(result.args[0]),
+          );
+          return;
+
+        case CoinsAdminAction.ActivityEdit:
+          await interaction.showModal(
+            CoinsAdminContainer.activityModal(await ActivityService.getRewards()),
           );
           return;
 
@@ -107,6 +116,9 @@ export class CoinsAdminButtonHandler extends InteractionHandler {
         return CoinsAdminContainer.rolePicker(
           await PermissionService.getRolePage(guildId, Number(arg) || 0),
         );
+
+      case CoinsAdminAction.Activity:
+        return CoinsAdminContainer.activity(await ActivityService.getRewards());
 
       case CoinsAdminAction.Delete:
         return CoinsAdminContainer.deleteConfirm(

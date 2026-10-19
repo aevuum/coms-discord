@@ -49,6 +49,9 @@ model User {
   messagesCount Int @default(0)
 
   characterSlots Int @default(0)
+
+  weeklyMessages     Int @default(0)
+  weeklyVoiceSeconds Int @default(0)
   voiceSeconds  Int @default(0)
 
   selectedAwardId String?
@@ -318,6 +321,7 @@ enum CoinTransactionType {
   ADMIN_REMOVE
   AWARD_GRANT
   AWARD_REVOKE
+  ACTIVITY_REWARD
 }
 
 model CoinTransaction {
@@ -488,4 +492,16 @@ model RollEntry {
   updatedAt DateTime @updatedAt
 
   @@index([kind])
+}
+
+model ActivitySettings {
+  guildId String @id
+
+  rewardFirst  Int @default(0)
+  rewardSecond Int @default(0)
+  rewardThird  Int @default(0)
+
+  lastResetAt DateTime?
+
+  updatedAt DateTime @updatedAt
 }

@@ -146,3 +146,8 @@ export type LocationSettings = Prisma.LocationSettingsModel
  * 
  */
 export type RollEntry = Prisma.RollEntryModel
+/**
+ * Model ActivitySettings
+ * 
+ */
+export type ActivitySettings = Prisma.ActivitySettingsModel
