@@ -3,6 +3,8 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ContainerBuilder,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
   TextDisplayBuilder,
@@ -26,8 +28,16 @@ export type TopView = {
 };
 
 export class ActivityContainer {
-  public static top(view: TopView, pageSize: number) {
+  public static top(view: TopView, pageSize: number, bannerName: string | null) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    if (bannerName) {
+      container.addMediaGalleryComponents(
+        new MediaGalleryBuilder().addItems(
+          new MediaGalleryItemBuilder().setURL(`attachment://${bannerName}`),
+        ),
+      );
+    }
 
     const resetAt = Math.floor(view.resetAt.getTime() / 1000);
 

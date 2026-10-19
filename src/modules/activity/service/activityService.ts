@@ -1,5 +1,5 @@
 import { container } from "@sapphire/framework";
-import { MessageFlags, type Client } from "discord.js";
+import { AttachmentBuilder, MessageFlags, type Client } from "discord.js";
 
 import { CoinTransactionType } from "../../../database/generated/prisma/client.js";
 
@@ -7,6 +7,7 @@ import { StipendSchedule } from "../../coins/lib/stipendSchedule.js";
 import { CoinRepository } from "../../coins/repositories/coinRepository.js";
 import { CoinService } from "../../coins/service/coinService.js";
 import { ActivityContainer } from "../lib/activityContainer.js";
+import { TOP_BANNER_NAME, TopBanner } from "../lib/topBanner.js";
 import { ActivityRepository, type ActivityRow } from "../repositories/activityRepository.js";
 
 export const TOP_PAGE_SIZE = 10;
@@ -29,6 +30,24 @@ export class ActivityService {
       viewer: await ActivityRepository.position(viewerId),
       rewards: await this.getRewards(),
       resetAt: StipendSchedule.nextPayout(),
+    };
+  }
+
+  public static async getMessage(client: Client, page: number, viewerId: string) {
+    const view = await this.getPage(page, viewerId);
+
+    const leaders = view.page === 0 ? view.rows.slice(0, 3) : await ActivityRepository.page(0, 3);
+
+    const banner = await TopBanner.render(client, leaders).catch((error) => {
+      container.logger.error(error);
+      return null;
+    });
+
+    return {
+      flags: MessageFlags.IsComponentsV2 as const,
+      components: [ActivityContainer.top(view, TOP_PAGE_SIZE, banner ? TOP_BANNER_NAME : null)],
+      files: banner ? [new AttachmentBuilder(banner, { name: TOP_BANNER_NAME })] : [],
+      allowedMentions: { parse: [] },
     };
   }
 

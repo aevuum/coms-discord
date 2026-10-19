@@ -1,9 +1,8 @@
 import { ApplicationCommandRegistry, Command } from "@sapphire/framework";
 
-import { MessageFlags, type ChatInputCommandInteraction } from "discord.js";
+import type { ChatInputCommandInteraction } from "discord.js";
 
-import { ActivityContainer } from "../lib/activityContainer.js";
-import { ActivityService, TOP_PAGE_SIZE } from "../service/activityService.js";
+import { ActivityService } from "../service/activityService.js";
 
 export class TopCommand extends Command {
   public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -24,13 +23,9 @@ export class TopCommand extends Command {
     await interaction.deferReply();
 
     try {
-      await interaction.editReply({
-        flags: MessageFlags.IsComponentsV2,
-        components: [
-          ActivityContainer.top(await ActivityService.getPage(0, interaction.user.id), TOP_PAGE_SIZE),
-        ],
-        allowedMentions: { parse: [] },
-      });
+      await interaction.editReply(
+        await ActivityService.getMessage(interaction.client, 0, interaction.user.id),
+      );
     } catch (error) {
       this.container.logger.error(error);
 

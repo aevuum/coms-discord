@@ -3,10 +3,9 @@ import {
   InteractionHandlerTypes,
 } from "@sapphire/framework";
 
-import { MessageFlags, type ButtonInteraction } from "discord.js";
+import type { ButtonInteraction } from "discord.js";
 
-import { ActivityContainer } from "../lib/activityContainer.js";
-import { ActivityService, TOP_PAGE_SIZE } from "../service/activityService.js";
+import { ActivityService } from "../service/activityService.js";
 
 export class TopPageHandler extends InteractionHandler {
   public constructor(
@@ -34,11 +33,8 @@ export class TopPageHandler extends InteractionHandler {
       await interaction.deferUpdate();
 
       await interaction.editReply({
-        flags: MessageFlags.IsComponentsV2,
-        components: [
-          ActivityContainer.top(await ActivityService.getPage(page, interaction.user.id), TOP_PAGE_SIZE),
-        ],
-        allowedMentions: { parse: [] },
+        ...(await ActivityService.getMessage(interaction.client, page, interaction.user.id)),
+        attachments: [],
       });
     } catch (error) {
       this.container.logger.error(error);
