@@ -176,3 +176,18 @@ export type StaffApplicationRole = Prisma.StaffApplicationRoleModel
  * 
  */
 export type ReportSettings = Prisma.ReportSettingsModel
+/**
+ * Model Giveaway
+ * 
+ */
+export type Giveaway = Prisma.GiveawayModel
+/**
+ * Model GiveawayEntry
+ * 
+ */
+export type GiveawayEntry = Prisma.GiveawayEntryModel
+/**
+ * Model GiveawaySettings
+ * 
+ */
+export type GiveawaySettings = Prisma.GiveawaySettingsModel

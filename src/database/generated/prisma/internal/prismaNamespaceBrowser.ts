@@ -77,7 +77,10 @@ export const ModelName = {
   StaffApplication: 'StaffApplication',
   StaffApplicationVote: 'StaffApplicationVote',
   StaffApplicationRole: 'StaffApplicationRole',
-  ReportSettings: 'ReportSettings'
+  ReportSettings: 'ReportSettings',
+  Giveaway: 'Giveaway',
+  GiveawayEntry: 'GiveawayEntry',
+  GiveawaySettings: 'GiveawaySettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -496,6 +499,46 @@ export const ReportSettingsScalarFieldEnum = {
 } as const
 
 export type ReportSettingsScalarFieldEnum = (typeof ReportSettingsScalarFieldEnum)[keyof typeof ReportSettingsScalarFieldEnum]
+
+
+export const GiveawayScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  hostId: 'hostId',
+  prize: 'prize',
+  description: 'description',
+  imagePath: 'imagePath',
+  winnerCount: 'winnerCount',
+  winnerIds: 'winnerIds',
+  status: 'status',
+  endsAt: 'endsAt',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GiveawayScalarFieldEnum = (typeof GiveawayScalarFieldEnum)[keyof typeof GiveawayScalarFieldEnum]
+
+
+export const GiveawayEntryScalarFieldEnum = {
+  giveawayId: 'giveawayId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type GiveawayEntryScalarFieldEnum = (typeof GiveawayEntryScalarFieldEnum)[keyof typeof GiveawayEntryScalarFieldEnum]
+
+
+export const GiveawaySettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  channelId: 'channelId',
+  pingRoleId: 'pingRoleId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GiveawaySettingsScalarFieldEnum = (typeof GiveawaySettingsScalarFieldEnum)[keyof typeof GiveawaySettingsScalarFieldEnum]
 
 
 export const SortOrder = {

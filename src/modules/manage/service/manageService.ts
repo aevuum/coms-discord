@@ -15,6 +15,7 @@ import { ShopService } from "../../shop/service/shopService.js";
 import { LocationAdminViews } from "../../locations/lib/locationAdminViews.js";
 import { RollAdminViews } from "../../rolls/lib/rollAdminViews.js";
 import { ApplicationAdminViews } from "../../applications/lib/applicationAdminViews.js";
+import { GiveawayAdminViews } from "../../giveaways/lib/giveawayAdminViews.js";
 import { ReportAdminContainer } from "../../reports/lib/reportAdminContainer.js";
 import { ReportReviewers } from "../../reports/service/reportReviewers.js";
 import { ManageContainer } from "../lib/manageContainer.js";
@@ -81,6 +82,9 @@ export class ManageService {
 
       case ManageSectionId.Applications:
         return ApplicationAdminViews.root(interaction.client);
+
+      case ManageSectionId.Giveaways:
+        return GiveawayAdminViews.root(interaction.client, subject.guildId as string);
 
       case ManageSectionId.Reports: {
         const view = await ReportReviewers.getView(subject.guildId as string, 0);

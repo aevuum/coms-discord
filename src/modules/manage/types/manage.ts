@@ -10,6 +10,7 @@ export enum ManageSectionId {
   Rolls = "rolls",
   Applications = "applications",
   Reports = "reports",
+  Giveaways = "giveaways",
   Permissions = "permissions",
 }
 

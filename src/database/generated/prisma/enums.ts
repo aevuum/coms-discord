@@ -135,3 +135,12 @@ export const StaffApplicationStatus = {
 } as const
 
 export type StaffApplicationStatus = (typeof StaffApplicationStatus)[keyof typeof StaffApplicationStatus]
+
+
+export const GiveawayStatus = {
+  ACTIVE: 'ACTIVE',
+  ENDED: 'ENDED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type GiveawayStatus = (typeof GiveawayStatus)[keyof typeof GiveawayStatus]

@@ -542,6 +542,23 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>
 }
 
+export type EnumGiveawayStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.GiveawayStatus | Prisma.EnumGiveawayStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGiveawayStatusFilter<$PrismaModel> | $Enums.GiveawayStatus
+}
+
+export type EnumGiveawayStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GiveawayStatus | Prisma.EnumGiveawayStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGiveawayStatusWithAggregatesFilter<$PrismaModel> | $Enums.GiveawayStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGiveawayStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGiveawayStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1027,6 +1044,23 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumGiveawayStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.GiveawayStatus | Prisma.EnumGiveawayStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGiveawayStatusFilter<$PrismaModel> | $Enums.GiveawayStatus
+}
+
+export type NestedEnumGiveawayStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GiveawayStatus | Prisma.EnumGiveawayStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GiveawayStatus[] | Prisma.ListEnumGiveawayStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGiveawayStatusWithAggregatesFilter<$PrismaModel> | $Enums.GiveawayStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGiveawayStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGiveawayStatusFilter<$PrismaModel>
 }
 
 

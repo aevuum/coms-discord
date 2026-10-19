@@ -410,7 +410,10 @@ export const ModelName = {
   StaffApplication: 'StaffApplication',
   StaffApplicationVote: 'StaffApplicationVote',
   StaffApplicationRole: 'StaffApplicationRole',
-  ReportSettings: 'ReportSettings'
+  ReportSettings: 'ReportSettings',
+  Giveaway: 'Giveaway',
+  GiveawayEntry: 'GiveawayEntry',
+  GiveawaySettings: 'GiveawaySettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -426,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2428,6 +2431,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Giveaway: {
+      payload: Prisma.$GiveawayPayload<ExtArgs>
+      fields: Prisma.GiveawayFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GiveawayFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GiveawayFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>
+        }
+        findFirst: {
+          args: Prisma.GiveawayFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GiveawayFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>
+        }
+        findMany: {
+          args: Prisma.GiveawayFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>[]
+        }
+        create: {
+          args: Prisma.GiveawayCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>
+        }
+        createMany: {
+          args: Prisma.GiveawayCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GiveawayCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>[]
+        }
+        delete: {
+          args: Prisma.GiveawayDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>
+        }
+        update: {
+          args: Prisma.GiveawayUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>
+        }
+        deleteMany: {
+          args: Prisma.GiveawayDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GiveawayUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GiveawayUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>[]
+        }
+        upsert: {
+          args: Prisma.GiveawayUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayPayload>
+        }
+        aggregate: {
+          args: Prisma.GiveawayAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGiveaway>
+        }
+        groupBy: {
+          args: Prisma.GiveawayGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GiveawayGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GiveawayCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GiveawayCountAggregateOutputType> | number
+        }
+      }
+    }
+    GiveawayEntry: {
+      payload: Prisma.$GiveawayEntryPayload<ExtArgs>
+      fields: Prisma.GiveawayEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GiveawayEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GiveawayEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.GiveawayEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GiveawayEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>
+        }
+        findMany: {
+          args: Prisma.GiveawayEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>[]
+        }
+        create: {
+          args: Prisma.GiveawayEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>
+        }
+        createMany: {
+          args: Prisma.GiveawayEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GiveawayEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.GiveawayEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>
+        }
+        update: {
+          args: Prisma.GiveawayEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.GiveawayEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GiveawayEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GiveawayEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.GiveawayEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawayEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.GiveawayEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGiveawayEntry>
+        }
+        groupBy: {
+          args: Prisma.GiveawayEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GiveawayEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GiveawayEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GiveawayEntryCountAggregateOutputType> | number
+        }
+      }
+    }
+    GiveawaySettings: {
+      payload: Prisma.$GiveawaySettingsPayload<ExtArgs>
+      fields: Prisma.GiveawaySettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GiveawaySettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GiveawaySettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.GiveawaySettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GiveawaySettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>
+        }
+        findMany: {
+          args: Prisma.GiveawaySettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>[]
+        }
+        create: {
+          args: Prisma.GiveawaySettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>
+        }
+        createMany: {
+          args: Prisma.GiveawaySettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GiveawaySettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.GiveawaySettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>
+        }
+        update: {
+          args: Prisma.GiveawaySettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.GiveawaySettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GiveawaySettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GiveawaySettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.GiveawaySettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GiveawaySettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.GiveawaySettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGiveawaySettings>
+        }
+        groupBy: {
+          args: Prisma.GiveawaySettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GiveawaySettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GiveawaySettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GiveawaySettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2869,6 +3094,46 @@ export const ReportSettingsScalarFieldEnum = {
 export type ReportSettingsScalarFieldEnum = (typeof ReportSettingsScalarFieldEnum)[keyof typeof ReportSettingsScalarFieldEnum]
 
 
+export const GiveawayScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  hostId: 'hostId',
+  prize: 'prize',
+  description: 'description',
+  imagePath: 'imagePath',
+  winnerCount: 'winnerCount',
+  winnerIds: 'winnerIds',
+  status: 'status',
+  endsAt: 'endsAt',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GiveawayScalarFieldEnum = (typeof GiveawayScalarFieldEnum)[keyof typeof GiveawayScalarFieldEnum]
+
+
+export const GiveawayEntryScalarFieldEnum = {
+  giveawayId: 'giveawayId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type GiveawayEntryScalarFieldEnum = (typeof GiveawayEntryScalarFieldEnum)[keyof typeof GiveawayEntryScalarFieldEnum]
+
+
+export const GiveawaySettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  channelId: 'channelId',
+  pingRoleId: 'pingRoleId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GiveawaySettingsScalarFieldEnum = (typeof GiveawaySettingsScalarFieldEnum)[keyof typeof GiveawaySettingsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3183,6 +3448,20 @@ export type ListEnumStaffApplicationStatusFieldRefInput<$PrismaModel> = FieldRef
 
 
 /**
+ * Reference to a field of type 'GiveawayStatus'
+ */
+export type EnumGiveawayStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GiveawayStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'GiveawayStatus[]'
+ */
+export type ListEnumGiveawayStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GiveawayStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3332,6 +3611,9 @@ export type GlobalOmitConfig = {
   staffApplicationVote?: Prisma.StaffApplicationVoteOmit
   staffApplicationRole?: Prisma.StaffApplicationRoleOmit
   reportSettings?: Prisma.ReportSettingsOmit
+  giveaway?: Prisma.GiveawayOmit
+  giveawayEntry?: Prisma.GiveawayEntryOmit
+  giveawaySettings?: Prisma.GiveawaySettingsOmit
 }
 
 /* Types for Logging */

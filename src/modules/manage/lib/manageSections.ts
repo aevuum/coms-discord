@@ -67,6 +67,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Giveaways,
+    key: "manage.giveaways",
+    label: "Розыгрыши",
+    emoji: "🎁",
+    description: "Создание розыгрышей, итоги и перевыбор победителей",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Reports,
     key: "manage.reports",
     label: "Жалобы",

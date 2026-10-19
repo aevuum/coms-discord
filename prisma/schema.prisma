@@ -613,3 +613,56 @@ model ReportSettings {
 
   updatedAt DateTime @updatedAt
 }
+
+enum GiveawayStatus {
+  ACTIVE
+  ENDED
+  CANCELLED
+}
+
+model Giveaway {
+  id String @id @default(cuid())
+
+  guildId   String
+  channelId String
+  messageId String?
+  hostId    String
+
+  prize       String
+  description String?
+  imagePath   String?
+
+  winnerCount Int
+  winnerIds   String[] @default([])
+
+  status  GiveawayStatus @default(ACTIVE)
+  endsAt  DateTime
+  endedAt DateTime?
+
+  entries GiveawayEntry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, endsAt])
+}
+
+model GiveawayEntry {
+  giveawayId String
+  userId     String
+
+  giveaway Giveaway @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([giveawayId, userId])
+}
+
+model GiveawaySettings {
+  guildId String @id
+
+  channelId  String?
+  pingRoleId String?
+
+  updatedAt DateTime @updatedAt
+}
