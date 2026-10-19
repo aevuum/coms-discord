@@ -315,7 +315,13 @@ export class GiveawayService {
     await message
       ?.edit({
         flags: MessageFlags.IsComponentsV2,
-        components: [GiveawayContainer.message(giveaway, await GiveawayRepository.countEntries(id))],
+        components: [
+          GiveawayContainer.message(
+            giveaway,
+            await GiveawayRepository.countEntries(id),
+            (await GiveawayRepository.getSettings(giveaway.guildId))?.pingRoleId ?? null,
+          ),
+        ],
         allowedMentions: { parse: [] },
       })
       .catch(() => null);
