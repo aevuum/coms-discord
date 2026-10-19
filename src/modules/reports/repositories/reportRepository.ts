@@ -16,6 +16,7 @@ export class ReportRepository {
     messageId: string | null;
     messageContent: string | null;
     images: string[];
+    targetIsStaff: boolean;
   }) {
     return prisma.report.create({ data });
   }

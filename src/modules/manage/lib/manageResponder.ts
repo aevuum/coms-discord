@@ -21,6 +21,7 @@ const USER_ERRORS = new Set([
   "LocationError",
   "RollError",
   "ApplicationError",
+  "ReportError",
   "StorageError",
 ]);
 

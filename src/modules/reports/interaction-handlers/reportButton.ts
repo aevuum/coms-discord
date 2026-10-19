@@ -42,6 +42,8 @@ export class ReportButtonHandler extends InteractionHandler {
         throw new ReportError("Жалобы работают только на сервере.");
       }
 
+      await ReportService.assertCanHandle(interaction.member, result.reportId);
+
       const report =
         result.action === ReportAction.Take
           ? await ReportService.take(result.reportId, interaction.user.id)

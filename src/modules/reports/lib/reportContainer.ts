@@ -38,6 +38,9 @@ export class ReportContainer {
           `# ${HEADER} Жалоба`,
           `${ARROW} **От:** <@${report.reporterId}> (\`${report.reporterId}\`)`,
           `${ARROW} **На:** <@${report.targetId}> (\`${report.targetId}\`)`,
+          report.targetIsStaff
+            ? "⚠️ **Жалоба на члена команды.** Сам нарушитель рассмотреть её не может."
+            : null,
           report.reason ? `${ARROW} **Правило:** ${report.reason}` : null,
           `${ARROW} **Отправлена:** <t:${createdAt}:f>`,
           previousReports > 0

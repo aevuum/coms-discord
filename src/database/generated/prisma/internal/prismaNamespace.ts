@@ -409,7 +409,8 @@ export const ModelName = {
   Report: 'Report',
   StaffApplication: 'StaffApplication',
   StaffApplicationVote: 'StaffApplicationVote',
-  StaffApplicationRole: 'StaffApplicationRole'
+  StaffApplicationRole: 'StaffApplicationRole',
+  ReportSettings: 'ReportSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -425,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2353,6 +2354,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ReportSettings: {
+      payload: Prisma.$ReportSettingsPayload<ExtArgs>
+      fields: Prisma.ReportSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReportSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReportSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.ReportSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReportSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.ReportSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.ReportSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.ReportSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReportSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.ReportSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>
+        }
+        update: {
+          args: Prisma.ReportSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReportSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReportSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReportSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReportSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReportSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.ReportSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReportSettings>
+        }
+        groupBy: {
+          args: Prisma.ReportSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReportSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReportSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReportSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2729,6 +2804,7 @@ export const ReportScalarFieldEnum = {
   messageId: 'messageId',
   messageContent: 'messageContent',
   images: 'images',
+  targetIsStaff: 'targetIsStaff',
   staffMessageId: 'staffMessageId',
   reviewerId: 'reviewerId',
   status: 'status',
@@ -2782,6 +2858,15 @@ export const StaffApplicationRoleScalarFieldEnum = {
 } as const
 
 export type StaffApplicationRoleScalarFieldEnum = (typeof StaffApplicationRoleScalarFieldEnum)[keyof typeof StaffApplicationRoleScalarFieldEnum]
+
+
+export const ReportSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  reviewerRoleIds: 'reviewerRoleIds',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReportSettingsScalarFieldEnum = (typeof ReportSettingsScalarFieldEnum)[keyof typeof ReportSettingsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3246,6 +3331,7 @@ export type GlobalOmitConfig = {
   staffApplication?: Prisma.StaffApplicationOmit
   staffApplicationVote?: Prisma.StaffApplicationVoteOmit
   staffApplicationRole?: Prisma.StaffApplicationRoleOmit
+  reportSettings?: Prisma.ReportSettingsOmit
 }
 
 /* Types for Logging */

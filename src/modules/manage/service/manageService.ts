@@ -15,6 +15,8 @@ import { ShopService } from "../../shop/service/shopService.js";
 import { LocationAdminViews } from "../../locations/lib/locationAdminViews.js";
 import { RollAdminViews } from "../../rolls/lib/rollAdminViews.js";
 import { ApplicationAdminViews } from "../../applications/lib/applicationAdminViews.js";
+import { ReportAdminContainer } from "../../reports/lib/reportAdminContainer.js";
+import { ReportReviewers } from "../../reports/service/reportReviewers.js";
 import { ManageContainer } from "../lib/manageContainer.js";
 import { ManageError } from "../lib/manageResponder.js";
 import { getManageSection } from "../lib/manageSections.js";
@@ -79,6 +81,12 @@ export class ManageService {
 
       case ManageSectionId.Applications:
         return ApplicationAdminViews.root(interaction.client);
+
+      case ManageSectionId.Reports: {
+        const view = await ReportReviewers.getView(subject.guildId as string, 0);
+
+        return ReportAdminContainer.root(view.roleIds, view.rolePage, view.roleNames);
+      }
 
       case ManageSectionId.Permissions: {
         const overview = await PermissionService.getOverview(subject);

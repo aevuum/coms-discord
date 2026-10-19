@@ -171,3 +171,8 @@ export type StaffApplicationVote = Prisma.StaffApplicationVoteModel
  * 
  */
 export type StaffApplicationRole = Prisma.StaffApplicationRoleModel
+/**
+ * Model ReportSettings
+ * 
+ */
+export type ReportSettings = Prisma.ReportSettingsModel

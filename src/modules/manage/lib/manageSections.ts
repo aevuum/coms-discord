@@ -67,6 +67,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Reports,
+    key: "manage.reports",
+    label: "Жалобы",
+    emoji: "<:563621mod8:1518587360886128661>",
+    description: "Роли, которые могут рассматривать жалобы участников",
+    access: CommandAccess.Admin,
+  },
+  {
     id: ManageSectionId.Permissions,
     key: "manage.permissions",
     label: "Доступ",

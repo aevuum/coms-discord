@@ -3,6 +3,7 @@ import {
   MessageFlags,
   type Attachment,
   type Guild,
+  type GuildMember,
   type User,
 } from "discord.js";
 
@@ -17,6 +18,7 @@ import {
 import { ReportContainer } from "../lib/reportContainer.js";
 import { ReportRepository } from "../repositories/reportRepository.js";
 import { ReportError } from "../types/report.js";
+import { ReportReviewers } from "./reportReviewers.js";
 
 const IMAGE_EXTENSIONS: Record<string, string> = {
   "image/png": "png",
@@ -64,6 +66,9 @@ export class ReportService {
 
     const files = await this.downloadImages(input.images);
 
+    const targetMember = await input.guild.members.fetch(input.target.id).catch(() => null);
+    const targetIsStaff = targetMember ? await ReportReviewers.canReview(targetMember) : false;
+
     const report = await ReportRepository.create({
       guildId: input.guild.id,
       reporterId: input.reporter.id,
@@ -74,6 +79,7 @@ export class ReportService {
       messageId: input.messageId,
       messageContent: await this.messageContent(input.guild, input.channelId, input.messageId),
       images: files.map((file) => file.name ?? ""),
+      targetIsStaff,
     });
 
     try {
@@ -94,6 +100,24 @@ export class ReportService {
     }
 
     this.cooldowns.set(input.reporter.id, Date.now());
+
+    return report;
+  }
+
+  public static async assertCanHandle(member: GuildMember, reportId: string) {
+    const report = await this.load(reportId);
+
+    if (report.targetId === member.id) {
+      throw new ReportError("Это жалоба на вас. Её должен рассмотреть другой член команды.");
+    }
+
+    if (report.reporterId === member.id) {
+      throw new ReportError("Это ваша жалоба. Её должен рассмотреть другой член команды.");
+    }
+
+    if (!(await ReportReviewers.canReview(member))) {
+      throw new ReportError("У вас нет доступа к рассмотрению жалоб.");
+    }
 
     return report;
   }

@@ -34,6 +34,7 @@ export type ReportMinAggregateOutputType = {
   channelId: string | null
   messageId: string | null
   messageContent: string | null
+  targetIsStaff: boolean | null
   staffMessageId: string | null
   reviewerId: string | null
   status: $Enums.ReportStatus | null
@@ -52,6 +53,7 @@ export type ReportMaxAggregateOutputType = {
   channelId: string | null
   messageId: string | null
   messageContent: string | null
+  targetIsStaff: boolean | null
   staffMessageId: string | null
   reviewerId: string | null
   status: $Enums.ReportStatus | null
@@ -71,6 +73,7 @@ export type ReportCountAggregateOutputType = {
   messageId: number
   messageContent: number
   images: number
+  targetIsStaff: number
   staffMessageId: number
   reviewerId: number
   status: number
@@ -91,6 +94,7 @@ export type ReportMinAggregateInputType = {
   channelId?: true
   messageId?: true
   messageContent?: true
+  targetIsStaff?: true
   staffMessageId?: true
   reviewerId?: true
   status?: true
@@ -109,6 +113,7 @@ export type ReportMaxAggregateInputType = {
   channelId?: true
   messageId?: true
   messageContent?: true
+  targetIsStaff?: true
   staffMessageId?: true
   reviewerId?: true
   status?: true
@@ -128,6 +133,7 @@ export type ReportCountAggregateInputType = {
   messageId?: true
   messageContent?: true
   images?: true
+  targetIsStaff?: true
   staffMessageId?: true
   reviewerId?: true
   status?: true
@@ -220,6 +226,7 @@ export type ReportGroupByOutputType = {
   messageId: string | null
   messageContent: string | null
   images: string[]
+  targetIsStaff: boolean
   staffMessageId: string | null
   reviewerId: string | null
   status: $Enums.ReportStatus
@@ -260,6 +267,7 @@ export type ReportWhereInput = {
   messageId?: Prisma.StringNullableFilter<"Report"> | string | null
   messageContent?: Prisma.StringNullableFilter<"Report"> | string | null
   images?: Prisma.StringNullableListFilter<"Report">
+  targetIsStaff?: Prisma.BoolFilter<"Report"> | boolean
   staffMessageId?: Prisma.StringNullableFilter<"Report"> | string | null
   reviewerId?: Prisma.StringNullableFilter<"Report"> | string | null
   status?: Prisma.EnumReportStatusFilter<"Report"> | $Enums.ReportStatus
@@ -279,6 +287,7 @@ export type ReportOrderByWithRelationInput = {
   messageId?: Prisma.SortOrderInput | Prisma.SortOrder
   messageContent?: Prisma.SortOrderInput | Prisma.SortOrder
   images?: Prisma.SortOrder
+  targetIsStaff?: Prisma.SortOrder
   staffMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -301,6 +310,7 @@ export type ReportWhereUniqueInput = Prisma.AtLeast<{
   messageId?: Prisma.StringNullableFilter<"Report"> | string | null
   messageContent?: Prisma.StringNullableFilter<"Report"> | string | null
   images?: Prisma.StringNullableListFilter<"Report">
+  targetIsStaff?: Prisma.BoolFilter<"Report"> | boolean
   staffMessageId?: Prisma.StringNullableFilter<"Report"> | string | null
   reviewerId?: Prisma.StringNullableFilter<"Report"> | string | null
   status?: Prisma.EnumReportStatusFilter<"Report"> | $Enums.ReportStatus
@@ -320,6 +330,7 @@ export type ReportOrderByWithAggregationInput = {
   messageId?: Prisma.SortOrderInput | Prisma.SortOrder
   messageContent?: Prisma.SortOrderInput | Prisma.SortOrder
   images?: Prisma.SortOrder
+  targetIsStaff?: Prisma.SortOrder
   staffMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -345,6 +356,7 @@ export type ReportScalarWhereWithAggregatesInput = {
   messageId?: Prisma.StringNullableWithAggregatesFilter<"Report"> | string | null
   messageContent?: Prisma.StringNullableWithAggregatesFilter<"Report"> | string | null
   images?: Prisma.StringNullableListFilter<"Report">
+  targetIsStaff?: Prisma.BoolWithAggregatesFilter<"Report"> | boolean
   staffMessageId?: Prisma.StringNullableWithAggregatesFilter<"Report"> | string | null
   reviewerId?: Prisma.StringNullableWithAggregatesFilter<"Report"> | string | null
   status?: Prisma.EnumReportStatusWithAggregatesFilter<"Report"> | $Enums.ReportStatus
@@ -364,6 +376,7 @@ export type ReportCreateInput = {
   messageId?: string | null
   messageContent?: string | null
   images?: Prisma.ReportCreateimagesInput | string[]
+  targetIsStaff?: boolean
   staffMessageId?: string | null
   reviewerId?: string | null
   status?: $Enums.ReportStatus
@@ -383,6 +396,7 @@ export type ReportUncheckedCreateInput = {
   messageId?: string | null
   messageContent?: string | null
   images?: Prisma.ReportCreateimagesInput | string[]
+  targetIsStaff?: boolean
   staffMessageId?: string | null
   reviewerId?: string | null
   status?: $Enums.ReportStatus
@@ -402,6 +416,7 @@ export type ReportUpdateInput = {
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ReportUpdateimagesInput | string[]
+  targetIsStaff?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
@@ -421,6 +436,7 @@ export type ReportUncheckedUpdateInput = {
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ReportUpdateimagesInput | string[]
+  targetIsStaff?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
@@ -440,6 +456,7 @@ export type ReportCreateManyInput = {
   messageId?: string | null
   messageContent?: string | null
   images?: Prisma.ReportCreateimagesInput | string[]
+  targetIsStaff?: boolean
   staffMessageId?: string | null
   reviewerId?: string | null
   status?: $Enums.ReportStatus
@@ -459,6 +476,7 @@ export type ReportUpdateManyMutationInput = {
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ReportUpdateimagesInput | string[]
+  targetIsStaff?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
@@ -478,6 +496,7 @@ export type ReportUncheckedUpdateManyInput = {
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ReportUpdateimagesInput | string[]
+  targetIsStaff?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
@@ -497,6 +516,7 @@ export type ReportCountOrderByAggregateInput = {
   messageId?: Prisma.SortOrder
   messageContent?: Prisma.SortOrder
   images?: Prisma.SortOrder
+  targetIsStaff?: Prisma.SortOrder
   staffMessageId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -515,6 +535,7 @@ export type ReportMaxOrderByAggregateInput = {
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
   messageContent?: Prisma.SortOrder
+  targetIsStaff?: Prisma.SortOrder
   staffMessageId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -533,6 +554,7 @@ export type ReportMinOrderByAggregateInput = {
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
   messageContent?: Prisma.SortOrder
+  targetIsStaff?: Prisma.SortOrder
   staffMessageId?: Prisma.SortOrder
   reviewerId?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -567,6 +589,7 @@ export type ReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   messageId?: boolean
   messageContent?: boolean
   images?: boolean
+  targetIsStaff?: boolean
   staffMessageId?: boolean
   reviewerId?: boolean
   status?: boolean
@@ -586,6 +609,7 @@ export type ReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   messageId?: boolean
   messageContent?: boolean
   images?: boolean
+  targetIsStaff?: boolean
   staffMessageId?: boolean
   reviewerId?: boolean
   status?: boolean
@@ -605,6 +629,7 @@ export type ReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   messageId?: boolean
   messageContent?: boolean
   images?: boolean
+  targetIsStaff?: boolean
   staffMessageId?: boolean
   reviewerId?: boolean
   status?: boolean
@@ -624,6 +649,7 @@ export type ReportSelectScalar = {
   messageId?: boolean
   messageContent?: boolean
   images?: boolean
+  targetIsStaff?: boolean
   staffMessageId?: boolean
   reviewerId?: boolean
   status?: boolean
@@ -632,7 +658,7 @@ export type ReportSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "reporterId" | "targetId" | "reason" | "description" | "channelId" | "messageId" | "messageContent" | "images" | "staffMessageId" | "reviewerId" | "status" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["report"]>
+export type ReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "guildId" | "reporterId" | "targetId" | "reason" | "description" | "channelId" | "messageId" | "messageContent" | "images" | "targetIsStaff" | "staffMessageId" | "reviewerId" | "status" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["report"]>
 
 export type $ReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Report"
@@ -648,6 +674,7 @@ export type $ReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     messageId: string | null
     messageContent: string | null
     images: string[]
+    targetIsStaff: boolean
     staffMessageId: string | null
     reviewerId: string | null
     status: $Enums.ReportStatus
@@ -1087,6 +1114,7 @@ export interface ReportFieldRefs {
   readonly messageId: Prisma.FieldRef<"Report", 'String'>
   readonly messageContent: Prisma.FieldRef<"Report", 'String'>
   readonly images: Prisma.FieldRef<"Report", 'String[]'>
+  readonly targetIsStaff: Prisma.FieldRef<"Report", 'Boolean'>
   readonly staffMessageId: Prisma.FieldRef<"Report", 'String'>
   readonly reviewerId: Prisma.FieldRef<"Report", 'String'>
   readonly status: Prisma.FieldRef<"Report", 'ReportStatus'>

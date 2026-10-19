@@ -76,7 +76,8 @@ export const ModelName = {
   Report: 'Report',
   StaffApplication: 'StaffApplication',
   StaffApplicationVote: 'StaffApplicationVote',
-  StaffApplicationRole: 'StaffApplicationRole'
+  StaffApplicationRole: 'StaffApplicationRole',
+  ReportSettings: 'ReportSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -432,6 +433,7 @@ export const ReportScalarFieldEnum = {
   messageId: 'messageId',
   messageContent: 'messageContent',
   images: 'images',
+  targetIsStaff: 'targetIsStaff',
   staffMessageId: 'staffMessageId',
   reviewerId: 'reviewerId',
   status: 'status',
@@ -485,6 +487,15 @@ export const StaffApplicationRoleScalarFieldEnum = {
 } as const
 
 export type StaffApplicationRoleScalarFieldEnum = (typeof StaffApplicationRoleScalarFieldEnum)[keyof typeof StaffApplicationRoleScalarFieldEnum]
+
+
+export const ReportSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  reviewerRoleIds: 'reviewerRoleIds',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReportSettingsScalarFieldEnum = (typeof ReportSettingsScalarFieldEnum)[keyof typeof ReportSettingsScalarFieldEnum]
 
 
 export const SortOrder = {

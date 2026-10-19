@@ -529,6 +529,8 @@ model Report {
 
   images String[] @default([])
 
+  targetIsStaff Boolean @default(false)
+
   staffMessageId String?
   reviewerId     String?
 
@@ -600,6 +602,14 @@ model StaffApplicationRole {
 
   open      Boolean @default(true)
   questions Json?
+
+  updatedAt DateTime @updatedAt
+}
+
+model ReportSettings {
+  guildId String @id
+
+  reviewerRoleIds String[] @default([])
 
   updatedAt DateTime @updatedAt
 }
