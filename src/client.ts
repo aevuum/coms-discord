@@ -3,7 +3,7 @@ import {
   RegisterBehavior,
   SapphireClient,
 } from "@sapphire/framework";
-import { GatewayIntentBits } from "discord.js";
+import { GatewayIntentBits, Partials } from "discord.js";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -23,6 +23,7 @@ const intents = [
   GatewayIntentBits.GuildMessages,
   GatewayIntentBits.MessageContent,
   GatewayIntentBits.GuildVoiceStates,
+  GatewayIntentBits.DirectMessages,
 ];
 
 if (await hasGuildMembersIntent(process.env.DISCORD_TOKEN)) {
@@ -35,6 +36,7 @@ if (await hasGuildMembersIntent(process.env.DISCORD_TOKEN)) {
 
 const client = new SapphireClient({
   intents,
+  partials: [Partials.Channel],
 });
 
 registerModulePaths(client, join(__dirname, "modules"));

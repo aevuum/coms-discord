@@ -541,3 +541,56 @@ model Report {
 
   @@index([targetId])
 }
+
+enum StaffApplicationStatus {
+  DRAFT
+  AWAITING_POST
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model StaffApplication {
+  id String @id @default(cuid())
+
+  guildId String
+  userId  String
+
+  tagId    String
+  roleName String
+  roleId   String?
+
+  answers Json
+
+  trialPrompt String?
+  trialPost   String?
+
+  staffMessageId String?
+  threadId       String?
+
+  status StaffApplicationStatus @default(DRAFT)
+
+  decidedById  String?
+  decidedAt    DateTime?
+  rejectReason String?
+
+  votes StaffApplicationVote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, tagId, status])
+}
+
+model StaffApplicationVote {
+  applicationId String
+  userId        String
+  stars         Int
+
+  application StaffApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([applicationId, userId])
+}

@@ -156,3 +156,13 @@ export type ActivitySettings = Prisma.ActivitySettingsModel
  * 
  */
 export type Report = Prisma.ReportModel
+/**
+ * Model StaffApplication
+ * 
+ */
+export type StaffApplication = Prisma.StaffApplicationModel
+/**
+ * Model StaffApplicationVote
+ * 
+ */
+export type StaffApplicationVote = Prisma.StaffApplicationVoteModel

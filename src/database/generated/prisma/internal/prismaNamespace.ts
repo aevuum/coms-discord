@@ -406,7 +406,9 @@ export const ModelName = {
   LocationSettings: 'LocationSettings',
   RollEntry: 'RollEntry',
   ActivitySettings: 'ActivitySettings',
-  Report: 'Report'
+  Report: 'Report',
+  StaffApplication: 'StaffApplication',
+  StaffApplicationVote: 'StaffApplicationVote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2128,6 +2130,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StaffApplication: {
+      payload: Prisma.$StaffApplicationPayload<ExtArgs>
+      fields: Prisma.StaffApplicationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StaffApplicationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StaffApplicationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>
+        }
+        findFirst: {
+          args: Prisma.StaffApplicationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StaffApplicationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>
+        }
+        findMany: {
+          args: Prisma.StaffApplicationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>[]
+        }
+        create: {
+          args: Prisma.StaffApplicationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>
+        }
+        createMany: {
+          args: Prisma.StaffApplicationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StaffApplicationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>[]
+        }
+        delete: {
+          args: Prisma.StaffApplicationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>
+        }
+        update: {
+          args: Prisma.StaffApplicationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>
+        }
+        deleteMany: {
+          args: Prisma.StaffApplicationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StaffApplicationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StaffApplicationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>[]
+        }
+        upsert: {
+          args: Prisma.StaffApplicationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationPayload>
+        }
+        aggregate: {
+          args: Prisma.StaffApplicationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStaffApplication>
+        }
+        groupBy: {
+          args: Prisma.StaffApplicationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffApplicationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StaffApplicationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffApplicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    StaffApplicationVote: {
+      payload: Prisma.$StaffApplicationVotePayload<ExtArgs>
+      fields: Prisma.StaffApplicationVoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StaffApplicationVoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StaffApplicationVoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>
+        }
+        findFirst: {
+          args: Prisma.StaffApplicationVoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StaffApplicationVoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>
+        }
+        findMany: {
+          args: Prisma.StaffApplicationVoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>[]
+        }
+        create: {
+          args: Prisma.StaffApplicationVoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>
+        }
+        createMany: {
+          args: Prisma.StaffApplicationVoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StaffApplicationVoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>[]
+        }
+        delete: {
+          args: Prisma.StaffApplicationVoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>
+        }
+        update: {
+          args: Prisma.StaffApplicationVoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>
+        }
+        deleteMany: {
+          args: Prisma.StaffApplicationVoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StaffApplicationVoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StaffApplicationVoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>[]
+        }
+        upsert: {
+          args: Prisma.StaffApplicationVoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StaffApplicationVotePayload>
+        }
+        aggregate: {
+          args: Prisma.StaffApplicationVoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStaffApplicationVote>
+        }
+        groupBy: {
+          args: Prisma.StaffApplicationVoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffApplicationVoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StaffApplicationVoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StaffApplicationVoteCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2515,12 +2665,53 @@ export const ReportScalarFieldEnum = {
 export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
+export const StaffApplicationScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  userId: 'userId',
+  tagId: 'tagId',
+  roleName: 'roleName',
+  roleId: 'roleId',
+  answers: 'answers',
+  trialPrompt: 'trialPrompt',
+  trialPost: 'trialPost',
+  staffMessageId: 'staffMessageId',
+  threadId: 'threadId',
+  status: 'status',
+  decidedById: 'decidedById',
+  decidedAt: 'decidedAt',
+  rejectReason: 'rejectReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffApplicationScalarFieldEnum = (typeof StaffApplicationScalarFieldEnum)[keyof typeof StaffApplicationScalarFieldEnum]
+
+
+export const StaffApplicationVoteScalarFieldEnum = {
+  applicationId: 'applicationId',
+  userId: 'userId',
+  stars: 'stars',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StaffApplicationVoteScalarFieldEnum = (typeof StaffApplicationVoteScalarFieldEnum)[keyof typeof StaffApplicationVoteScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2537,6 +2728,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2777,6 +2977,34 @@ export type ListEnumReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'StaffApplicationStatus'
+ */
+export type EnumStaffApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StaffApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'StaffApplicationStatus[]'
+ */
+export type ListEnumStaffApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StaffApplicationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2922,6 +3150,8 @@ export type GlobalOmitConfig = {
   rollEntry?: Prisma.RollEntryOmit
   activitySettings?: Prisma.ActivitySettingsOmit
   report?: Prisma.ReportOmit
+  staffApplication?: Prisma.StaffApplicationOmit
+  staffApplicationVote?: Prisma.StaffApplicationVoteOmit
 }
 
 /* Types for Logging */

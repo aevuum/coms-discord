@@ -124,3 +124,14 @@ export const ReportStatus = {
 } as const
 
 export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
+
+
+export const StaffApplicationStatus = {
+  DRAFT: 'DRAFT',
+  AWAITING_POST: 'AWAITING_POST',
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type StaffApplicationStatus = (typeof StaffApplicationStatus)[keyof typeof StaffApplicationStatus]
