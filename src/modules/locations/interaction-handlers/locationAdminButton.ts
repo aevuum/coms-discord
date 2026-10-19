@@ -22,6 +22,7 @@ const BUTTON_ACTIONS = new Set<LocationAdminAction>([
   LocationAdminAction.ToggleAccess,
   LocationAdminAction.ArrivalPage,
   LocationAdminAction.ArrivalClear,
+  LocationAdminAction.ArrivalThread,
   LocationAdminAction.RouteAdd,
   LocationAdminAction.RouteDelete,
   LocationAdminAction.Delete,
@@ -66,6 +67,15 @@ export class LocationAdminButtonHandler extends InteractionHandler {
           ),
         );
 
+        return;
+      }
+
+      if (result.action === LocationAdminAction.ArrivalThread) {
+        await LocationService.assertCanManage(interaction);
+
+        const location = await LocationService.get(process.env.GUILD_ID ?? "", result.args[0]);
+
+        await interaction.showModal(LocationAdminContainer.threadModal(location.id, location.name));
         return;
       }
 

@@ -115,7 +115,7 @@ export class LocationAdminContainer {
       location.description ? `> ${location.description}` : "-# Без описания.",
       `${ARROW} Роль: \`@${roleName}\``,
       `${ARROW} Доступ: ${LocationFormatter.access(location)}`,
-      `${ARROW} Канал прибытия: ${arrivalName ? `\`#${arrivalName}\`` : "не задан"}`,
+      `${ARROW} Куда писать о прибытии: ${arrivalName ?? "не задано"}`,
     ]);
 
     container.addTextDisplayComponents(
@@ -145,7 +145,7 @@ export class LocationAdminContainer {
           .setStyle(ButtonStyle.Secondary),
         new ButtonBuilder()
           .setCustomId(LocationCustomIds.build(LocationAdminAction.ArrivalPage, location.id, "0"))
-          .setLabel("Канал прибытия")
+          .setLabel("Место прибытия")
           .setEmoji("<:7361media:1518587252672827412>")
           .setStyle(ButtonStyle.Secondary),
       ),
@@ -208,6 +208,25 @@ export class LocationAdminContainer {
     return container;
   }
 
+  public static threadModal(id: string, locationName: string) {
+    return new ModalBuilder()
+      .setCustomId(LocationCustomIds.build(LocationAdminAction.ArrivalThreadModal, id))
+      .setTitle(`Ветка прибытия · ${locationName}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Ссылка на ветку или её ID")
+          .setDescription("ПКМ по ветке в форуме → «Копировать ссылку»")
+          .setTextInputComponent(
+            new TextInputBuilder()
+              .setCustomId(LocationModalFields.Thread)
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+              .setMaxLength(200)
+              .setPlaceholder("https://discord.com/channels/…"),
+          ),
+      );
+  }
+
   public static locationModal(customId: string, title: string, values: { name: string; emoji: string; description: string }) {
     return new ModalBuilder()
       .setCustomId(customId)
@@ -257,6 +276,7 @@ export class LocationAdminContainer {
     pageId: (page: number) => string;
     clearId: string | null;
     backId: string;
+    threadId?: string;
   }) {
     const container = this.base(options.title, [`${ARROW} ${options.description}`]);
 
@@ -276,6 +296,16 @@ export class LocationAdminContainer {
     }
 
     const extra: ButtonBuilder[] = [];
+
+    if (options.threadId) {
+      extra.push(
+        new ButtonBuilder()
+          .setCustomId(options.threadId)
+          .setLabel("Ветка форума")
+          .setEmoji("🧵")
+          .setStyle(ButtonStyle.Primary),
+      );
+    }
 
     if (options.clearId) {
       extra.push(

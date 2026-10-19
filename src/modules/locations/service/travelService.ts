@@ -375,7 +375,7 @@ export class TravelService {
 
       const result = TravelContainer.success(
         "Вы на месте",
-        `Вы прибыли в **${LocationFormatter.title(route.to)}**.${spent}`,
+        `Вы прибыли в **${LocationFormatter.title(route.to)}**.${spent}${this.sceneLink(route.to)}`,
       );
 
       if (notify) {
@@ -436,7 +436,10 @@ export class TravelService {
 
     await this.dm(
       member,
-      TravelContainer.success("Вы на месте", `Вы прибыли в **${LocationFormatter.title(location)}**.`),
+      TravelContainer.success(
+        "Вы на месте",
+        `Вы прибыли в **${LocationFormatter.title(location)}**.${this.sceneLink(location)}`,
+      ),
     );
   }
 
@@ -465,6 +468,11 @@ export class TravelService {
     if (missing.length) {
       await member.roles.add(missing, "Перемещение между локациями");
     }
+  }
+
+  private static sceneLink(location: Location) {
+    return location.arrivalChannelId ? `
+-# Место отыгрыша: <#${location.arrivalChannelId}>` : "";
   }
 
   private static async announceArrival(member: GuildMember, location: Location, method: string) {

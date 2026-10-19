@@ -18,11 +18,11 @@ export class LocationAdminViews {
   public static async view(client: Client, guildId: string, id: string) {
     const location = await LocationService.get(guildId, id);
 
-    const arrival = location.arrivalChannelId
-      ? (TravelService.getGuild(client).channels.cache.get(location.arrivalChannelId)?.name ?? null)
-      : null;
-
-    return LocationAdminContainer.view(location, LocationService.roleName(client, location.roleId), arrival);
+    return LocationAdminContainer.view(
+      location,
+      LocationService.roleName(client, location.roleId),
+      await LocationService.arrivalLabel(client, location.arrivalChannelId),
+    );
   }
 
   public static async addRole(guildId: string, page: number) {
@@ -34,12 +34,14 @@ export class LocationAdminViews {
 
     return LocationAdminContainer.channelPicker({
       title: `Канал прибытия · ${LocationFormatter.title(location)}`,
-      description: "Бот будет писать сюда, когда игрок прибывает в локацию. Подходят только текстовые каналы.",
+      description:
+        "Бот будет писать сюда, когда игрок прибывает в локацию, а игроку пришлёт ссылку. Выберите текстовый канал или нажмите «Ветка форума» и вставьте ссылку на пост.",
       page: LocationService.getChannelPage(client, page),
       selectId: LocationCustomIds.build(LocationAdminAction.Arrival, id),
       pageId: (next) => LocationCustomIds.build(LocationAdminAction.ArrivalPage, id, String(next)),
       clearId: location.arrivalChannelId ? LocationCustomIds.build(LocationAdminAction.ArrivalClear, id) : null,
       backId: LocationCustomIds.build(LocationAdminAction.View, id),
+      threadId: LocationCustomIds.build(LocationAdminAction.ArrivalThread, id),
     });
   }
 

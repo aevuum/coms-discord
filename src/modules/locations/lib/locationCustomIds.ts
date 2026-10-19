@@ -20,6 +20,8 @@ export enum LocationAdminAction {
   ArrivalPage = "arrival_page",
   Arrival = "arrival",
   ArrivalClear = "arrival_clear",
+  ArrivalThread = "arrival_thread",
+  ArrivalThreadModal = "arrival_thread_modal",
   RouteAdd = "route_add",
   RouteTarget = "route_target",
   RouteModal = "route_modal",
@@ -47,6 +49,7 @@ export const LocationModalFields = {
   ItemName: "item_name",
   ItemQuantity: "item_quantity",
   Options: "options",
+  Thread: "thread",
 } as const;
 
 function build(prefix: string, action: string, args: string[]) {

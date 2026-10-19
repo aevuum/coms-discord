@@ -157,6 +157,45 @@ export class LocationService {
     });
   }
 
+  public static async setArrivalThread(client: Client, guildId: string, id: string, input: string) {
+    const ids = input.match(/\d{17,20}/g) ?? [];
+    const threadId = input.includes("/channels/") ? ids[1] : ids[0];
+
+    if (!threadId) {
+      throw new LocationError("Не удалось найти ID ветки. Вставьте ссылку на пост в форуме или его ID.");
+    }
+
+    const thread = await client.channels.fetch(threadId).catch(() => null);
+
+    if (!thread?.isThread() || thread.guildId !== guildId) {
+      throw new LocationError("Это не ветка форума с этого сервера, или у бота нет к ней доступа.");
+    }
+
+    if (thread.locked) {
+      throw new LocationError("Ветка закрыта: бот не сможет писать в неё. Откройте ветку и попробуйте снова.");
+    }
+
+    return this.setArrivalChannel(guildId, id, thread.id);
+  }
+
+  public static async arrivalLabel(client: Client, channelId: string | null) {
+    if (!channelId) {
+      return null;
+    }
+
+    const channel = await client.channels.fetch(channelId).catch(() => null);
+
+    if (!channel || channel.isDMBased()) {
+      return "канал недоступен";
+    }
+
+    if (channel.isThread()) {
+      return `🧵 ветка \`${channel.name}\`${channel.parent ? ` в \`#${channel.parent.name}\`` : ""}`;
+    }
+
+    return `\`#${channel.name}\``;
+  }
+
   public static async setArrivalChannel(guildId: string, id: string, channelId: string | null) {
     await this.get(guildId, id);
 

@@ -21,6 +21,7 @@ const MODAL_ACTIONS = new Set<LocationAdminAction>([
   LocationAdminAction.CreateModal,
   LocationAdminAction.EditModal,
   LocationAdminAction.RouteModal,
+  LocationAdminAction.ArrivalThreadModal,
   LocationAdminAction.MoveSearch,
 ]);
 
@@ -91,6 +92,11 @@ export class LocationAdminModalHandler extends InteractionHandler {
           text(LocationModalFields.Emoji),
           text(LocationModalFields.Description),
         );
+
+        return LocationAdminViews.view(client, guildId, result.args[0]);
+
+      case LocationAdminAction.ArrivalThreadModal:
+        await LocationService.setArrivalThread(client, guildId, result.args[0], text(LocationModalFields.Thread));
 
         return LocationAdminViews.view(client, guildId, result.args[0]);
 
