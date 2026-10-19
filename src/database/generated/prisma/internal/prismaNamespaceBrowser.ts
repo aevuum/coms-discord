@@ -72,7 +72,8 @@ export const ModelName = {
   Travel: 'Travel',
   LocationSettings: 'LocationSettings',
   RollEntry: 'RollEntry',
-  ActivitySettings: 'ActivitySettings'
+  ActivitySettings: 'ActivitySettings',
+  Report: 'Report'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,6 +416,28 @@ export const ActivitySettingsScalarFieldEnum = {
 } as const
 
 export type ActivitySettingsScalarFieldEnum = (typeof ActivitySettingsScalarFieldEnum)[keyof typeof ActivitySettingsScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  reporterId: 'reporterId',
+  targetId: 'targetId',
+  reason: 'reason',
+  description: 'description',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  messageContent: 'messageContent',
+  images: 'images',
+  staffMessageId: 'staffMessageId',
+  reviewerId: 'reviewerId',
+  status: 'status',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
 export const SortOrder = {

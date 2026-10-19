@@ -151,3 +151,8 @@ export type RollEntry = Prisma.RollEntryModel
  * 
  */
 export type ActivitySettings = Prisma.ActivitySettingsModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel

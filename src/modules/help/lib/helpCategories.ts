@@ -6,7 +6,7 @@ export const HELP_CATEGORIES: HelpCategoryDefinition[] = [
     label: "Основные",
     emoji: "<:423717discordcamp:1518587355068497950>",
     description: "Профиль, статистика и общие команды.",
-    modules: ["help", "users", "global", "shop", "activity"],
+    modules: ["help", "users", "global", "shop", "activity", "reports"],
   },
   {
     id: "roleplay",

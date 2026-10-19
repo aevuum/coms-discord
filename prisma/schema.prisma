@@ -505,3 +505,39 @@ model ActivitySettings {
 
   updatedAt DateTime @updatedAt
 }
+
+enum ReportStatus {
+  OPEN
+  REVIEWING
+  RESOLVED
+  REJECTED
+}
+
+model Report {
+  id String @id @default(cuid())
+
+  guildId    String
+  reporterId String
+  targetId   String
+
+  reason      String?
+  description String
+
+  channelId      String?
+  messageId      String?
+  messageContent String?
+
+  images String[] @default([])
+
+  staffMessageId String?
+  reviewerId     String?
+
+  status ReportStatus @default(OPEN)
+
+  closedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([targetId])
+}

@@ -114,3 +114,13 @@ export const RollKind = {
 } as const
 
 export type RollKind = (typeof RollKind)[keyof typeof RollKind]
+
+
+export const ReportStatus = {
+  OPEN: 'OPEN',
+  REVIEWING: 'REVIEWING',
+  RESOLVED: 'RESOLVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
