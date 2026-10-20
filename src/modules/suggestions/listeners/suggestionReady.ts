@@ -20,6 +20,10 @@ export class SuggestionReadyListener extends Listener {
       const { message, created } = await SuggestionService.syncPanel(client);
 
       this.container.logger.info(`Suggestion panel ${created ? "posted" : "updated"}: ${message.id}`);
+
+      const roleId = await SuggestionService.ensurePingRole(client);
+
+      this.container.logger.info(`Suggestion ping role: ${roleId}`);
     } catch (error) {
       this.container.logger.error(error);
     }

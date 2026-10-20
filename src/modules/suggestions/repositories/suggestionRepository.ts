@@ -18,18 +18,6 @@ export class SuggestionRepository {
     return prisma.suggestion.create({ data, include: WITH_VOTES });
   }
 
-  public static getSettings(guildId: string) {
-    return prisma.suggestionSettings.findUnique({ where: { guildId } });
-  }
-
-  public static setPingRole(guildId: string, pingRoleId: string | null) {
-    return prisma.suggestionSettings.upsert({
-      where: { guildId },
-      create: { guildId, pingRoleId },
-      update: { pingRoleId },
-    });
-  }
-
   public static findById(id: string) {
     return prisma.suggestion.findUnique({ where: { id }, include: WITH_VOTES });
   }

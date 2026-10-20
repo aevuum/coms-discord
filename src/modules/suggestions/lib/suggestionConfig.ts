@@ -4,6 +4,14 @@ export const SUGGESTION_BOARD_CHANNEL_ID = "1561828617363656800";
 
 export const SUGGESTION_COOLDOWN_MS = 10 * 60 * 1000;
 
+export const SUGGESTION_PING_ROLE = {
+  name: "⌇💡 ::  Идеи ❝   .",
+  match: "идеи",
+  label: "Идеи",
+  emoji: "💡",
+  description: "Пинг, когда игроки предлагают новые идеи для сервера.",
+};
+
 export const SUGGESTION_CATEGORIES = [
   { value: "mechanics", label: "Новая механика", emoji: "⚙️" },
   { value: "change", label: "Изменение существующего", emoji: "🔧" },

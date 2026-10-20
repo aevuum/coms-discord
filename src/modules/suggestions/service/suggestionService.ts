@@ -2,6 +2,7 @@ import {
   MessageFlags,
   ThreadAutoArchiveDuration,
   type Client,
+  type Guild,
   type GuildMember,
   type Message,
 } from "discord.js";
@@ -9,11 +10,14 @@ import {
 import type { Suggestion } from "../../../database/generated/prisma/client.js";
 
 import { ApplicationService } from "../../applications/service/applicationService.js";
+import { PingRoleAdminContainer } from "../../roles/lib/pingRoleAdminContainer.js";
+import { PingRolesService } from "../../roles/service/pingRolesService.js";
 import {
   SUGGESTION_BOARD_CHANNEL_ID,
   SUGGESTION_CATEGORIES,
   SUGGESTION_COOLDOWN_MS,
   SUGGESTION_PANEL_CHANNEL_ID,
+  SUGGESTION_PING_ROLE,
   SuggestionAction,
   SuggestionCustomIds,
 } from "../lib/suggestionConfig.js";
@@ -22,6 +26,57 @@ import { SuggestionRepository } from "../repositories/suggestionRepository.js";
 import { SuggestionError, type SuggestionInput } from "../types/suggestion.js";
 
 export class SuggestionService {
+  private static cachedPingRoleId: string | null = null;
+
+  public static async ensurePingRole(client: Client<true>) {
+    const guild = client.guilds.cache.get(process.env.GUILD_ID ?? "");
+
+    if (!guild) {
+      return null;
+    }
+
+    const roleId = await this.pingRoleId(guild);
+
+    const listed = await PingRolesService.ensureListed(roleId, {
+      label: SUGGESTION_PING_ROLE.label,
+      emoji: SUGGESTION_PING_ROLE.emoji,
+      description: SUGGESTION_PING_ROLE.description,
+    });
+
+    if (listed) {
+      await PingRolesService.syncPanel(client);
+    }
+
+    return roleId;
+  }
+
+  private static async pingRoleId(guild: Guild) {
+    if (this.cachedPingRoleId && guild.roles.cache.has(this.cachedPingRoleId)) {
+      return this.cachedPingRoleId;
+    }
+
+    const roles = await guild.roles.fetch();
+
+    const existing = roles.find(
+      (role) =>
+        role.name === SUGGESTION_PING_ROLE.name ||
+        PingRoleAdminContainer.cleanName(role.name).toLowerCase() === SUGGESTION_PING_ROLE.match,
+    );
+
+    const role =
+      existing ??
+      (await guild.roles.create({
+        name: SUGGESTION_PING_ROLE.name,
+        permissions: [],
+        mentionable: false,
+        reason: "Пинг-роль для новых идей",
+      }));
+
+    this.cachedPingRoleId = role.id;
+
+    return role.id;
+  }
+
   public static async syncPanel(client: Client<true>) {
     const channel = await client.channels.fetch(SUGGESTION_PANEL_CHANNEL_ID);
 
@@ -76,7 +131,7 @@ export class SuggestionService {
       throw new SuggestionError("Канал идей недоступен. Сообщите администрации.");
     }
 
-    const pingRoleId = (await SuggestionRepository.getSettings(member.guild.id))?.pingRoleId ?? null;
+    const pingRoleId = await this.pingRoleId(member.guild).catch(() => null);
 
     const suggestion = await SuggestionRepository.create({
       guildId: member.guild.id,

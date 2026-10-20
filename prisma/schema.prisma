@@ -753,11 +753,3 @@ model PingRole {
 
   @@index([guildId, sortOrder])
 }
-
-model SuggestionSettings {
-  guildId String @id
-
-  pingRoleId String?
-
-  updatedAt DateTime @updatedAt
-}

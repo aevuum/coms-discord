@@ -78,6 +78,18 @@ export class PingRolesService {
     return result.count;
   }
 
+  public static async ensureListed(roleId: string, data: PingRoleData) {
+    await this.seed();
+
+    if (await PingRoleRepository.find(roleId)) {
+      return false;
+    }
+
+    await PingRoleRepository.create(this.guildId(), roleId, this.normalize(data));
+
+    return true;
+  }
+
   public static async apply(member: GuildMember, wanted: string[]) {
     const allowed = new Set((await this.list()).map((role) => role.roleId));
 

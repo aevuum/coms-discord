@@ -83,14 +83,6 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
-    id: ManageSectionId.Suggestions,
-    key: "manage.suggestions",
-    label: "Идеи",
-    emoji: "💡",
-    description: "Роль, которую бот пингует при новой идее",
-    access: CommandAccess.Restricted,
-  },
-  {
     id: ManageSectionId.Reports,
     key: "manage.reports",
     label: "Жалобы",
