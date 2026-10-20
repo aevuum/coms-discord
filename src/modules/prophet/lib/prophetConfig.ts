@@ -6,4 +6,6 @@ export const PROPHET_ACTIVE_DAYS = 30;
 
 export const PROPHET_CATCH_UP_DAYS = 3;
 
+export const PROPHET_DELIVERY_PRICE_KNUTS = 1;
+
 export const PROPHET_NAMES_PER_MESSAGE = 30;

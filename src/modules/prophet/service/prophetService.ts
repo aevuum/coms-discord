@@ -8,6 +8,7 @@ import {
   PROPHET_CATCH_UP_DAYS,
   PROPHET_CHANNEL_ID,
   PROPHET_DEBOUNCE_MS,
+  PROPHET_DELIVERY_PRICE_KNUTS,
 } from "../lib/prophetConfig.js";
 import { ProphetContainer, type ProphetRecipient } from "../lib/prophetContainer.js";
 
@@ -51,6 +52,34 @@ export class ProphetService {
         void this.deliver(message.client, issue).catch((error) => container.logger.error(error));
       }
     }, PROPHET_DEBOUNCE_MS);
+  }
+
+  private static async charge(characterId: string) {
+    await prisma.$transaction(async (tx) => {
+      const result = await tx.character.updateMany({
+        where: { id: characterId, balanceKnuts: { gte: PROPHET_DELIVERY_PRICE_KNUTS } },
+        data: { balanceKnuts: { decrement: PROPHET_DELIVERY_PRICE_KNUTS } },
+      });
+
+      if (!result.count) {
+        return;
+      }
+
+      const character = await tx.character.findUniqueOrThrow({
+        where: { id: characterId },
+        select: { balanceKnuts: true },
+      });
+
+      await tx.characterTransaction.create({
+        data: {
+          characterId,
+          type: "PURCHASE",
+          amountKnuts: -PROPHET_DELIVERY_PRICE_KNUTS,
+          balanceAfterKnuts: character.balanceKnuts,
+          reason: "Доставка «Ежедневного пророка» совой",
+        },
+      });
+    });
   }
 
   public static async catchUp(client: Client<true>) {
@@ -110,7 +139,12 @@ export class ProphetService {
 
       const recipients = byChannel.get(channelId) ?? [];
 
-      recipients.push({ name: tupper.character.rpName, ownerId: tupper.character.user.discordId });
+      recipients.push({
+        characterId: tupper.character.id,
+        name: tupper.character.rpName,
+        ownerId: tupper.character.user.discordId,
+        paid: tupper.character.balanceKnuts >= PROPHET_DELIVERY_PRICE_KNUTS,
+      });
       byChannel.set(channelId, recipients);
     }
 
@@ -140,6 +174,10 @@ export class ProphetService {
 
       if (sent) {
         delivered += recipients.length;
+
+        for (const recipient of recipients.filter((entry) => entry.paid)) {
+          await this.charge(recipient.characterId).catch((error) => container.logger.error(error));
+        }
       }
     }
 
