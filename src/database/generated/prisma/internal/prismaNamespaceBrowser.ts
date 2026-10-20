@@ -623,6 +623,7 @@ export const ProphetStateScalarFieldEnum = {
   guildId: 'guildId',
   lastIssueId: 'lastIssueId',
   deliveredAt: 'deliveredAt',
+  deliveredCount: 'deliveredCount',
   updatedAt: 'updatedAt'
 } as const
 

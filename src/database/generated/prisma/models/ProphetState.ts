@@ -20,14 +20,25 @@ export type ProphetStateModel = runtime.Types.Result.DefaultSelection<Prisma.$Pr
 
 export type AggregateProphetState = {
   _count: ProphetStateCountAggregateOutputType | null
+  _avg: ProphetStateAvgAggregateOutputType | null
+  _sum: ProphetStateSumAggregateOutputType | null
   _min: ProphetStateMinAggregateOutputType | null
   _max: ProphetStateMaxAggregateOutputType | null
+}
+
+export type ProphetStateAvgAggregateOutputType = {
+  deliveredCount: number | null
+}
+
+export type ProphetStateSumAggregateOutputType = {
+  deliveredCount: number | null
 }
 
 export type ProphetStateMinAggregateOutputType = {
   guildId: string | null
   lastIssueId: string | null
   deliveredAt: Date | null
+  deliveredCount: number | null
   updatedAt: Date | null
 }
 
@@ -35,6 +46,7 @@ export type ProphetStateMaxAggregateOutputType = {
   guildId: string | null
   lastIssueId: string | null
   deliveredAt: Date | null
+  deliveredCount: number | null
   updatedAt: Date | null
 }
 
@@ -42,15 +54,25 @@ export type ProphetStateCountAggregateOutputType = {
   guildId: number
   lastIssueId: number
   deliveredAt: number
+  deliveredCount: number
   updatedAt: number
   _all: number
 }
 
 
+export type ProphetStateAvgAggregateInputType = {
+  deliveredCount?: true
+}
+
+export type ProphetStateSumAggregateInputType = {
+  deliveredCount?: true
+}
+
 export type ProphetStateMinAggregateInputType = {
   guildId?: true
   lastIssueId?: true
   deliveredAt?: true
+  deliveredCount?: true
   updatedAt?: true
 }
 
@@ -58,6 +80,7 @@ export type ProphetStateMaxAggregateInputType = {
   guildId?: true
   lastIssueId?: true
   deliveredAt?: true
+  deliveredCount?: true
   updatedAt?: true
 }
 
@@ -65,6 +88,7 @@ export type ProphetStateCountAggregateInputType = {
   guildId?: true
   lastIssueId?: true
   deliveredAt?: true
+  deliveredCount?: true
   updatedAt?: true
   _all?: true
 }
@@ -107,6 +131,18 @@ export type ProphetStateAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProphetStateAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProphetStateSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProphetStateMinAggregateInputType
@@ -137,6 +173,8 @@ export type ProphetStateGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: ProphetStateCountAggregateInputType | true
+  _avg?: ProphetStateAvgAggregateInputType
+  _sum?: ProphetStateSumAggregateInputType
   _min?: ProphetStateMinAggregateInputType
   _max?: ProphetStateMaxAggregateInputType
 }
@@ -145,8 +183,11 @@ export type ProphetStateGroupByOutputType = {
   guildId: string
   lastIssueId: string | null
   deliveredAt: Date | null
+  deliveredCount: number
   updatedAt: Date
   _count: ProphetStateCountAggregateOutputType | null
+  _avg: ProphetStateAvgAggregateOutputType | null
+  _sum: ProphetStateSumAggregateOutputType | null
   _min: ProphetStateMinAggregateOutputType | null
   _max: ProphetStateMaxAggregateOutputType | null
 }
@@ -173,6 +214,7 @@ export type ProphetStateWhereInput = {
   guildId?: Prisma.StringFilter<"ProphetState"> | string
   lastIssueId?: Prisma.StringNullableFilter<"ProphetState"> | string | null
   deliveredAt?: Prisma.DateTimeNullableFilter<"ProphetState"> | Date | string | null
+  deliveredCount?: Prisma.IntFilter<"ProphetState"> | number
   updatedAt?: Prisma.DateTimeFilter<"ProphetState"> | Date | string
 }
 
@@ -180,6 +222,7 @@ export type ProphetStateOrderByWithRelationInput = {
   guildId?: Prisma.SortOrder
   lastIssueId?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveredCount?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -190,6 +233,7 @@ export type ProphetStateWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProphetStateWhereInput | Prisma.ProphetStateWhereInput[]
   lastIssueId?: Prisma.StringNullableFilter<"ProphetState"> | string | null
   deliveredAt?: Prisma.DateTimeNullableFilter<"ProphetState"> | Date | string | null
+  deliveredCount?: Prisma.IntFilter<"ProphetState"> | number
   updatedAt?: Prisma.DateTimeFilter<"ProphetState"> | Date | string
 }, "guildId">
 
@@ -197,10 +241,13 @@ export type ProphetStateOrderByWithAggregationInput = {
   guildId?: Prisma.SortOrder
   lastIssueId?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveredCount?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProphetStateCountOrderByAggregateInput
+  _avg?: Prisma.ProphetStateAvgOrderByAggregateInput
   _max?: Prisma.ProphetStateMaxOrderByAggregateInput
   _min?: Prisma.ProphetStateMinOrderByAggregateInput
+  _sum?: Prisma.ProphetStateSumOrderByAggregateInput
 }
 
 export type ProphetStateScalarWhereWithAggregatesInput = {
@@ -210,6 +257,7 @@ export type ProphetStateScalarWhereWithAggregatesInput = {
   guildId?: Prisma.StringWithAggregatesFilter<"ProphetState"> | string
   lastIssueId?: Prisma.StringNullableWithAggregatesFilter<"ProphetState"> | string | null
   deliveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProphetState"> | Date | string | null
+  deliveredCount?: Prisma.IntWithAggregatesFilter<"ProphetState"> | number
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProphetState"> | Date | string
 }
 
@@ -217,6 +265,7 @@ export type ProphetStateCreateInput = {
   guildId: string
   lastIssueId?: string | null
   deliveredAt?: Date | string | null
+  deliveredCount?: number
   updatedAt?: Date | string
 }
 
@@ -224,6 +273,7 @@ export type ProphetStateUncheckedCreateInput = {
   guildId: string
   lastIssueId?: string | null
   deliveredAt?: Date | string | null
+  deliveredCount?: number
   updatedAt?: Date | string
 }
 
@@ -231,6 +281,7 @@ export type ProphetStateUpdateInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   lastIssueId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveredCount?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -238,6 +289,7 @@ export type ProphetStateUncheckedUpdateInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   lastIssueId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveredCount?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -245,6 +297,7 @@ export type ProphetStateCreateManyInput = {
   guildId: string
   lastIssueId?: string | null
   deliveredAt?: Date | string | null
+  deliveredCount?: number
   updatedAt?: Date | string
 }
 
@@ -252,6 +305,7 @@ export type ProphetStateUpdateManyMutationInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   lastIssueId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveredCount?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -259,6 +313,7 @@ export type ProphetStateUncheckedUpdateManyInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   lastIssueId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deliveredCount?: Prisma.IntFieldUpdateOperationsInput | number
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -266,13 +321,19 @@ export type ProphetStateCountOrderByAggregateInput = {
   guildId?: Prisma.SortOrder
   lastIssueId?: Prisma.SortOrder
   deliveredAt?: Prisma.SortOrder
+  deliveredCount?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProphetStateAvgOrderByAggregateInput = {
+  deliveredCount?: Prisma.SortOrder
 }
 
 export type ProphetStateMaxOrderByAggregateInput = {
   guildId?: Prisma.SortOrder
   lastIssueId?: Prisma.SortOrder
   deliveredAt?: Prisma.SortOrder
+  deliveredCount?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -280,7 +341,12 @@ export type ProphetStateMinOrderByAggregateInput = {
   guildId?: Prisma.SortOrder
   lastIssueId?: Prisma.SortOrder
   deliveredAt?: Prisma.SortOrder
+  deliveredCount?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProphetStateSumOrderByAggregateInput = {
+  deliveredCount?: Prisma.SortOrder
 }
 
 
@@ -289,6 +355,7 @@ export type ProphetStateSelect<ExtArgs extends runtime.Types.Extensions.Internal
   guildId?: boolean
   lastIssueId?: boolean
   deliveredAt?: boolean
+  deliveredCount?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["prophetState"]>
 
@@ -296,6 +363,7 @@ export type ProphetStateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   guildId?: boolean
   lastIssueId?: boolean
   deliveredAt?: boolean
+  deliveredCount?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["prophetState"]>
 
@@ -303,6 +371,7 @@ export type ProphetStateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   guildId?: boolean
   lastIssueId?: boolean
   deliveredAt?: boolean
+  deliveredCount?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["prophetState"]>
 
@@ -310,10 +379,11 @@ export type ProphetStateSelectScalar = {
   guildId?: boolean
   lastIssueId?: boolean
   deliveredAt?: boolean
+  deliveredCount?: boolean
   updatedAt?: boolean
 }
 
-export type ProphetStateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"guildId" | "lastIssueId" | "deliveredAt" | "updatedAt", ExtArgs["result"]["prophetState"]>
+export type ProphetStateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"guildId" | "lastIssueId" | "deliveredAt" | "deliveredCount" | "updatedAt", ExtArgs["result"]["prophetState"]>
 
 export type $ProphetStatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProphetState"
@@ -322,6 +392,7 @@ export type $ProphetStatePayload<ExtArgs extends runtime.Types.Extensions.Intern
     guildId: string
     lastIssueId: string | null
     deliveredAt: Date | null
+    deliveredCount: number
     updatedAt: Date
   }, ExtArgs["result"]["prophetState"]>
   composites: {}
@@ -749,6 +820,7 @@ export interface ProphetStateFieldRefs {
   readonly guildId: Prisma.FieldRef<"ProphetState", 'String'>
   readonly lastIssueId: Prisma.FieldRef<"ProphetState", 'String'>
   readonly deliveredAt: Prisma.FieldRef<"ProphetState", 'DateTime'>
+  readonly deliveredCount: Prisma.FieldRef<"ProphetState", 'Int'>
   readonly updatedAt: Prisma.FieldRef<"ProphetState", 'DateTime'>
 }
     

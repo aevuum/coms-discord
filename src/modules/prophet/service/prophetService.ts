@@ -77,7 +77,7 @@ export class ProphetService {
 
     const state = await prisma.prophetState.findUnique({ where: { guildId: newest.guildId! } });
 
-    if (state?.lastIssueId === newest.id) {
+    if (state?.lastIssueId === newest.id && state.deliveredCount > 0) {
       return 0;
     }
 
@@ -86,12 +86,6 @@ export class ProphetService {
 
   public static async deliver(client: Client, issue: Issue) {
     const guildId = process.env.GUILD_ID ?? "";
-
-    await prisma.prophetState.upsert({
-      where: { guildId },
-      create: { guildId, lastIssueId: issue.id, deliveredAt: new Date() },
-      update: { lastIssueId: issue.id, deliveredAt: new Date() },
-    });
 
     const since = new Date(Date.now() - PROPHET_ACTIVE_DAYS * 24 * 60 * 60 * 1000);
 
@@ -148,6 +142,12 @@ export class ProphetService {
         delivered += recipients.length;
       }
     }
+
+    await prisma.prophetState.upsert({
+      where: { guildId },
+      create: { guildId, lastIssueId: issue.id, deliveredAt: new Date(), deliveredCount: delivered },
+      update: { lastIssueId: issue.id, deliveredAt: new Date(), deliveredCount: delivered },
+    });
 
     container.logger.info(`Daily Prophet delivered to ${delivered} characters in ${byChannel.size} channels`);
 

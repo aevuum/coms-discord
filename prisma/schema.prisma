@@ -762,8 +762,9 @@ model PingRole {
 model ProphetState {
   guildId String @id
 
-  lastIssueId String?
-  deliveredAt DateTime?
+  lastIssueId    String?
+  deliveredAt    DateTime?
+  deliveredCount Int       @default(0)
 
   updatedAt DateTime @updatedAt
 }
