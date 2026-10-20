@@ -84,7 +84,7 @@ export class ProphetService {
         continue;
       }
 
-      if (channel.isThread() && (channel.archived || channel.locked)) {
+      if (channel.isThread() && channel.locked) {
         continue;
       }
 
