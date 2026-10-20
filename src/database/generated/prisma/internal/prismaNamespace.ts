@@ -418,7 +418,8 @@ export const ModelName = {
   Suggestion: 'Suggestion',
   SuggestionReaction: 'SuggestionReaction',
   SuggestionRating: 'SuggestionRating',
-  PingRole: 'PingRole'
+  PingRole: 'PingRole',
+  ProphetState: 'ProphetState'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -434,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3028,6 +3029,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProphetState: {
+      payload: Prisma.$ProphetStatePayload<ExtArgs>
+      fields: Prisma.ProphetStateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProphetStateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProphetStateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>
+        }
+        findFirst: {
+          args: Prisma.ProphetStateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProphetStateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>
+        }
+        findMany: {
+          args: Prisma.ProphetStateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>[]
+        }
+        create: {
+          args: Prisma.ProphetStateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>
+        }
+        createMany: {
+          args: Prisma.ProphetStateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProphetStateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>[]
+        }
+        delete: {
+          args: Prisma.ProphetStateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>
+        }
+        update: {
+          args: Prisma.ProphetStateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>
+        }
+        deleteMany: {
+          args: Prisma.ProphetStateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProphetStateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProphetStateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>[]
+        }
+        upsert: {
+          args: Prisma.ProphetStateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProphetStatePayload>
+        }
+        aggregate: {
+          args: Prisma.ProphetStateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProphetState>
+        }
+        groupBy: {
+          args: Prisma.ProphetStateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProphetStateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProphetStateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProphetStateCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3581,6 +3656,16 @@ export const PingRoleScalarFieldEnum = {
 export type PingRoleScalarFieldEnum = (typeof PingRoleScalarFieldEnum)[keyof typeof PingRoleScalarFieldEnum]
 
 
+export const ProphetStateScalarFieldEnum = {
+  guildId: 'guildId',
+  lastIssueId: 'lastIssueId',
+  deliveredAt: 'deliveredAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProphetStateScalarFieldEnum = (typeof ProphetStateScalarFieldEnum)[keyof typeof ProphetStateScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4080,6 +4165,7 @@ export type GlobalOmitConfig = {
   suggestionReaction?: Prisma.SuggestionReactionOmit
   suggestionRating?: Prisma.SuggestionRatingOmit
   pingRole?: Prisma.PingRoleOmit
+  prophetState?: Prisma.ProphetStateOmit
 }
 
 /* Types for Logging */

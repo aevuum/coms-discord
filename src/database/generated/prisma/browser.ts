@@ -192,3 +192,8 @@ export type SuggestionRating = Prisma.SuggestionRatingModel
  * 
  */
 export type PingRole = Prisma.PingRoleModel
+/**
+ * Model ProphetState
+ * 
+ */
+export type ProphetState = Prisma.ProphetStateModel

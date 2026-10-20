@@ -85,7 +85,8 @@ export const ModelName = {
   Suggestion: 'Suggestion',
   SuggestionReaction: 'SuggestionReaction',
   SuggestionRating: 'SuggestionRating',
-  PingRole: 'PingRole'
+  PingRole: 'PingRole',
+  ProphetState: 'ProphetState'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -616,6 +617,16 @@ export const PingRoleScalarFieldEnum = {
 } as const
 
 export type PingRoleScalarFieldEnum = (typeof PingRoleScalarFieldEnum)[keyof typeof PingRoleScalarFieldEnum]
+
+
+export const ProphetStateScalarFieldEnum = {
+  guildId: 'guildId',
+  lastIssueId: 'lastIssueId',
+  deliveredAt: 'deliveredAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProphetStateScalarFieldEnum = (typeof ProphetStateScalarFieldEnum)[keyof typeof ProphetStateScalarFieldEnum]
 
 
 export const SortOrder = {

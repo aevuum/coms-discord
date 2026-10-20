@@ -2,17 +2,25 @@ import { container } from "@sapphire/framework";
 import { MessageFlags, type Client, type Message } from "discord.js";
 
 import prisma from "../../../database/prisma.js";
+import { TupperLocationBackfill } from "../../tupper/service/tupperLocationBackfill.js";
 import {
   PROPHET_ACTIVE_DAYS,
+  PROPHET_CATCH_UP_DAYS,
   PROPHET_CHANNEL_ID,
   PROPHET_DEBOUNCE_MS,
 } from "../lib/prophetConfig.js";
 import { ProphetContainer, type ProphetRecipient } from "../lib/prophetContainer.js";
 
+type Issue = {
+  id: string;
+  url: string;
+  createdAt: Date;
+};
+
 export class ProphetService {
   private static timer: NodeJS.Timeout | null = null;
 
-  private static latest: { url: string; createdAt: Date } | null = null;
+  private static latest: Issue | null = null;
 
   public static isIssue(message: Message) {
     if (message.channelId !== PROPHET_CHANNEL_ID || message.system) {
@@ -27,7 +35,7 @@ export class ProphetService {
   }
 
   public static schedule(message: Message) {
-    this.latest = { url: message.url, createdAt: message.createdAt };
+    this.latest = { id: message.id, url: message.url, createdAt: message.createdAt };
 
     if (this.timer) {
       clearTimeout(this.timer);
@@ -40,14 +48,51 @@ export class ProphetService {
       this.latest = null;
 
       if (issue) {
-        void this.deliver(message.client, issue.url, issue.createdAt).catch((error) =>
-          container.logger.error(error),
-        );
+        void this.deliver(message.client, issue).catch((error) => container.logger.error(error));
       }
     }, PROPHET_DEBOUNCE_MS);
   }
 
-  public static async deliver(client: Client, issueUrl: string, publishedAt: Date) {
+  public static async catchUp(client: Client<true>) {
+    const restored = await TupperLocationBackfill.run(client);
+
+    if (restored) {
+      container.logger.info(`Restored last locations of ${restored} tuppers`);
+    }
+
+    const channel = await client.channels.fetch(PROPHET_CHANNEL_ID).catch(() => null);
+
+    if (!channel?.isTextBased() || channel.isDMBased()) {
+      return 0;
+    }
+
+    const messages = await channel.messages.fetch({ limit: 20 });
+    const newest = [...messages.values()]
+      .filter((message) => this.isIssue(message))
+      .sort((left, right) => right.createdTimestamp - left.createdTimestamp)[0];
+
+    if (!newest || Date.now() - newest.createdTimestamp > PROPHET_CATCH_UP_DAYS * 24 * 60 * 60 * 1000) {
+      return 0;
+    }
+
+    const state = await prisma.prophetState.findUnique({ where: { guildId: newest.guildId! } });
+
+    if (state?.lastIssueId === newest.id) {
+      return 0;
+    }
+
+    return this.deliver(client, { id: newest.id, url: newest.url, createdAt: newest.createdAt });
+  }
+
+  public static async deliver(client: Client, issue: Issue) {
+    const guildId = process.env.GUILD_ID ?? "";
+
+    await prisma.prophetState.upsert({
+      where: { guildId },
+      create: { guildId, lastIssueId: issue.id, deliveredAt: new Date() },
+      update: { lastIssueId: issue.id, deliveredAt: new Date() },
+    });
+
     const since = new Date(Date.now() - PROPHET_ACTIVE_DAYS * 24 * 60 * 60 * 1000);
 
     const tuppers = await prisma.characterTupper.findMany({
@@ -91,7 +136,7 @@ export class ProphetService {
       const sent = await channel
         .send({
           flags: MessageFlags.IsComponentsV2,
-          components: [ProphetContainer.delivery(recipients, issueUrl, publishedAt)],
+          components: [ProphetContainer.delivery(recipients, issue.url, issue.createdAt)],
           allowedMentions: { users: [...new Set(recipients.map((recipient) => recipient.ownerId))] },
         })
         .catch((error) => {

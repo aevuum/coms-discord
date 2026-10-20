@@ -758,3 +758,12 @@ model PingRole {
 
   @@index([guildId, sortOrder])
 }
+
+model ProphetState {
+  guildId String @id
+
+  lastIssueId String?
+  deliveredAt DateTime?
+
+  updatedAt DateTime @updatedAt
+}
