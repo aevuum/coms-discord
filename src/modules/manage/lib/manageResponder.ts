@@ -24,6 +24,7 @@ const USER_ERRORS = new Set([
   "ReportError",
   "GiveawayError",
   "PingRoleError",
+  "SuggestionError",
   "StorageError",
 ]);
 

@@ -45,6 +45,7 @@ export type SuggestionMinAggregateOutputType = {
   benefit: string | null
   messageId: string | null
   threadId: string | null
+  pingRoleId: string | null
   status: $Enums.SuggestionStatus | null
   decidedById: string | null
   decidedAt: Date | null
@@ -64,6 +65,7 @@ export type SuggestionMaxAggregateOutputType = {
   benefit: string | null
   messageId: string | null
   threadId: string | null
+  pingRoleId: string | null
   status: $Enums.SuggestionStatus | null
   decidedById: string | null
   decidedAt: Date | null
@@ -83,6 +85,7 @@ export type SuggestionCountAggregateOutputType = {
   benefit: number
   messageId: number
   threadId: number
+  pingRoleId: number
   status: number
   decidedById: number
   decidedAt: number
@@ -112,6 +115,7 @@ export type SuggestionMinAggregateInputType = {
   benefit?: true
   messageId?: true
   threadId?: true
+  pingRoleId?: true
   status?: true
   decidedById?: true
   decidedAt?: true
@@ -131,6 +135,7 @@ export type SuggestionMaxAggregateInputType = {
   benefit?: true
   messageId?: true
   threadId?: true
+  pingRoleId?: true
   status?: true
   decidedById?: true
   decidedAt?: true
@@ -150,6 +155,7 @@ export type SuggestionCountAggregateInputType = {
   benefit?: true
   messageId?: true
   threadId?: true
+  pingRoleId?: true
   status?: true
   decidedById?: true
   decidedAt?: true
@@ -256,6 +262,7 @@ export type SuggestionGroupByOutputType = {
   benefit: string | null
   messageId: string | null
   threadId: string | null
+  pingRoleId: string | null
   status: $Enums.SuggestionStatus
   decidedById: string | null
   decidedAt: Date | null
@@ -298,6 +305,7 @@ export type SuggestionWhereInput = {
   benefit?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   messageId?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   threadId?: Prisma.StringNullableFilter<"Suggestion"> | string | null
+  pingRoleId?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   status?: Prisma.EnumSuggestionStatusFilter<"Suggestion"> | $Enums.SuggestionStatus
   decidedById?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   decidedAt?: Prisma.DateTimeNullableFilter<"Suggestion"> | Date | string | null
@@ -319,6 +327,7 @@ export type SuggestionOrderByWithRelationInput = {
   benefit?: Prisma.SortOrderInput | Prisma.SortOrder
   messageId?: Prisma.SortOrderInput | Prisma.SortOrder
   threadId?: Prisma.SortOrderInput | Prisma.SortOrder
+  pingRoleId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   decidedById?: Prisma.SortOrderInput | Prisma.SortOrder
   decidedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -343,6 +352,7 @@ export type SuggestionWhereUniqueInput = Prisma.AtLeast<{
   benefit?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   messageId?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   threadId?: Prisma.StringNullableFilter<"Suggestion"> | string | null
+  pingRoleId?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   status?: Prisma.EnumSuggestionStatusFilter<"Suggestion"> | $Enums.SuggestionStatus
   decidedById?: Prisma.StringNullableFilter<"Suggestion"> | string | null
   decidedAt?: Prisma.DateTimeNullableFilter<"Suggestion"> | Date | string | null
@@ -364,6 +374,7 @@ export type SuggestionOrderByWithAggregationInput = {
   benefit?: Prisma.SortOrderInput | Prisma.SortOrder
   messageId?: Prisma.SortOrderInput | Prisma.SortOrder
   threadId?: Prisma.SortOrderInput | Prisma.SortOrder
+  pingRoleId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   decidedById?: Prisma.SortOrderInput | Prisma.SortOrder
   decidedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -391,6 +402,7 @@ export type SuggestionScalarWhereWithAggregatesInput = {
   benefit?: Prisma.StringNullableWithAggregatesFilter<"Suggestion"> | string | null
   messageId?: Prisma.StringNullableWithAggregatesFilter<"Suggestion"> | string | null
   threadId?: Prisma.StringNullableWithAggregatesFilter<"Suggestion"> | string | null
+  pingRoleId?: Prisma.StringNullableWithAggregatesFilter<"Suggestion"> | string | null
   status?: Prisma.EnumSuggestionStatusWithAggregatesFilter<"Suggestion"> | $Enums.SuggestionStatus
   decidedById?: Prisma.StringNullableWithAggregatesFilter<"Suggestion"> | string | null
   decidedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Suggestion"> | Date | string | null
@@ -410,6 +422,7 @@ export type SuggestionCreateInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -431,6 +444,7 @@ export type SuggestionUncheckedCreateInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -451,6 +465,7 @@ export type SuggestionUpdateInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -472,6 +487,7 @@ export type SuggestionUncheckedUpdateInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -493,6 +509,7 @@ export type SuggestionCreateManyInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -511,6 +528,7 @@ export type SuggestionUpdateManyMutationInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -530,6 +548,7 @@ export type SuggestionUncheckedUpdateManyInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -549,6 +568,7 @@ export type SuggestionCountOrderByAggregateInput = {
   benefit?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
   threadId?: Prisma.SortOrder
+  pingRoleId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   decidedById?: Prisma.SortOrder
   decidedAt?: Prisma.SortOrder
@@ -572,6 +592,7 @@ export type SuggestionMaxOrderByAggregateInput = {
   benefit?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
   threadId?: Prisma.SortOrder
+  pingRoleId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   decidedById?: Prisma.SortOrder
   decidedAt?: Prisma.SortOrder
@@ -591,6 +612,7 @@ export type SuggestionMinOrderByAggregateInput = {
   benefit?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
   threadId?: Prisma.SortOrder
+  pingRoleId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   decidedById?: Prisma.SortOrder
   decidedAt?: Prisma.SortOrder
@@ -651,6 +673,7 @@ export type SuggestionCreateWithoutReactionsInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -671,6 +694,7 @@ export type SuggestionUncheckedCreateWithoutReactionsInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -706,6 +730,7 @@ export type SuggestionUpdateWithoutReactionsInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -726,6 +751,7 @@ export type SuggestionUncheckedUpdateWithoutReactionsInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -746,6 +772,7 @@ export type SuggestionCreateWithoutRatingsInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -766,6 +793,7 @@ export type SuggestionUncheckedCreateWithoutRatingsInput = {
   benefit?: string | null
   messageId?: string | null
   threadId?: string | null
+  pingRoleId?: string | null
   status?: $Enums.SuggestionStatus
   decidedById?: string | null
   decidedAt?: Date | string | null
@@ -801,6 +829,7 @@ export type SuggestionUpdateWithoutRatingsInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -821,6 +850,7 @@ export type SuggestionUncheckedUpdateWithoutRatingsInput = {
   benefit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   threadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pingRoleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSuggestionStatusFieldUpdateOperationsInput | $Enums.SuggestionStatus
   decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -881,6 +911,7 @@ export type SuggestionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   benefit?: boolean
   messageId?: boolean
   threadId?: boolean
+  pingRoleId?: boolean
   status?: boolean
   decidedById?: boolean
   decidedAt?: boolean
@@ -903,6 +934,7 @@ export type SuggestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   benefit?: boolean
   messageId?: boolean
   threadId?: boolean
+  pingRoleId?: boolean
   status?: boolean
   decidedById?: boolean
   decidedAt?: boolean
@@ -922,6 +954,7 @@ export type SuggestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   benefit?: boolean
   messageId?: boolean
   threadId?: boolean
+  pingRoleId?: boolean
   status?: boolean
   decidedById?: boolean
   decidedAt?: boolean
@@ -941,6 +974,7 @@ export type SuggestionSelectScalar = {
   benefit?: boolean
   messageId?: boolean
   threadId?: boolean
+  pingRoleId?: boolean
   status?: boolean
   decidedById?: boolean
   decidedAt?: boolean
@@ -949,7 +983,7 @@ export type SuggestionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SuggestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "guildId" | "authorId" | "title" | "category" | "description" | "benefit" | "messageId" | "threadId" | "status" | "decidedById" | "decidedAt" | "reason" | "createdAt" | "updatedAt", ExtArgs["result"]["suggestion"]>
+export type SuggestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "number" | "guildId" | "authorId" | "title" | "category" | "description" | "benefit" | "messageId" | "threadId" | "pingRoleId" | "status" | "decidedById" | "decidedAt" | "reason" | "createdAt" | "updatedAt", ExtArgs["result"]["suggestion"]>
 export type SuggestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   reactions?: boolean | Prisma.Suggestion$reactionsArgs<ExtArgs>
   ratings?: boolean | Prisma.Suggestion$ratingsArgs<ExtArgs>
@@ -975,6 +1009,7 @@ export type $SuggestionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     benefit: string | null
     messageId: string | null
     threadId: string | null
+    pingRoleId: string | null
     status: $Enums.SuggestionStatus
     decidedById: string | null
     decidedAt: Date | null
@@ -1416,6 +1451,7 @@ export interface SuggestionFieldRefs {
   readonly benefit: Prisma.FieldRef<"Suggestion", 'String'>
   readonly messageId: Prisma.FieldRef<"Suggestion", 'String'>
   readonly threadId: Prisma.FieldRef<"Suggestion", 'String'>
+  readonly pingRoleId: Prisma.FieldRef<"Suggestion", 'String'>
   readonly status: Prisma.FieldRef<"Suggestion", 'SuggestionStatus'>
   readonly decidedById: Prisma.FieldRef<"Suggestion", 'String'>
   readonly decidedAt: Prisma.FieldRef<"Suggestion", 'DateTime'>

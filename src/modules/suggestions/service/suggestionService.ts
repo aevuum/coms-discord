@@ -76,6 +76,8 @@ export class SuggestionService {
       throw new SuggestionError("Канал идей недоступен. Сообщите администрации.");
     }
 
+    const pingRoleId = (await SuggestionRepository.getSettings(member.guild.id))?.pingRoleId ?? null;
+
     const suggestion = await SuggestionRepository.create({
       guildId: member.guild.id,
       authorId: member.id,
@@ -83,13 +85,14 @@ export class SuggestionService {
       category,
       description,
       benefit: input.benefit.trim() || null,
+      pingRoleId,
     });
 
     try {
       const message = await channel.send({
         flags: MessageFlags.IsComponentsV2,
         components: [SuggestionContainer.card(suggestion)],
-        allowedMentions: { parse: [] },
+        allowedMentions: { parse: [], roles: pingRoleId ? [pingRoleId] : [] },
       });
 
       const thread = await message

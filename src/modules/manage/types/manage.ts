@@ -12,6 +12,7 @@ export enum ManageSectionId {
   Reports = "reports",
   Giveaways = "giveaways",
   PingRoles = "pingroles",
+  Suggestions = "suggestions",
   Permissions = "permissions",
 }
 

@@ -157,6 +157,7 @@ export class SuggestionContainer {
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
+          suggestion.pingRoleId ? `<@&${suggestion.pingRoleId}>` : null,
           `-# ${category.emoji} ${category.label} · идея #${suggestion.number}`,
           `# ${suggestion.title}`,
           `-# Автор: <@${suggestion.authorId}> · <t:${createdAt}:R>`,

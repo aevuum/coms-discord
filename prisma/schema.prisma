@@ -695,8 +695,9 @@ model Suggestion {
   description String
   benefit     String?
 
-  messageId String?
-  threadId  String?
+  messageId  String?
+  threadId   String?
+  pingRoleId String?
 
   status      SuggestionStatus @default(PENDING)
   decidedById String?
@@ -751,4 +752,12 @@ model PingRole {
   updatedAt DateTime @updatedAt
 
   @@index([guildId, sortOrder])
+}
+
+model SuggestionSettings {
+  guildId String @id
+
+  pingRoleId String?
+
+  updatedAt DateTime @updatedAt
 }

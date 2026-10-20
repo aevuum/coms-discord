@@ -17,6 +17,7 @@ import { RollAdminViews } from "../../rolls/lib/rollAdminViews.js";
 import { ApplicationAdminViews } from "../../applications/lib/applicationAdminViews.js";
 import { GiveawayAdminViews } from "../../giveaways/lib/giveawayAdminViews.js";
 import { PingRoleAdminViews } from "../../roles/lib/pingRoleAdminViews.js";
+import { SuggestionAdminService } from "../../suggestions/service/suggestionAdminService.js";
 import { ReportAdminContainer } from "../../reports/lib/reportAdminContainer.js";
 import { ReportReviewers } from "../../reports/service/reportReviewers.js";
 import { ManageContainer } from "../lib/manageContainer.js";
@@ -89,6 +90,9 @@ export class ManageService {
 
       case ManageSectionId.PingRoles:
         return PingRoleAdminViews.root(interaction.client);
+
+      case ManageSectionId.Suggestions:
+        return SuggestionAdminService.root(interaction.client, subject.guildId as string);
 
       case ManageSectionId.Reports: {
         const view = await ReportReviewers.getView(subject.guildId as string, 0);
