@@ -18,6 +18,7 @@ import type { Ticket } from "../../../database/generated/prisma/client.js";
 
 import { RollContainer } from "../../rolls/lib/rollContainer.js";
 import { ROLL_KINDS } from "../../rolls/lib/rollKinds.js";
+import { PendingTraitService } from "../../rolls/service/pendingTraitService.js";
 import { RollService } from "../../rolls/service/rollService.js";
 import { RollKind } from "../../rolls/types/rolls.js";
 
@@ -237,14 +238,18 @@ export class TicketService {
 
   private static async rollTrait(channel: SendableChannels, ownerId: string) {
     try {
-      const { entry, entries } = await RollService.roll(RollKind.TRAIT);
+      const { entry, entries, rolledAt, repeated } = await PendingTraitService.resolve(ownerId);
+
+      const caption = repeated
+        ? `Трейт персонажа <@${ownerId}> выпал <t:${Math.floor(rolledAt.getTime() / 1000)}:f> в одном из прошлых тикетов и закреплён до регистрации персонажа`
+        : `Трейт персонажа <@${ownerId}>, выпал автоматически при открытии тикета и закреплён до регистрации персонажа`;
 
       await channel.send({
         flags: MessageFlags.IsComponentsV2,
         components: [
           RollContainer.result(ROLL_KINDS[RollKind.TRAIT], entry, RollService.effectiveChance(entry, entries), {
             reroll: false,
-            caption: `Трейт персонажа <@${ownerId}>, выпал автоматически при открытии тикета`,
+            caption,
           }),
         ],
         allowedMentions: { parse: [] },

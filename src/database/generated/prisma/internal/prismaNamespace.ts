@@ -419,7 +419,8 @@ export const ModelName = {
   SuggestionReaction: 'SuggestionReaction',
   SuggestionRating: 'SuggestionRating',
   PingRole: 'PingRole',
-  ProphetState: 'ProphetState'
+  ProphetState: 'ProphetState',
+  PendingTraitRoll: 'PendingTraitRoll'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -435,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3103,6 +3104,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PendingTraitRoll: {
+      payload: Prisma.$PendingTraitRollPayload<ExtArgs>
+      fields: Prisma.PendingTraitRollFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PendingTraitRollFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PendingTraitRollFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>
+        }
+        findFirst: {
+          args: Prisma.PendingTraitRollFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PendingTraitRollFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>
+        }
+        findMany: {
+          args: Prisma.PendingTraitRollFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>[]
+        }
+        create: {
+          args: Prisma.PendingTraitRollCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>
+        }
+        createMany: {
+          args: Prisma.PendingTraitRollCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PendingTraitRollCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>[]
+        }
+        delete: {
+          args: Prisma.PendingTraitRollDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>
+        }
+        update: {
+          args: Prisma.PendingTraitRollUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>
+        }
+        deleteMany: {
+          args: Prisma.PendingTraitRollDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PendingTraitRollUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PendingTraitRollUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>[]
+        }
+        upsert: {
+          args: Prisma.PendingTraitRollUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PendingTraitRollPayload>
+        }
+        aggregate: {
+          args: Prisma.PendingTraitRollAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePendingTraitRoll>
+        }
+        groupBy: {
+          args: Prisma.PendingTraitRollGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PendingTraitRollGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PendingTraitRollCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PendingTraitRollCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3667,6 +3742,15 @@ export const ProphetStateScalarFieldEnum = {
 export type ProphetStateScalarFieldEnum = (typeof ProphetStateScalarFieldEnum)[keyof typeof ProphetStateScalarFieldEnum]
 
 
+export const PendingTraitRollScalarFieldEnum = {
+  discordId: 'discordId',
+  rollEntryId: 'rollEntryId',
+  rolledAt: 'rolledAt'
+} as const
+
+export type PendingTraitRollScalarFieldEnum = (typeof PendingTraitRollScalarFieldEnum)[keyof typeof PendingTraitRollScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4167,6 +4251,7 @@ export type GlobalOmitConfig = {
   suggestionRating?: Prisma.SuggestionRatingOmit
   pingRole?: Prisma.PingRoleOmit
   prophetState?: Prisma.ProphetStateOmit
+  pendingTraitRoll?: Prisma.PendingTraitRollOmit
 }
 
 /* Types for Logging */

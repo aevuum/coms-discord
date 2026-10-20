@@ -11,6 +11,7 @@ import { Currency, MAX_BALANCE_KNUTS } from "../../economy/lib/currency.js";
 import { Storage } from "../../../lib/storage.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { TupperService } from "../../tupper/service/tupperService.js";
+import { PendingTraitService } from "../../rolls/service/pendingTraitService.js";
 import {
   CharacterError,
   ManageCharacterAction,
@@ -61,6 +62,8 @@ export class CharacterService {
       await Storage.delete(avatarPath);
       throw error;
     }
+
+    await PendingTraitService.consume(discordId).catch(() => null);
 
     return character;
   }

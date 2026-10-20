@@ -768,3 +768,10 @@ model ProphetState {
 
   updatedAt DateTime @updatedAt
 }
+
+model PendingTraitRoll {
+  discordId   String @id
+  rollEntryId String
+
+  rolledAt DateTime @default(now())
+}

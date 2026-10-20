@@ -221,3 +221,8 @@ export type PingRole = Prisma.PingRoleModel
  * 
  */
 export type ProphetState = Prisma.ProphetStateModel
+/**
+ * Model PendingTraitRoll
+ * 
+ */
+export type PendingTraitRoll = Prisma.PendingTraitRollModel

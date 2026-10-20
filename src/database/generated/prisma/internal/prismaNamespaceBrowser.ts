@@ -86,7 +86,8 @@ export const ModelName = {
   SuggestionReaction: 'SuggestionReaction',
   SuggestionRating: 'SuggestionRating',
   PingRole: 'PingRole',
-  ProphetState: 'ProphetState'
+  ProphetState: 'ProphetState',
+  PendingTraitRoll: 'PendingTraitRoll'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -628,6 +629,15 @@ export const ProphetStateScalarFieldEnum = {
 } as const
 
 export type ProphetStateScalarFieldEnum = (typeof ProphetStateScalarFieldEnum)[keyof typeof ProphetStateScalarFieldEnum]
+
+
+export const PendingTraitRollScalarFieldEnum = {
+  discordId: 'discordId',
+  rollEntryId: 'rollEntryId',
+  rolledAt: 'rolledAt'
+} as const
+
+export type PendingTraitRollScalarFieldEnum = (typeof PendingTraitRollScalarFieldEnum)[keyof typeof PendingTraitRollScalarFieldEnum]
 
 
 export const SortOrder = {
