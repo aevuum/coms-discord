@@ -9,10 +9,17 @@ import {
   type Guild,
   type GuildMember,
   type Message,
+  type SendableChannels,
   type TopLevelComponent,
 } from "discord.js";
+import { container } from "@sapphire/framework";
 
 import type { Ticket } from "../../../database/generated/prisma/client.js";
+
+import { RollContainer } from "../../rolls/lib/rollContainer.js";
+import { ROLL_KINDS } from "../../rolls/lib/rollKinds.js";
+import { RollService } from "../../rolls/service/rollService.js";
+import { RollKind } from "../../rolls/types/rolls.js";
 
 import { CharacterSlotRepository } from "../../character/repositories/characterSlotRepository.js";
 import { TicketRepository } from "../repositories/ticketRepository.js";
@@ -212,6 +219,10 @@ export class TicketService {
 
       await message.pin().catch(() => null);
 
+      if (tagId === TICKET_CHARACTER_TAG_ID) {
+        await this.rollTrait(channel, member.id);
+      }
+
       return { url: channel.url, subject };
     } catch (error) {
       await channel.delete("Не удалось создать тикет").catch(() => null);
@@ -221,6 +232,25 @@ export class TicketService {
       }
 
       throw error;
+    }
+  }
+
+  private static async rollTrait(channel: SendableChannels, ownerId: string) {
+    try {
+      const { entry, entries } = await RollService.roll(RollKind.TRAIT);
+
+      await channel.send({
+        flags: MessageFlags.IsComponentsV2,
+        components: [
+          RollContainer.result(ROLL_KINDS[RollKind.TRAIT], entry, RollService.effectiveChance(entry, entries), {
+            reroll: false,
+            caption: `Трейт персонажа <@${ownerId}>, выпал автоматически при открытии тикета`,
+          }),
+        ],
+        allowedMentions: { parse: [] },
+      });
+    } catch (error) {
+      container.logger.error(error);
     }
   }
 
@@ -406,6 +436,38 @@ export class TicketService {
     return removed;
   }
 
+  public static async closeForLeaver(guild: Guild, userId: string) {
+    const tickets = await TicketRepository.findOpenByOwner(guild.id, userId);
+
+    let removed = 0;
+
+    for (const ticket of tickets) {
+      if (await this.finishClose(guild.client, guild, ticket, null)) {
+        await this.deleteChannel(guild, ticket.channelId, "Автор тикета покинул сервер").catch(() => null);
+        removed++;
+      }
+    }
+
+    return removed;
+  }
+
+  public static async cleanupLeavers(guild: Guild) {
+    const tickets = await TicketRepository.findAllOpen(guild.id);
+    const owners = [...new Set(tickets.map((ticket) => ticket.ownerId))];
+
+    let removed = 0;
+
+    for (const ownerId of owners) {
+      const member = await guild.members.fetch(ownerId).catch((error) => (error?.code === 10007 ? null : undefined));
+
+      if (member === null) {
+        removed += await this.closeForLeaver(guild, ownerId);
+      }
+    }
+
+    return removed;
+  }
+
   public static async handleChannelDelete(guild: Guild, channelId: string) {
     const ticket = await TicketRepository.findByChannel(channelId);
 
@@ -495,14 +557,14 @@ export class TicketService {
     return ticket;
   }
 
-  private static async deleteChannel(guild: Guild, channelId: string) {
+  private static async deleteChannel(guild: Guild, channelId: string, reason = "Тикет закрыт") {
     const channel = await guild.channels.fetch(channelId).catch(() => null);
 
     if (!channel) {
       return false;
     }
 
-    await channel.delete("Тикет закрыт");
+    await channel.delete(reason);
 
     return true;
   }

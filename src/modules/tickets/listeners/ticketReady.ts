@@ -30,6 +30,12 @@ export class TicketReadyListener extends Listener {
       if (removed) {
         this.container.logger.info(`Removed ${removed} closed ticket channels`);
       }
+
+      const abandoned = guild ? await TicketService.cleanupLeavers(guild) : 0;
+
+      if (abandoned) {
+        this.container.logger.info(`Removed ${abandoned} tickets of members who left the server`);
+      }
     } catch (error) {
       this.container.logger.error(error);
     }

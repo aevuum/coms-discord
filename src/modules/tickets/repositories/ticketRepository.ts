@@ -7,6 +7,18 @@ export class TicketRepository {
     });
   }
 
+  public static findOpenByOwner(guildId: string, ownerId: string) {
+    return prisma.ticket.findMany({
+      where: { guildId, ownerId, status: "OPEN" },
+    });
+  }
+
+  public static findAllOpen(guildId: string) {
+    return prisma.ticket.findMany({
+      where: { guildId, status: "OPEN" },
+    });
+  }
+
   public static findById(id: string) {
     return prisma.ticket.findUnique({ where: { id } });
   }

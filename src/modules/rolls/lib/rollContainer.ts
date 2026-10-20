@@ -22,8 +22,14 @@ const ARROW = "<:48765whitearrow:1518587298281685173>";
 const ERROR = "<:240191mark:1518581039172292688>";
 
 export class RollContainer {
-  public static result(meta: RollKindMeta, entry: RollEntry, chance: number) {
+  public static result(
+    meta: RollKindMeta,
+    entry: RollEntry,
+    chance: number,
+    options: { reroll?: boolean; caption?: string } = {},
+  ) {
     const stars = RollService.stars(chance);
+    const reroll = options.reroll ?? true;
 
     const container = new ContainerBuilder().setAccentColor(entry.isDefault ? 0x475b56 : 0xc9a227);
 
@@ -34,6 +40,7 @@ export class RollContainer {
           `# ${entry.emoji ? `${entry.emoji} ` : ""}${entry.name} (${"★".repeat(stars)}${"☆".repeat(5 - stars)})`,
           entry.description ? `${ARROW} "${entry.description}"` : null,
           `-# Шанс выпадения: ${RollService.formatChance(chance)}`,
+          options.caption ? `-# ${options.caption}` : null,
         ]
           .filter((line) => line !== null)
           .join("\n"),
@@ -44,6 +51,10 @@ export class RollContainer {
       container.addMediaGalleryComponents(
         new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(entry.imageUrl)),
       );
+    }
+
+    if (!reroll) {
+      return container;
     }
 
     container.addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small));
