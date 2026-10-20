@@ -26,18 +26,21 @@ export type AggregateStaffApplicationRole = {
 
 export type StaffApplicationRoleMinAggregateOutputType = {
   tagId: string | null
+  roleId: string | null
   open: boolean | null
   updatedAt: Date | null
 }
 
 export type StaffApplicationRoleMaxAggregateOutputType = {
   tagId: string | null
+  roleId: string | null
   open: boolean | null
   updatedAt: Date | null
 }
 
 export type StaffApplicationRoleCountAggregateOutputType = {
   tagId: number
+  roleId: number
   open: number
   questions: number
   updatedAt: number
@@ -47,18 +50,21 @@ export type StaffApplicationRoleCountAggregateOutputType = {
 
 export type StaffApplicationRoleMinAggregateInputType = {
   tagId?: true
+  roleId?: true
   open?: true
   updatedAt?: true
 }
 
 export type StaffApplicationRoleMaxAggregateInputType = {
   tagId?: true
+  roleId?: true
   open?: true
   updatedAt?: true
 }
 
 export type StaffApplicationRoleCountAggregateInputType = {
   tagId?: true
+  roleId?: true
   open?: true
   questions?: true
   updatedAt?: true
@@ -139,6 +145,7 @@ export type StaffApplicationRoleGroupByArgs<ExtArgs extends runtime.Types.Extens
 
 export type StaffApplicationRoleGroupByOutputType = {
   tagId: string
+  roleId: string | null
   open: boolean
   questions: runtime.JsonValue | null
   updatedAt: Date
@@ -167,6 +174,7 @@ export type StaffApplicationRoleWhereInput = {
   OR?: Prisma.StaffApplicationRoleWhereInput[]
   NOT?: Prisma.StaffApplicationRoleWhereInput | Prisma.StaffApplicationRoleWhereInput[]
   tagId?: Prisma.StringFilter<"StaffApplicationRole"> | string
+  roleId?: Prisma.StringNullableFilter<"StaffApplicationRole"> | string | null
   open?: Prisma.BoolFilter<"StaffApplicationRole"> | boolean
   questions?: Prisma.JsonNullableFilter<"StaffApplicationRole">
   updatedAt?: Prisma.DateTimeFilter<"StaffApplicationRole"> | Date | string
@@ -174,6 +182,7 @@ export type StaffApplicationRoleWhereInput = {
 
 export type StaffApplicationRoleOrderByWithRelationInput = {
   tagId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   open?: Prisma.SortOrder
   questions?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -184,6 +193,7 @@ export type StaffApplicationRoleWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.StaffApplicationRoleWhereInput | Prisma.StaffApplicationRoleWhereInput[]
   OR?: Prisma.StaffApplicationRoleWhereInput[]
   NOT?: Prisma.StaffApplicationRoleWhereInput | Prisma.StaffApplicationRoleWhereInput[]
+  roleId?: Prisma.StringNullableFilter<"StaffApplicationRole"> | string | null
   open?: Prisma.BoolFilter<"StaffApplicationRole"> | boolean
   questions?: Prisma.JsonNullableFilter<"StaffApplicationRole">
   updatedAt?: Prisma.DateTimeFilter<"StaffApplicationRole"> | Date | string
@@ -191,6 +201,7 @@ export type StaffApplicationRoleWhereUniqueInput = Prisma.AtLeast<{
 
 export type StaffApplicationRoleOrderByWithAggregationInput = {
   tagId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   open?: Prisma.SortOrder
   questions?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -204,6 +215,7 @@ export type StaffApplicationRoleScalarWhereWithAggregatesInput = {
   OR?: Prisma.StaffApplicationRoleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StaffApplicationRoleScalarWhereWithAggregatesInput | Prisma.StaffApplicationRoleScalarWhereWithAggregatesInput[]
   tagId?: Prisma.StringWithAggregatesFilter<"StaffApplicationRole"> | string
+  roleId?: Prisma.StringNullableWithAggregatesFilter<"StaffApplicationRole"> | string | null
   open?: Prisma.BoolWithAggregatesFilter<"StaffApplicationRole"> | boolean
   questions?: Prisma.JsonNullableWithAggregatesFilter<"StaffApplicationRole">
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StaffApplicationRole"> | Date | string
@@ -211,6 +223,7 @@ export type StaffApplicationRoleScalarWhereWithAggregatesInput = {
 
 export type StaffApplicationRoleCreateInput = {
   tagId: string
+  roleId?: string | null
   open?: boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Date | string
@@ -218,6 +231,7 @@ export type StaffApplicationRoleCreateInput = {
 
 export type StaffApplicationRoleUncheckedCreateInput = {
   tagId: string
+  roleId?: string | null
   open?: boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Date | string
@@ -225,6 +239,7 @@ export type StaffApplicationRoleUncheckedCreateInput = {
 
 export type StaffApplicationRoleUpdateInput = {
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   open?: Prisma.BoolFieldUpdateOperationsInput | boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -232,6 +247,7 @@ export type StaffApplicationRoleUpdateInput = {
 
 export type StaffApplicationRoleUncheckedUpdateInput = {
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   open?: Prisma.BoolFieldUpdateOperationsInput | boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -239,6 +255,7 @@ export type StaffApplicationRoleUncheckedUpdateInput = {
 
 export type StaffApplicationRoleCreateManyInput = {
   tagId: string
+  roleId?: string | null
   open?: boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Date | string
@@ -246,6 +263,7 @@ export type StaffApplicationRoleCreateManyInput = {
 
 export type StaffApplicationRoleUpdateManyMutationInput = {
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   open?: Prisma.BoolFieldUpdateOperationsInput | boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -253,6 +271,7 @@ export type StaffApplicationRoleUpdateManyMutationInput = {
 
 export type StaffApplicationRoleUncheckedUpdateManyInput = {
   tagId?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   open?: Prisma.BoolFieldUpdateOperationsInput | boolean
   questions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -260,6 +279,7 @@ export type StaffApplicationRoleUncheckedUpdateManyInput = {
 
 export type StaffApplicationRoleCountOrderByAggregateInput = {
   tagId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
   open?: Prisma.SortOrder
   questions?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -267,12 +287,14 @@ export type StaffApplicationRoleCountOrderByAggregateInput = {
 
 export type StaffApplicationRoleMaxOrderByAggregateInput = {
   tagId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
   open?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type StaffApplicationRoleMinOrderByAggregateInput = {
   tagId?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
   open?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -281,6 +303,7 @@ export type StaffApplicationRoleMinOrderByAggregateInput = {
 
 export type StaffApplicationRoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   tagId?: boolean
+  roleId?: boolean
   open?: boolean
   questions?: boolean
   updatedAt?: boolean
@@ -288,6 +311,7 @@ export type StaffApplicationRoleSelect<ExtArgs extends runtime.Types.Extensions.
 
 export type StaffApplicationRoleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   tagId?: boolean
+  roleId?: boolean
   open?: boolean
   questions?: boolean
   updatedAt?: boolean
@@ -295,6 +319,7 @@ export type StaffApplicationRoleSelectCreateManyAndReturn<ExtArgs extends runtim
 
 export type StaffApplicationRoleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   tagId?: boolean
+  roleId?: boolean
   open?: boolean
   questions?: boolean
   updatedAt?: boolean
@@ -302,18 +327,20 @@ export type StaffApplicationRoleSelectUpdateManyAndReturn<ExtArgs extends runtim
 
 export type StaffApplicationRoleSelectScalar = {
   tagId?: boolean
+  roleId?: boolean
   open?: boolean
   questions?: boolean
   updatedAt?: boolean
 }
 
-export type StaffApplicationRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"tagId" | "open" | "questions" | "updatedAt", ExtArgs["result"]["staffApplicationRole"]>
+export type StaffApplicationRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"tagId" | "roleId" | "open" | "questions" | "updatedAt", ExtArgs["result"]["staffApplicationRole"]>
 
 export type $StaffApplicationRolePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StaffApplicationRole"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     tagId: string
+    roleId: string | null
     open: boolean
     questions: runtime.JsonValue | null
     updatedAt: Date
@@ -741,6 +768,7 @@ export interface Prisma__StaffApplicationRoleClient<T, Null = never, ExtArgs ext
  */
 export interface StaffApplicationRoleFieldRefs {
   readonly tagId: Prisma.FieldRef<"StaffApplicationRole", 'String'>
+  readonly roleId: Prisma.FieldRef<"StaffApplicationRole", 'String'>
   readonly open: Prisma.FieldRef<"StaffApplicationRole", 'Boolean'>
   readonly questions: Prisma.FieldRef<"StaffApplicationRole", 'Json'>
   readonly updatedAt: Prisma.FieldRef<"StaffApplicationRole", 'DateTime'>

@@ -187,3 +187,8 @@ export type SuggestionReaction = Prisma.SuggestionReactionModel
  * 
  */
 export type SuggestionRating = Prisma.SuggestionRatingModel
+/**
+ * Model PingRole
+ * 
+ */
+export type PingRole = Prisma.PingRoleModel

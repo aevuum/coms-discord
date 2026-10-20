@@ -417,7 +417,8 @@ export const ModelName = {
   TermsAcceptance: 'TermsAcceptance',
   Suggestion: 'Suggestion',
   SuggestionReaction: 'SuggestionReaction',
-  SuggestionRating: 'SuggestionRating'
+  SuggestionRating: 'SuggestionRating',
+  PingRole: 'PingRole'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2953,6 +2954,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PingRole: {
+      payload: Prisma.$PingRolePayload<ExtArgs>
+      fields: Prisma.PingRoleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PingRoleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PingRoleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>
+        }
+        findFirst: {
+          args: Prisma.PingRoleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PingRoleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>
+        }
+        findMany: {
+          args: Prisma.PingRoleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>[]
+        }
+        create: {
+          args: Prisma.PingRoleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>
+        }
+        createMany: {
+          args: Prisma.PingRoleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PingRoleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>[]
+        }
+        delete: {
+          args: Prisma.PingRoleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>
+        }
+        update: {
+          args: Prisma.PingRoleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>
+        }
+        deleteMany: {
+          args: Prisma.PingRoleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PingRoleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PingRoleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>[]
+        }
+        upsert: {
+          args: Prisma.PingRoleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PingRolePayload>
+        }
+        aggregate: {
+          args: Prisma.PingRoleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePingRole>
+        }
+        groupBy: {
+          args: Prisma.PingRoleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PingRoleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PingRoleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PingRoleCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3377,6 +3452,7 @@ export type StaffApplicationVoteScalarFieldEnum = (typeof StaffApplicationVoteSc
 
 export const StaffApplicationRoleScalarFieldEnum = {
   tagId: 'tagId',
+  roleId: 'roleId',
   open: 'open',
   questions: 'questions',
   updatedAt: 'updatedAt'
@@ -3486,6 +3562,20 @@ export const SuggestionRatingScalarFieldEnum = {
 } as const
 
 export type SuggestionRatingScalarFieldEnum = (typeof SuggestionRatingScalarFieldEnum)[keyof typeof SuggestionRatingScalarFieldEnum]
+
+
+export const PingRoleScalarFieldEnum = {
+  roleId: 'roleId',
+  guildId: 'guildId',
+  label: 'label',
+  emoji: 'emoji',
+  description: 'description',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PingRoleScalarFieldEnum = (typeof PingRoleScalarFieldEnum)[keyof typeof PingRoleScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3986,6 +4076,7 @@ export type GlobalOmitConfig = {
   suggestion?: Prisma.SuggestionOmit
   suggestionReaction?: Prisma.SuggestionReactionOmit
   suggestionRating?: Prisma.SuggestionRatingOmit
+  pingRole?: Prisma.PingRoleOmit
 }
 
 /* Types for Logging */

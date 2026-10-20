@@ -75,6 +75,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.PingRoles,
+    key: "manage.pingroles",
+    label: "Пинг-роли",
+    emoji: "<:21796announcement:1518587271303925830>",
+    description: "Роли на панели уведомлений, которые участники выбирают сами",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Reports,
     key: "manage.reports",
     label: "Жалобы",

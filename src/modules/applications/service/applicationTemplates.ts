@@ -46,7 +46,8 @@ export class ApplicationTemplates {
       return {
         tagId: tag.id,
         name: tag.name,
-        roleId: this.resolveRoleId(forum.guild, tag.name),
+        roleId: setting?.roleId ?? this.resolveRoleId(forum.guild, tag.name),
+        roleManual: Boolean(setting?.roleId),
         open: setting?.open ?? true,
         customQuestions: Array.isArray(setting?.questions),
         emoji: custom?.name

@@ -10,13 +10,15 @@ import {
   TextDisplayBuilder,
 } from "discord.js";
 
-import { PING_ROLES, PingRolesCustomIds } from "./pingRoles.js";
+import type { PingRole } from "../../../database/generated/prisma/client.js";
+
+import { PingRolesCustomIds } from "./pingRoles.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const HEADER = "<:21796announcement:1518587271303925830>";
 
 export class PingRolesContainer {
-  public static panel() {
+  public static panel(roles: PingRole[]) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
@@ -36,9 +38,15 @@ export class PingRolesContainer {
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        PING_ROLES.map(
-          (role) => `${role.emoji} <@&${role.id}>\n-# ${role.description}`,
-        ).join("\n"),
+        roles.length
+          ? roles
+              .map((role) =>
+                [`${role.emoji ?? ARROW} <@&${role.roleId}>`, role.description ? `-# ${role.description}` : null]
+                  .filter((line) => line !== null)
+                  .join("\n"),
+              )
+              .join("\n")
+          : "-# Пинг-ролей пока нет.",
       ),
     );
 
@@ -46,24 +54,34 @@ export class PingRolesContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
-    container.addActionRowComponents(
-      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-        new StringSelectMenuBuilder()
-          .setCustomId(PingRolesCustomIds.select)
-          .setPlaceholder("Выберите пинг-роли")
-          .setMinValues(1)
-          .setMaxValues(PING_ROLES.length)
-          .addOptions(
-            PING_ROLES.map((role) =>
-              new StringSelectMenuOptionBuilder()
-                .setValue(role.id)
-                .setLabel(role.label)
-                .setEmoji(role.emoji)
-                .setDescription(role.description),
+    if (roles.length) {
+      container.addActionRowComponents(
+        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+          new StringSelectMenuBuilder()
+            .setCustomId(PingRolesCustomIds.select)
+            .setPlaceholder("Выберите пинг-роли")
+            .setMinValues(1)
+            .setMaxValues(roles.length)
+            .addOptions(
+              roles.map((role) => {
+                const option = new StringSelectMenuOptionBuilder()
+                  .setValue(role.roleId)
+                  .setLabel(role.label);
+
+                if (role.emoji) {
+                  option.setEmoji(role.emoji);
+                }
+
+                if (role.description) {
+                  option.setDescription(role.description);
+                }
+
+                return option;
+              }),
             ),
-          ),
-      ),
-    );
+        ),
+      );
+    }
 
     container.addActionRowComponents(
       new ActionRowBuilder<ButtonBuilder>().addComponents(

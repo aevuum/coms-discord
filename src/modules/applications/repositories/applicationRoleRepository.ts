@@ -20,6 +20,14 @@ export class ApplicationRoleRepository {
     });
   }
 
+  public static setRole(tagId: string, roleId: string | null) {
+    return prisma.staffApplicationRole.upsert({
+      where: { tagId },
+      create: { tagId, roleId },
+      update: { roleId },
+    });
+  }
+
   public static setQuestions(tagId: string, questions: ApplicationQuestion[] | null) {
     const value = questions ? (questions as Prisma.InputJsonValue) : Prisma.DbNull;
 

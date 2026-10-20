@@ -15,6 +15,7 @@ import {
 } from "discord.js";
 
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
+import type { RolePage } from "../../permissions/types/permissions.js";
 import type { ApplicationQuestion, ApplicationRole } from "../types/application.js";
 import {
   ApplicationAdminAction,
@@ -65,11 +66,14 @@ export class ApplicationAdminContainer {
     questions: ApplicationQuestion[],
     problem: string | null,
     maxQuestions: number,
+    roleName: string | null,
   ) {
     const container = this.base(role.name, [
       `${ARROW} Набор: ${role.open ? "🟢 **открыт**" : "🔴 **закрыт**"}`,
       `${ARROW} Пункты: ${this.source(role)}`,
-      role.roleId ? `${ARROW} Роль при принятии: <@&${role.roleId}>` : `${ARROW} Роль с таким названием на сервере не найдена, выдавать придётся вручную.`,
+      roleName
+        ? `${ARROW} Роль при принятии: \`@${roleName}\` · ${role.roleManual ? "выбрана вручную" : "найдена по названию"}`
+        : `${ARROW} Роль при принятии не задана: выберите её кнопкой «Роль при принятии», иначе выдавать придётся вручную.`,
       problem ? `-# ${problem}` : null,
       "",
       ...questions.map(
@@ -120,9 +124,78 @@ export class ApplicationAdminContainer {
       );
     }
 
-    buttons.push(this.backButton(ApplicationAdminCustomIds.build(ApplicationAdminAction.Root)));
+    buttons.push(
+      new ButtonBuilder()
+        .setCustomId(ApplicationAdminCustomIds.build(ApplicationAdminAction.RolePage, role.tagId, 0))
+        .setLabel("Роль при принятии")
+        .setEmoji("🎖️")
+        .setStyle(ButtonStyle.Secondary),
+      this.backButton(ApplicationAdminCustomIds.build(ApplicationAdminAction.Root)),
+    );
 
     container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(buttons));
+
+    return container;
+  }
+
+  public static rolePicker(role: ApplicationRole, rolePage: RolePage, currentName: string | null) {
+    const container = this.base(`${role.name} · роль при принятии`, [
+      `${ARROW} Эту роль бот выдаст кандидату, когда администрация примет его заявку.`,
+      `${ARROW} Сейчас: ${currentName ? `\`@${currentName}\` · ${role.roleManual ? "выбрана вручную" : "найдена по названию должности"}` : "не задана"}`,
+      "-# Роль бота должна быть выше выбранной роли в списке ролей сервера, иначе бот не сможет её выдать.",
+    ]);
+
+    if (rolePage.roles.length) {
+      container.addActionRowComponents(
+        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+          new StringSelectMenuBuilder()
+            .setCustomId(ApplicationAdminCustomIds.build(ApplicationAdminAction.RoleSet, role.tagId))
+            .setPlaceholder(
+              rolePage.totalPages > 1
+                ? `Роль · страница ${rolePage.page + 1} из ${rolePage.totalPages}`
+                : "Выберите роль",
+            )
+            .addOptions(
+              rolePage.roles.map((entry) =>
+                new StringSelectMenuOptionBuilder()
+                  .setLabel(entry.name.slice(0, 100))
+                  .setValue(entry.id)
+                  .setDefault(entry.id === role.roleId),
+              ),
+            ),
+        ),
+      );
+    }
+
+    const row = new ActionRowBuilder<ButtonBuilder>();
+
+    if (rolePage.totalPages > 1) {
+      row.addComponents(
+        new ButtonBuilder()
+          .setCustomId(ApplicationAdminCustomIds.build(ApplicationAdminAction.RolePage, role.tagId, rolePage.page - 1))
+          .setEmoji("<:26204blackarrow:1518587278467792997>")
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(rolePage.page <= 0),
+        new ButtonBuilder()
+          .setCustomId(ApplicationAdminCustomIds.build(ApplicationAdminAction.RolePage, role.tagId, rolePage.page + 1))
+          .setEmoji("<:48765whitearrow:1518587298281685173>")
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(rolePage.page >= rolePage.totalPages - 1),
+      );
+    }
+
+    if (role.roleManual) {
+      row.addComponents(
+        new ButtonBuilder()
+          .setCustomId(ApplicationAdminCustomIds.build(ApplicationAdminAction.RoleAuto, role.tagId))
+          .setLabel("По названию")
+          .setStyle(ButtonStyle.Secondary),
+      );
+    }
+
+    row.addComponents(this.backButton(ApplicationAdminCustomIds.build(ApplicationAdminAction.Role, role.tagId)));
+
+    container.addActionRowComponents(row);
 
     return container;
   }

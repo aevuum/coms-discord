@@ -600,6 +600,7 @@ model StaffApplicationVote {
 model StaffApplicationRole {
   tagId String @id
 
+  roleId    String?
   open      Boolean @default(true)
   questions Json?
 
@@ -735,4 +736,19 @@ model SuggestionRating {
   updatedAt DateTime @updatedAt
 
   @@id([suggestionId, userId])
+}
+
+model PingRole {
+  roleId String @id
+
+  guildId     String
+  label       String
+  emoji       String?
+  description String?
+  sortOrder   Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([guildId, sortOrder])
 }

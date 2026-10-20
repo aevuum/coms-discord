@@ -13,6 +13,9 @@ export enum ApplicationAdminAction {
   Down = "down",
   Delete = "delete",
   Reset = "reset",
+  RolePage = "role_page",
+  RoleSet = "role_set",
+  RoleAuto = "role_auto",
 }
 
 const PREFIX = "appadmin";

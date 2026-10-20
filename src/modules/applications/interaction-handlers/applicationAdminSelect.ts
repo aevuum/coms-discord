@@ -30,7 +30,8 @@ export class ApplicationAdminSelectHandler extends InteractionHandler {
 
     if (
       parsed?.action !== ApplicationAdminAction.PickRole &&
-      parsed?.action !== ApplicationAdminAction.PickQuestion
+      parsed?.action !== ApplicationAdminAction.PickQuestion &&
+      parsed?.action !== ApplicationAdminAction.RoleSet
     ) {
       return this.none();
     }
@@ -46,10 +47,16 @@ export class ApplicationAdminSelectHandler extends InteractionHandler {
 
       const [value] = interaction.values;
 
+      if (result.action === ApplicationAdminAction.RoleSet) {
+        await ApplicationAdminService.setRole(interaction.client, result.args[0], value);
+      }
+
       const view =
         result.action === ApplicationAdminAction.PickRole
           ? await ApplicationAdminViews.role(interaction.client, value)
-          : await ApplicationAdminViews.question(interaction.client, result.args[0], Number(value));
+          : result.action === ApplicationAdminAction.RoleSet
+            ? await ApplicationAdminViews.role(interaction.client, result.args[0])
+            : await ApplicationAdminViews.question(interaction.client, result.args[0], Number(value));
 
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,

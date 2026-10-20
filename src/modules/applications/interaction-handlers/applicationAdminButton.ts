@@ -21,6 +21,8 @@ const BUTTON_ACTIONS = new Set<ApplicationAdminAction>([
   ApplicationAdminAction.Down,
   ApplicationAdminAction.Delete,
   ApplicationAdminAction.Reset,
+  ApplicationAdminAction.RolePage,
+  ApplicationAdminAction.RoleAuto,
 ]);
 
 type AdminButton = {
@@ -114,6 +116,13 @@ export class ApplicationAdminButtonHandler extends InteractionHandler {
         return ApplicationAdminViews.role(client, tagId);
 
       case ApplicationAdminAction.Role:
+        return ApplicationAdminViews.role(client, tagId);
+
+      case ApplicationAdminAction.RolePage:
+        return ApplicationAdminViews.rolePicker(client, tagId, Number.isInteger(index) ? index : 0);
+
+      case ApplicationAdminAction.RoleAuto:
+        await ApplicationAdminService.setRole(client, tagId, null);
         return ApplicationAdminViews.role(client, tagId);
 
       default:

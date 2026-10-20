@@ -88,6 +88,31 @@ export class ApplicationAdminService {
     await this.save(tagId, questions);
   }
 
+  public static async setRole(client: Client, tagId: string, roleId: string | null) {
+    await ApplicationTemplates.getRole(client, tagId);
+
+    if (roleId) {
+      const guild = client.guilds.cache.get(process.env.GUILD_ID ?? "");
+      const role = await guild?.roles.fetch(roleId).catch(() => null);
+
+      if (!guild || !role || role.id === guild.id) {
+        throw new ApplicationError("Роль не найдена.");
+      }
+
+      if (role.managed) {
+        throw new ApplicationError("Эта роль управляется интеграцией или ботом, её нельзя выдавать вручную.");
+      }
+
+      const me = guild.members.me ?? (await guild.members.fetchMe());
+
+      if (role.position >= me.roles.highest.position) {
+        throw new ApplicationError("Роль бота должна быть выше этой роли в списке ролей сервера, иначе бот не сможет её выдать.");
+      }
+    }
+
+    await ApplicationRoleRepository.setRole(tagId, roleId);
+  }
+
   public static async reset(tagId: string) {
     await ApplicationRoleRepository.setQuestions(tagId, null);
   }

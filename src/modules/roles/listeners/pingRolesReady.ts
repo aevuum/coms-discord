@@ -18,6 +18,12 @@ export class PingRolesReadyListener extends Listener {
 
   public override async run(client: Client<true>) {
     try {
+      const seeded = await PingRolesService.seed();
+
+      if (seeded) {
+        this.container.logger.info(`Seeded ${seeded} ping roles`);
+      }
+
       const { message, created } = await PingRolesService.syncPanel(client);
 
       this.container.logger.info(

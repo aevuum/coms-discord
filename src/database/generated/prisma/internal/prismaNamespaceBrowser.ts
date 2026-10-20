@@ -84,7 +84,8 @@ export const ModelName = {
   TermsAcceptance: 'TermsAcceptance',
   Suggestion: 'Suggestion',
   SuggestionReaction: 'SuggestionReaction',
-  SuggestionRating: 'SuggestionRating'
+  SuggestionRating: 'SuggestionRating',
+  PingRole: 'PingRole'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -488,6 +489,7 @@ export type StaffApplicationVoteScalarFieldEnum = (typeof StaffApplicationVoteSc
 
 export const StaffApplicationRoleScalarFieldEnum = {
   tagId: 'tagId',
+  roleId: 'roleId',
   open: 'open',
   questions: 'questions',
   updatedAt: 'updatedAt'
@@ -597,6 +599,20 @@ export const SuggestionRatingScalarFieldEnum = {
 } as const
 
 export type SuggestionRatingScalarFieldEnum = (typeof SuggestionRatingScalarFieldEnum)[keyof typeof SuggestionRatingScalarFieldEnum]
+
+
+export const PingRoleScalarFieldEnum = {
+  roleId: 'roleId',
+  guildId: 'guildId',
+  label: 'label',
+  emoji: 'emoji',
+  description: 'description',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PingRoleScalarFieldEnum = (typeof PingRoleScalarFieldEnum)[keyof typeof PingRoleScalarFieldEnum]
 
 
 export const SortOrder = {
