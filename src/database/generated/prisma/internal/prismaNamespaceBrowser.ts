@@ -286,6 +286,8 @@ export const CharacterTupperScalarFieldEnum = {
   characterId: 'characterId',
   name: 'name',
   prefix: 'prefix',
+  lastChannelId: 'lastChannelId',
+  lastUsedAt: 'lastUsedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

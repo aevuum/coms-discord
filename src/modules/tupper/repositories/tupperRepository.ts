@@ -11,6 +11,13 @@ const withCharacter = {
 } as const;
 
 export class TupperRepository {
+  public static markUsed(characterId: string, channelId: string) {
+    return prisma.characterTupper.updateMany({
+      where: { characterId },
+      data: { lastChannelId: channelId, lastUsedAt: new Date() },
+    });
+  }
+
   public static async create(
     characterId: string,
     name: string,

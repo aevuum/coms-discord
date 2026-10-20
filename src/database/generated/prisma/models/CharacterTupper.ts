@@ -29,6 +29,8 @@ export type CharacterTupperMinAggregateOutputType = {
   characterId: string | null
   name: string | null
   prefix: string | null
+  lastChannelId: string | null
+  lastUsedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -38,6 +40,8 @@ export type CharacterTupperMaxAggregateOutputType = {
   characterId: string | null
   name: string | null
   prefix: string | null
+  lastChannelId: string | null
+  lastUsedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,6 +51,8 @@ export type CharacterTupperCountAggregateOutputType = {
   characterId: number
   name: number
   prefix: number
+  lastChannelId: number
+  lastUsedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -58,6 +64,8 @@ export type CharacterTupperMinAggregateInputType = {
   characterId?: true
   name?: true
   prefix?: true
+  lastChannelId?: true
+  lastUsedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -67,6 +75,8 @@ export type CharacterTupperMaxAggregateInputType = {
   characterId?: true
   name?: true
   prefix?: true
+  lastChannelId?: true
+  lastUsedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,6 +86,8 @@ export type CharacterTupperCountAggregateInputType = {
   characterId?: true
   name?: true
   prefix?: true
+  lastChannelId?: true
+  lastUsedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -158,6 +170,8 @@ export type CharacterTupperGroupByOutputType = {
   characterId: string
   name: string
   prefix: string
+  lastChannelId: string | null
+  lastUsedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: CharacterTupperCountAggregateOutputType | null
@@ -188,6 +202,8 @@ export type CharacterTupperWhereInput = {
   characterId?: Prisma.StringFilter<"CharacterTupper"> | string
   name?: Prisma.StringFilter<"CharacterTupper"> | string
   prefix?: Prisma.StringFilter<"CharacterTupper"> | string
+  lastChannelId?: Prisma.StringNullableFilter<"CharacterTupper"> | string | null
+  lastUsedAt?: Prisma.DateTimeNullableFilter<"CharacterTupper"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CharacterTupper"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterTupper"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
@@ -198,6 +214,8 @@ export type CharacterTupperOrderByWithRelationInput = {
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   prefix?: Prisma.SortOrder
+  lastChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastUsedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   character?: Prisma.CharacterOrderByWithRelationInput
@@ -211,6 +229,8 @@ export type CharacterTupperWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CharacterTupperWhereInput[]
   NOT?: Prisma.CharacterTupperWhereInput | Prisma.CharacterTupperWhereInput[]
   name?: Prisma.StringFilter<"CharacterTupper"> | string
+  lastChannelId?: Prisma.StringNullableFilter<"CharacterTupper"> | string | null
+  lastUsedAt?: Prisma.DateTimeNullableFilter<"CharacterTupper"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CharacterTupper"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterTupper"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
@@ -221,6 +241,8 @@ export type CharacterTupperOrderByWithAggregationInput = {
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   prefix?: Prisma.SortOrder
+  lastChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastUsedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CharacterTupperCountOrderByAggregateInput
@@ -236,6 +258,8 @@ export type CharacterTupperScalarWhereWithAggregatesInput = {
   characterId?: Prisma.StringWithAggregatesFilter<"CharacterTupper"> | string
   name?: Prisma.StringWithAggregatesFilter<"CharacterTupper"> | string
   prefix?: Prisma.StringWithAggregatesFilter<"CharacterTupper"> | string
+  lastChannelId?: Prisma.StringNullableWithAggregatesFilter<"CharacterTupper"> | string | null
+  lastUsedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CharacterTupper"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterTupper"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterTupper"> | Date | string
 }
@@ -244,6 +268,8 @@ export type CharacterTupperCreateInput = {
   id?: string
   name: string
   prefix: string
+  lastChannelId?: string | null
+  lastUsedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutTupperInput
@@ -254,6 +280,8 @@ export type CharacterTupperUncheckedCreateInput = {
   characterId: string
   name: string
   prefix: string
+  lastChannelId?: string | null
+  lastUsedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -262,6 +290,8 @@ export type CharacterTupperUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   prefix?: Prisma.StringFieldUpdateOperationsInput | string
+  lastChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutTupperNestedInput
@@ -272,6 +302,8 @@ export type CharacterTupperUncheckedUpdateInput = {
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   prefix?: Prisma.StringFieldUpdateOperationsInput | string
+  lastChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -281,6 +313,8 @@ export type CharacterTupperCreateManyInput = {
   characterId: string
   name: string
   prefix: string
+  lastChannelId?: string | null
+  lastUsedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -289,6 +323,8 @@ export type CharacterTupperUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   prefix?: Prisma.StringFieldUpdateOperationsInput | string
+  lastChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -298,6 +334,8 @@ export type CharacterTupperUncheckedUpdateManyInput = {
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   prefix?: Prisma.StringFieldUpdateOperationsInput | string
+  lastChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -312,6 +350,8 @@ export type CharacterTupperCountOrderByAggregateInput = {
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   prefix?: Prisma.SortOrder
+  lastChannelId?: Prisma.SortOrder
+  lastUsedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -321,6 +361,8 @@ export type CharacterTupperMaxOrderByAggregateInput = {
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   prefix?: Prisma.SortOrder
+  lastChannelId?: Prisma.SortOrder
+  lastUsedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -330,6 +372,8 @@ export type CharacterTupperMinOrderByAggregateInput = {
   characterId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   prefix?: Prisma.SortOrder
+  lastChannelId?: Prisma.SortOrder
+  lastUsedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -370,6 +414,8 @@ export type CharacterTupperCreateWithoutCharacterInput = {
   id?: string
   name: string
   prefix: string
+  lastChannelId?: string | null
+  lastUsedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -378,6 +424,8 @@ export type CharacterTupperUncheckedCreateWithoutCharacterInput = {
   id?: string
   name: string
   prefix: string
+  lastChannelId?: string | null
+  lastUsedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -402,6 +450,8 @@ export type CharacterTupperUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   prefix?: Prisma.StringFieldUpdateOperationsInput | string
+  lastChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -410,6 +460,8 @@ export type CharacterTupperUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   prefix?: Prisma.StringFieldUpdateOperationsInput | string
+  lastChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastUsedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -421,6 +473,8 @@ export type CharacterTupperSelect<ExtArgs extends runtime.Types.Extensions.Inter
   characterId?: boolean
   name?: boolean
   prefix?: boolean
+  lastChannelId?: boolean
+  lastUsedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -431,6 +485,8 @@ export type CharacterTupperSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   characterId?: boolean
   name?: boolean
   prefix?: boolean
+  lastChannelId?: boolean
+  lastUsedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -441,6 +497,8 @@ export type CharacterTupperSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   characterId?: boolean
   name?: boolean
   prefix?: boolean
+  lastChannelId?: boolean
+  lastUsedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
@@ -451,11 +509,13 @@ export type CharacterTupperSelectScalar = {
   characterId?: boolean
   name?: boolean
   prefix?: boolean
+  lastChannelId?: boolean
+  lastUsedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CharacterTupperOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "name" | "prefix" | "createdAt" | "updatedAt", ExtArgs["result"]["characterTupper"]>
+export type CharacterTupperOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "name" | "prefix" | "lastChannelId" | "lastUsedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["characterTupper"]>
 export type CharacterTupperInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
@@ -476,6 +536,8 @@ export type $CharacterTupperPayload<ExtArgs extends runtime.Types.Extensions.Int
     characterId: string
     name: string
     prefix: string
+    lastChannelId: string | null
+    lastUsedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["characterTupper"]>
@@ -906,6 +968,8 @@ export interface CharacterTupperFieldRefs {
   readonly characterId: Prisma.FieldRef<"CharacterTupper", 'String'>
   readonly name: Prisma.FieldRef<"CharacterTupper", 'String'>
   readonly prefix: Prisma.FieldRef<"CharacterTupper", 'String'>
+  readonly lastChannelId: Prisma.FieldRef<"CharacterTupper", 'String'>
+  readonly lastUsedAt: Prisma.FieldRef<"CharacterTupper", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"CharacterTupper", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CharacterTupper", 'DateTime'>
 }

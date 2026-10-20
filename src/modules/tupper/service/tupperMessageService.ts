@@ -3,6 +3,7 @@ import type { Message } from "discord.js";
 
 import { TupperCache } from "../cache/tupperCache.js";
 import { MessageFormatter } from "../lib/messageFormatter.js";
+import { TupperRepository } from "../repositories/tupperRepository.js";
 import { WebhookService } from "./webhookService.js";
 import { SpellCastService } from "../../spells/service/spellCastService.js";
 import { Storage } from "../../../lib/storage.js";
@@ -63,6 +64,10 @@ export class TupperMessageService {
     }
 
     await message.delete().catch(() => {});
+
+    await TupperRepository.markUsed(tupper.character.id, message.channelId).catch((error) =>
+      container.logger.error(error),
+    );
 
     if (content.length) {
       await SpellCastService.handle(tupper.character.id, content, sent).catch(

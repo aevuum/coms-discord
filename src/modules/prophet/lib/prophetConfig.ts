@@ -1,0 +1,7 @@
+export const PROPHET_CHANNEL_ID = "1440451062602399785";
+
+export const PROPHET_DEBOUNCE_MS = 60 * 1000;
+
+export const PROPHET_ACTIVE_DAYS = 30;
+
+export const PROPHET_NAMES_PER_MESSAGE = 30;

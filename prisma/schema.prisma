@@ -310,8 +310,13 @@ model CharacterTupper {
 
   prefix String @unique
 
+  lastChannelId String?
+  lastUsedAt    DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([lastChannelId])
 }
 
 enum CoinTransactionType {
