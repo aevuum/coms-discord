@@ -8,6 +8,8 @@ export const MAX_SPELL_COST = 1000;
 
 export const GIF_CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
+export const GIFS_STORED_PER_SPELL = 5;
+
 export const DIFFICULTY_COEFFICIENTS: Record<SpellDifficulty, number> = {
   [SpellDifficulty.BASIC]: 1,
   [SpellDifficulty.INTERMEDIATE]: 1.5,

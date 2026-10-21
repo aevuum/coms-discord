@@ -1,3 +1,4 @@
+import { Storage } from "../../../lib/storage.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -121,12 +122,12 @@ export class RollAdminContainer {
       entry.description ? `> ${entry.description}` : "-# Без описания.",
       `${ARROW} Шанс: **${RollService.formatChance(chance)}** · ${"★".repeat(RollService.stars(chance))}`,
       entry.isDefault ? `-# ${meta.defaultHint} Шанс считается сам: 100% минус редкие варианты.` : null,
-      `${ARROW} Картинка: ${entry.imageUrl ? "есть" : "нет"}`,
+      `${ARROW} Картинка: ${Storage.media(entry.imagePath, entry.imageUrl) ? "есть" : "нет"}`,
     ]);
 
-    if (entry.imageUrl) {
+    if (Storage.media(entry.imagePath, entry.imageUrl)) {
       container.addMediaGalleryComponents(
-        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(entry.imageUrl)),
+        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(Storage.media(entry.imagePath, entry.imageUrl)!)),
       );
     }
 
@@ -187,8 +188,8 @@ export class RollAdminContainer {
           ),
         new LabelBuilder()
           .setLabel("Картинка или гифка")
-          .setDescription("Постоянная ссылка https:// (Giphy, Imgur). Ссылки на вложения Discord со временем перестают работать")
-          .setTextInputComponent(input(RollModalFields.ImageUrl, TextInputStyle.Short, false, 500, entry?.imageUrl)),
+          .setDescription("Ссылка https:// на картинку или гифку, бот сохранит копию у себя")
+          .setTextInputComponent(input(RollModalFields.ImageUrl, TextInputStyle.Short, false, 500, entry ? Storage.media(entry.imagePath, entry.imageUrl) : null)),
       );
 
     if (!entry?.isDefault) {

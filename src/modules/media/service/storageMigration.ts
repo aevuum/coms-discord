@@ -7,7 +7,57 @@ export class StorageMigration {
       avatars: await this.avatars(),
       banners: await this.banners(),
       items: await this.items(),
+      spells: await this.spells(),
+      rolls: await this.rolls(),
     };
+  }
+
+  private static async spells() {
+    const spells = await prisma.spell.findMany({
+      where: { imagePath: null, imageUrl: { not: null } },
+      select: { id: true, imageUrl: true },
+    });
+
+    let moved = 0;
+
+    for (const spell of spells) {
+      const path = await Storage.uploadFromUrl(spell.imageUrl!).catch(() => null);
+
+      if (path) {
+        await prisma.spell.update({
+          where: { id: spell.id },
+          data: { imagePath: path, imageUrl: null },
+        });
+
+        moved++;
+      }
+    }
+
+    return moved;
+  }
+
+  private static async rolls() {
+    const entries = await prisma.rollEntry.findMany({
+      where: { imagePath: null, imageUrl: { not: null } },
+      select: { id: true, imageUrl: true },
+    });
+
+    let moved = 0;
+
+    for (const entry of entries) {
+      const path = await Storage.uploadFromUrl(entry.imageUrl!).catch(() => null);
+
+      if (path) {
+        await prisma.rollEntry.update({
+          where: { id: entry.id },
+          data: { imagePath: path, imageUrl: null },
+        });
+
+        moved++;
+      }
+    }
+
+    return moved;
   }
 
   private static async avatars() {

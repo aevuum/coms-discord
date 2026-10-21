@@ -5,6 +5,8 @@ import type { Attachment } from "discord.js";
 
 const MAX_BYTES = 8 * 1024 * 1024;
 
+const DOWNLOAD_TIMEOUT_MS = 20_000;
+
 const EXTENSIONS: Record<string, string> = {
   "image/png": "png",
   "image/jpeg": "jpg",
@@ -41,15 +43,39 @@ export class Storage {
   }
 
   public static async uploadFromUrl(url: string) {
-    const response = await fetch(url).catch(() => null);
+    const response = await fetch(url, { signal: AbortSignal.timeout(DOWNLOAD_TIMEOUT_MS) }).catch(
+      () => null,
+    );
 
     if (!response?.ok) {
-      throw new StorageError("Не удалось скачать изображение.");
+      throw new StorageError("Не удалось скачать изображение по ссылке.");
+    }
+
+    if (Number(response.headers.get("content-length") ?? 0) > MAX_BYTES) {
+      throw new StorageError("Изображение должно быть не больше 8 МБ.");
     }
 
     const mime = (response.headers.get("content-type") ?? "").split(";")[0].trim();
 
     return this.uploadBuffer(new Uint8Array(await response.arrayBuffer()), mime);
+  }
+
+  public static async fromLink(text: string, currentPath: string | null, legacyUrl: string | null) {
+    const link = text.trim();
+
+    if (link && link === this.media(currentPath, legacyUrl)) {
+      return undefined;
+    }
+
+    if (!link) {
+      return currentPath || legacyUrl ? null : undefined;
+    }
+
+    if (!/^https:\/\/\S+$/i.test(link) || link.length > 500) {
+      throw new StorageError("Ссылка на картинку должна начинаться с https:// и быть не длиннее 500 символов.");
+    }
+
+    return this.uploadFromUrl(link);
   }
 
   public static async uploadBuffer(data: Uint8Array, mime: string) {

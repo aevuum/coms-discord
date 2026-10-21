@@ -1,3 +1,4 @@
+import { Storage } from "../../../lib/storage.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -155,8 +156,10 @@ export class SpellComponents {
         manaCost.setValue(String(spell.manaCost));
       }
 
-      if (spell.imageUrl) {
-        imageUrl.setValue(spell.imageUrl);
+      const image = Storage.media(spell.imagePath, spell.imageUrl);
+
+      if (image) {
+        imageUrl.setValue(image);
       }
     }
 
@@ -198,7 +201,7 @@ export class SpellComponents {
           .setTextInputComponent(manaCost),
         new LabelBuilder()
           .setLabel("Картинка или гифка")
-          .setDescription("Прямая https-ссылка на изображение")
+          .setDescription("Ссылка https:// на картинку или гифку, бот сохранит копию у себя")
           .setTextInputComponent(imageUrl),
       );
   }

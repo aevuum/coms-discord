@@ -49,6 +49,12 @@ export class SpellModalHandler extends InteractionHandler {
     },
   ) {
     try {
+      if (interaction.isFromMessage()) {
+        await interaction.deferUpdate();
+      } else {
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+      }
+
       await SpellService.assertCanManage(interaction);
 
       const input: SpellInput = {
@@ -77,20 +83,9 @@ export class SpellModalHandler extends InteractionHandler {
           ? await SpellService.update(spellId, input)
           : await SpellService.create(input);
 
-      const components = [SpellContainer.detail(spell, SpellMode.Manage, page)];
-
-      if (interaction.isFromMessage()) {
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components,
-        });
-
-        return;
-      }
-
-      await interaction.reply({
-        flags: [MessageFlags.IsComponentsV2, MessageFlags.Ephemeral],
-        components,
+      await interaction.editReply({
+        flags: MessageFlags.IsComponentsV2,
+        components: [SpellContainer.detail(spell, SpellMode.Manage, page)],
       });
     } catch (error) {
       await SpellResponder.error(interaction, error);

@@ -1,3 +1,4 @@
+import { Storage } from "../../../lib/storage.js";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -47,9 +48,9 @@ export class RollContainer {
       ),
     );
 
-    if (entry.imageUrl) {
+    if (Storage.media(entry.imagePath, entry.imageUrl)) {
       container.addMediaGalleryComponents(
-        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(entry.imageUrl)),
+        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(Storage.media(entry.imagePath, entry.imageUrl)!)),
       );
     }
 
@@ -148,9 +149,9 @@ export class RollContainer {
       ),
     );
 
-    if (entry.imageUrl) {
+    if (Storage.media(entry.imagePath, entry.imageUrl)) {
       container.addMediaGalleryComponents(
-        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(entry.imageUrl)),
+        new MediaGalleryBuilder().addItems(new MediaGalleryItemBuilder().setURL(Storage.media(entry.imagePath, entry.imageUrl)!)),
       );
     }
 

@@ -1,3 +1,4 @@
+import { Storage } from "../../../lib/storage.js";
 import {
   ContainerBuilder,
   MediaGalleryBuilder,
@@ -108,7 +109,8 @@ export class SpellContainer {
       ),
     );
 
-    const preview = spell.imageUrl ?? spell.gifUrls[0] ?? null;
+    const preview =
+      Storage.media(spell.imagePath, spell.imageUrl) ?? Storage.url(spell.gifPaths[0]);
 
     if (preview) {
       container.addMediaGalleryComponents(
