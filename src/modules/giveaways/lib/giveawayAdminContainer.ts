@@ -22,7 +22,7 @@ import type { RolePage } from "../../permissions/types/permissions.js";
 import { GiveawayAdminAction, GiveawayCustomIds, GiveawayModalFields } from "./giveawayCustomIds.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:gift_teal:1562262879812460639>";
+const HEADER = "<:sec_giveaway:1562521778125799554>";
 const PREV = "<:26204blackarrow:1518587278467792997>";
 const NEXT = "<:48765whitearrow:1518587298281685173>";
 

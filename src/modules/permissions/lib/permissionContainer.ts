@@ -14,7 +14,7 @@ import {
 import { PermissionComponents } from "./permissionComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:72943adminhexagon:1518587307945492480>";
+const HEADER = "<:sec_access:1562521769946906696>";
 
 export class PermissionContainer {
   public static overview(

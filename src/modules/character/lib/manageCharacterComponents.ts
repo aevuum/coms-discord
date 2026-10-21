@@ -58,7 +58,7 @@ export const CHARACTER_TABS: {
 }[] = [
   { id: CharacterTab.Profile, label: "Профиль", description: "Анкета, возраст, факультет, особая роль", emoji: "<:928205membericon:1518581050555633674>" },
   { id: CharacterTab.Inventory, label: "Инвентарь", description: "Выдача и изъятие предметов", emoji: "<:inventory:1562485572008673340>" },
-  { id: CharacterTab.Stats, label: "Мана и деньги", description: "Текущая мана и баланс персонажа", emoji: "<:29865potionwhite:1518587289989550100>" },
+  { id: CharacterTab.Stats, label: "Мана и деньги", description: "Текущая мана и баланс персонажа", emoji: "<:mana_flask:1562520781165035583>" },
   { id: CharacterTab.Familiar, label: "Фамильяр", description: "Регистрация и привязка фамильяра", emoji: "<:familiar:1562485560533319720>" },
   { id: CharacterTab.Runes, label: "Руны", description: "Изученные руны и степень их изучения", emoji: "<:elder_ansuz:1562468430295334952>" },
   { id: CharacterTab.Status, label: "Статус", description: "Заморозка, смерть и удаление", emoji: "<:char_frozen:1562490458725425172>" },
@@ -218,7 +218,7 @@ export class ManageCharacterComponents {
 
       case CharacterTab.Stats:
         return row.addComponents(
-          act(ManageCharacterAction.SetMana, "Изменить ману", "<:29865potionwhite:1518587289989550100>", ButtonStyle.Primary),
+          act(ManageCharacterAction.SetMana, "Изменить ману", "<:mana_flask:1562520781165035583>", ButtonStyle.Primary),
           act(ManageCharacterAction.SetBalance, "Изменить баланс", "<:galleon:1521547045268099242>", ButtonStyle.Primary),
         );
 

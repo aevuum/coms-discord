@@ -1,6 +1,6 @@
 import { CoinTransactionType } from "../../../database/generated/prisma/client.js";
 
-export const COINS_EMOJI = "<:4197emeraldrankicon:1518587243143368835>";
+export const COINS_EMOJI = "<:coms_coin:1562521767837306900>";
 
 const transactionLabels: Record<CoinTransactionType, string> = {
   [CoinTransactionType.PURCHASE]: "Покупка",

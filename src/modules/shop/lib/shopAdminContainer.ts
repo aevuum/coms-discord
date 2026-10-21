@@ -27,7 +27,7 @@ import {
 import { ShopFormatter } from "./shopFormatter.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:16874shopcyan:1518587268154134569>";
+const HEADER = "<:sec_shop:1562521793691131955>";
 
 export class ShopAdminContainer {
   public static root(items: ShopItem[]) {

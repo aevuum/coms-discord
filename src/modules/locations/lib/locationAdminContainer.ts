@@ -32,7 +32,7 @@ import {
 import { LocationFormatter } from "./locationFormatter.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:3124journeys:1518587239276478546>";
+const HEADER = "<:sec_locations:1562521782680952994>";
 const PREV = "<:26204blackarrow:1518587278467792997>";
 const NEXT = "<:48765whitearrow:1518587298281685173>";
 
