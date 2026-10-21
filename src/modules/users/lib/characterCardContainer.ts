@@ -25,6 +25,8 @@ const POTION = "<:29865potionwhite:1518587289989550100>";
 const CHEST = "<:527877discordlegendchest:1518587359136972930>";
 const FEATHER = "<:teal_feather:1562262848598577284>";
 
+const PAD = "⠀".repeat(60);
+
 type CardCharacter = Character & {
   tupper: CharacterTupper | null;
 };
@@ -126,7 +128,7 @@ export class CharacterCardContainer {
           character.tupper
             ? `${FEATHER} Таппер: **${character.tupper.name}** · Тег: \`${character.tupper.prefix}\``
             : `${FEATHER} Таппер ещё не настроен.`,
-          "-# Эта карточка видна только вам.",
+          `-# Эта карточка видна только вам.${PAD}`,
         ].join("\n"),
       ),
     );

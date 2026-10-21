@@ -17,8 +17,7 @@ const BUTTON_ACTIONS = new Set<AwardAction>([
   AwardAction.Create,
   AwardAction.Delete,
   AwardAction.DeleteConfirm,
-  AwardAction.Give,
-  AwardAction.Take,
+  AwardAction.Player,
 ]);
 
 export class AwardButtonHandler extends InteractionHandler {
@@ -55,20 +54,11 @@ export class AwardButtonHandler extends InteractionHandler {
           await interaction.showModal(AwardComponents.createModal());
           return;
 
-        case AwardAction.Give:
+        case AwardAction.Player:
           await interaction.showModal(
             ManageComponents.memberSearchModal(
-              AwardCustomIds.build(AwardAction.GiveSearch),
-              "Выдача награды",
-            ),
-          );
-          return;
-
-        case AwardAction.Take:
-          await interaction.showModal(
-            ManageComponents.memberSearchModal(
-              AwardCustomIds.build(AwardAction.TakeSearch),
-              "Снятие награды",
+              AwardCustomIds.build(AwardAction.PlayerSearch),
+              "Награды игрока",
             ),
           );
           return;

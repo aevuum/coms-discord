@@ -5,13 +5,10 @@ export enum AwardAction {
   Delete = "delete",
   DeleteSelect = "delete_select",
   DeleteConfirm = "delete_confirm",
-  Give = "give",
-  GiveSearch = "give_search",
-  GiveMember = "give_member",
+  Player = "player",
+  PlayerSearch = "player_search",
+  PlayerMember = "player_member",
   GiveAward = "give_award",
-  Take = "take",
-  TakeSearch = "take_search",
-  TakeMember = "take_member",
   TakeAward = "take_award",
 }
 

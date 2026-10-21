@@ -16,16 +16,21 @@ import {
   CharacterModalFields,
   CharacterPanelAction,
 } from "../lib/characterCustomIds.js";
-import {
-  ACTION_TITLES,
-  ManageCharacterContainer,
-} from "../lib/manageCharacterContainer.js";
+import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { Mana } from "../../spells/lib/mana.js";
-import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { Currency } from "../../economy/lib/currency.js";
-import { ManageCharacterAction } from "../types/character.js";
+
+const MODAL_ACTIONS = new Set<CharacterPanelAction>([
+  CharacterPanelAction.Search,
+  CharacterPanelAction.CreateModal,
+  CharacterPanelAction.GiveModal,
+  CharacterPanelAction.TakeModal,
+  CharacterPanelAction.ManaModal,
+  CharacterPanelAction.BalanceModal,
+  CharacterPanelAction.EditModal,
+]);
 
 export class CharacterModalHandler extends InteractionHandler {
   public constructor(
@@ -41,16 +46,7 @@ export class CharacterModalHandler extends InteractionHandler {
   public override parse(interaction: ModalSubmitInteraction) {
     const parsed = CharacterCustomIds.parse(interaction.customId);
 
-    if (
-      !parsed ||
-      (parsed.action !== CharacterPanelAction.Search &&
-        parsed.action !== CharacterPanelAction.CreateModal &&
-        parsed.action !== CharacterPanelAction.GiveModal &&
-        parsed.action !== CharacterPanelAction.TakeModal &&
-        parsed.action !== CharacterPanelAction.ManaModal &&
-        parsed.action !== CharacterPanelAction.BalanceModal &&
-        parsed.action !== CharacterPanelAction.EditModal)
-    ) {
+    if (!parsed || !MODAL_ACTIONS.has(parsed.action)) {
       return this.none();
     }
 
@@ -91,41 +87,63 @@ export class CharacterModalHandler extends InteractionHandler {
       args: string[];
     },
   ) {
+    const [discordId, characterId] = result.args;
+    const field = (id: string) => interaction.fields.getTextInputValue(id);
+
     switch (result.action) {
       case CharacterPanelAction.Search:
-        return this.search(interaction, result.args[0] as ManageCharacterAction);
+        return this.search(interaction);
 
-      case CharacterPanelAction.GiveModal:
-        return this.giveItem(interaction, result.args[0], result.args[1]);
-
-      case CharacterPanelAction.TakeModal:
-        return this.takeItem(
-          interaction,
-          result.args[0],
-          result.args[1],
-          result.args[2],
+      case CharacterPanelAction.GiveModal: {
+        const given = await CharacterInventoryService.give(
+          discordId,
+          characterId,
+          field(CharacterModalFields.ItemName),
+          field(CharacterModalFields.ItemQuantity),
+          interaction.fields.getUploadedFiles(CharacterModalFields.ItemImage)?.first() ?? null,
         );
+
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          `Выдано **${given.item.name}** × ${given.quantity}. Теперь в инвентаре: ${given.item.quantity} шт.`,
+        );
+      }
+
+      case CharacterPanelAction.TakeModal: {
+        const taken = await CharacterInventoryService.take(
+          discordId,
+          characterId,
+          result.args[2],
+          field(CharacterModalFields.ItemQuantity),
+        );
+
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          `Забрано **${taken.item.name}** × ${taken.quantity}. Осталось: ${Math.max(taken.item.quantity, 0)} шт.`,
+        );
+      }
 
       case CharacterPanelAction.ManaModal: {
         const character = await CharacterService.setMana(
-          result.args[0],
-          result.args[1],
-          interaction.fields.getTextInputValue(CharacterModalFields.ManaCurrent),
-          interaction.fields.getTextInputValue(CharacterModalFields.ManaMax),
+          discordId,
+          characterId,
+          field(CharacterModalFields.ManaCurrent),
+          field(CharacterModalFields.ManaMax),
         );
 
-        return ManageCharacterContainer.result(
-          ACTION_TITLES[ManageCharacterAction.SetMana],
-          `Мана персонажа **${character.rpName}**: ${Mana.format(character.mana, character.maxMana)}`,
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          `Мана установлена: ${Mana.format(character.mana, character.maxMana)}`,
         );
       }
 
       case CharacterPanelAction.BalanceModal: {
-        const field = (id: string) => interaction.fields.getTextInputValue(id);
-
         const { character, change } = await CharacterService.setBalance(
-          result.args[0],
-          result.args[1],
+          discordId,
+          characterId,
           {
             galleons: field(CharacterModalFields.Galleons),
             sickles: field(CharacterModalFields.Sickles),
@@ -134,89 +152,53 @@ export class CharacterModalHandler extends InteractionHandler {
           },
         );
 
-        return ManageCharacterContainer.result(
-          ACTION_TITLES[ManageCharacterAction.SetBalance],
-          [
-            `Баланс **${character.rpName}**: ${Currency.inline(character.balanceKnuts)}`,
-            change
-              ? `изменение: ${change > 0 ? "+" : "−"}${Currency.inline(Math.abs(change))}`
-              : "Баланс не изменился.",
-          ].join(" · "),
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          change
+            ? `Баланс изменён на ${change > 0 ? "+" : "−"}${Currency.inline(Math.abs(change))}, теперь ${Currency.inline(character.balanceKnuts)}.`
+            : "Баланс не изменился.",
         );
       }
 
       case CharacterPanelAction.EditModal: {
-        const character = await CharacterService.edit(result.args[0], result.args[1], {
-          ...this.characterFields(interaction),
-        });
+        const character = await CharacterService.edit(
+          discordId,
+          characterId,
+          this.characterFields(interaction),
+        );
 
-        return ManageCharacterContainer.result(
-          ACTION_TITLES[ManageCharacterAction.Edit],
-          [
-            `Персонаж **${character.rpName}** изменён`,
-            CharacterFormatter.facultyLabel(character.faculty),
-            character.age === null ? "возраст не указан" : CharacterFormatter.age(character.age),
-          ].join(" · "),
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          `Персонаж **${character.rpName}** изменён.`,
         );
       }
 
-      default:
-        return this.create(interaction, result.args[0]);
+      default: {
+        const character = await CharacterService.create(
+          discordId,
+          this.characterFields(interaction),
+        );
+
+        return ManageCharacterView.character(
+          discordId,
+          character.id,
+          `Персонаж **${character.rpName}** создан.`,
+        );
+      }
     }
   }
 
-  private async search(
-    interaction: ModalSubmitInteraction,
-    action: ManageCharacterAction,
-  ) {
+  private async search(interaction: ModalSubmitInteraction) {
     const query = interaction.fields.getTextInputValue(MEMBER_QUERY_FIELD);
 
     return ManageContainer.memberResults(
-      ACTION_TITLES[action] ?? "Поиск игрока",
+      "Поиск игрока",
       query,
       await MemberSearchService.search(query),
-      CharacterCustomIds.build(CharacterPanelAction.Member, action),
-      CharacterCustomIds.build(CharacterPanelAction.Start, action),
-    );
-  }
-
-  private async giveItem(
-    interaction: ModalSubmitInteraction,
-    discordId: string,
-    characterId: string,
-  ) {
-    const files = interaction.fields.getUploadedFiles(CharacterModalFields.ItemImage);
-
-    const given = await CharacterInventoryService.give(
-      discordId,
-      characterId,
-      interaction.fields.getTextInputValue(CharacterModalFields.ItemName),
-      interaction.fields.getTextInputValue(CharacterModalFields.ItemQuantity),
-      files?.first() ?? null,
-    );
-
-    return ManageCharacterContainer.result(
-      ACTION_TITLES[ManageCharacterAction.GiveItem],
-      `Персонаж **${given.character.rpName}** получил **${given.item.name}** × ${given.quantity}. Теперь в инвентаре: ${given.item.quantity} шт.`,
-    );
-  }
-
-  private async takeItem(
-    interaction: ModalSubmitInteraction,
-    discordId: string,
-    characterId: string,
-    itemId: string,
-  ) {
-    const taken = await CharacterInventoryService.take(
-      discordId,
-      characterId,
-      itemId,
-      interaction.fields.getTextInputValue(CharacterModalFields.ItemQuantity),
-    );
-
-    return ManageCharacterContainer.result(
-      ACTION_TITLES[ManageCharacterAction.TakeItem],
-      `У персонажа **${taken.character.rpName}** забрано **${taken.item.name}** × ${taken.quantity}. Осталось: ${Math.max(taken.item.quantity, 0)} шт.`,
+      CharacterCustomIds.build(CharacterPanelAction.Member),
+      CharacterCustomIds.build(CharacterPanelAction.Start),
     );
   }
 
@@ -232,16 +214,5 @@ export class CharacterModalHandler extends InteractionHandler {
         CharacterModalFields.Faculty,
       )[0] as CharacterFaculty,
     };
-  }
-
-  private async create(interaction: ModalSubmitInteraction, discordId: string) {
-    const character = await CharacterService.create(discordId, this.characterFields(interaction));
-
-    const member = await MemberSearchService.getMember(discordId);
-
-    return ManageCharacterContainer.result(
-      ACTION_TITLES[ManageCharacterAction.Create],
-      `Персонаж **${character.rpName}** создан для игрока **${member?.displayName ?? discordId}**.`,
-    );
   }
 }

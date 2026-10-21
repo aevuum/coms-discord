@@ -27,18 +27,10 @@ export class AwardComponents {
         .setEmoji("<:6509addguild:1518587247769817088>")
         .setStyle(ButtonStyle.Success),
 
-      new ButtonBuilder()
-        .setCustomId(AwardCustomIds.build(AwardAction.Give))
-        .setLabel("Выдать")
-        .setEmoji("<:766839verifiedgreen:1518587368636944534>")
-        .setStyle(ButtonStyle.Primary)
-        .setDisabled(!hasAwards),
-
-      new ButtonBuilder()
-        .setCustomId(AwardCustomIds.build(AwardAction.Take))
-        .setLabel("Снять")
-        .setEmoji("<:12138cross:1518587259669053591>")
-        .setStyle(ButtonStyle.Secondary),
+      ManageComponents.memberSearchButton(
+        AwardCustomIds.build(AwardAction.Player),
+        "Выдать или снять",
+      ),
 
       new ButtonBuilder()
         .setCustomId(AwardCustomIds.build(AwardAction.Delete))
@@ -73,6 +65,45 @@ export class AwardComponents {
           }),
         ),
     );
+  }
+
+  public static playerRows(discordId: string, awards: Award[], owned: Award[]) {
+    const rows: ActionRowBuilder<StringSelectMenuBuilder | ButtonBuilder>[] = [];
+    const ownedIds = new Set(owned.map((award) => award.id));
+    const givable = awards.filter((award) => !ownedIds.has(award.id));
+
+    if (givable.length) {
+      rows.push(
+        this.awardSelect(
+          AwardCustomIds.build(AwardAction.GiveAward, discordId),
+          givable,
+          "Выдать награду",
+        ),
+      );
+    }
+
+    if (owned.length) {
+      rows.push(
+        this.awardSelect(
+          AwardCustomIds.build(AwardAction.TakeAward, discordId),
+          owned,
+          "Снять награду",
+        ),
+      );
+    }
+
+    rows.push(
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        ManageComponents.memberSearchButton(
+          AwardCustomIds.build(AwardAction.Player),
+          "Другой игрок",
+        ).setStyle(ButtonStyle.Secondary),
+        this.backButton(),
+        ManageComponents.homeButton(),
+      ),
+    );
+
+    return rows;
   }
 
   public static backRow() {

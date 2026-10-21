@@ -19,8 +19,7 @@ import { AwardService } from "../service/awardService.js";
 
 const MODAL_ACTIONS = new Set<AwardAction>([
   AwardAction.CreateModal,
-  AwardAction.GiveSearch,
-  AwardAction.TakeSearch,
+  AwardAction.PlayerSearch,
 ]);
 
 export class AwardModalHandler extends InteractionHandler {
@@ -89,16 +88,12 @@ export class AwardModalHandler extends InteractionHandler {
 
     const query = interaction.fields.getTextInputValue(MEMBER_QUERY_FIELD);
 
-    const members = await MemberSearchService.search(query);
-
-    const give = action === AwardAction.GiveSearch;
-
     return ManageContainer.memberResults(
-      give ? "Выдача награды" : "Снятие награды",
+      "Награды игрока",
       query,
-      members,
-      AwardCustomIds.build(give ? AwardAction.GiveMember : AwardAction.TakeMember),
-      AwardCustomIds.build(give ? AwardAction.Give : AwardAction.Take),
+      await MemberSearchService.search(query),
+      AwardCustomIds.build(AwardAction.PlayerMember),
+      AwardCustomIds.build(AwardAction.Player),
     );
   }
 }

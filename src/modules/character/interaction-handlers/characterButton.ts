@@ -3,27 +3,45 @@ import {
   InteractionHandlerTypes,
 } from "@sapphire/framework";
 
-import { ButtonInteraction, MessageFlags } from "discord.js";
+import { ButtonInteraction, MessageFlags, type ContainerBuilder } from "discord.js";
 
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { ManageResponder } from "../../manage/lib/manageResponder.js";
+import { MemberSearchService } from "../../manage/service/memberSearchService.js";
 import {
   CharacterCustomIds,
   CharacterPanelAction,
 } from "../lib/characterCustomIds.js";
+import { ManageCharacterComponents } from "../lib/manageCharacterComponents.js";
 import {
-  ACTION_TITLES,
+  ACTION_RESULTS,
   ManageCharacterContainer,
 } from "../lib/manageCharacterContainer.js";
-import { getCharacterCategory } from "../lib/manageCharacterComponents.js";
+import { ManageCharacterView } from "../lib/manageCharacterView.js";
+import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { ManageCharacterAction } from "../types/character.js";
 
 const BUTTON_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.Root,
   CharacterPanelAction.Start,
+  CharacterPanelAction.Player,
+  CharacterPanelAction.Character,
+  CharacterPanelAction.Create,
+  CharacterPanelAction.Act,
   CharacterPanelAction.Confirm,
-  CharacterPanelAction.Category,
+]);
+
+const MODAL_ACTIONS = new Set<ManageCharacterAction>([
+  ManageCharacterAction.Edit,
+  ManageCharacterAction.SetMana,
+  ManageCharacterAction.SetBalance,
+  ManageCharacterAction.GiveItem,
+]);
+
+const CONFIRMED_ACTIONS = new Set<ManageCharacterAction>([
+  ManageCharacterAction.Delete,
+  ManageCharacterAction.Kill,
 ]);
 
 export class CharacterButtonHandler extends InteractionHandler {
@@ -56,63 +74,137 @@ export class CharacterButtonHandler extends InteractionHandler {
   ) {
     try {
       if (result.action === CharacterPanelAction.Start) {
-        const action = result.args[0] as ManageCharacterAction;
-
         await interaction.showModal(
           ManageComponents.memberSearchModal(
-            CharacterCustomIds.build(CharacterPanelAction.Search, action),
-            ACTION_TITLES[action] ?? "Поиск игрока",
+            CharacterCustomIds.build(CharacterPanelAction.Search),
+            "Поиск игрока",
           ),
         );
 
         return;
       }
 
-      await CharacterService.assertCanManage(interaction);
+      if (result.action === CharacterPanelAction.Create) {
+        const member = await MemberSearchService.getMember(result.args[0]);
 
-      if (result.action === CharacterPanelAction.Category) {
-        const category = getCharacterCategory(result.args[0]);
-
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [
-            category
-              ? ManageCharacterContainer.category(category)
-              : ManageCharacterContainer.root(),
-          ],
-        });
-
-        return;
-      }
-
-      if (result.action === CharacterPanelAction.Confirm) {
-        const [action, discordId, characterId] = result.args;
-
-        const character = await CharacterService.apply(
-          action as ManageCharacterAction,
-          discordId,
-          characterId,
+        await interaction.showModal(
+          ManageCharacterComponents.createModal(
+            result.args[0],
+            member?.displayName ?? result.args[0],
+          ),
         );
 
-        await interaction.update({
-          flags: MessageFlags.IsComponentsV2,
-          components: [
-            ManageCharacterContainer.done(
-              action as ManageCharacterAction,
-              character.rpName,
-            ),
-          ],
-        });
-
         return;
       }
+
+      if (result.action === CharacterPanelAction.Act) {
+        const [action, discordId, characterId] = result.args as [
+          ManageCharacterAction,
+          string,
+          string,
+        ];
+
+        if (MODAL_ACTIONS.has(action)) {
+          const character = await CharacterInventoryService.getOwnedCharacter(
+            discordId,
+            characterId,
+          );
+
+          await interaction.showModal(
+            action === ManageCharacterAction.Edit
+              ? ManageCharacterComponents.editModal(discordId, character)
+              : action === ManageCharacterAction.SetMana
+                ? ManageCharacterComponents.manaModal(discordId, character)
+                : action === ManageCharacterAction.SetBalance
+                  ? ManageCharacterComponents.balanceModal(discordId, character)
+                  : ManageCharacterComponents.giveItemModal(
+                      discordId,
+                      character.id,
+                      character.rpName,
+                    ),
+          );
+
+          return;
+        }
+      }
+
+      await CharacterService.assertCanManage(interaction);
 
       await interaction.update({
         flags: MessageFlags.IsComponentsV2,
-        components: [ManageCharacterContainer.root()],
+        components: [await this.resolve(result)],
       });
     } catch (error) {
       await ManageResponder.error(interaction, error);
     }
+  }
+
+  private async resolve(result: {
+    action: CharacterPanelAction;
+    args: string[];
+  }): Promise<ContainerBuilder> {
+    switch (result.action) {
+      case CharacterPanelAction.Player:
+        return ManageCharacterView.player(result.args[0]);
+
+      case CharacterPanelAction.Character:
+        return ManageCharacterView.character(result.args[0], result.args[1]);
+
+      case CharacterPanelAction.Act: {
+        const [action, discordId, characterId] = result.args as [
+          ManageCharacterAction,
+          string,
+          string,
+        ];
+
+        const character = await CharacterInventoryService.getOwnedCharacter(
+          discordId,
+          characterId,
+        );
+
+        if (action === ManageCharacterAction.TakeItem) {
+          return ManageCharacterContainer.takeSelection(
+            discordId,
+            character,
+            await CharacterInventoryService.list(character.id),
+          );
+        }
+
+        if (CONFIRMED_ACTIONS.has(action)) {
+          return ManageCharacterContainer.confirm(action, discordId, character);
+        }
+
+        return this.apply(action, discordId, characterId);
+      }
+
+      case CharacterPanelAction.Confirm: {
+        const [action, discordId, characterId] = result.args as [
+          ManageCharacterAction,
+          string,
+          string,
+        ];
+
+        return this.apply(action, discordId, characterId);
+      }
+
+      default:
+        return ManageCharacterContainer.root();
+    }
+  }
+
+  private async apply(
+    action: ManageCharacterAction,
+    discordId: string,
+    characterId: string,
+  ) {
+    const character = await CharacterService.apply(action, discordId, characterId);
+
+    const notice = `Персонаж **${character.rpName}** ${ACTION_RESULTS[action]}.`;
+
+    if (action === ManageCharacterAction.Delete) {
+      return ManageCharacterView.player(discordId, notice);
+    }
+
+    return ManageCharacterView.character(discordId, characterId, notice);
   }
 }

@@ -1,25 +1,28 @@
 import {
   ContainerBuilder,
+  SectionBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
   TextDisplayBuilder,
+  ThumbnailBuilder,
 } from "discord.js";
 
 import type { Character } from "../../../database/generated/prisma/client.js";
 
+import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
-import { ManageComponents } from "../../manage/lib/manageComponents.js";
+import { Currency } from "../../economy/lib/currency.js";
+import { Mana } from "../../spells/lib/mana.js";
 import {
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
-import {
-  CHARACTER_CATEGORIES,
-  ManageCharacterComponents,
-} from "./manageCharacterComponents.js";
+import { ManageCharacterComponents } from "./manageCharacterComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const HEADER = "<:563621mod8:1518587360886128661>";
+const SUCCESS = "<:312537mark:1518581040548024430>";
+const PAD = "⠀".repeat(60);
 
 export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Create]: "Создание персонажа",
@@ -34,17 +37,21 @@ export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Edit]: "Изменение персонажа",
 };
 
-const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
+export const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Create]: "создан",
   [ManageCharacterAction.Delete]: "удалён",
   [ManageCharacterAction.Freeze]: "заморожен",
-  [ManageCharacterAction.Unfreeze]: "разморожен",
+  [ManageCharacterAction.Unfreeze]: "снова активен",
   [ManageCharacterAction.Kill]: "мёртв",
   [ManageCharacterAction.GiveItem]: "получил предмет",
   [ManageCharacterAction.TakeItem]: "лишился предмета",
   [ManageCharacterAction.SetMana]: "получил новую ману",
   [ManageCharacterAction.SetBalance]: "получил новый баланс",
   [ManageCharacterAction.Edit]: "изменён",
+};
+
+export type ManagedCharacter = Character & {
+  tupper?: { name: string; prefix: string } | null;
 };
 
 export class ManageCharacterContainer {
@@ -56,7 +63,8 @@ export class ManageCharacterContainer {
         [
           `# ${HEADER} Управление персонажами`,
           "",
-          `${ARROW} Выберите категорию действий.`,
+          `${ARROW} Найдите игрока по нику или ID. После этого откроется его карточка: там можно создать персонажа или выбрать существующего и выполнять с ним любые действия без повторного поиска.`,
+          `-# ${PAD}`,
         ].join("\n"),
       ),
     );
@@ -65,75 +73,38 @@ export class ManageCharacterContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        CHARACTER_CATEGORIES.map(
-          (category) =>
-            `${category.emoji} **${category.label}**\n-# ${category.description}`,
-        ).join("\n"),
-      ),
-    );
-
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
-    );
-
-    container.addActionRowComponents(ManageCharacterComponents.categoryButtons());
-
-    container.addActionRowComponents(ManageComponents.homeRow());
+    container.addActionRowComponents(ManageCharacterComponents.rootRow());
 
     return container;
   }
 
-  public static category(category: (typeof CHARACTER_CATEGORIES)[number]) {
-    const container = new ContainerBuilder().setAccentColor(0x475b56);
-
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        [
-          `# ${category.emoji} ${category.label}`,
-          "",
-          `${ARROW} ${category.description}.`,
-          "-# Выберите действие, затем найдите игрока по нику или ID.",
-        ].join("\n"),
-      ),
-    );
-
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
-    );
-
-    container.addActionRowComponents(
-      ManageCharacterComponents.categoryActions(category),
-    );
-
-    container.addActionRowComponents(ManageCharacterComponents.backRow());
-
-    return container;
-  }
-
-  public static characterSelection(
-    action: ManageCharacterAction,
+  public static player(
     memberName: string,
     discordId: string,
     characters: Character[],
+    notice: string | null = null,
   ) {
-    if (!characters.length) {
-      return this.result(
-        ACTION_TITLES[action],
-        `У игрока **${memberName}** нет персонажей.`,
-      );
-    }
-
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          `# ${HEADER} ${ACTION_TITLES[action]}`,
+          `# ${HEADER} ${memberName}`,
+          `-# <@${discordId}> · ${discordId}`,
+          notice ? `${SUCCESS} ${notice}` : null,
           "",
-          `${ARROW} Игрок: **${memberName}**. Выберите персонажа.`,
-        ].join("\n"),
+          characters.length
+            ? characters
+                .map(
+                  (character) =>
+                    `${ARROW} **${character.rpName}** · ${CharacterFormatter.faculty(character.faculty)} · ${CharacterFormatter.status(character.status)}`,
+                )
+                .join("\n")
+            : `${ARROW} У игрока пока нет персонажей.`,
+          `-# ${PAD}`,
+        ]
+          .filter((line) => line !== null)
+          .join("\n"),
       ),
     );
 
@@ -142,10 +113,83 @@ export class ManageCharacterContainer {
     );
 
     container.addActionRowComponents(
-      ManageCharacterComponents.characterSelect(action, discordId, characters),
+      ...ManageCharacterComponents.playerRows(discordId, characters),
     );
 
-    container.addActionRowComponents(ManageCharacterComponents.backRow());
+    return container;
+  }
+
+  public static dashboard(
+    memberName: string,
+    discordId: string,
+    character: ManagedCharacter,
+    items: InventoryListItem[],
+    notice: string | null = null,
+  ) {
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    const mana = Mana.current(character);
+
+    const header = new TextDisplayBuilder().setContent(
+      [
+        `# ${character.rpName}`,
+        `-# Игрок: **${memberName}** · <@${discordId}>`,
+        notice ? `${SUCCESS} ${notice}` : null,
+        "",
+        `> **Возраст:** ${character.age !== null ? CharacterFormatter.age(character.age) : "не указан"}`,
+        `> **Статус:** ${CharacterFormatter.status(character.status)}`,
+        `> **Особая роль:** ${character.specialRole ?? "нет"}`,
+        `> **Факультет:** ${CharacterFormatter.faculty(character.faculty)}`,
+        `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
+        `> **Баланс:** ${Currency.inline(character.balanceKnuts)}`,
+        character.tupper
+          ? `> **Таппер:** ${character.tupper.name} · \`${character.tupper.prefix}\``
+          : null,
+      ]
+        .filter((line) => line !== null)
+        .join("\n"),
+    );
+
+    const avatar = Storage.media(character.avatarPath, character.avatarUrl);
+
+    if (avatar) {
+      container.addSectionComponents(
+        new SectionBuilder()
+          .addTextDisplayComponents(header)
+          .setThumbnailAccessory(new ThumbnailBuilder().setURL(avatar)),
+      );
+    } else {
+      container.addTextDisplayComponents(header);
+    }
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
+    );
+
+    const shown = items.slice(0, 20);
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          "### <:527877discordlegendchest:1518587359136972930> Инвентарь",
+          shown.length
+            ? shown.map((item) => `${ARROW} **${item.name}** × ${item.quantity}`).join("\n")
+            : "-# Инвентарь пуст.",
+          items.length > shown.length ? `-# …и ещё ${items.length - shown.length}` : null,
+          `-# ${PAD}`,
+        ]
+          .filter((line) => line !== null)
+          .join("\n"),
+      ),
+    );
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addActionRowComponents(
+      ...ManageCharacterComponents.dashboardRows(discordId, character),
+    );
 
     return container;
   }
@@ -181,25 +225,11 @@ export class ManageCharacterContainer {
     return container;
   }
 
-  public static done(action: ManageCharacterAction, characterName: string) {
-    return this.result(
-      ACTION_TITLES[action],
-      `Персонаж **${characterName}** ${ACTION_RESULTS[action]}.`,
-    );
-  }
-
   public static takeSelection(
     discordId: string,
     character: Character,
     items: InventoryListItem[],
   ) {
-    if (!items.length) {
-      return this.result(
-        ACTION_TITLES[ManageCharacterAction.TakeItem],
-        `В инвентаре **${character.rpName}** нет предметов.`,
-      );
-    }
-
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
@@ -208,8 +238,7 @@ export class ManageCharacterContainer {
           `# ${HEADER} ${ACTION_TITLES[ManageCharacterAction.TakeItem]}`,
           "",
           `${ARROW} Персонаж: **${character.rpName}**`,
-          "",
-          items.map((item) => `${ARROW} **${item.name}** × ${item.quantity}`).join("\n"),
+          items.length ? "-# Выберите предмет, который нужно забрать." : `${ARROW} В инвентаре нет предметов.`,
         ].join("\n"),
       ),
     );
@@ -218,29 +247,15 @@ export class ManageCharacterContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
+    if (items.length) {
+      container.addActionRowComponents(
+        ManageCharacterComponents.itemSelect(discordId, character.id, items),
+      );
+    }
+
     container.addActionRowComponents(
-      ManageCharacterComponents.itemSelect(discordId, character.id, items),
+      ManageCharacterComponents.characterRow(discordId, character.id),
     );
-
-    container.addActionRowComponents(ManageCharacterComponents.backRow());
-
-    return container;
-  }
-
-  public static result(title: string, message: string) {
-    const container = new ContainerBuilder().setAccentColor(0x475b56);
-
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        [`# ${HEADER} ${title}`, "", `${ARROW} ${message}`].join("\n"),
-      ),
-    );
-
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
-    );
-
-    container.addActionRowComponents(ManageCharacterComponents.backRow());
 
     return container;
   }

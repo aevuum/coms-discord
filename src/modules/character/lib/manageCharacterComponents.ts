@@ -13,6 +13,7 @@ import {
 
 import {
   CharacterFaculty,
+  CharacterStatus,
   type Character,
 } from "../../../database/generated/prisma/client.js";
 
@@ -21,7 +22,6 @@ import { Currency } from "../../economy/lib/currency.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "../../spells/lib/mana.js";
 import {
-  CharacterCategory,
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
@@ -30,126 +30,6 @@ import {
   CharacterModalFields,
   CharacterPanelAction,
 } from "./characterCustomIds.js";
-
-type ActionButton = {
-  action: ManageCharacterAction;
-  label: string;
-  emoji: string;
-  style: ButtonStyle;
-};
-
-export const CHARACTER_CATEGORIES: {
-  id: CharacterCategory;
-  label: string;
-  emoji: string;
-  description: string;
-  actions: ActionButton[];
-}[] = [
-  {
-    id: CharacterCategory.Characters,
-    label: "Персонажи",
-    emoji: "<:928205membericon:1518581050555633674>",
-    description: "Создание, изменение и удаление персонажей",
-    actions: [
-      {
-        action: ManageCharacterAction.Create,
-        label: "Создать",
-        emoji: "<:6509addguild:1518587247769817088>",
-        style: ButtonStyle.Success,
-      },
-      {
-        action: ManageCharacterAction.Edit,
-        label: "Изменить",
-        emoji: "<:984149edit:1518587370474176612>",
-        style: ButtonStyle.Primary,
-      },
-      {
-        action: ManageCharacterAction.Delete,
-        label: "Удалить",
-        emoji: "<:14605delete:1518587266505642074>",
-        style: ButtonStyle.Danger,
-      },
-    ],
-  },
-  {
-    id: CharacterCategory.Status,
-    label: "Статус",
-    emoji: "<:97970trialmoderator:1518587338513715260>",
-    description: "Заморозка, разморозка и смерть персонажа",
-    actions: [
-      {
-        action: ManageCharacterAction.Freeze,
-        label: "Заморозить",
-        emoji: "<:97970trialmoderator:1518587338513715260>",
-        style: ButtonStyle.Secondary,
-      },
-      {
-        action: ManageCharacterAction.Unfreeze,
-        label: "Разморозить",
-        emoji: "<:172841lastmeadowbadge:1518587343378976779>",
-        style: ButtonStyle.Primary,
-      },
-      {
-        action: ManageCharacterAction.Kill,
-        label: "Умертвить",
-        emoji: "<:633509a:1518587362513256458>",
-        style: ButtonStyle.Danger,
-      },
-    ],
-  },
-  {
-    id: CharacterCategory.Inventory,
-    label: "Инвентарь",
-    emoji: "<:527877discordlegendchest:1518587359136972930>",
-    description: "Выдача и изъятие предметов персонажа",
-    actions: [
-      {
-        action: ManageCharacterAction.GiveItem,
-        label: "Выдать предмет",
-        emoji: "<:527877discordlegendchest:1518587359136972930>",
-        style: ButtonStyle.Success,
-      },
-      {
-        action: ManageCharacterAction.TakeItem,
-        label: "Забрать предмет",
-        emoji: "<:12138cross:1518587259669053591>",
-        style: ButtonStyle.Secondary,
-      },
-    ],
-  },
-  {
-    id: CharacterCategory.Mana,
-    label: "Мана",
-    emoji: "<:29865potionwhite:1518587289989550100>",
-    description: "Текущая и максимальная мана персонажа",
-    actions: [
-      {
-        action: ManageCharacterAction.SetMana,
-        label: "Установить ману",
-        emoji: "<:29865potionwhite:1518587289989550100>",
-        style: ButtonStyle.Primary,
-      },
-    ],
-  },
-  {
-    id: CharacterCategory.Economy,
-    label: "Экономика",
-    emoji: "<:galleon:1521547045268099242>",
-    description: "Баланс персонажа в галлеонах, сиклах и кнатах",
-    actions: [
-      {
-        action: ManageCharacterAction.SetBalance,
-        label: "Изменить баланс",
-        emoji: "<:galleon:1521547045268099242>",
-        style: ButtonStyle.Primary,
-      },
-    ],
-  },
-];
-
-export function getCharacterCategory(id: string) {
-  return CHARACTER_CATEGORIES.find((category) => category.id === id) ?? null;
-}
 
 const FACULTY_ORDER: CharacterFaculty[] = [
   CharacterFaculty.GRYFFINDOR,
@@ -160,56 +40,102 @@ const FACULTY_ORDER: CharacterFaculty[] = [
 ];
 
 export class ManageCharacterComponents {
-  public static categoryButtons() {
-    return new ActionRowBuilder<ButtonBuilder>().addComponents(
-      CHARACTER_CATEGORIES.map((category) =>
-        new ButtonBuilder()
-          .setCustomId(
-            CharacterCustomIds.build(CharacterPanelAction.Category, category.id),
-          )
-          .setLabel(category.label)
-          .setEmoji(category.emoji)
-          .setStyle(ButtonStyle.Secondary),
-      ),
+  public static searchButton(label = "Найти игрока") {
+    return ManageComponents.memberSearchButton(
+      CharacterCustomIds.build(CharacterPanelAction.Start),
+      label,
     );
   }
 
-  public static categoryActions(category: (typeof CHARACTER_CATEGORIES)[number]) {
-    return new ActionRowBuilder<ButtonBuilder>().addComponents(
-      category.actions.map((button) =>
-        new ButtonBuilder()
-          .setCustomId(
-            CharacterCustomIds.build(CharacterPanelAction.Start, button.action),
-          )
-          .setLabel(button.label)
-          .setEmoji(button.emoji)
-          .setStyle(button.style),
-      ),
-    );
+  public static rootRow() {
+    return ManageComponents.homeRow().addComponents(this.searchButton());
   }
 
-  public static characterSelect(
-    action: ManageCharacterAction,
-    discordId: string,
-    characters: Character[],
-  ) {
-    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId(
-          CharacterCustomIds.build(CharacterPanelAction.Pick, action, discordId),
-        )
-        .setPlaceholder("Выберите персонажа")
-        .addOptions(
-          characters.slice(0, 25).map((character) =>
-            new StringSelectMenuOptionBuilder()
-              .setLabel(character.rpName.slice(0, 100))
-              .setDescription(
-                `${CharacterFormatter.statusLabel(character.status)} · ${CharacterFormatter.facultyLabel(character.faculty)}`,
-              )
-              .setValue(character.id),
-          ),
+  public static playerRows(discordId: string, characters: Character[]) {
+    const rows: ActionRowBuilder<StringSelectMenuBuilder | ButtonBuilder>[] = [];
+
+    if (characters.length) {
+      rows.push(
+        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+          new StringSelectMenuBuilder()
+            .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Pick, discordId))
+            .setPlaceholder("Выберите персонажа")
+            .addOptions(
+              characters.slice(0, 25).map((character) =>
+                new StringSelectMenuOptionBuilder()
+                  .setLabel(character.rpName.slice(0, 100))
+                  .setDescription(
+                    `${CharacterFormatter.statusLabel(character.status)} · ${CharacterFormatter.facultyLabel(character.faculty)}`,
+                  )
+                  .setEmoji(CharacterFormatter.facultyEmoji(character.faculty))
+                  .setValue(character.id),
+              ),
+            ),
         ),
+      );
+    }
+
+    rows.push(
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Create, discordId))
+          .setLabel("Создать персонажа")
+          .setEmoji("<:6509addguild:1518587247769817088>")
+          .setStyle(ButtonStyle.Success),
+        this.searchButton("Другой игрок").setStyle(ButtonStyle.Secondary),
+        ManageComponents.homeButton(),
+      ),
     );
+
+    return rows;
+  }
+
+  public static dashboardRows(discordId: string, character: Character) {
+    const act = (
+      action: ManageCharacterAction,
+      label: string,
+      emoji: string,
+      style: ButtonStyle,
+    ) =>
+      new ButtonBuilder()
+        .setCustomId(
+          CharacterCustomIds.build(CharacterPanelAction.Act, action, discordId, character.id),
+        )
+        .setLabel(label)
+        .setEmoji(emoji)
+        .setStyle(style);
+
+    const alive = character.status === CharacterStatus.ALIVE;
+
+    return [
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        act(ManageCharacterAction.Edit, "Изменить", "<:984149edit:1518587370474176612>", ButtonStyle.Primary),
+        act(ManageCharacterAction.SetMana, "Мана", "<:29865potionwhite:1518587289989550100>", ButtonStyle.Secondary),
+        act(ManageCharacterAction.SetBalance, "Баланс", "<:galleon:1521547045268099242>", ButtonStyle.Secondary),
+      ),
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        act(ManageCharacterAction.GiveItem, "Выдать предмет", "<:527877discordlegendchest:1518587359136972930>", ButtonStyle.Success),
+        act(ManageCharacterAction.TakeItem, "Забрать предмет", "<:12138cross:1518587259669053591>", ButtonStyle.Secondary),
+      ),
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        alive
+          ? act(ManageCharacterAction.Freeze, "Заморозить", "<:97970trialmoderator:1518587338513715260>", ButtonStyle.Secondary)
+          : act(
+              ManageCharacterAction.Unfreeze,
+              character.status === CharacterStatus.DEAD ? "Вернуть к жизни" : "Разморозить",
+              "<:172841lastmeadowbadge:1518587343378976779>",
+              ButtonStyle.Primary,
+            ),
+        act(ManageCharacterAction.Kill, "Умертвить", "<:633509a:1518587362513256458>", ButtonStyle.Danger)
+          .setDisabled(character.status === CharacterStatus.DEAD),
+        act(ManageCharacterAction.Delete, "Удалить", "<:14605delete:1518587266505642074>", ButtonStyle.Danger),
+      ),
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        this.playerButton(discordId, "Все персонажи игрока"),
+        this.searchButton("Другой игрок").setStyle(ButtonStyle.Secondary),
+        ManageComponents.homeButton(),
+      ),
+    ];
   }
 
   public static confirm(
@@ -230,16 +156,37 @@ export class ManageCharacterComponents {
         .setLabel("Подтвердить")
         .setEmoji("<:766839verifiedgreen:1518587368636944534>")
         .setStyle(ButtonStyle.Danger),
-
-      this.backButton("Отмена"),
+      this.characterButton(discordId, characterId, "Отмена"),
     );
   }
 
-  public static backRow() {
+  public static characterRow(discordId: string, characterId: string) {
     return new ActionRowBuilder<ButtonBuilder>().addComponents(
-      this.backButton(),
+      this.characterButton(discordId, characterId),
+    );
+  }
+
+  public static playerRow(discordId: string) {
+    return new ActionRowBuilder<ButtonBuilder>().addComponents(
+      this.playerButton(discordId),
       ManageComponents.homeButton(),
     );
+  }
+
+  private static characterButton(discordId: string, characterId: string, label = "К персонажу") {
+    return new ButtonBuilder()
+      .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Character, discordId, characterId))
+      .setLabel(label)
+      .setEmoji("<:26204blackarrow:1518587278467792997>")
+      .setStyle(ButtonStyle.Secondary);
+  }
+
+  private static playerButton(discordId: string, label = "К игроку") {
+    return new ButtonBuilder()
+      .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Player, discordId))
+      .setLabel(label)
+      .setEmoji("<:26204blackarrow:1518587278467792997>")
+      .setStyle(ButtonStyle.Secondary);
   }
 
   public static createModal(discordId: string, memberName: string) {
@@ -516,13 +463,5 @@ export class ManageCharacterComponents {
               .setMaxLength(200),
           ),
       );
-  }
-
-  private static backButton(label = "Назад") {
-    return new ButtonBuilder()
-      .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Root))
-      .setLabel(label)
-      .setEmoji("<:26204blackarrow:1518587278467792997>")
-      .setStyle(ButtonStyle.Secondary);
   }
 }

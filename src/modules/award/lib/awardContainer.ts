@@ -14,6 +14,7 @@ import { AwardFormatter } from "./awardFormatter.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const HEADER = "<:972712donator:1518581051960852601>";
+const SUCCESS = "<:312537mark:1518581040548024430>";
 const MAX_LISTED = 20;
 
 export class AwardContainer {
@@ -80,35 +81,44 @@ export class AwardContainer {
     );
   }
 
-  public static selectToGive(memberName: string, discordId: string, awards: Award[]) {
-    return this.selection(
-      "Выдача награды",
-      `Игрок: **${memberName}**. Выберите награду, которую нужно выдать.`,
-      AwardComponents.awardSelect(
-        AwardCustomIds.build(AwardAction.GiveAward, discordId),
-        awards,
-        "Выберите награду",
+  public static player(
+    memberName: string,
+    discordId: string,
+    awards: Award[],
+    owned: Award[],
+    notice: string | null = null,
+  ) {
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          `# ${HEADER} ${memberName}`,
+          `-# <@${discordId}> · ${discordId}`,
+          notice ? `${SUCCESS} ${notice}` : null,
+          "",
+          owned.length
+            ? owned
+                .slice(0, MAX_LISTED)
+                .map((award) => `${award.emoji} **${award.label}** · ${AwardFormatter.rarity(award.rarity)}`)
+                .join("\n")
+            : `${ARROW} У игрока пока нет наград.`,
+          "-# Выдавайте и снимайте награды в меню ниже — игрок остаётся выбранным.",
+        ]
+          .filter((line) => line !== null)
+          .join("\n"),
       ),
     );
-  }
 
-  public static selectToTake(memberName: string, discordId: string, awards: Award[]) {
-    if (!awards.length) {
-      return this.result(
-        "Снятие награды",
-        `У игрока **${memberName}** нет наград.`,
-      );
-    }
-
-    return this.selection(
-      "Снятие награды",
-      `Игрок: **${memberName}**. Выберите награду, которую нужно снять.`,
-      AwardComponents.awardSelect(
-        AwardCustomIds.build(AwardAction.TakeAward, discordId),
-        awards,
-        "Выберите награду",
-      ),
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
+
+    container.addActionRowComponents(
+      ...AwardComponents.playerRows(discordId, awards, owned),
+    );
+
+    return container;
   }
 
   public static deleteConfirm(award: Award) {

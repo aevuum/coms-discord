@@ -22,14 +22,6 @@ export enum ManageCharacterAction {
   Edit = "edit",
 }
 
-export enum CharacterCategory {
-  Characters = "characters",
-  Status = "status",
-  Inventory = "inventory",
-  Mana = "mana",
-  Economy = "economy",
-}
-
 export type CharacterFormInput = {
   name: string;
   age: string;

@@ -14,9 +14,8 @@ import { AwardError } from "../types/award.js";
 
 const SELECT_ACTIONS = new Set<AwardAction>([
   AwardAction.DeleteSelect,
-  AwardAction.GiveMember,
+  AwardAction.PlayerMember,
   AwardAction.GiveAward,
-  AwardAction.TakeMember,
   AwardAction.TakeAward,
 ]);
 
@@ -77,36 +76,17 @@ export class AwardSelectHandler extends InteractionHandler {
           await AwardService.getAward(result.value),
         );
 
-      case AwardAction.GiveMember: {
-        const name = await this.memberName(result.value);
-
-        return AwardContainer.selectToGive(
-          name,
-          result.value,
-          await AwardService.getAwards(),
-        );
-      }
-
-      case AwardAction.TakeMember: {
-        const name = await this.memberName(result.value);
-
-        const awards = await AwardService.getUserAwards(result.value);
-
-        return AwardContainer.selectToTake(
-          name,
-          result.value,
-          awards.map((userAward) => userAward.award),
-        );
-      }
+      case AwardAction.PlayerMember:
+        return this.player(result.value);
 
       case AwardAction.GiveAward: {
         const discordId = result.args[0];
 
         const award = await AwardService.giveAward(discordId, result.value);
 
-        return AwardContainer.result(
-          "Награда выдана",
-          `${award.emoji} **${award.label}** выдана игроку **${await this.memberName(discordId)}** (+${award.rewardComsCoins} COMS).`,
+        return this.player(
+          discordId,
+          `${award.emoji} **${award.label}** выдана (+${award.rewardComsCoins} COMS).`,
         );
       }
 
@@ -115,15 +95,31 @@ export class AwardSelectHandler extends InteractionHandler {
 
         const award = await AwardService.removeAward(discordId, result.value);
 
-        return AwardContainer.result(
-          "Награда снята",
-          `${award.emoji} **${award.label}** снята с игрока **${await this.memberName(discordId)}** (−${award.deducted} COMS${award.deducted < award.rewardComsCoins ? `, на балансе было меньше ${award.rewardComsCoins}` : ""}).`,
+        return this.player(
+          discordId,
+          `${award.emoji} **${award.label}** снята (−${award.deducted} COMS${award.deducted < award.rewardComsCoins ? `, на балансе было меньше ${award.rewardComsCoins}` : ""}).`,
         );
       }
 
       default:
         throw new AwardError("Неизвестное действие.");
     }
+  }
+
+  private async player(discordId: string, notice: string | null = null) {
+    const [name, awards, owned] = await Promise.all([
+      this.memberName(discordId),
+      AwardService.getAwards(),
+      AwardService.getUserAwards(discordId),
+    ]);
+
+    return AwardContainer.player(
+      name,
+      discordId,
+      awards,
+      owned.map((userAward) => userAward.award),
+      notice,
+    );
   }
 
   private async memberName(discordId: string) {
