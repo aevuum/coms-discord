@@ -52,7 +52,7 @@ export const CHARACTER_TABS: {
   { id: CharacterTab.Inventory, label: "Инвентарь", description: "Выдача и изъятие предметов", emoji: "<:inventory:1562485572008673340>" },
   { id: CharacterTab.Stats, label: "Мана и деньги", description: "Текущая мана и баланс персонажа", emoji: "<:29865potionwhite:1518587289989550100>" },
   { id: CharacterTab.Familiar, label: "Фамильяр", description: "Регистрация и привязка фамильяра", emoji: "<:familiar:1562485560533319720>" },
-  { id: CharacterTab.Status, label: "Статус", description: "Заморозка, смерть и удаление", emoji: "<:97970trialmoderator:1518587338513715260>" },
+  { id: CharacterTab.Status, label: "Статус", description: "Заморозка, смерть и удаление", emoji: "<:char_frozen:1562490458725425172>" },
 ];
 
 export class ManageCharacterComponents {
@@ -179,14 +179,14 @@ export class ManageCharacterComponents {
       case CharacterTab.Status:
         return row.addComponents(
           character.status === CharacterStatus.ALIVE
-            ? act(ManageCharacterAction.Freeze, "Заморозить", "<:97970trialmoderator:1518587338513715260>", ButtonStyle.Secondary)
+            ? act(ManageCharacterAction.Freeze, "Заморозить", "<:char_frozen:1562490458725425172>", ButtonStyle.Secondary)
             : act(
                 ManageCharacterAction.Unfreeze,
                 character.status === CharacterStatus.DEAD ? "Вернуть к жизни" : "Разморозить",
-                "<:172841lastmeadowbadge:1518587343378976779>",
+                "<:char_active:1562490460759531541>",
                 ButtonStyle.Primary,
               ),
-          act(ManageCharacterAction.Kill, "Умертвить", "<:633509a:1518587362513256458>", ButtonStyle.Danger)
+          act(ManageCharacterAction.Kill, "Умертвить", "<:char_dead:1562490456783462450>", ButtonStyle.Danger)
             .setDisabled(character.status === CharacterStatus.DEAD),
           act(ManageCharacterAction.Delete, "Удалить персонажа", "<:14605delete:1518587266505642074>", ButtonStyle.Danger),
         );

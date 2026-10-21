@@ -269,7 +269,7 @@ export class ManageCharacterContainer {
     this.text(container, [
       "### <:29865potionwhite:1518587289989550100> Мана и деньги",
       `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
-      `> -# ${Mana.status(mana, character.maxMana)}${timeToFull ? ` · полное восстановление через ${timeToFull}` : ""}`,
+      `> ${Mana.caption(mana, character.maxMana, timeToFull)}`,
       `> **Баланс:** ${Currency.inline(character.balanceKnuts)}`,
     ]);
   }
@@ -303,7 +303,7 @@ export class ManageCharacterContainer {
 
   private static statusTab(container: ContainerBuilder, character: ManagedCharacter) {
     this.text(container, [
-      "### <:97970trialmoderator:1518587338513715260> Статус",
+      "### <:char_frozen:1562490458725425172> Статус",
       `> **Сейчас:** ${CharacterFormatter.status(character.status)}`,
       "-# Замороженный персонаж не участвует в игре, но сохраняет всё имущество. Умерщвление меняет статус на «Мёртв», удаление стирает персонажа полностью.",
     ]);

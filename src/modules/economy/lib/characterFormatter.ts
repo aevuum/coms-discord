@@ -26,9 +26,9 @@ const statusLabels: Record<CharacterStatus, string> = {
 };
 
 const statusEmojis: Record<CharacterStatus, string> = {
-  [CharacterStatus.ALIVE]: "<:172841lastmeadowbadge:1518587343378976779>",
-  [CharacterStatus.FROZEN]: "<:97970trialmoderator:1518587338513715260>",
-  [CharacterStatus.DEAD]: "<:633509a:1518587362513256458>",
+  [CharacterStatus.ALIVE]: "<:char_active:1562490460759531541>",
+  [CharacterStatus.FROZEN]: "<:char_frozen:1562490458725425172>",
+  [CharacterStatus.DEAD]: "<:char_dead:1562490456783462450>",
 };
 
 export class CharacterFormatter {

@@ -46,7 +46,7 @@ export class SuggestionContainer {
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
-            "# 💡 | Идеи для сервера",
+            "# <:idea:1562490454812004423> | Идеи для сервера",
             "",
             `> ${ARROW} Есть идея новой механики, предложение изменить существующую или улучшить сервер? Нажмите кнопку ниже и опишите её.`,
             `> ${ARROW} Идея попадёт в канал идей: игроки смогут поддержать её или выступить против, а команда проекта — оценить.`,
@@ -65,7 +65,7 @@ export class SuggestionContainer {
           new ButtonBuilder()
             .setCustomId(SuggestionCustomIds.build(SuggestionAction.Open))
             .setLabel("Предложить идею")
-            .setEmoji("💡")
+            .setEmoji("<:idea:1562490454812004423>")
             .setStyle(ButtonStyle.Success),
         ),
       );
@@ -234,7 +234,7 @@ export class SuggestionContainer {
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
-            `## 💡 Ваша идея #${suggestion.number} рассмотрена`,
+            `## <:idea:1562490454812004423> Ваша идея #${suggestion.number} рассмотрена`,
             `**${suggestion.title}**`,
             accepted
               ? `${SUCCESS} Администрация приняла идею. Спасибо, что помогаете делать сервер лучше!`

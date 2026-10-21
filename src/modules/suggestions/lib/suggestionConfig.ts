@@ -8,7 +8,7 @@ export const SUGGESTION_PING_ROLE = {
   name: "⌇💡 ::  Идеи ❝   .",
   match: "идеи",
   label: "Идеи",
-  emoji: "💡",
+  emoji: "<:idea:1562490454812004423>",
   description: "Пинг, когда игроки предлагают новые идеи для сервера.",
 };
 
@@ -18,7 +18,7 @@ export const SUGGESTION_CATEGORIES = [
   { value: "roleplay", label: "Ролевая игра и лор", emoji: "<:roleplay:1562262888884871208>" },
   { value: "bot", label: "Бот", emoji: "<:developer:1562262892269801503>" },
   { value: "server", label: "Сервер и каналы", emoji: "<:1821serversfolder:1518587234163622040>" },
-  { value: "other", label: "Другое", emoji: "💡" },
+  { value: "other", label: "Другое", emoji: "<:idea:1562490454812004423>" },
 ];
 
 export enum SuggestionAction {
