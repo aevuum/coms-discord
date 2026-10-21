@@ -238,7 +238,7 @@ export class ManageCharacterContainer {
     const shown = rest.slice(0, 20);
 
     this.text(container, [
-      "### <:527877discordlegendchest:1518587359136972930> Инвентарь",
+      "### <:inventory:1562485572008673340> Инвентарь",
       items.length ? null : "-# Инвентарь пуст.",
     ]);
 
@@ -269,7 +269,7 @@ export class ManageCharacterContainer {
     this.text(container, [
       "### <:29865potionwhite:1518587289989550100> Мана и деньги",
       `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
-      `> ${timeToFull ? `Полное восстановление через ${timeToFull}` : "Мана полностью восстановлена"}`,
+      `> -# ${Mana.status(mana, character.maxMana)}${timeToFull ? ` · полное восстановление через ${timeToFull}` : ""}`,
       `> **Баланс:** ${Currency.inline(character.balanceKnuts)}`,
     ]);
   }
@@ -277,7 +277,7 @@ export class ManageCharacterContainer {
   private static familiarTab(container: ContainerBuilder, familiar: CharacterFamiliar | null) {
     if (!familiar) {
       this.text(container, [
-        "### <:teal_feather:1562262848598577284> Фамильяр",
+        "### <:familiar:1562485560533319720> Фамильяр",
         `${ARROW} У персонажа нет фамильяра.`,
         "-# Добавьте фамильяра: имя, описание и изображение. Игрок увидит его в карточке персонажа.",
       ]);
@@ -286,7 +286,7 @@ export class ManageCharacterContainer {
     }
 
     this.text(container, [
-      `### <:teal_feather:1562262848598577284> ${familiar.name}`,
+      `### <:familiar:1562485560533319720> ${familiar.name}`,
       familiar.description.slice(0, 1500),
     ]);
 

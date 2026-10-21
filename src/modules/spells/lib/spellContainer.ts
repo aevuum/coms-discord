@@ -225,7 +225,7 @@ export class SpellContainer {
           this.isLowMana(result)
             ? "-# <:warning_yellow:1562262858660708414> Силы на исходе — ещё пара заклинаний, и персонаж начнёт истощаться."
             : null,
-          timeToFull ? `-# Полное восстановление через ${timeToFull}` : null,
+          `-# ${Mana.status(result.manaAfter, result.maxMana)}${timeToFull ? ` · полное восстановление через ${timeToFull}` : ""}`,
         ]
           .filter((line) => line !== null)
           .join("\n"),

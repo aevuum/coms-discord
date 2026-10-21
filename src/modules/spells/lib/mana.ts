@@ -9,6 +9,46 @@ import {
 
 const MS_PER_MANA = (60 * 60 * 1000) / MANA_REGEN_PER_HOUR;
 
+const CRITICAL_LIFE_RATIO = 0.5;
+
+type BarSegments = Record<"left" | "middle" | "right", [string, string, string]>;
+
+const MANA_BAR: BarSegments = {
+  left: [
+    "<:mana_l_empty:1562485510054617108>",
+    "<:mana_l_half:1562485514114965504>",
+    "<:mana_l_full:1562485511942180925>",
+  ],
+  middle: [
+    "<:mana_m_empty:1562485516622897252>",
+    "<:mana_m_half:1562485521068851210>",
+    "<:mana_m_full:1562485518976028734>",
+  ],
+  right: [
+    "<:mana_r_empty:1562485522956288160>",
+    "<:mana_r_half:1562485527167373354>",
+    "<:mana_r_full:1562485524873085098>",
+  ],
+};
+
+const LIFE_BAR: BarSegments = {
+  left: [
+    "<:life_l_empty:1562485488416325692>",
+    "<:life_l_half:1562485492933599313>",
+    "<:life_l_full:1562485490832375858>",
+  ],
+  middle: [
+    "<:life_m_empty:1562485495299047444>",
+    "<:life_m_half:1562485500147933294>",
+    "<:life_m_full:1562485497526358176>",
+  ],
+  right: [
+    "<:life_r_empty:1562485502052143154>",
+    "<:life_r_half:1562485507504603228>",
+    "<:life_r_full:1562485505038221312>",
+  ],
+};
+
 export class Mana {
   public static spellCost(spell: Pick<Spell, "difficulty" | "manaCost">) {
     if (spell.manaCost !== null && spell.manaCost !== undefined) {
@@ -50,16 +90,41 @@ export class Mana {
     return this.regenerate(state, now).mana;
   }
 
-  public static bar(mana: number, maxMana: number, size = 12) {
-    const ratio = maxMana > 0 ? Math.min(Math.max(mana / maxMana, 0), 1) : 0;
+  public static bar(mana: number, maxMana: number, size = 10) {
+    const segments = mana < 0 ? LIFE_BAR : MANA_BAR;
 
-    const filled = Math.round(ratio * size);
+    const ratio = maxMana > 0 ? Math.min(Math.abs(mana) / maxMana, 1) : 0;
 
-    return "▰".repeat(filled) + "▱".repeat(size - filled);
+    const halves = mana === 0 ? 0 : Math.max(Math.round(ratio * size * 2), 1);
+
+    return Array.from({ length: size }, (_, index) => {
+      const part = index === 0 ? "left" : index === size - 1 ? "right" : "middle";
+      const fill = Math.min(Math.max(halves - index * 2, 0), 2);
+
+      return segments[part][fill];
+    }).join("");
   }
 
   public static format(mana: number, maxMana: number) {
-    return `\`${this.bar(mana, maxMana)}\` **${mana}** / ${maxMana}`;
+    return `${this.bar(mana, maxMana)} **${mana}** / ${maxMana}`;
+  }
+
+  public static status(mana: number, maxMana: number) {
+    if (mana >= maxMana) {
+      return "Мана полностью восстановлена";
+    }
+
+    if (mana > 0) {
+      return "Мана восстанавливается";
+    }
+
+    if (mana === 0) {
+      return "Мана иссякла";
+    }
+
+    return Math.abs(mana) / Math.max(maxMana, 1) < CRITICAL_LIFE_RATIO
+      ? "Опасно: тратятся жизненные силы"
+      : "Критично: жизненные силы на исходе";
   }
 
   public static timeToFull(mana: number, maxMana: number) {

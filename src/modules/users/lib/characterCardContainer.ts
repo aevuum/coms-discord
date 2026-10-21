@@ -23,8 +23,8 @@ import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { TupperCustomIds } from "../../tupper/lib/tupperCustomIds.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const CHEST = "<:527877discordlegendchest:1518587359136972930>";
-const FEATHER = "<:teal_feather:1562262848598577284>";
+const CHEST = "<:inventory:1562485572008673340>";
+const FEATHER = "<:familiar:1562485560533319720>";
 
 const PAD = "⠀".repeat(60);
 

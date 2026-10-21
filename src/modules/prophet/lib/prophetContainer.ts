@@ -26,14 +26,14 @@ export class ProphetContainer {
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
-            "## 🦉 Почтовая сова",
+            "## <:prophet_owl:1562486459057831956> Почтовая сова",
             single ? this.singleLine(shown[0]) : "Сюда одна за другой влетают совы с «Ежедневным пророком» в клювах и оставляют свежий выпуск каждому:",
             single
               ? `-# <@${shown[0].ownerId}>`
               : shown
                   .map(
                     (recipient) =>
-                      `🗞️ **${recipient.name}** · <@${recipient.ownerId}>${recipient.paid ? "" : " · <:teal_feather:1562262848598577284> сова улетела без оплаты"}`,
+                      `<:prophet_news:1562486461184483409> **${recipient.name}** · <@${recipient.ownerId}>${recipient.paid ? "" : " · <:prophet_owl:1562486459057831956> сова улетела без оплаты"}`,
                   )
                   .join("\n"),
             recipients.length > shown.length ? `-# и ещё ${recipients.length - shown.length}` : null,
@@ -48,7 +48,7 @@ export class ProphetContainer {
           new ButtonBuilder()
             .setStyle(ButtonStyle.Link)
             .setLabel("Читать выпуск")
-            .setEmoji("📰")
+            .setEmoji("<:prophet_news:1562486461184483409>")
             .setURL(issueUrl),
         ),
       );

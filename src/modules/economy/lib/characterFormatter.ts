@@ -12,11 +12,11 @@ const facultyLabels: Record<CharacterFaculty, string> = {
 };
 
 const facultyEmojis: Record<CharacterFaculty, string> = {
-  [CharacterFaculty.GRYFFINDOR]: "<:grifinoria:1519583216992784567>",
-  [CharacterFaculty.SLYTHERIN]: "<:slytherincrest:1519583221988196392>",
-  [CharacterFaculty.HUFFLEPUFF]: "<:hufflepuff:1519583218544676873>",
-  [CharacterFaculty.RAVENCLAW]: "<:ravenclaw:1519583220327252048>",
-  [CharacterFaculty.ADULT]: "<:515636magicwandids:1519585028596563968>",
+  [CharacterFaculty.GRYFFINDOR]: "<:house_lion:1562485567977955409>",
+  [CharacterFaculty.SLYTHERIN]: "<:house_snake:1562485569563398226>",
+  [CharacterFaculty.HUFFLEPUFF]: "<:house_badger:1562485563431321782>",
+  [CharacterFaculty.RAVENCLAW]: "<:house_eagle:1562485566178726008>",
+  [CharacterFaculty.ADULT]: "<:adult_wizard:1562485558029320352>",
 };
 
 const statusLabels: Record<CharacterStatus, string> = {

@@ -49,9 +49,9 @@ export const CHARACTER_TABS: {
   emoji: string;
 }[] = [
   { id: CharacterTab.Profile, label: "Профиль", description: "Анкета, возраст, факультет, особая роль", emoji: "<:928205membericon:1518581050555633674>" },
-  { id: CharacterTab.Inventory, label: "Инвентарь", description: "Выдача и изъятие предметов", emoji: "<:527877discordlegendchest:1518587359136972930>" },
+  { id: CharacterTab.Inventory, label: "Инвентарь", description: "Выдача и изъятие предметов", emoji: "<:inventory:1562485572008673340>" },
   { id: CharacterTab.Stats, label: "Мана и деньги", description: "Текущая мана и баланс персонажа", emoji: "<:29865potionwhite:1518587289989550100>" },
-  { id: CharacterTab.Familiar, label: "Фамильяр", description: "Регистрация и привязка фамильяра", emoji: "<:teal_feather:1562262848598577284>" },
+  { id: CharacterTab.Familiar, label: "Фамильяр", description: "Регистрация и привязка фамильяра", emoji: "<:familiar:1562485560533319720>" },
   { id: CharacterTab.Status, label: "Статус", description: "Заморозка, смерть и удаление", emoji: "<:97970trialmoderator:1518587338513715260>" },
 ];
 
@@ -148,7 +148,7 @@ export class ManageCharacterComponents {
     switch (tab) {
       case CharacterTab.Inventory:
         return row.addComponents(
-          act(ManageCharacterAction.GiveItem, "Выдать предмет", "<:527877discordlegendchest:1518587359136972930>", ButtonStyle.Success),
+          act(ManageCharacterAction.GiveItem, "Выдать предмет", "<:inventory:1562485572008673340>", ButtonStyle.Success),
           act(ManageCharacterAction.TakeItem, "Забрать предмет", "<:12138cross:1518587259669053591>", ButtonStyle.Secondary),
         );
 

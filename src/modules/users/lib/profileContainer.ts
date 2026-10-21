@@ -62,7 +62,7 @@ export class ProfileContainer {
         case "inventory": {
           const inventory = profile.inventory ?? [];
           contentText = [
-            "## <:527877discordlegendchest:1518587359136972930> Инвентарь",
+            "## <:inventory:1562485572008673340> Инвентарь",
             "",
             inventory.length
               ? inventory
