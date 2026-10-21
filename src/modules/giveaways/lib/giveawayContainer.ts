@@ -37,9 +37,9 @@ export class GiveawayContainer {
 
     const header =
       giveaway.status === "ACTIVE"
-        ? "# <:gift_teal:1562262879812460639> Розыгрыш"
+        ? "# <:sec_giveaway:1562521778125799554> Розыгрыш"
         : giveaway.status === "ENDED"
-          ? "# <:teal_stars:1562262850913697815> Розыгрыш завершён"
+          ? "# <:sec_giveaway:1562521778125799554> Розыгрыш завершён"
           : "# 🚫 Розыгрыш отменён";
 
     container.addTextDisplayComponents(
@@ -87,7 +87,7 @@ export class GiveawayContainer {
           new ButtonBuilder()
             .setCustomId(GiveawayCustomIds.join(giveaway.id))
             .setLabel(`Участвовать · ${entries}`)
-            .setEmoji("<:teal_stars:1562262850913697815>")
+            .setEmoji("<:sec_giveaway:1562521778125799554>")
             .setStyle(ButtonStyle.Success),
         ),
       );
@@ -102,12 +102,12 @@ export class GiveawayContainer {
         new TextDisplayBuilder().setContent(
           giveaway.winnerIds.length
             ? [
-                `## <:teal_stars:1562262850913697815> ${reroll ? "Новые победители" : "Итоги розыгрыша"}`,
+                `## <:sec_giveaway:1562521778125799554> ${reroll ? "Новые победители" : "Итоги розыгрыша"}`,
                 `${ARROW} Поздравляем ${giveaway.winnerIds.map((id) => `<@${id}>`).join(", ")}!`,
                 `${ARROW} Приз: **${giveaway.prize}**`,
                 `-# Для получения приза свяжитесь с <@${giveaway.hostId}>.`,
               ].join("\n")
-            : `## <:gift_teal:1562262879812460639> Итоги розыгрыша\n${ARROW} Розыгрыш **${giveaway.prize}** завершён без победителей: никто не участвовал.`,
+            : `## <:sec_giveaway:1562521778125799554> Итоги розыгрыша\n${ARROW} Розыгрыш **${giveaway.prize}** завершён без победителей: никто не участвовал.`,
         ),
       );
   }
@@ -117,7 +117,7 @@ export class GiveawayContainer {
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
-            "## <:teal_stars:1562262850913697815> Вы выиграли в розыгрыше!",
+            "## <:sec_giveaway:1562521778125799554> Вы выиграли в розыгрыше!",
             `${ARROW} Приз: **${giveaway.prize}**`,
             messageUrl ? `${ARROW} [Перейти к розыгрышу](${messageUrl})` : null,
             `-# Для получения приза свяжитесь с организатором <@${giveaway.hostId}>.`,
