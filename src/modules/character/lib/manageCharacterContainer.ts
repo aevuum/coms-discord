@@ -23,6 +23,7 @@ const ARROW = "<:48765whitearrow:1518587298281685173>";
 const HEADER = "<:563621mod8:1518587360886128661>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const PAD = "⠀".repeat(60);
+const MAX_IMAGE_ITEMS = 4;
 
 export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Create]: "Создание персонажа",
@@ -166,22 +167,52 @@ export class ManageCharacterContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
     );
 
-    const shown = items.slice(0, 20);
+    const line = (item: InventoryListItem) => `${ARROW} **${item.name}** × ${item.quantity}`;
+
+    const withImages = items
+      .map((item) => ({ item, url: Storage.url(item.imagePath) }))
+      .filter((entry): entry is { item: InventoryListItem; url: string } => entry.url !== null)
+      .slice(0, MAX_IMAGE_ITEMS);
+
+    const rest = items.filter((item) => !withImages.some((entry) => entry.item === item));
+    const shown = rest.slice(0, 20);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
           "### <:527877discordlegendchest:1518587359136972930> Инвентарь",
-          shown.length
-            ? shown.map((item) => `${ARROW} **${item.name}** × ${item.quantity}`).join("\n")
-            : "-# Инвентарь пуст.",
-          items.length > shown.length ? `-# …и ещё ${items.length - shown.length}` : null,
+          items.length ? null : "-# Инвентарь пуст.",
           `-# ${PAD}`,
         ]
-          .filter((line) => line !== null)
+          .filter((entry) => entry !== null)
           .join("\n"),
       ),
     );
+
+    for (const { item, url } of withImages) {
+      container.addSectionComponents(
+        new SectionBuilder()
+          .addTextDisplayComponents(new TextDisplayBuilder().setContent(line(item)))
+          .setThumbnailAccessory(
+            new ThumbnailBuilder()
+              .setURL(url)
+              .setDescription(item.name.slice(0, 1024)),
+          ),
+      );
+    }
+
+    if (shown.length) {
+      container.addTextDisplayComponents(
+        new TextDisplayBuilder().setContent(
+          [
+            shown.map(line).join("\n"),
+            rest.length > shown.length ? `-# …и ещё ${rest.length - shown.length}` : null,
+          ]
+            .filter((entry) => entry !== null)
+            .join("\n"),
+        ),
+      );
+    }
 
     container.addSeparatorComponents(
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
