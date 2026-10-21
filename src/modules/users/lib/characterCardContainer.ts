@@ -20,6 +20,7 @@ import type {
 
 import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
+import { Mana } from "../../spells/lib/mana.js";
 import { TupperCustomIds } from "../../tupper/lib/tupperCustomIds.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
@@ -52,10 +53,14 @@ export class CharacterCardContainer {
   public static build(character: CardCharacter, items: CardItem[]) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
+    const mana = Mana.current(character);
+
     const header = new TextDisplayBuilder().setContent(
       [
         `## ${this.title(character)}`,
         `> **Статус персонажа:** ${CharacterFormatter.status(character.status)}`,
+        `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
+        `> ${Mana.caption(mana, character.maxMana, Mana.timeToFull(mana, character.maxMana))}`,
         `-# ${PAD}`,
       ].join("\n"),
     );
