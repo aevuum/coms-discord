@@ -42,7 +42,7 @@ export class ProfileComponents {
           new StringSelectMenuOptionBuilder()
             .setLabel("Инвентарь")
             .setValue("inventory")
-            .setEmoji("<:29865potionwhite:1518587289989550100>"),
+            .setEmoji("<:mana_flask:1562520781165035583>"),
         ),
     );
 

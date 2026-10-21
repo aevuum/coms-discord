@@ -25,7 +25,7 @@ import {
 import { TemplateParser } from "./templateParser.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:12784editor:1518587261707616407>";
+const HEADER = "<:sec_recruit:1562521789559476344>";
 
 export class ApplicationAdminContainer {
   public static root(roles: ApplicationRole[]) {

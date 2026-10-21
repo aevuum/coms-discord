@@ -14,7 +14,7 @@ import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import type { RolePage } from "../../permissions/types/permissions.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:563621mod8:1518587360886128661>";
+const HEADER = "<:sec_complaints:1562521776020258826>";
 
 export enum ReportAdminAction {
   Page = "page",

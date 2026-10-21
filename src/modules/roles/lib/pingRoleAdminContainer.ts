@@ -21,7 +21,7 @@ import type { RolePage } from "../../permissions/types/permissions.js";
 import { PING_ROLES_MAX, PingRoleAdminAction, PingRoleAdminIds, PingRoleFields } from "./pingRoles.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:21796announcement:1518587271303925830>";
+const HEADER = "<:sec_ping:1562521785537138839>";
 const PREV = "<:26204blackarrow:1518587278467792997>";
 const NEXT = "<:48765whitearrow:1518587298281685173>";
 

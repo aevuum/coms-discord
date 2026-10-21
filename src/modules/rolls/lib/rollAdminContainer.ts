@@ -25,7 +25,7 @@ import { RollAdminAction, RollCustomIds, RollModalFields } from "./rollCustomIds
 import { ROLL_KINDS } from "./rollKinds.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:82269sailormoonkaleidomoon:1519585023555010732>";
+const HEADER = "<:sec_races:1562521787571634256>";
 
 export class RollAdminContainer {
   public static root(counts: Record<string, number>) {

@@ -13,7 +13,7 @@ import { AwardAction, AwardCustomIds } from "./awardCustomIds.js";
 import { AwardFormatter } from "./awardFormatter.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:972712donator:1518581051960852601>";
+const HEADER = "<:sec_rewards:1562521791329468467>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const MAX_LISTED = 20;
 

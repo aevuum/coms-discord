@@ -25,8 +25,8 @@ import {
 import { SpellComponents } from "./spellComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const WAND = "<:515636magicwandids:1519585028596563968>";
-const POTION = "<:29865potionwhite:1518587289989550100>";
+const WAND = "<:wand:1562520778828677280>";
+const POTION = "<:mana_flask:1562520781165035583>";
 const BOOK = "<:6849serverguide:1518587250802426078>";
 const LOW_MANA_RATIO = 0.2;
 const CRITICAL_MANA_RATIO = 0.5;

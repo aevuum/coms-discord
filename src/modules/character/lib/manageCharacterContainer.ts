@@ -26,7 +26,7 @@ import {
 import { ManageCharacterComponents } from "./manageCharacterComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "<:563621mod8:1518587360886128661>";
+const HEADER = "<:sec_characters:1562521773789155450>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const PAD = "⠀".repeat(60);
 const MAX_IMAGE_ITEMS = 6;
@@ -267,7 +267,7 @@ export class ManageCharacterContainer {
     const timeToFull = Mana.timeToFull(mana, character.maxMana);
 
     this.text(container, [
-      "### <:29865potionwhite:1518587289989550100> Мана и деньги",
+      "### <:mana_flask:1562520781165035583> Мана и деньги",
       `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
       `> ${Mana.caption(mana, character.maxMana, timeToFull)}`,
       `> **Баланс:** ${Currency.inline(character.balanceKnuts)}`,
