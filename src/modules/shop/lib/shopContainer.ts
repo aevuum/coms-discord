@@ -22,7 +22,7 @@ const HEADER = "<:16874shopcyan:1518587268154134569>";
 
 export class ShopContainer {
   public static storefront(items: ShopItem[], balance: number) {
-    const container = new ContainerBuilder().setAccentColor(0x2ecc71);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -76,7 +76,7 @@ export class ShopContainer {
   }
 
   public static item(item: ShopItem, balance: number, owned: number) {
-    const container = new ContainerBuilder().setAccentColor(0x2ecc71);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const limitReached = item.maxPerUser !== null && owned >= item.maxPerUser;
 
@@ -125,7 +125,7 @@ export class ShopContainer {
   }
 
   public static purchased(result: PurchaseResult) {
-    const container = new ContainerBuilder().setAccentColor(0x2ecc71);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(

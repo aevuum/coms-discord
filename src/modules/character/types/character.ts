@@ -33,6 +33,7 @@ export enum CharacterCategory {
 export type CharacterFormInput = {
   name: string;
   age: string;
+  specialRole: string;
   avatar: Attachment | null;
   faculty: CharacterFaculty;
 };

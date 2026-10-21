@@ -12,7 +12,6 @@ import {
 
 import type {
   StaffApplication,
-  StaffApplicationStatus,
   StaffApplicationVote,
 } from "../../../database/generated/prisma/client.js";
 
@@ -25,13 +24,6 @@ const HEADER = "<:928205membericon:1518581050555633674>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const ERROR = "<:240191mark:1518581039172292688>";
 
-const STATUS_COLORS: Record<StaffApplicationStatus, number> = {
-  DRAFT: 0x475b56,
-  AWAITING_POST: 0x475b56,
-  PENDING: 0xc9a227,
-  ACCEPTED: 0x2e8b57,
-  REJECTED: 0xc0392b,
-};
 
 const RATINGS = ["Слабо", "Ниже среднего", "Средне", "Хорошо", "Отлично"];
 
@@ -109,8 +101,7 @@ export class ApplicationContainer {
   }
 
   public static partSaved(applicationId: string, nextPart: number, totalParts: number) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -130,8 +121,7 @@ export class ApplicationContainer {
   }
 
   public static trialRequest(application: StaffApplication) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -159,7 +149,7 @@ export class ApplicationContainer {
   }
 
   public static review(application: StaffApplication, votes: StaffApplicationVote[]) {
-    const container = new ContainerBuilder().setAccentColor(STATUS_COLORS[application.status]);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const answers = application.answers as ApplicationAnswer[];
     const filled = answers.filter((answer) => answer.answer);
@@ -266,8 +256,7 @@ export class ApplicationContainer {
     }
 
     return chunks.map((chunk) =>
-      new ContainerBuilder()
-        .setAccentColor(0x475b56)
+      new ContainerBuilder().setAccentColor(0x475b56)
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(chunk)),
     );
   }
@@ -275,8 +264,7 @@ export class ApplicationContainer {
   public static decisionNotice(application: StaffApplication) {
     const accepted = application.status === "ACCEPTED";
 
-    return new ContainerBuilder()
-      .setAccentColor(STATUS_COLORS[application.status])
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -296,14 +284,12 @@ export class ApplicationContainer {
   }
 
   public static success(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x2e8b57)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${SUCCESS} ${text}`));
   }
 
   public static error(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0xc0392b)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${ERROR} ${text}`));
   }
 
@@ -338,16 +324,16 @@ export class ApplicationContainer {
 
     switch (application.status) {
       case "ACCEPTED":
-        return `**Статус:** 🟢 Принята · <@${application.decidedById}>${decidedAt}`;
+        return `**Статус:** <:dot_green:1562262861374423044> Принята · <@${application.decidedById}>${decidedAt}`;
       case "REJECTED":
         return [
-          `**Статус:** 🔴 Отклонена · <@${application.decidedById}>${decidedAt}`,
+          `**Статус:** <:240191mark:1518581039172292688> Отклонена · <@${application.decidedById}>${decidedAt}`,
           application.rejectReason ? `-# Причина: ${TemplateParser.shorten(this.flatten(application.rejectReason), 300)}` : null,
         ]
           .filter((line) => line !== null)
           .join("\n");
       default:
-        return "**Статус:** 🟡 На рассмотрении\n-# Оценивать может команда проекта, решение принимает администрация.";
+        return "**Статус:** <:dot_yellow:1562262864939589673> На рассмотрении\n-# Оценивать может команда проекта, решение принимает администрация.";
     }
   }
 

@@ -84,7 +84,7 @@ export class ProfileSettingsModalHandler extends InteractionHandler {
     await interaction.editReply({
       flags: MessageFlags.IsComponentsV2,
       components: [
-        new ContainerBuilder().addTextDisplayComponents(
+        new ContainerBuilder().setAccentColor(0x475b56).addTextDisplayComponents(
           new TextDisplayBuilder().setContent(text),
         ),
       ],

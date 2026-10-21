@@ -37,7 +37,7 @@ export class EconomyContainer {
   }
 
   public static selectCharacter(characters: CharacterOption[]) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -61,7 +61,7 @@ export class EconomyContainer {
   }
 
   public static main(character: Character, showBack: boolean) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     this.addHeader(
       container,
@@ -107,7 +107,7 @@ export class EconomyContainer {
   }
 
   public static selectTransferUser(sender: Character) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -142,7 +142,7 @@ export class EconomyContainer {
     receiverDiscordId: string,
     characters: CharacterOption[],
   ) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -173,7 +173,7 @@ export class EconomyContainer {
   }
 
   public static transferConfirm(preview: TransferPreview) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -220,7 +220,7 @@ export class EconomyContainer {
   }
 
   public static transferSuccess(result: TransferResult) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -260,7 +260,7 @@ export class EconomyContainer {
   }
 
   public static history(history: HistoryPage) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -307,7 +307,7 @@ export class EconomyContainer {
     backCharacterId?: string,
     showBack = true,
   ) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(

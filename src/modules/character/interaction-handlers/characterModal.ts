@@ -226,6 +226,7 @@ export class CharacterModalHandler extends InteractionHandler {
     return {
       name: interaction.fields.getTextInputValue(CharacterModalFields.Name),
       age: interaction.fields.getTextInputValue(CharacterModalFields.Age),
+      specialRole: interaction.fields.getTextInputValue(CharacterModalFields.SpecialRole),
       avatar: avatar ?? null,
       faculty: interaction.fields.getStringSelectValues(
         CharacterModalFields.Faculty,

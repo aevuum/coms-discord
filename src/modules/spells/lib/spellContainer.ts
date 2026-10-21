@@ -15,14 +15,11 @@ import type {
 import {
   SpellMode,
   type CastResult,
-  type CastedSpell,
   type SpellPage,
 } from "../types/spells.js";
 import { Mana } from "./mana.js";
 import {
-  DIFFICULTY_COLORS,
   DIFFICULTY_LABELS,
-  DIFFICULTY_ORDER,
   DIFFICULTY_STARS,
 } from "./spellConfig.js";
 import { SpellComponents } from "./spellComponents.js";
@@ -31,14 +28,12 @@ const ARROW = "<:48765whitearrow:1518587298281685173>";
 const WAND = "<:515636magicwandids:1519585028596563968>";
 const POTION = "<:29865potionwhite:1518587289989550100>";
 const BOOK = "<:6849serverguide:1518587250802426078>";
-const DEFAULT_COLOR = 0x475b56;
-const EXHAUSTED_COLOR = 0xb3261e;
 const LOW_MANA_RATIO = 0.2;
 const CRITICAL_MANA_RATIO = 0.5;
 
 export class SpellContainer {
   public static page(page: SpellPage, mode: SpellMode) {
-    const container = new ContainerBuilder().setAccentColor(DEFAULT_COLOR);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -80,9 +75,7 @@ export class SpellContainer {
   }
 
   public static detail(spell: Spell, mode: SpellMode, page: number) {
-    const container = new ContainerBuilder().setAccentColor(
-      DIFFICULTY_COLORS[spell.difficulty],
-    );
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -143,7 +136,7 @@ export class SpellContainer {
   }
 
   public static deleteConfirm(spell: Spell, page: number) {
-    const container = new ContainerBuilder().setAccentColor(DEFAULT_COLOR);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -168,7 +161,7 @@ export class SpellContainer {
   }
 
   public static deleted(spell: Spell, page: number) {
-    const container = new ContainerBuilder().setAccentColor(DEFAULT_COLOR);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -188,9 +181,7 @@ export class SpellContainer {
   }
 
   public static cast(result: CastResult) {
-    const container = new ContainerBuilder().setAccentColor(
-      DIFFICULTY_COLORS[this.hardest(result.spells)],
-    );
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     result.spells.forEach((cast, index) => {
       if (index > 0) {
@@ -232,7 +223,7 @@ export class SpellContainer {
           `### ${POTION} Мана · ${result.characterName}`,
           `${Mana.format(result.manaAfter, result.maxMana)}  \`−${result.totalCost}\``,
           this.isLowMana(result)
-            ? "-# ⚠️ Силы на исходе — ещё пара заклинаний, и персонаж начнёт истощаться."
+            ? "-# <:warning_yellow:1562262858660708414> Силы на исходе — ещё пара заклинаний, и персонаж начнёт истощаться."
             : null,
           timeToFull ? `-# Полное восстановление через ${timeToFull}` : null,
         ]
@@ -242,8 +233,6 @@ export class SpellContainer {
     );
 
     if (result.manaAfter < 0) {
-      container.setAccentColor(EXHAUSTED_COLOR);
-
       container.addSeparatorComponents(
         new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
       );
@@ -267,7 +256,7 @@ export class SpellContainer {
     const critical = result.manaAfter <= -result.maxMana * CRITICAL_MANA_RATIO;
 
     return [
-      "### ⚠️ Магическое истощение",
+      "### <:warning_yellow:1562262858660708414> Магическое истощение",
       critical
         ? `> **${result.characterName}** на грани обморока — ещё одно заклинание, и персонаж рухнет без сознания от нехватки сил.`
         : `> Мана ушла в минус. **${result.characterName}** едва держится на ногах — если продолжить колдовать, персонаж скоро потеряет сознание от нехватки сил.`,
@@ -276,7 +265,7 @@ export class SpellContainer {
   }
 
   public static error(message: string) {
-    const container = new ContainerBuilder().setAccentColor(DEFAULT_COLOR);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -306,15 +295,5 @@ export class SpellContainer {
     const count = DIFFICULTY_STARS[difficulty];
 
     return "★".repeat(count) + "☆".repeat(5 - count);
-  }
-
-  private static hardest(spells: CastedSpell[]) {
-    return spells
-      .map((cast) => cast.spell.difficulty)
-      .reduce((hardest, current) =>
-        DIFFICULTY_ORDER.indexOf(current) > DIFFICULTY_ORDER.indexOf(hardest)
-          ? current
-          : hardest,
-      );
   }
 }

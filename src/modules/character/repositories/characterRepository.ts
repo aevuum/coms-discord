@@ -13,6 +13,7 @@ export class CharacterRepository {
     avatarPath: string | null,
     faculty: CharacterFaculty,
     age: number | null,
+    specialRole: string | null,
   ) {
     return prisma.character.create({
       data: {
@@ -21,6 +22,7 @@ export class CharacterRepository {
         avatarPath,
         faculty,
         age,
+        specialRole,
         balanceKnuts: Currency.START_BALANCE,
         inventoryItems: {
           create: StarterItems.records(),
@@ -101,6 +103,7 @@ export class CharacterRepository {
     data: {
       rpName: string;
       age: number | null;
+      specialRole: string | null;
       faculty: CharacterFaculty;
       avatarPath?: string;
     },

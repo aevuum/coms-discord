@@ -70,7 +70,7 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     id: ManageSectionId.Giveaways,
     key: "manage.giveaways",
     label: "Розыгрыши",
-    emoji: "🎁",
+    emoji: "<:gift_teal:1562262879812460639>",
     description: "Создание розыгрышей, итоги и перевыбор победителей",
     access: CommandAccess.Restricted,
   },

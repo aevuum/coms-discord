@@ -133,8 +133,7 @@ export class PingRolesContainer {
   }
 
   private static notice(content: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(content));
   }
 }

@@ -22,8 +22,7 @@ export class ProphetContainer {
     const single = recipients.length === 1;
     const price = this.price();
 
-    return new ContainerBuilder()
-      .setAccentColor(0x8b7355)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -34,7 +33,7 @@ export class ProphetContainer {
               : shown
                   .map(
                     (recipient) =>
-                      `🗞️ **${recipient.name}** · <@${recipient.ownerId}>${recipient.paid ? "" : " · 🪶 сова улетела без оплаты"}`,
+                      `🗞️ **${recipient.name}** · <@${recipient.ownerId}>${recipient.paid ? "" : " · <:teal_feather:1562262848598577284> сова улетела без оплаты"}`,
                   )
                   .join("\n"),
             recipients.length > shown.length ? `-# и ещё ${recipients.length - shown.length}` : null,

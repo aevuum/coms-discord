@@ -47,7 +47,7 @@ export class TupperComponents {
   }
 
   public static selection(characters: TupperCharacter[]) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -75,7 +75,7 @@ export class TupperComponents {
   }
 
   public static settings(character: TupperCharacter, showBack: boolean) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const header = new TextDisplayBuilder().setContent(
       [
@@ -215,7 +215,7 @@ export class TupperComponents {
   }
 
   public static error(message: string) {
-    const container = new ContainerBuilder();
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(

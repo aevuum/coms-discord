@@ -39,7 +39,7 @@ export class ProfileContainer {
     let contentText = "";
 
     if (!profile) {
-      contentText = "⚠️ Данные профиля не найдены.";
+      contentText = "<:warning_yellow:1562262858660708414> Данные профиля не найдены.";
     } else {
       switch (tab) {
         case "economy": {

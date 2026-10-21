@@ -69,7 +69,7 @@ export class ApplicationAdminContainer {
     roleName: string | null,
   ) {
     const container = this.base(role.name, [
-      `${ARROW} Набор: ${role.open ? "🟢 **открыт**" : "🔴 **закрыт**"}`,
+      `${ARROW} Набор: ${role.open ? "<:dot_green:1562262861374423044> **открыт**" : "<:240191mark:1518581039172292688> **закрыт**"}`,
       `${ARROW} Пункты: ${this.source(role)}`,
       roleName
         ? `${ARROW} Роль при принятии: \`@${roleName}\` · ${role.roleManual ? "выбрана вручную" : "найдена по названию"}`
@@ -293,7 +293,7 @@ export class ApplicationAdminContainer {
   }
 
   private static status(role: ApplicationRole) {
-    return role.open ? "🟢" : "🔴";
+    return role.open ? "<:dot_green:1562262861374423044>" : "<:240191mark:1518581039172292688>";
   }
 
   private static source(role: ApplicationRole) {

@@ -22,12 +22,12 @@ import type { RolePage } from "../../permissions/types/permissions.js";
 import { GiveawayAdminAction, GiveawayCustomIds, GiveawayModalFields } from "./giveawayCustomIds.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const HEADER = "🎁";
+const HEADER = "<:gift_teal:1562262879812460639>";
 const PREV = "<:26204blackarrow:1518587278467792997>";
 const NEXT = "<:48765whitearrow:1518587298281685173>";
 
 const STATUS = {
-  ACTIVE: "🟢",
+  ACTIVE: "<:dot_green:1562262861374423044>",
   ENDED: "🏁",
   CANCELLED: "🚫",
 };
@@ -92,7 +92,7 @@ export class GiveawayAdminContainer {
         new ButtonBuilder()
           .setCustomId(GiveawayCustomIds.admin(GiveawayAdminAction.Settings))
           .setLabel("Настройки")
-          .setEmoji("⚙️")
+          .setEmoji("<:settings_gear:1562262876545093695>")
           .setStyle(ButtonStyle.Secondary),
         ManageComponents.homeButton(),
       ),
@@ -251,7 +251,7 @@ export class GiveawayAdminContainer {
         new ButtonBuilder()
           .setCustomId(GiveawayCustomIds.admin(GiveawayAdminAction.RolePage, 0))
           .setLabel("Роль для упоминания")
-          .setEmoji("🔔")
+          .setEmoji("<:megaphone:1562262885944655882>")
           .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setCustomId(GiveawayCustomIds.admin(GiveawayAdminAction.RoleClear))

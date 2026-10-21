@@ -107,7 +107,7 @@ export class ActivityContainer {
   }
 
   public static winnerNotice(place: number, amount: number, row: ActivityRow) {
-    return new ContainerBuilder().setAccentColor(0xc9a227).addTextDisplayComponents(
+    return new ContainerBuilder().setAccentColor(0x475b56).addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
           `## ${MEDALS[place - 1] ?? HEADER} ${place} место в недельном рейтинге активности`,

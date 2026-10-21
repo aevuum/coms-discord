@@ -19,15 +19,10 @@ const ARROW = "<:383438arrowright:1518587353390907473>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const ERROR = "<:240191mark:1518581039172292688>";
 
-const COLORS = {
-  ACTIVE: 0x475b56,
-  ENDED: 0xc9a227,
-  CANCELLED: 0x5f6b68,
-};
 
 export class GiveawayContainer {
   public static message(giveaway: Giveaway, entries: number, pingRoleId: string | null = null) {
-    const container = new ContainerBuilder().setAccentColor(COLORS[giveaway.status]);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const image = Storage.url(giveaway.imagePath);
 
@@ -42,9 +37,9 @@ export class GiveawayContainer {
 
     const header =
       giveaway.status === "ACTIVE"
-        ? "# 🎁 Розыгрыш"
+        ? "# <:gift_teal:1562262879812460639> Розыгрыш"
         : giveaway.status === "ENDED"
-          ? "# 🎉 Розыгрыш завершён"
+          ? "# <:teal_stars:1562262850913697815> Розыгрыш завершён"
           : "# 🚫 Розыгрыш отменён";
 
     container.addTextDisplayComponents(
@@ -92,7 +87,7 @@ export class GiveawayContainer {
           new ButtonBuilder()
             .setCustomId(GiveawayCustomIds.join(giveaway.id))
             .setLabel(`Участвовать · ${entries}`)
-            .setEmoji("🎉")
+            .setEmoji("<:teal_stars:1562262850913697815>")
             .setStyle(ButtonStyle.Success),
         ),
       );
@@ -102,29 +97,27 @@ export class GiveawayContainer {
   }
 
   public static winners(giveaway: Giveaway, reroll: boolean) {
-    return new ContainerBuilder()
-      .setAccentColor(COLORS.ENDED)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           giveaway.winnerIds.length
             ? [
-                `## 🎉 ${reroll ? "Новые победители" : "Итоги розыгрыша"}`,
+                `## <:teal_stars:1562262850913697815> ${reroll ? "Новые победители" : "Итоги розыгрыша"}`,
                 `${ARROW} Поздравляем ${giveaway.winnerIds.map((id) => `<@${id}>`).join(", ")}!`,
                 `${ARROW} Приз: **${giveaway.prize}**`,
                 `-# Для получения приза свяжитесь с <@${giveaway.hostId}>.`,
               ].join("\n")
-            : `## 🎁 Итоги розыгрыша\n${ARROW} Розыгрыш **${giveaway.prize}** завершён без победителей: никто не участвовал.`,
+            : `## <:gift_teal:1562262879812460639> Итоги розыгрыша\n${ARROW} Розыгрыш **${giveaway.prize}** завершён без победителей: никто не участвовал.`,
         ),
       );
   }
 
   public static winnerNotice(giveaway: Giveaway, messageUrl: string | null) {
-    return new ContainerBuilder()
-      .setAccentColor(COLORS.ENDED)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
-            "## 🎉 Вы выиграли в розыгрыше!",
+            "## <:teal_stars:1562262850913697815> Вы выиграли в розыгрыше!",
             `${ARROW} Приз: **${giveaway.prize}**`,
             messageUrl ? `${ARROW} [Перейти к розыгрышу](${messageUrl})` : null,
             `-# Для получения приза свяжитесь с организатором <@${giveaway.hostId}>.`,
@@ -136,14 +129,12 @@ export class GiveawayContainer {
   }
 
   public static success(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x2e8b57)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${SUCCESS} ${text}`));
   }
 
   public static error(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0xc0392b)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${ERROR} ${text}`));
   }
 

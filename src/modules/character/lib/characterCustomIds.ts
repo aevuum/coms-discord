@@ -29,6 +29,7 @@ export const CharacterModalFields = {
   Knuts: "knuts",
   Reason: "reason",
   Age: "age",
+  SpecialRole: "special_role",
 } as const;
 
 export class CharacterCustomIds {

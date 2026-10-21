@@ -31,7 +31,7 @@ export class RollContainer {
     const stars = RollService.stars(chance);
     const reroll = options.reroll ?? true;
 
-    const container = new ContainerBuilder().setAccentColor(entry.isDefault ? 0x475b56 : 0xc9a227);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -135,7 +135,7 @@ export class RollContainer {
   }
 
   public static catalogEntry(meta: RollKindMeta, entry: RollEntry, chance: number) {
-    const container = new ContainerBuilder().setAccentColor(entry.isDefault ? 0x475b56 : 0xc9a227);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
@@ -174,8 +174,7 @@ export class RollContainer {
   }
 
   public static error(message: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent([`## ${ERROR} Ошибка`, `${ARROW} ${message}`].join("\n")),
       );

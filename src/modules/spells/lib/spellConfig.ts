@@ -32,13 +32,6 @@ export const DIFFICULTY_LABELS: Record<SpellDifficulty, string> = {
   [SpellDifficulty.UNFORGIVABLE]: "Непростительное",
 };
 
-export const DIFFICULTY_COLORS: Record<SpellDifficulty, number> = {
-  [SpellDifficulty.BASIC]: 0x6fa8dc,
-  [SpellDifficulty.INTERMEDIATE]: 0x76b947,
-  [SpellDifficulty.ADVANCED]: 0xe69138,
-  [SpellDifficulty.MASTER]: 0xa78bfa,
-  [SpellDifficulty.UNFORGIVABLE]: 0x1f7a3a,
-};
 
 export const DIFFICULTY_ORDER: SpellDifficulty[] = [
   SpellDifficulty.BASIC,

@@ -21,7 +21,7 @@ export class TermsContainer {
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          "## 📜 Прежде чем начать",
+          "## <:scroll:1562262856039145553> Прежде чем начать",
           "Чтобы пользоваться ботом CoMS, ознакомьтесь с документами проекта и подтвердите согласие с ними.",
           "",
           `${ARROW} **Условия использования** — правила работы с ботом, игровые ценности, розыгрыши, ответственность.`,
@@ -46,7 +46,7 @@ export class TermsContainer {
         new ButtonBuilder()
           .setCustomId(TermsCustomIds.build(TermsAction.Accept))
           .setLabel("Принимаю")
-          .setEmoji("✅")
+          .setEmoji("<:checkmark_teal:1562262873902817401>")
           .setStyle(ButtonStyle.Success),
         new ButtonBuilder()
           .setCustomId(TermsCustomIds.build(TermsAction.Decline))
@@ -59,8 +59,7 @@ export class TermsContainer {
   }
 
   public static accepted() {
-    return new ContainerBuilder()
-      .setAccentColor(0x2e8b57)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -73,8 +72,7 @@ export class TermsContainer {
   }
 
   public static declined() {
-    return new ContainerBuilder()
-      .setAccentColor(0x5f6b68)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -91,7 +89,7 @@ export class TermsContainer {
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          "## 📜 Документы проекта",
+          "## <:scroll:1562262856039145553> Документы проекта",
           acceptedAt
             ? `${ARROW} Вы приняли текущую редакцию <t:${Math.floor(acceptedAt.getTime() / 1000)}:f>.`
             : `${ARROW} Вы ещё не приняли текущую редакцию документов.`,
@@ -117,8 +115,7 @@ export class TermsContainer {
   }
 
   public static withdrawConfirm() {
-    return new ContainerBuilder()
-      .setAccentColor(0xc0392b)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -143,8 +140,7 @@ export class TermsContainer {
   }
 
   public static withdrawn() {
-    return new ContainerBuilder()
-      .setAccentColor(0x5f6b68)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [

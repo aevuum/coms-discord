@@ -10,7 +10,7 @@ import {
   TextDisplayBuilder,
 } from "discord.js";
 
-import type { Report, ReportStatus } from "../../../database/generated/prisma/client.js";
+import type { Report } from "../../../database/generated/prisma/client.js";
 
 import { ReportAction, ReportCustomIds } from "./reportCustomIds.js";
 
@@ -19,16 +19,10 @@ const HEADER = "<:563621mod8:1518587360886128661>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const ERROR = "<:240191mark:1518581039172292688>";
 
-const STATUS_COLORS: Record<ReportStatus, number> = {
-  OPEN: 0xc0392b,
-  REVIEWING: 0xc9a227,
-  RESOLVED: 0x2e8b57,
-  REJECTED: 0x5f6b68,
-};
 
 export class ReportContainer {
   public static staff(report: Report, previousReports: number) {
-    const container = new ContainerBuilder().setAccentColor(STATUS_COLORS[report.status]);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const createdAt = Math.floor(report.createdAt.getTime() / 1000);
 
@@ -39,7 +33,7 @@ export class ReportContainer {
           `${ARROW} **От:** <@${report.reporterId}> (\`${report.reporterId}\`)`,
           `${ARROW} **На:** <@${report.targetId}> (\`${report.targetId}\`)`,
           report.targetIsStaff
-            ? "⚠️ **Жалоба на члена команды.** Сам нарушитель рассмотреть её не может."
+            ? "<:warning_yellow:1562262858660708414> **Жалоба на члена команды.** Сам нарушитель рассмотреть её не может."
             : null,
           report.reason ? `${ARROW} **Правило:** ${report.reason}` : null,
           `${ARROW} **Отправлена:** <t:${createdAt}:f>`,
@@ -125,8 +119,7 @@ export class ReportContainer {
   public static reporterNotice(report: Report) {
     const resolved = report.status === "RESOLVED";
 
-    return new ContainerBuilder()
-      .setAccentColor(STATUS_COLORS[report.status])
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -141,27 +134,25 @@ export class ReportContainer {
   }
 
   public static success(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x2e8b57)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${SUCCESS} ${text}`));
   }
 
   public static error(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0xc0392b)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${ERROR} ${text}`));
   }
 
   private static status(report: Report) {
     switch (report.status) {
       case "OPEN":
-        return "**Статус:** 🔴 Ожидает рассмотрения";
+        return "**Статус:** <:caution_red:1562262870656552962> Ожидает рассмотрения";
       case "REVIEWING":
-        return `**Статус:** 🟡 Рассматривает <@${report.reviewerId}>`;
+        return `**Статус:** <:dot_yellow:1562262864939589673> Рассматривает <@${report.reviewerId}>`;
       case "RESOLVED":
-        return `**Статус:** 🟢 Меры приняты · <@${report.reviewerId}>${this.closedAt(report)}`;
+        return `**Статус:** <:dot_green:1562262861374423044> Меры приняты · <@${report.reviewerId}>${this.closedAt(report)}`;
       case "REJECTED":
-        return `**Статус:** ⚪ Отклонена · <@${report.reviewerId}>${this.closedAt(report)}`;
+        return `**Статус:** <:dot_white:1562262867846373436> Отклонена · <@${report.reviewerId}>${this.closedAt(report)}`;
     }
   }
 

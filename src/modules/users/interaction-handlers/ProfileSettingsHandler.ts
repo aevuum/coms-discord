@@ -39,7 +39,7 @@ export class ProfileSettingsHandler extends InteractionHandler {
     result: { targetDiscordId: string },
   ) {
     if (interaction.user.id !== result.targetDiscordId) {
-      const errorContainer = new ContainerBuilder().addTextDisplayComponents(
+      const errorContainer = new ContainerBuilder().setAccentColor(0x475b56).addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           "<:240191mark:1518581039172292688> Вы не можете настраивать чужой профиль.",
         ),

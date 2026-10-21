@@ -286,8 +286,18 @@ export class ManageCharacterComponents {
       .setRequired(false)
       .setMaxLength(4);
 
+    const specialRole = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.SpecialRole)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false)
+      .setMaxLength(60);
+
     if (character) {
       name.setValue(character.rpName);
+
+      if (character.specialRole) {
+        specialRole.setValue(character.specialRole);
+      }
 
       if (character.age !== null) {
         age.setValue(String(character.age));
@@ -303,6 +313,10 @@ export class ManageCharacterComponents {
           .setLabel("Возраст, лет")
           .setDescription("Можно оставить пустым")
           .setTextInputComponent(age),
+        new LabelBuilder()
+          .setLabel("Особая роль")
+          .setDescription("Например: профессор зельеварения. Можно оставить пустым")
+          .setTextInputComponent(specialRole),
         new LabelBuilder()
           .setLabel("Аватар персонажа")
           .setDescription(

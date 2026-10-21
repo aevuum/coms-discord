@@ -23,7 +23,7 @@ import { TupperCustomIds } from "../../tupper/lib/tupperCustomIds.js";
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const POTION = "<:29865potionwhite:1518587289989550100>";
 const CHEST = "<:527877discordlegendchest:1518587359136972930>";
-const MEMBER = "<:928205membericon:1518581050555633674>";
+const FEATHER = "<:teal_feather:1562262848598577284>";
 
 type CardCharacter = Character & {
   tupper: CharacterTupper | null;
@@ -41,16 +41,22 @@ export class CharacterCardContainer {
   public static build(character: CardCharacter, items: CardItem[]) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
+    const mana = Mana.current(character);
+    const timeToFull = Mana.timeToFull(mana, character.maxMana);
+
     const header = new TextDisplayBuilder().setContent(
       [
-        `# ${MEMBER} ${character.rpName}`,
-        `${ARROW} ${CharacterFormatter.faculty(character.faculty)}`,
-        `${ARROW} ${CharacterFormatter.status(character.status)}`,
-        character.age !== null ? `${ARROW} Возраст: ${CharacterFormatter.age(character.age)}` : null,
-        "-# Эта карточка видна только вам.",
-      ]
-        .filter((line) => line !== null)
-        .join("\n"),
+        `## ${character.rpName}`,
+        `> **Возраст:** ${character.age !== null ? CharacterFormatter.age(character.age) : "не указан"}`,
+        `> **Статус:** ${CharacterFormatter.status(character.status)}`,
+        `> **Особая роль:** ${character.specialRole ?? "нет"}`,
+        `> **Факультет:** ${CharacterFormatter.faculty(character.faculty)}`,
+        "",
+        `${POTION} **Мана:** ${Mana.format(mana, character.maxMana)}`,
+        timeToFull
+          ? `-# Полное восстановление через ${timeToFull}`
+          : "-# Мана полностью восстановлена",
+      ].join("\n"),
     );
 
     const avatar = Storage.media(character.avatarPath, character.avatarUrl);
@@ -71,30 +77,10 @@ export class CharacterCardContainer {
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
-    const mana = Mana.current(character);
-
-    const timeToFull = Mana.timeToFull(mana, character.maxMana);
-
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          `### ${POTION} Мана`,
-          Mana.format(mana, character.maxMana),
-          timeToFull
-            ? `-# Полное восстановление через ${timeToFull}`
-            : "-# Мана полностью восстановлена",
-        ].join("\n"),
-      ),
-    );
-
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
-    );
-
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        [
-          `### ${CHEST} Инвентарь`,
+          `# ${CHEST} Инвентарь`,
           items.length ? null : "-# Инвентарь пуст.",
         ]
           .filter((line) => line !== null)
@@ -131,22 +117,18 @@ export class CharacterCardContainer {
     }
 
     container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
         [
-          `### <a:83918animatedarrowgreen:1518587316879495249> Таппер`,
           character.tupper
-            ? `${ARROW} Имя: **${character.tupper.name}** · Тег: \`${character.tupper.prefix}\``
-            : `${ARROW} Таппер ещё не настроен.`,
+            ? `${FEATHER} Таппер: **${character.tupper.name}** · Тег: \`${character.tupper.prefix}\``
+            : `${FEATHER} Таппер ещё не настроен.`,
+          "-# Эта карточка видна только вам.",
         ].join("\n"),
       ),
-    );
-
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
     );
 
     container.addActionRowComponents(
@@ -155,7 +137,7 @@ export class CharacterCardContainer {
           .setCustomId(TupperCustomIds.open(character.id))
           .setLabel("Редактировать таппер")
           .setEmoji("<:479873settingsna:1518581042456432791>")
-          .setStyle(ButtonStyle.Primary),
+          .setStyle(ButtonStyle.Secondary),
       ),
     );
 

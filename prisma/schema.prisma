@@ -128,6 +128,8 @@ model Character {
 
   age Int?
 
+  specialRole String?
+
   mana          Int      @default(100)
   maxMana       Int      @default(100)
   manaUpdatedAt DateTime @default(now())

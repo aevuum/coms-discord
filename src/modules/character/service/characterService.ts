@@ -34,7 +34,7 @@ export class CharacterService {
   }
 
   public static async create(discordId: string, input: CharacterFormInput) {
-    const { name, age, faculty } = this.parseForm(input);
+    const { name, age, specialRole, faculty } = this.parseForm(input);
 
     let user = await UserRepository.getByDiscordId(discordId);
 
@@ -50,6 +50,7 @@ export class CharacterService {
       avatarPath,
       faculty,
       age,
+      specialRole,
     ).catch(async (error) => {
       await Storage.delete(avatarPath);
       throw error;
@@ -191,13 +192,14 @@ export class CharacterService {
   public static async edit(discordId: string, characterId: string, input: CharacterFormInput) {
     const character = await this.getOwned(discordId, characterId);
 
-    const { name, age, faculty } = this.parseForm(input);
+    const { name, age, specialRole, faculty } = this.parseForm(input);
 
     const avatarPath = input.avatar ? await Storage.uploadAttachment(input.avatar) : null;
 
     const updated = await CharacterRepository.updateDetails(character.id, {
       rpName: name,
       age,
+      specialRole,
       faculty,
       ...(avatarPath ? { avatarPath } : {}),
     });
@@ -222,7 +224,12 @@ export class CharacterService {
       throw new CharacterError("Выберите факультет персонажа.");
     }
 
-    return { name, age: this.parseAge(input.age), faculty: input.faculty };
+    return {
+      name,
+      age: this.parseAge(input.age),
+      specialRole: input.specialRole.trim().slice(0, 60) || null,
+      faculty: input.faculty,
+    };
   }
 
   private static parseAge(input: string) {

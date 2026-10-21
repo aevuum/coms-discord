@@ -156,8 +156,7 @@ export class TravelContainer {
         : null,
     ].filter((line): line is string => line !== null);
 
-    const container = new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    const container = new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(lines.join("\n")));
 
     container.addSeparatorComponents(
@@ -199,8 +198,7 @@ export class TravelContainer {
       failed: `${ERROR} Не удалось: ${"reason" in state ? state.reason : ""}`,
     }[state.status];
 
-    const container = new ContainerBuilder()
-      .setAccentColor(resolved ? 0x4f545c : 0x475b56)
+    const container = new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -248,8 +246,7 @@ export class TravelContainer {
   }
 
   public static log(content: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${MAP} ${content}`));
   }
 
@@ -262,8 +259,7 @@ export class TravelContainer {
   }
 
   public static notice(title: string, message: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent([`## ${title}`, `${ARROW} ${message}`].join("\n")),
       );

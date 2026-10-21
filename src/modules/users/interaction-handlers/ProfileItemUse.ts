@@ -63,7 +63,7 @@ export class ProfileItemUse extends InteractionHandler {
     try {
       const used = await ShopService.useItem(interaction.user.id, result.itemId);
 
-      const container = new ContainerBuilder().setAccentColor(0x2ecc71);
+      const container = new ContainerBuilder().setAccentColor(0x475b56);
 
       container.addTextDisplayComponents(
         new TextDisplayBuilder().setContent(

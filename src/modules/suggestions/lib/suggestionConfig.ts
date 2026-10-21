@@ -13,11 +13,11 @@ export const SUGGESTION_PING_ROLE = {
 };
 
 export const SUGGESTION_CATEGORIES = [
-  { value: "mechanics", label: "Новая механика", emoji: "⚙️" },
-  { value: "change", label: "Изменение существующего", emoji: "🔧" },
-  { value: "roleplay", label: "Ролевая игра и лор", emoji: "🪄" },
-  { value: "bot", label: "Бот", emoji: "🤖" },
-  { value: "server", label: "Сервер и каналы", emoji: "🏰" },
+  { value: "mechanics", label: "Новая механика", emoji: "<:settings_gear:1562262876545093695>" },
+  { value: "change", label: "Изменение существующего", emoji: "<:tools:1562262895952138250>" },
+  { value: "roleplay", label: "Ролевая игра и лор", emoji: "<:roleplay:1562262888884871208>" },
+  { value: "bot", label: "Бот", emoji: "<:developer:1562262892269801503>" },
+  { value: "server", label: "Сервер и каналы", emoji: "<:1821serversfolder:1518587234163622040>" },
   { value: "other", label: "Другое", emoji: "💡" },
 ];
 

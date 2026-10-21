@@ -18,7 +18,6 @@ import type {
   Suggestion,
   SuggestionRating,
   SuggestionReaction,
-  SuggestionStatus,
 } from "../../../database/generated/prisma/client.js";
 
 import {
@@ -33,11 +32,6 @@ const ARROW = "<:383438arrowright:1518587353390907473>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const ERROR = "<:240191mark:1518581039172292688>";
 
-const COLORS: Record<SuggestionStatus, number> = {
-  PENDING: 0x475b56,
-  ACCEPTED: 0x2e8b57,
-  REJECTED: 0xc0392b,
-};
 
 const RATINGS = ["Слабо", "Ниже среднего", "Средне", "Хорошо", "Отлично"];
 
@@ -48,8 +42,7 @@ export type SuggestionWithVotes = Suggestion & {
 
 export class SuggestionContainer {
   public static panel() {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -150,7 +143,7 @@ export class SuggestionContainer {
   }
 
   public static card(suggestion: SuggestionWithVotes) {
-    const container = new ContainerBuilder().setAccentColor(COLORS[suggestion.status]);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
     const category = suggestionCategory(suggestion.category);
     const createdAt = Math.floor(suggestion.createdAt.getTime() / 1000);
 
@@ -237,8 +230,7 @@ export class SuggestionContainer {
   public static decisionNotice(suggestion: Suggestion, messageUrl: string | null) {
     const accepted = suggestion.status === "ACCEPTED";
 
-    return new ContainerBuilder()
-      .setAccentColor(COLORS[suggestion.status])
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(
         new TextDisplayBuilder().setContent(
           [
@@ -257,14 +249,12 @@ export class SuggestionContainer {
   }
 
   public static success(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x2e8b57)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${SUCCESS} ${text}`));
   }
 
   public static error(text: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0xc0392b)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(`${ERROR} ${text}`));
   }
 
@@ -276,13 +266,13 @@ export class SuggestionContainer {
 
   private static staffBlock(ratings: SuggestionRating[]) {
     if (!ratings.length) {
-      return "### 🛡️ Оценка команды\n-# Команда проекта ещё не оценила идею.";
+      return "### <:shield_mods:1562262882950062251> Оценка команды\n-# Команда проекта ещё не оценила идею.";
     }
 
     const average = ratings.reduce((sum, rating) => sum + rating.stars, 0) / ratings.length;
 
     return [
-      `### 🛡️ Оценка команды: ${this.stars(average)} ${average.toFixed(1)} из 5`,
+      `### <:shield_mods:1562262882950062251> Оценка команды: ${this.stars(average)} ${average.toFixed(1)} из 5`,
       ...ratings.slice(0, 10).map((rating) => `${ARROW} <@${rating.userId}> — ${this.stars(rating.stars)}`),
       ratings.length > 10 ? `-# и ещё ${ratings.length - 10}` : null,
     ]
@@ -315,16 +305,16 @@ export class SuggestionContainer {
 
     switch (suggestion.status) {
       case "ACCEPTED":
-        return `**Статус:** 🟢 Принята администрацией · <@${suggestion.decidedById}>${decidedAt}`;
+        return `**Статус:** <:dot_green:1562262861374423044> Принята администрацией · <@${suggestion.decidedById}>${decidedAt}`;
       case "REJECTED":
         return [
-          `**Статус:** 🔴 Отклонена · <@${suggestion.decidedById}>${decidedAt}`,
+          `**Статус:** <:240191mark:1518581039172292688> Отклонена · <@${suggestion.decidedById}>${decidedAt}`,
           suggestion.reason ? `-# Причина: ${suggestion.reason.replace(/\s+/g, " ")}` : null,
         ]
           .filter((line) => line !== null)
           .join("\n");
       default:
-        return "**Статус:** 🟡 На рассмотрении\n-# 👍/👎 — голос игроков, звёзды — оценка команды, решение принимает администрация.";
+        return "**Статус:** <:dot_yellow:1562262864939589673> На рассмотрении\n-# 👍/👎 — голос игроков, звёзды — оценка команды, решение принимает администрация.";
     }
   }
 

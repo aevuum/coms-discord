@@ -167,7 +167,7 @@ export class TicketContainer {
   public static staffCall(ticket: Ticket, ownerName: string) {
     const closed = ticket.status === "CLOSED";
 
-    const container = new ContainerBuilder().setAccentColor(closed ? 0x4f545c : 0x475b56);
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
 
     const lines = [
       `# ${CALL} Анкета на проверку`,
@@ -327,8 +327,7 @@ export class TicketContainer {
   }
 
   private static notice(content: string) {
-    return new ContainerBuilder()
-      .setAccentColor(0x475b56)
+    return new ContainerBuilder().setAccentColor(0x475b56)
       .addTextDisplayComponents(new TextDisplayBuilder().setContent(content));
   }
 }
