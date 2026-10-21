@@ -396,6 +396,7 @@ export const ModelName = {
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
   CommandPermission: 'CommandPermission',
+  CharacterFamiliar: 'CharacterFamiliar',
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
   RoleStipend: 'RoleStipend',
@@ -436,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1325,6 +1326,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CommandPermissionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CommandPermissionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CharacterFamiliar: {
+      payload: Prisma.$CharacterFamiliarPayload<ExtArgs>
+      fields: Prisma.CharacterFamiliarFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CharacterFamiliarFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CharacterFamiliarFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>
+        }
+        findFirst: {
+          args: Prisma.CharacterFamiliarFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CharacterFamiliarFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>
+        }
+        findMany: {
+          args: Prisma.CharacterFamiliarFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>[]
+        }
+        create: {
+          args: Prisma.CharacterFamiliarCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>
+        }
+        createMany: {
+          args: Prisma.CharacterFamiliarCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CharacterFamiliarCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>[]
+        }
+        delete: {
+          args: Prisma.CharacterFamiliarDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>
+        }
+        update: {
+          args: Prisma.CharacterFamiliarUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>
+        }
+        deleteMany: {
+          args: Prisma.CharacterFamiliarDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CharacterFamiliarUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CharacterFamiliarUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>[]
+        }
+        upsert: {
+          args: Prisma.CharacterFamiliarUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CharacterFamiliarPayload>
+        }
+        aggregate: {
+          args: Prisma.CharacterFamiliarAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCharacterFamiliar>
+        }
+        groupBy: {
+          args: Prisma.CharacterFamiliarGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterFamiliarGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CharacterFamiliarCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CharacterFamiliarCountAggregateOutputType> | number
         }
       }
     }
@@ -3395,6 +3470,19 @@ export const CommandPermissionScalarFieldEnum = {
 export type CommandPermissionScalarFieldEnum = (typeof CommandPermissionScalarFieldEnum)[keyof typeof CommandPermissionScalarFieldEnum]
 
 
+export const CharacterFamiliarScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  name: 'name',
+  description: 'description',
+  imagePath: 'imagePath',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterFamiliarScalarFieldEnum = (typeof CharacterFamiliarScalarFieldEnum)[keyof typeof CharacterFamiliarScalarFieldEnum]
+
+
 export const CharacterTupperScalarFieldEnum = {
   id: 'id',
   characterId: 'characterId',
@@ -4228,6 +4316,7 @@ export type GlobalOmitConfig = {
   inventoryItem?: Prisma.InventoryItemOmit
   characterInventoryItem?: Prisma.CharacterInventoryItemOmit
   commandPermission?: Prisma.CommandPermissionOmit
+  characterFamiliar?: Prisma.CharacterFamiliarOmit
   characterTupper?: Prisma.CharacterTupperOmit
   coinTransaction?: Prisma.CoinTransactionOmit
   roleStipend?: Prisma.RoleStipendOmit

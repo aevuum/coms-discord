@@ -115,7 +115,8 @@ model Wallet {
 model Character {
   id String @id @default(cuid())
 
-  tupper CharacterTupper?
+  tupper   CharacterTupper?
+  familiar CharacterFamiliar?
 
   rpName     String
   avatarUrl  String?
@@ -300,6 +301,20 @@ model CommandPermission {
 
   @@unique([guildId, commandName, roleId])
   @@index([guildId])
+}
+
+model CharacterFamiliar {
+  id String @id @default(cuid())
+
+  characterId String    @unique
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String
+  imagePath   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model CharacterTupper {

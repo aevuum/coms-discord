@@ -102,6 +102,11 @@ export type CharacterInventoryItem = Prisma.CharacterInventoryItemModel
  */
 export type CommandPermission = Prisma.CommandPermissionModel
 /**
+ * Model CharacterFamiliar
+ * 
+ */
+export type CharacterFamiliar = Prisma.CharacterFamiliarModel
+/**
  * Model CharacterTupper
  * 
  */

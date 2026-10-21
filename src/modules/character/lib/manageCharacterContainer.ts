@@ -1,5 +1,7 @@
 import {
   ContainerBuilder,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
   SectionBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
@@ -7,13 +9,17 @@ import {
   ThumbnailBuilder,
 } from "discord.js";
 
-import type { Character } from "../../../database/generated/prisma/client.js";
+import type {
+  Character,
+  CharacterFamiliar,
+} from "../../../database/generated/prisma/client.js";
 
 import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { Currency } from "../../economy/lib/currency.js";
 import { Mana } from "../../spells/lib/mana.js";
 import {
+  CharacterTab,
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
@@ -23,7 +29,7 @@ const ARROW = "<:48765whitearrow:1518587298281685173>";
 const HEADER = "<:563621mod8:1518587360886128661>";
 const SUCCESS = "<:312537mark:1518581040548024430>";
 const PAD = "⠀".repeat(60);
-const MAX_IMAGE_ITEMS = 4;
+const MAX_IMAGE_ITEMS = 6;
 
 export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.Create]: "Создание персонажа",
@@ -36,6 +42,8 @@ export const ACTION_TITLES: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.SetMana]: "Установка маны",
   [ManageCharacterAction.SetBalance]: "Баланс персонажа",
   [ManageCharacterAction.Edit]: "Изменение персонажа",
+  [ManageCharacterAction.Familiar]: "Фамильяр персонажа",
+  [ManageCharacterAction.FamiliarDelete]: "Отвязка фамильяра",
 };
 
 export const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
@@ -49,10 +57,13 @@ export const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
   [ManageCharacterAction.SetMana]: "получил новую ману",
   [ManageCharacterAction.SetBalance]: "получил новый баланс",
   [ManageCharacterAction.Edit]: "изменён",
+  [ManageCharacterAction.Familiar]: "получил фамильяра",
+  [ManageCharacterAction.FamiliarDelete]: "лишился фамильяра",
 };
 
 export type ManagedCharacter = Character & {
   tupper?: { name: string; prefix: string } | null;
+  familiar?: CharacterFamiliar | null;
 };
 
 export class ManageCharacterContainer {
@@ -125,27 +136,18 @@ export class ManageCharacterContainer {
     discordId: string,
     character: ManagedCharacter,
     items: InventoryListItem[],
+    tab: CharacterTab,
     notice: string | null = null,
   ) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
-
-    const mana = Mana.current(character);
 
     const header = new TextDisplayBuilder().setContent(
       [
         `# ${character.rpName}`,
         `-# Игрок: **${memberName}** · <@${discordId}>`,
+        `-# ${CharacterFormatter.faculty(character.faculty)} · ${CharacterFormatter.status(character.status)}`,
         notice ? `${SUCCESS} ${notice}` : null,
-        "",
-        `> **Возраст:** ${character.age !== null ? CharacterFormatter.age(character.age) : "не указан"}`,
-        `> **Статус:** ${CharacterFormatter.status(character.status)}`,
-        `> **Особая роль:** ${character.specialRole ?? "нет"}`,
-        `> **Факультет:** ${CharacterFormatter.faculty(character.faculty)}`,
-        `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
-        `> **Баланс:** ${Currency.inline(character.balanceKnuts)}`,
-        character.tupper
-          ? `> **Таппер:** ${character.tupper.name} · \`${character.tupper.prefix}\``
-          : null,
+        `-# ${PAD}`,
       ]
         .filter((line) => line !== null)
         .join("\n"),
@@ -163,10 +165,68 @@ export class ManageCharacterContainer {
       container.addTextDisplayComponents(header);
     }
 
+    container.addActionRowComponents(
+      ManageCharacterComponents.tabSelect(discordId, character.id, tab),
+    );
+
     container.addSeparatorComponents(
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
     );
 
+    switch (tab) {
+      case CharacterTab.Inventory:
+        this.inventoryTab(container, items);
+        break;
+
+      case CharacterTab.Stats:
+        this.statsTab(container, character);
+        break;
+
+      case CharacterTab.Familiar:
+        this.familiarTab(container, character.familiar ?? null);
+        break;
+
+      case CharacterTab.Status:
+        this.statusTab(container, character);
+        break;
+
+      default:
+        this.profileTab(container, character);
+    }
+
+    container.addActionRowComponents(
+      ManageCharacterComponents.tabActions(discordId, character, tab, Boolean(character.familiar)),
+    );
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addActionRowComponents(ManageCharacterComponents.navRow(discordId));
+
+    return container;
+  }
+
+  private static text(container: ContainerBuilder, lines: (string | null)[]) {
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        lines.filter((line) => line !== null).join("\n"),
+      ),
+    );
+  }
+
+  private static profileTab(container: ContainerBuilder, character: ManagedCharacter) {
+    this.text(container, [
+      "### <:928205membericon:1518581050555633674> Профиль",
+      `> **Возраст:** ${character.age !== null ? CharacterFormatter.age(character.age) : "не указан"}`,
+      `> **Факультет:** ${CharacterFormatter.faculty(character.faculty)}`,
+      `> **Особая роль:** ${character.specialRole ?? "нет"}`,
+      `> **Таппер:** ${character.tupper ? `${character.tupper.name} · \`${character.tupper.prefix}\`` : "не настроен"}`,
+      "-# Имя, возраст, факультет, особая роль и аватар меняются через «Изменить анкету».",
+    ]);
+  }
+
+  private static inventoryTab(container: ContainerBuilder, items: InventoryListItem[]) {
     const line = (item: InventoryListItem) => `${ARROW} **${item.name}** × ${item.quantity}`;
 
     const withImages = items
@@ -177,17 +237,10 @@ export class ManageCharacterContainer {
     const rest = items.filter((item) => !withImages.some((entry) => entry.item === item));
     const shown = rest.slice(0, 20);
 
-    container.addTextDisplayComponents(
-      new TextDisplayBuilder().setContent(
-        [
-          "### <:527877discordlegendchest:1518587359136972930> Инвентарь",
-          items.length ? null : "-# Инвентарь пуст.",
-          `-# ${PAD}`,
-        ]
-          .filter((entry) => entry !== null)
-          .join("\n"),
-      ),
-    );
+    this.text(container, [
+      "### <:527877discordlegendchest:1518587359136972930> Инвентарь",
+      items.length ? null : "-# Инвентарь пуст.",
+    ]);
 
     for (const { item, url } of withImages) {
       container.addSectionComponents(
@@ -202,27 +255,58 @@ export class ManageCharacterContainer {
     }
 
     if (shown.length) {
-      container.addTextDisplayComponents(
-        new TextDisplayBuilder().setContent(
-          [
-            shown.map(line).join("\n"),
-            rest.length > shown.length ? `-# …и ещё ${rest.length - shown.length}` : null,
-          ]
-            .filter((entry) => entry !== null)
-            .join("\n"),
+      this.text(container, [
+        shown.map(line).join("\n"),
+        rest.length > shown.length ? `-# …и ещё ${rest.length - shown.length}` : null,
+      ]);
+    }
+  }
+
+  private static statsTab(container: ContainerBuilder, character: ManagedCharacter) {
+    const mana = Mana.current(character);
+    const timeToFull = Mana.timeToFull(mana, character.maxMana);
+
+    this.text(container, [
+      "### <:29865potionwhite:1518587289989550100> Мана и деньги",
+      `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
+      `> ${timeToFull ? `Полное восстановление через ${timeToFull}` : "Мана полностью восстановлена"}`,
+      `> **Баланс:** ${Currency.inline(character.balanceKnuts)}`,
+    ]);
+  }
+
+  private static familiarTab(container: ContainerBuilder, familiar: CharacterFamiliar | null) {
+    if (!familiar) {
+      this.text(container, [
+        "### <:teal_feather:1562262848598577284> Фамильяр",
+        `${ARROW} У персонажа нет фамильяра.`,
+        "-# Добавьте фамильяра: имя, описание и изображение. Игрок увидит его в карточке персонажа.",
+      ]);
+
+      return;
+    }
+
+    this.text(container, [
+      `### <:teal_feather:1562262848598577284> ${familiar.name}`,
+      familiar.description.slice(0, 1500),
+    ]);
+
+    const image = Storage.url(familiar.imagePath);
+
+    if (image) {
+      container.addMediaGalleryComponents(
+        new MediaGalleryBuilder().addItems(
+          new MediaGalleryItemBuilder().setURL(image).setDescription(familiar.name.slice(0, 1024)),
         ),
       );
     }
+  }
 
-    container.addSeparatorComponents(
-      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
-    );
-
-    container.addActionRowComponents(
-      ...ManageCharacterComponents.dashboardRows(discordId, character),
-    );
-
-    return container;
+  private static statusTab(container: ContainerBuilder, character: ManagedCharacter) {
+    this.text(container, [
+      "### <:97970trialmoderator:1518587338513715260> Статус",
+      `> **Сейчас:** ${CharacterFormatter.status(character.status)}`,
+      "-# Замороженный персонаж не участвует в игре, но сохраняет всё имущество. Умерщвление меняет статус на «Мёртв», удаление стирает персонажа полностью.",
+    ]);
   }
 
   public static confirm(
@@ -239,8 +323,10 @@ export class ManageCharacterContainer {
           "",
           `${ARROW} Персонаж: **${character.rpName}** · ${CharacterFormatter.faculty(character.faculty)}`,
           action === ManageCharacterAction.Delete
-            ? "-# Персонаж, его деньги, история и таппер будут удалены без возможности восстановления."
-            : "-# Статус персонажа изменится на «Мёртв».",
+            ? "-# Персонаж, его деньги, история, таппер и фамильяр будут удалены без возможности восстановления."
+            : action === ManageCharacterAction.FamiliarDelete
+              ? "-# Фамильяр и его изображение будут удалены."
+              : "-# Статус персонажа изменится на «Мёртв».",
         ].join("\n"),
       ),
     );
@@ -285,7 +371,7 @@ export class ManageCharacterContainer {
     }
 
     container.addActionRowComponents(
-      ManageCharacterComponents.characterRow(discordId, character.id),
+      ManageCharacterComponents.characterRow(discordId, character.id, CharacterTab.Inventory),
     );
 
     return container;

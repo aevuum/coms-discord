@@ -39,6 +39,7 @@ export class CharacterRepository {
       include: {
         user: true,
         tupper: true,
+        familiar: true,
       },
       orderBy: {
         createdAt: "asc",
@@ -54,6 +55,7 @@ export class CharacterRepository {
       include: {
         user: true,
         tupper: true,
+        familiar: true,
       },
     });
   }

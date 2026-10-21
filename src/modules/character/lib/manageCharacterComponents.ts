@@ -15,6 +15,7 @@ import {
   CharacterFaculty,
   CharacterStatus,
   type Character,
+  type CharacterFamiliar,
 } from "../../../database/generated/prisma/client.js";
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
@@ -22,6 +23,8 @@ import { Currency } from "../../economy/lib/currency.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "../../spells/lib/mana.js";
 import {
+  ACTION_TABS,
+  CharacterTab,
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
@@ -37,6 +40,19 @@ const FACULTY_ORDER: CharacterFaculty[] = [
   CharacterFaculty.HUFFLEPUFF,
   CharacterFaculty.RAVENCLAW,
   CharacterFaculty.ADULT,
+];
+
+export const CHARACTER_TABS: {
+  id: CharacterTab;
+  label: string;
+  description: string;
+  emoji: string;
+}[] = [
+  { id: CharacterTab.Profile, label: "Профиль", description: "Анкета, возраст, факультет, особая роль", emoji: "<:928205membericon:1518581050555633674>" },
+  { id: CharacterTab.Inventory, label: "Инвентарь", description: "Выдача и изъятие предметов", emoji: "<:527877discordlegendchest:1518587359136972930>" },
+  { id: CharacterTab.Stats, label: "Мана и деньги", description: "Текущая мана и баланс персонажа", emoji: "<:29865potionwhite:1518587289989550100>" },
+  { id: CharacterTab.Familiar, label: "Фамильяр", description: "Регистрация и привязка фамильяра", emoji: "<:teal_feather:1562262848598577284>" },
+  { id: CharacterTab.Status, label: "Статус", description: "Заморозка, смерть и удаление", emoji: "<:97970trialmoderator:1518587338513715260>" },
 ];
 
 export class ManageCharacterComponents {
@@ -90,7 +106,29 @@ export class ManageCharacterComponents {
     return rows;
   }
 
-  public static dashboardRows(discordId: string, character: Character) {
+  public static tabSelect(discordId: string, characterId: string, tab: CharacterTab) {
+    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Tab, discordId, characterId))
+        .addOptions(
+          CHARACTER_TABS.map((entry) =>
+            new StringSelectMenuOptionBuilder()
+              .setLabel(entry.label)
+              .setDescription(entry.description)
+              .setEmoji(entry.emoji)
+              .setValue(entry.id)
+              .setDefault(entry.id === tab),
+          ),
+        ),
+    );
+  }
+
+  public static tabActions(
+    discordId: string,
+    character: Character,
+    tab: CharacterTab,
+    hasFamiliar: boolean,
+  ) {
     const act = (
       action: ManageCharacterAction,
       label: string,
@@ -105,37 +143,119 @@ export class ManageCharacterComponents {
         .setEmoji(emoji)
         .setStyle(style);
 
-    const alive = character.status === CharacterStatus.ALIVE;
+    const row = new ActionRowBuilder<ButtonBuilder>();
 
-    return [
-      new ActionRowBuilder<ButtonBuilder>().addComponents(
-        act(ManageCharacterAction.Edit, "Изменить", "<:984149edit:1518587370474176612>", ButtonStyle.Primary),
-        act(ManageCharacterAction.SetMana, "Мана", "<:29865potionwhite:1518587289989550100>", ButtonStyle.Secondary),
-        act(ManageCharacterAction.SetBalance, "Баланс", "<:galleon:1521547045268099242>", ButtonStyle.Secondary),
-      ),
-      new ActionRowBuilder<ButtonBuilder>().addComponents(
-        act(ManageCharacterAction.GiveItem, "Выдать предмет", "<:527877discordlegendchest:1518587359136972930>", ButtonStyle.Success),
-        act(ManageCharacterAction.TakeItem, "Забрать предмет", "<:12138cross:1518587259669053591>", ButtonStyle.Secondary),
-      ),
-      new ActionRowBuilder<ButtonBuilder>().addComponents(
-        alive
-          ? act(ManageCharacterAction.Freeze, "Заморозить", "<:97970trialmoderator:1518587338513715260>", ButtonStyle.Secondary)
-          : act(
-              ManageCharacterAction.Unfreeze,
-              character.status === CharacterStatus.DEAD ? "Вернуть к жизни" : "Разморозить",
-              "<:172841lastmeadowbadge:1518587343378976779>",
-              ButtonStyle.Primary,
-            ),
-        act(ManageCharacterAction.Kill, "Умертвить", "<:633509a:1518587362513256458>", ButtonStyle.Danger)
-          .setDisabled(character.status === CharacterStatus.DEAD),
-        act(ManageCharacterAction.Delete, "Удалить", "<:14605delete:1518587266505642074>", ButtonStyle.Danger),
-      ),
-      new ActionRowBuilder<ButtonBuilder>().addComponents(
-        this.playerButton(discordId, "Все персонажи игрока"),
-        this.searchButton("Другой игрок").setStyle(ButtonStyle.Secondary),
-        ManageComponents.homeButton(),
-      ),
-    ];
+    switch (tab) {
+      case CharacterTab.Inventory:
+        return row.addComponents(
+          act(ManageCharacterAction.GiveItem, "Выдать предмет", "<:527877discordlegendchest:1518587359136972930>", ButtonStyle.Success),
+          act(ManageCharacterAction.TakeItem, "Забрать предмет", "<:12138cross:1518587259669053591>", ButtonStyle.Secondary),
+        );
+
+      case CharacterTab.Stats:
+        return row.addComponents(
+          act(ManageCharacterAction.SetMana, "Изменить ману", "<:29865potionwhite:1518587289989550100>", ButtonStyle.Primary),
+          act(ManageCharacterAction.SetBalance, "Изменить баланс", "<:galleon:1521547045268099242>", ButtonStyle.Primary),
+        );
+
+      case CharacterTab.Familiar:
+        row.addComponents(
+          act(
+            ManageCharacterAction.Familiar,
+            hasFamiliar ? "Изменить фамильяра" : "Добавить фамильяра",
+            hasFamiliar ? "<:984149edit:1518587370474176612>" : "<:6509addguild:1518587247769817088>",
+            hasFamiliar ? ButtonStyle.Primary : ButtonStyle.Success,
+          ),
+        );
+
+        if (hasFamiliar) {
+          row.addComponents(
+            act(ManageCharacterAction.FamiliarDelete, "Отвязать", "<:14605delete:1518587266505642074>", ButtonStyle.Danger),
+          );
+        }
+
+        return row;
+
+      case CharacterTab.Status:
+        return row.addComponents(
+          character.status === CharacterStatus.ALIVE
+            ? act(ManageCharacterAction.Freeze, "Заморозить", "<:97970trialmoderator:1518587338513715260>", ButtonStyle.Secondary)
+            : act(
+                ManageCharacterAction.Unfreeze,
+                character.status === CharacterStatus.DEAD ? "Вернуть к жизни" : "Разморозить",
+                "<:172841lastmeadowbadge:1518587343378976779>",
+                ButtonStyle.Primary,
+              ),
+          act(ManageCharacterAction.Kill, "Умертвить", "<:633509a:1518587362513256458>", ButtonStyle.Danger)
+            .setDisabled(character.status === CharacterStatus.DEAD),
+          act(ManageCharacterAction.Delete, "Удалить персонажа", "<:14605delete:1518587266505642074>", ButtonStyle.Danger),
+        );
+
+      default:
+        return row.addComponents(
+          act(ManageCharacterAction.Edit, "Изменить анкету", "<:984149edit:1518587370474176612>", ButtonStyle.Primary),
+        );
+    }
+  }
+
+  public static navRow(discordId: string) {
+    return new ActionRowBuilder<ButtonBuilder>().addComponents(
+      this.playerButton(discordId, "Все персонажи"),
+      this.searchButton("Другой игрок").setStyle(ButtonStyle.Secondary),
+      ManageComponents.homeButton(),
+    );
+  }
+
+  public static familiarModal(
+    discordId: string,
+    character: Character,
+    familiar: CharacterFamiliar | null,
+  ) {
+    const name = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.FamiliarName)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(true)
+      .setMinLength(2)
+      .setMaxLength(80);
+
+    const description = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.FamiliarDescription)
+      .setStyle(TextInputStyle.Paragraph)
+      .setRequired(true)
+      .setMaxLength(1500);
+
+    if (familiar) {
+      name.setValue(familiar.name);
+      description.setValue(familiar.description);
+    }
+
+    return new ModalBuilder()
+      .setCustomId(
+        CharacterCustomIds.build(CharacterPanelAction.FamiliarModal, discordId, character.id),
+      )
+      .setTitle(`Фамильяр · ${character.rpName}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Имя фамильяра")
+          .setDescription("Например: сова Хедвиг")
+          .setTextInputComponent(name),
+        new LabelBuilder()
+          .setLabel("Описание")
+          .setDescription("Внешность, характер, история")
+          .setTextInputComponent(description),
+        new LabelBuilder()
+          .setLabel("Изображение")
+          .setDescription(
+            familiar
+              ? "Загрузите новое изображение или оставьте пустым, чтобы не менять"
+              : "Загрузите изображение фамильяра",
+          )
+          .setFileUploadComponent(
+            new FileUploadBuilder()
+              .setCustomId(CharacterModalFields.FamiliarImage)
+              .setRequired(!familiar),
+          ),
+      );
   }
 
   public static confirm(
@@ -156,13 +276,13 @@ export class ManageCharacterComponents {
         .setLabel("Подтвердить")
         .setEmoji("<:766839verifiedgreen:1518587368636944534>")
         .setStyle(ButtonStyle.Danger),
-      this.characterButton(discordId, characterId, "Отмена"),
+      this.characterButton(discordId, characterId, ACTION_TABS[action] ?? CharacterTab.Profile, "Отмена"),
     );
   }
 
-  public static characterRow(discordId: string, characterId: string) {
+  public static characterRow(discordId: string, characterId: string, tab: CharacterTab) {
     return new ActionRowBuilder<ButtonBuilder>().addComponents(
-      this.characterButton(discordId, characterId),
+      this.characterButton(discordId, characterId, tab),
     );
   }
 
@@ -173,9 +293,14 @@ export class ManageCharacterComponents {
     );
   }
 
-  private static characterButton(discordId: string, characterId: string, label = "К персонажу") {
+  private static characterButton(
+    discordId: string,
+    characterId: string,
+    tab: CharacterTab,
+    label = "К персонажу",
+  ) {
     return new ButtonBuilder()
-      .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Character, discordId, characterId))
+      .setCustomId(CharacterCustomIds.build(CharacterPanelAction.Character, discordId, characterId, tab))
       .setLabel(label)
       .setEmoji("<:26204blackarrow:1518587278467792997>")
       .setStyle(ButtonStyle.Secondary);

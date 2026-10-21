@@ -19,6 +19,8 @@ import {
 import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { FamiliarService } from "../service/familiarService.js";
+import { CharacterTab } from "../types/character.js";
 import { Mana } from "../../spells/lib/mana.js";
 import { Currency } from "../../economy/lib/currency.js";
 
@@ -30,6 +32,7 @@ const MODAL_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.ManaModal,
   CharacterPanelAction.BalanceModal,
   CharacterPanelAction.EditModal,
+  CharacterPanelAction.FamiliarModal,
 ]);
 
 export class CharacterModalHandler extends InteractionHandler {
@@ -106,6 +109,7 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterView.character(
           discordId,
           characterId,
+          CharacterTab.Inventory,
           `Выдано **${given.item.name}** × ${given.quantity}. Теперь в инвентаре: ${given.item.quantity} шт.`,
         );
       }
@@ -121,6 +125,7 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterView.character(
           discordId,
           characterId,
+          CharacterTab.Inventory,
           `Забрано **${taken.item.name}** × ${taken.quantity}. Осталось: ${Math.max(taken.item.quantity, 0)} шт.`,
         );
       }
@@ -136,6 +141,7 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterView.character(
           discordId,
           characterId,
+          CharacterTab.Stats,
           `Мана установлена: ${Mana.format(character.mana, character.maxMana)}`,
         );
       }
@@ -155,6 +161,7 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterView.character(
           discordId,
           characterId,
+          CharacterTab.Stats,
           change
             ? `Баланс изменён на ${change > 0 ? "+" : "−"}${Currency.inline(Math.abs(change))}, теперь ${Currency.inline(character.balanceKnuts)}.`
             : "Баланс не изменился.",
@@ -171,7 +178,24 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterView.character(
           discordId,
           characterId,
+          CharacterTab.Profile,
           `Персонаж **${character.rpName}** изменён.`,
+        );
+      }
+
+      case CharacterPanelAction.FamiliarModal: {
+        const familiar = await FamiliarService.save(discordId, characterId, {
+          name: field(CharacterModalFields.FamiliarName),
+          description: field(CharacterModalFields.FamiliarDescription),
+          image:
+            interaction.fields.getUploadedFiles(CharacterModalFields.FamiliarImage)?.first() ?? null,
+        });
+
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          CharacterTab.Familiar,
+          `Фамильяр **${familiar.name}** сохранён.`,
         );
       }
 
@@ -184,6 +208,7 @@ export class CharacterModalHandler extends InteractionHandler {
         return ManageCharacterView.character(
           discordId,
           character.id,
+          CharacterTab.Profile,
           `Персонаж **${character.rpName}** создан.`,
         );
       }

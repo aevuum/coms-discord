@@ -1,6 +1,7 @@
 import { MemberSearchService } from "../../manage/service/memberSearchService.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { CharacterTab } from "../types/character.js";
 import { ManageCharacterContainer } from "./manageCharacterContainer.js";
 
 export class ManageCharacterView {
@@ -21,6 +22,7 @@ export class ManageCharacterView {
   public static async character(
     discordId: string,
     characterId: string,
+    tab: CharacterTab = CharacterTab.Profile,
     notice: string | null = null,
   ) {
     const [member, character, items] = await Promise.all([
@@ -34,6 +36,7 @@ export class ManageCharacterView {
       discordId,
       character,
       items,
+      tab,
       notice,
     );
   }

@@ -99,6 +99,7 @@ export class CharacterService {
         await TupperService.removeForCharacter(character.id);
         await CharacterRepository.delete(character.id);
         await Storage.delete(character.avatarPath);
+        await Storage.delete(character.familiar?.imagePath);
         break;
 
       case ManageCharacterAction.Freeze:

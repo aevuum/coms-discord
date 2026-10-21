@@ -63,6 +63,7 @@ export const ModelName = {
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
   CommandPermission: 'CommandPermission',
+  CharacterFamiliar: 'CharacterFamiliar',
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
   RoleStipend: 'RoleStipend',
@@ -282,6 +283,19 @@ export const CommandPermissionScalarFieldEnum = {
 } as const
 
 export type CommandPermissionScalarFieldEnum = (typeof CommandPermissionScalarFieldEnum)[keyof typeof CommandPermissionScalarFieldEnum]
+
+
+export const CharacterFamiliarScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  name: 'name',
+  description: 'description',
+  imagePath: 'imagePath',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterFamiliarScalarFieldEnum = (typeof CharacterFamiliarScalarFieldEnum)[keyof typeof CharacterFamiliarScalarFieldEnum]
 
 
 export const CharacterTupperScalarFieldEnum = {

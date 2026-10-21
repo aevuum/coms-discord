@@ -14,11 +14,13 @@ import { ManageCharacterComponents } from "../lib/manageCharacterComponents.js";
 import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { CharacterTab } from "../types/character.js";
 
 const SELECT_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.Member,
   CharacterPanelAction.Pick,
   CharacterPanelAction.TakeSelect,
+  CharacterPanelAction.Tab,
 ]);
 
 export class CharacterSelectHandler extends InteractionHandler {
@@ -74,7 +76,13 @@ export class CharacterSelectHandler extends InteractionHandler {
       const container =
         result.action === CharacterPanelAction.Member
           ? await ManageCharacterView.player(result.value)
-          : await ManageCharacterView.character(result.args[0], result.value);
+          : result.action === CharacterPanelAction.Tab
+            ? await ManageCharacterView.character(
+                result.args[0],
+                result.args[1],
+                result.value as CharacterTab,
+              )
+            : await ManageCharacterView.character(result.args[0], result.value);
 
       await interaction.update({
         flags: MessageFlags.IsComponentsV2,

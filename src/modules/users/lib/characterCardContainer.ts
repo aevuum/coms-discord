@@ -3,6 +3,8 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ContainerBuilder,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
   SectionBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
@@ -12,23 +14,30 @@ import {
 
 import type {
   Character,
+  CharacterFamiliar,
   CharacterTupper,
 } from "../../../database/generated/prisma/client.js";
 
 import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
-import { Mana } from "../../spells/lib/mana.js";
 import { TupperCustomIds } from "../../tupper/lib/tupperCustomIds.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
-const POTION = "<:29865potionwhite:1518587289989550100>";
 const CHEST = "<:527877discordlegendchest:1518587359136972930>";
 const FEATHER = "<:teal_feather:1562262848598577284>";
 
 const PAD = "⠀".repeat(60);
 
+export const FAMILIAR_CARD_PREFIX = "cardfam";
+
+export enum FamiliarCardAction {
+  View = "view",
+  Back = "back",
+}
+
 type CardCharacter = Character & {
   tupper: CharacterTupper | null;
+  familiar: CharacterFamiliar | null;
 };
 
 export type CardItem = {
@@ -43,21 +52,11 @@ export class CharacterCardContainer {
   public static build(character: CardCharacter, items: CardItem[]) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
-    const mana = Mana.current(character);
-    const timeToFull = Mana.timeToFull(mana, character.maxMana);
-
     const header = new TextDisplayBuilder().setContent(
       [
-        `## ${character.rpName}`,
-        `> **Возраст:** ${character.age !== null ? CharacterFormatter.age(character.age) : "не указан"}`,
-        `> **Статус:** ${CharacterFormatter.status(character.status)}`,
-        `> **Особая роль:** ${character.specialRole ?? "нет"}`,
-        `> **Факультет:** ${CharacterFormatter.faculty(character.faculty)}`,
-        "",
-        `${POTION} **Мана:** ${Mana.format(mana, character.maxMana)}`,
-        timeToFull
-          ? `-# Полное восстановление через ${timeToFull}`
-          : "-# Мана полностью восстановлена",
+        `## ${this.title(character)}`,
+        `> **Статус персонажа:** ${CharacterFormatter.status(character.status)}`,
+        `-# ${PAD}`,
       ].join("\n"),
     );
 
@@ -74,6 +73,21 @@ export class CharacterCardContainer {
     } else {
       container.addTextDisplayComponents(header);
     }
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          `### ${FEATHER} Фамильяр`,
+          character.familiar
+            ? `${ARROW} **${character.familiar.name}**`
+            : `${ARROW} Фамильяра пока нет.`,
+        ].join("\n"),
+      ),
+    );
 
     container.addSeparatorComponents(
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
@@ -124,26 +138,84 @@ export class CharacterCardContainer {
 
     container.addTextDisplayComponents(
       new TextDisplayBuilder().setContent(
-        [
-          character.tupper
-            ? `${FEATHER} Таппер: **${character.tupper.name}** · Тег: \`${character.tupper.prefix}\``
-            : `${FEATHER} Таппер ещё не настроен.`,
-          `-# Эта карточка видна только вам.${PAD}`,
-        ].join("\n"),
+        character.tupper
+          ? `-# Таппер: **${character.tupper.name}** · тег \`${character.tupper.prefix}\``
+          : "-# Таппер ещё не настроен.",
       ),
     );
 
     container.addActionRowComponents(
       new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()
+          .setCustomId(this.customId(FamiliarCardAction.View, character.id))
+          .setLabel("Просмотреть фамильяра")
+          .setEmoji(FEATHER)
+          .setStyle(ButtonStyle.Primary)
+          .setDisabled(!character.familiar),
+        new ButtonBuilder()
           .setCustomId(TupperCustomIds.open(character.id))
-          .setLabel("Редактировать таппер")
+          .setLabel("Изменить таппер")
           .setEmoji("<:479873settingsna:1518581042456432791>")
           .setStyle(ButtonStyle.Secondary),
       ),
     );
 
     return container;
+  }
+
+  public static familiar(character: Character, familiar: CharacterFamiliar) {
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          `# ${FEATHER} ${familiar.name}`,
+          `-# Фамильяр персонажа **${character.rpName}**`,
+          "",
+          familiar.description,
+          `-# ${PAD}`,
+        ].join("\n"),
+      ),
+    );
+
+    const image = Storage.url(familiar.imagePath);
+
+    if (image) {
+      container.addMediaGalleryComponents(
+        new MediaGalleryBuilder().addItems(
+          new MediaGalleryItemBuilder()
+            .setURL(image)
+            .setDescription(familiar.name.slice(0, 1024)),
+        ),
+      );
+    }
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small),
+    );
+
+    container.addActionRowComponents(
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId(this.customId(FamiliarCardAction.Back, character.id))
+          .setLabel("К персонажу")
+          .setEmoji("<:26204blackarrow:1518587278467792997>")
+          .setStyle(ButtonStyle.Secondary),
+      ),
+    );
+
+    return container;
+  }
+
+  public static customId(action: FamiliarCardAction, characterId: string) {
+    return `${FAMILIAR_CARD_PREFIX}:${action}:${characterId}`;
+  }
+
+  private static title(character: CardCharacter) {
+    const age = character.age !== null ? `, ${CharacterFormatter.age(character.age)}` : "";
+    const role = character.specialRole ? ` | ${character.specialRole}` : "";
+
+    return `${character.rpName}${age} (${CharacterFormatter.facultyLabel(character.faculty)})${role}`;
   }
 
   private static itemLine(item: CardItem) {

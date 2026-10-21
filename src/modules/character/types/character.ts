@@ -20,7 +20,29 @@ export enum ManageCharacterAction {
   SetMana = "mana",
   SetBalance = "balance",
   Edit = "edit",
+  Familiar = "familiar",
+  FamiliarDelete = "familiar_delete",
 }
+
+export enum CharacterTab {
+  Profile = "profile",
+  Inventory = "inventory",
+  Stats = "stats",
+  Familiar = "familiar",
+  Status = "status",
+}
+
+export const ACTION_TABS: Partial<Record<ManageCharacterAction, CharacterTab>> = {
+  [ManageCharacterAction.GiveItem]: CharacterTab.Inventory,
+  [ManageCharacterAction.TakeItem]: CharacterTab.Inventory,
+  [ManageCharacterAction.SetMana]: CharacterTab.Stats,
+  [ManageCharacterAction.SetBalance]: CharacterTab.Stats,
+  [ManageCharacterAction.Familiar]: CharacterTab.Familiar,
+  [ManageCharacterAction.FamiliarDelete]: CharacterTab.Familiar,
+  [ManageCharacterAction.Freeze]: CharacterTab.Status,
+  [ManageCharacterAction.Unfreeze]: CharacterTab.Status,
+  [ManageCharacterAction.Kill]: CharacterTab.Status,
+};
 
 export type CharacterFormInput = {
   name: string;

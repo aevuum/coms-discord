@@ -8,6 +8,8 @@ export enum CharacterPanelAction {
   Character = "char",
   Create = "create",
   Act = "act",
+  Tab = "tab",
+  FamiliarModal = "familiar_modal",
   Confirm = "confirm",
   CreateModal = "create_modal",
   GiveModal = "give_modal",
@@ -33,6 +35,9 @@ export const CharacterModalFields = {
   Reason: "reason",
   Age: "age",
   SpecialRole: "special_role",
+  FamiliarName: "familiar_name",
+  FamiliarDescription: "familiar_description",
+  FamiliarImage: "familiar_image",
 } as const;
 
 export class CharacterCustomIds {

@@ -20,7 +20,12 @@ import {
 import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
-import { ManageCharacterAction } from "../types/character.js";
+import { FamiliarService } from "../service/familiarService.js";
+import {
+  ACTION_TABS,
+  CharacterTab,
+  ManageCharacterAction,
+} from "../types/character.js";
 
 const BUTTON_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.Root,
@@ -42,6 +47,7 @@ const MODAL_ACTIONS = new Set<ManageCharacterAction>([
 const CONFIRMED_ACTIONS = new Set<ManageCharacterAction>([
   ManageCharacterAction.Delete,
   ManageCharacterAction.Kill,
+  ManageCharacterAction.FamiliarDelete,
 ]);
 
 export class CharacterButtonHandler extends InteractionHandler {
@@ -104,6 +110,23 @@ export class CharacterButtonHandler extends InteractionHandler {
           string,
         ];
 
+        if (action === ManageCharacterAction.Familiar) {
+          const character = await CharacterInventoryService.getOwnedCharacter(
+            discordId,
+            characterId,
+          );
+
+          await interaction.showModal(
+            ManageCharacterComponents.familiarModal(
+              discordId,
+              character,
+              character.familiar ?? null,
+            ),
+          );
+
+          return;
+        }
+
         if (MODAL_ACTIONS.has(action)) {
           const character = await CharacterInventoryService.getOwnedCharacter(
             discordId,
@@ -148,7 +171,11 @@ export class CharacterButtonHandler extends InteractionHandler {
         return ManageCharacterView.player(result.args[0]);
 
       case CharacterPanelAction.Character:
-        return ManageCharacterView.character(result.args[0], result.args[1]);
+        return ManageCharacterView.character(
+          result.args[0],
+          result.args[1],
+          (result.args[2] as CharacterTab | undefined) ?? CharacterTab.Profile,
+        );
 
       case CharacterPanelAction.Act: {
         const [action, discordId, characterId] = result.args as [
@@ -197,6 +224,19 @@ export class CharacterButtonHandler extends InteractionHandler {
     discordId: string,
     characterId: string,
   ) {
+    const tab = ACTION_TABS[action] ?? CharacterTab.Profile;
+
+    if (action === ManageCharacterAction.FamiliarDelete) {
+      const familiar = await FamiliarService.remove(discordId, characterId);
+
+      return ManageCharacterView.character(
+        discordId,
+        characterId,
+        tab,
+        `Фамильяр **${familiar.name}** отвязан и удалён.`,
+      );
+    }
+
     const character = await CharacterService.apply(action, discordId, characterId);
 
     const notice = `Персонаж **${character.rpName}** ${ACTION_RESULTS[action]}.`;
@@ -205,6 +245,6 @@ export class CharacterButtonHandler extends InteractionHandler {
       return ManageCharacterView.player(discordId, notice);
     }
 
-    return ManageCharacterView.character(discordId, characterId, notice);
+    return ManageCharacterView.character(discordId, characterId, tab, notice);
   }
 }
