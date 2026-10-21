@@ -9,7 +9,8 @@ import { PermissionService } from "../../permissions/service/permissionService.j
 import type { BaseInteraction } from "discord.js";
 import { SpellCache } from "../cache/spellCache.js";
 import { SPELL_SEED } from "../data/spellSeed.js";
-import { GIF_CACHE_TTL_MS, MAX_SPELL_COST } from "../lib/spellConfig.js";
+import { Storage } from "../../../lib/storage.js";
+import { GIF_CACHE_TTL_MS, GIFS_STORED_PER_SPELL, MAX_SPELL_COST } from "../lib/spellConfig.js";
 import { SpellMatcher } from "../lib/spellMatcher.js";
 import {
   SpellRepository,
@@ -28,6 +29,8 @@ export class SpellService {
   public static readonly MANAGE_KEY = "manage.spells";
 
   private static readonly MAX_INCANTATIONS = 10;
+
+  private static readonly gifDownloads = new Map<string, Promise<string[]>>();
 
   public static async loadCache() {
     if (!(await SpellRepository.count())) {
@@ -98,7 +101,10 @@ export class SpellService {
   public static async create(input: SpellInput) {
     const data = await this.parseInput(input);
 
-    const spell = await SpellRepository.create(data);
+    const spell = await SpellRepository.create(data).catch(async (error) => {
+      await Storage.delete(data.imagePath);
+      throw error;
+    });
 
     SpellCache.update(spell);
 
@@ -106,13 +112,25 @@ export class SpellService {
   }
 
   public static async update(spellId: string, input: SpellInput) {
-    await this.getSpell(spellId);
+    const previous = await this.getSpell(spellId);
 
-    const data = await this.parseInput(input, spellId);
+    const data = await this.parseInput(input, previous);
 
-    const spell = await SpellRepository.update(spellId, data);
+    const spell = await SpellRepository.update(spellId, data).catch(async (error) => {
+      if (data.imagePath) {
+        await Storage.delete(data.imagePath);
+      }
+
+      throw error;
+    });
 
     SpellCache.update(spell);
+
+    if (data.imagePath !== undefined && previous.imagePath) {
+      await Storage.delete(previous.imagePath);
+    }
+
+    await Promise.all(previous.gifPaths.map((path) => Storage.delete(path)));
 
     return spell;
   }
@@ -124,41 +142,64 @@ export class SpellService {
 
     SpellCache.remove(spell.id);
 
+    await Promise.all([spell.imagePath, ...spell.gifPaths].map((path) => Storage.delete(path)));
+
     return spell;
   }
 
   public static async getImage(spell: Spell) {
-    if (spell.imageUrl) {
-      return spell.imageUrl;
+    const own = Storage.media(spell.imagePath, spell.imageUrl);
+
+    if (own) {
+      return own;
     }
 
+    const paths = spell.gifPaths.length ? spell.gifPaths : await this.storeGifs(spell);
+
+    return paths.length ? Storage.url(paths[Math.floor(Math.random() * paths.length)]) : null;
+  }
+
+  private static async storeGifs(spell: Spell) {
     if (!GifService.isEnabled()) {
-      return null;
+      return [];
     }
 
-    let gifUrls = spell.gifUrls;
+    if (spell.gifFetchedAt && Date.now() - spell.gifFetchedAt.getTime() < GIF_CACHE_TTL_MS) {
+      return [];
+    }
 
-    const expired =
-      !spell.gifFetchedAt ||
-      Date.now() - spell.gifFetchedAt.getTime() > GIF_CACHE_TTL_MS;
+    const pending = this.gifDownloads.get(spell.id);
 
-    if (!gifUrls.length || expired) {
+    if (pending) {
+      return pending;
+    }
+
+    const download = (async () => {
       const found = await GifService.search(this.gifQuery(spell));
 
-      if (found.length) {
-        try {
-          SpellCache.update(await SpellRepository.updateGifs(spell.id, found));
-        } catch (error) {
-          container.logger.error(error);
-        }
+      const paths = (
+        await Promise.all(
+          found
+            .slice(0, GIFS_STORED_PER_SPELL)
+            .map((url) => Storage.uploadFromUrl(url).catch(() => null)),
+        )
+      ).filter((path): path is string => path !== null);
 
-        gifUrls = found;
+      try {
+        SpellCache.update(await SpellRepository.updateGifs(spell.id, paths));
+      } catch (error) {
+        container.logger.error(error);
+        await Promise.all(paths.map((path) => Storage.delete(path)));
+
+        return [];
       }
-    }
 
-    return gifUrls.length
-      ? gifUrls[Math.floor(Math.random() * gifUrls.length)]
-      : null;
+      return paths;
+    })().finally(() => this.gifDownloads.delete(spell.id));
+
+    this.gifDownloads.set(spell.id, download);
+
+    return download;
   }
 
   private static gifQuery(spell: Spell) {
@@ -175,7 +216,7 @@ export class SpellService {
 
   private static async parseInput(
     input: SpellInput,
-    spellId?: string,
+    previous?: Spell,
   ): Promise<SpellData> {
     await this.ensureCache();
 
@@ -215,7 +256,7 @@ export class SpellService {
 
       const conflict = SpellCache.all().find(
         (spell) =>
-          spell.id !== spellId &&
+          spell.id !== previous?.id &&
           spell.incantations.some(
             (other) => SpellMatcher.normalize(other) === normalized,
           ),
@@ -248,34 +289,18 @@ export class SpellService {
       manaCost = Number(costText);
     }
 
-    const imageText = input.imageUrl.trim();
-
-    let imageUrl: string | null = null;
-
-    if (imageText.length) {
-      let parsed: URL;
-
-      try {
-        parsed = new URL(imageText);
-      } catch {
-        throw new SpellError("Ссылка на картинку некорректна.");
-      }
-
-      if (parsed.protocol !== "https:" || imageText.length > 500) {
-        throw new SpellError(
-          "Ссылка на картинку должна начинаться с https:// и быть не длиннее 500 символов.",
-        );
-      }
-
-      imageUrl = imageText;
-    }
+    const imagePath = await Storage.fromLink(
+      input.imageUrl,
+      previous?.imagePath ?? null,
+      previous?.imageUrl ?? null,
+    );
 
     return {
       name,
       incantations,
       difficulty,
       manaCost,
-      imageUrl,
+      ...(imagePath !== undefined ? { imagePath, imageUrl: null } : {}),
     };
   }
 }

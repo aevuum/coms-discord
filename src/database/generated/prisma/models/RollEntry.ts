@@ -41,6 +41,7 @@ export type RollEntryMinAggregateOutputType = {
   description: string | null
   emoji: string | null
   imageUrl: string | null
+  imagePath: string | null
   chance: number | null
   isDefault: boolean | null
   createdAt: Date | null
@@ -54,6 +55,7 @@ export type RollEntryMaxAggregateOutputType = {
   description: string | null
   emoji: string | null
   imageUrl: string | null
+  imagePath: string | null
   chance: number | null
   isDefault: boolean | null
   createdAt: Date | null
@@ -67,6 +69,7 @@ export type RollEntryCountAggregateOutputType = {
   description: number
   emoji: number
   imageUrl: number
+  imagePath: number
   chance: number
   isDefault: number
   createdAt: number
@@ -90,6 +93,7 @@ export type RollEntryMinAggregateInputType = {
   description?: true
   emoji?: true
   imageUrl?: true
+  imagePath?: true
   chance?: true
   isDefault?: true
   createdAt?: true
@@ -103,6 +107,7 @@ export type RollEntryMaxAggregateInputType = {
   description?: true
   emoji?: true
   imageUrl?: true
+  imagePath?: true
   chance?: true
   isDefault?: true
   createdAt?: true
@@ -116,6 +121,7 @@ export type RollEntryCountAggregateInputType = {
   description?: true
   emoji?: true
   imageUrl?: true
+  imagePath?: true
   chance?: true
   isDefault?: true
   createdAt?: true
@@ -216,6 +222,7 @@ export type RollEntryGroupByOutputType = {
   description: string | null
   emoji: string | null
   imageUrl: string | null
+  imagePath: string | null
   chance: number
   isDefault: boolean
   createdAt: Date
@@ -252,6 +259,7 @@ export type RollEntryWhereInput = {
   description?: Prisma.StringNullableFilter<"RollEntry"> | string | null
   emoji?: Prisma.StringNullableFilter<"RollEntry"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"RollEntry"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"RollEntry"> | string | null
   chance?: Prisma.IntFilter<"RollEntry"> | number
   isDefault?: Prisma.BoolFilter<"RollEntry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RollEntry"> | Date | string
@@ -265,6 +273,7 @@ export type RollEntryOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   emoji?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePath?: Prisma.SortOrderInput | Prisma.SortOrder
   chance?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -281,6 +290,7 @@ export type RollEntryWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"RollEntry"> | string | null
   emoji?: Prisma.StringNullableFilter<"RollEntry"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"RollEntry"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"RollEntry"> | string | null
   chance?: Prisma.IntFilter<"RollEntry"> | number
   isDefault?: Prisma.BoolFilter<"RollEntry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RollEntry"> | Date | string
@@ -294,6 +304,7 @@ export type RollEntryOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   emoji?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePath?: Prisma.SortOrderInput | Prisma.SortOrder
   chance?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -315,6 +326,7 @@ export type RollEntryScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"RollEntry"> | string | null
   emoji?: Prisma.StringNullableWithAggregatesFilter<"RollEntry"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"RollEntry"> | string | null
+  imagePath?: Prisma.StringNullableWithAggregatesFilter<"RollEntry"> | string | null
   chance?: Prisma.IntWithAggregatesFilter<"RollEntry"> | number
   isDefault?: Prisma.BoolWithAggregatesFilter<"RollEntry"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RollEntry"> | Date | string
@@ -328,6 +340,7 @@ export type RollEntryCreateInput = {
   description?: string | null
   emoji?: string | null
   imageUrl?: string | null
+  imagePath?: string | null
   chance?: number
   isDefault?: boolean
   createdAt?: Date | string
@@ -341,6 +354,7 @@ export type RollEntryUncheckedCreateInput = {
   description?: string | null
   emoji?: string | null
   imageUrl?: string | null
+  imagePath?: string | null
   chance?: number
   isDefault?: boolean
   createdAt?: Date | string
@@ -354,6 +368,7 @@ export type RollEntryUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chance?: Prisma.IntFieldUpdateOperationsInput | number
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -367,6 +382,7 @@ export type RollEntryUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chance?: Prisma.IntFieldUpdateOperationsInput | number
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,6 +396,7 @@ export type RollEntryCreateManyInput = {
   description?: string | null
   emoji?: string | null
   imageUrl?: string | null
+  imagePath?: string | null
   chance?: number
   isDefault?: boolean
   createdAt?: Date | string
@@ -393,6 +410,7 @@ export type RollEntryUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chance?: Prisma.IntFieldUpdateOperationsInput | number
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -406,6 +424,7 @@ export type RollEntryUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chance?: Prisma.IntFieldUpdateOperationsInput | number
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -419,6 +438,7 @@ export type RollEntryCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   emoji?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   chance?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -436,6 +456,7 @@ export type RollEntryMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   emoji?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   chance?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -449,6 +470,7 @@ export type RollEntryMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   emoji?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   chance?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -472,6 +494,7 @@ export type RollEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   description?: boolean
   emoji?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   chance?: boolean
   isDefault?: boolean
   createdAt?: boolean
@@ -485,6 +508,7 @@ export type RollEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   description?: boolean
   emoji?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   chance?: boolean
   isDefault?: boolean
   createdAt?: boolean
@@ -498,6 +522,7 @@ export type RollEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   description?: boolean
   emoji?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   chance?: boolean
   isDefault?: boolean
   createdAt?: boolean
@@ -511,13 +536,14 @@ export type RollEntrySelectScalar = {
   description?: boolean
   emoji?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   chance?: boolean
   isDefault?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type RollEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "name" | "description" | "emoji" | "imageUrl" | "chance" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["rollEntry"]>
+export type RollEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "name" | "description" | "emoji" | "imageUrl" | "imagePath" | "chance" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["rollEntry"]>
 
 export type $RollEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RollEntry"
@@ -529,6 +555,7 @@ export type $RollEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     description: string | null
     emoji: string | null
     imageUrl: string | null
+    imagePath: string | null
     chance: number
     isDefault: boolean
     createdAt: Date
@@ -962,6 +989,7 @@ export interface RollEntryFieldRefs {
   readonly description: Prisma.FieldRef<"RollEntry", 'String'>
   readonly emoji: Prisma.FieldRef<"RollEntry", 'String'>
   readonly imageUrl: Prisma.FieldRef<"RollEntry", 'String'>
+  readonly imagePath: Prisma.FieldRef<"RollEntry", 'String'>
   readonly chance: Prisma.FieldRef<"RollEntry", 'Int'>
   readonly isDefault: Prisma.FieldRef<"RollEntry", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"RollEntry", 'DateTime'>

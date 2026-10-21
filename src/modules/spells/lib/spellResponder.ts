@@ -7,6 +7,7 @@ import {
   ModalSubmitInteraction,
 } from "discord.js";
 
+import { StorageError } from "../../../lib/storage.js";
 import { SpellError } from "../types/spells.js";
 import { SpellContainer } from "./spellContainer.js";
 
@@ -20,7 +21,7 @@ export class SpellResponder {
   ) {
     let message = "Произошла непредвиденная ошибка. Попробуйте позже.";
 
-    if (error instanceof SpellError) {
+    if (error instanceof SpellError || error instanceof StorageError) {
       message = error.message;
     } else {
       container.logger.error(error);

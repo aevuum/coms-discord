@@ -41,6 +41,7 @@ export type SpellMinAggregateOutputType = {
   difficulty: $Enums.SpellDifficulty | null
   manaCost: number | null
   imageUrl: string | null
+  imagePath: string | null
   gifQuery: string | null
   gifFetchedAt: Date | null
   isCustom: boolean | null
@@ -55,6 +56,7 @@ export type SpellMaxAggregateOutputType = {
   difficulty: $Enums.SpellDifficulty | null
   manaCost: number | null
   imageUrl: string | null
+  imagePath: string | null
   gifQuery: string | null
   gifFetchedAt: Date | null
   isCustom: boolean | null
@@ -70,8 +72,10 @@ export type SpellCountAggregateOutputType = {
   difficulty: number
   manaCost: number
   imageUrl: number
+  imagePath: number
   gifQuery: number
   gifUrls: number
+  gifPaths: number
   gifFetchedAt: number
   isCustom: number
   createdAt: number
@@ -95,6 +99,7 @@ export type SpellMinAggregateInputType = {
   difficulty?: true
   manaCost?: true
   imageUrl?: true
+  imagePath?: true
   gifQuery?: true
   gifFetchedAt?: true
   isCustom?: true
@@ -109,6 +114,7 @@ export type SpellMaxAggregateInputType = {
   difficulty?: true
   manaCost?: true
   imageUrl?: true
+  imagePath?: true
   gifQuery?: true
   gifFetchedAt?: true
   isCustom?: true
@@ -124,8 +130,10 @@ export type SpellCountAggregateInputType = {
   difficulty?: true
   manaCost?: true
   imageUrl?: true
+  imagePath?: true
   gifQuery?: true
   gifUrls?: true
+  gifPaths?: true
   gifFetchedAt?: true
   isCustom?: true
   createdAt?: true
@@ -227,8 +235,10 @@ export type SpellGroupByOutputType = {
   difficulty: $Enums.SpellDifficulty
   manaCost: number | null
   imageUrl: string | null
+  imagePath: string | null
   gifQuery: string | null
   gifUrls: string[]
+  gifPaths: string[]
   gifFetchedAt: Date | null
   isCustom: boolean
   createdAt: Date
@@ -266,8 +276,10 @@ export type SpellWhereInput = {
   difficulty?: Prisma.EnumSpellDifficultyFilter<"Spell"> | $Enums.SpellDifficulty
   manaCost?: Prisma.IntNullableFilter<"Spell"> | number | null
   imageUrl?: Prisma.StringNullableFilter<"Spell"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"Spell"> | string | null
   gifQuery?: Prisma.StringNullableFilter<"Spell"> | string | null
   gifUrls?: Prisma.StringNullableListFilter<"Spell">
+  gifPaths?: Prisma.StringNullableListFilter<"Spell">
   gifFetchedAt?: Prisma.DateTimeNullableFilter<"Spell"> | Date | string | null
   isCustom?: Prisma.BoolFilter<"Spell"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Spell"> | Date | string
@@ -283,8 +295,10 @@ export type SpellOrderByWithRelationInput = {
   difficulty?: Prisma.SortOrder
   manaCost?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePath?: Prisma.SortOrderInput | Prisma.SortOrder
   gifQuery?: Prisma.SortOrderInput | Prisma.SortOrder
   gifUrls?: Prisma.SortOrder
+  gifPaths?: Prisma.SortOrder
   gifFetchedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isCustom?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -303,8 +317,10 @@ export type SpellWhereUniqueInput = Prisma.AtLeast<{
   difficulty?: Prisma.EnumSpellDifficultyFilter<"Spell"> | $Enums.SpellDifficulty
   manaCost?: Prisma.IntNullableFilter<"Spell"> | number | null
   imageUrl?: Prisma.StringNullableFilter<"Spell"> | string | null
+  imagePath?: Prisma.StringNullableFilter<"Spell"> | string | null
   gifQuery?: Prisma.StringNullableFilter<"Spell"> | string | null
   gifUrls?: Prisma.StringNullableListFilter<"Spell">
+  gifPaths?: Prisma.StringNullableListFilter<"Spell">
   gifFetchedAt?: Prisma.DateTimeNullableFilter<"Spell"> | Date | string | null
   isCustom?: Prisma.BoolFilter<"Spell"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Spell"> | Date | string
@@ -320,8 +336,10 @@ export type SpellOrderByWithAggregationInput = {
   difficulty?: Prisma.SortOrder
   manaCost?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePath?: Prisma.SortOrderInput | Prisma.SortOrder
   gifQuery?: Prisma.SortOrderInput | Prisma.SortOrder
   gifUrls?: Prisma.SortOrder
+  gifPaths?: Prisma.SortOrder
   gifFetchedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isCustom?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -344,8 +362,10 @@ export type SpellScalarWhereWithAggregatesInput = {
   difficulty?: Prisma.EnumSpellDifficultyWithAggregatesFilter<"Spell"> | $Enums.SpellDifficulty
   manaCost?: Prisma.IntNullableWithAggregatesFilter<"Spell"> | number | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Spell"> | string | null
+  imagePath?: Prisma.StringNullableWithAggregatesFilter<"Spell"> | string | null
   gifQuery?: Prisma.StringNullableWithAggregatesFilter<"Spell"> | string | null
   gifUrls?: Prisma.StringNullableListFilter<"Spell">
+  gifPaths?: Prisma.StringNullableListFilter<"Spell">
   gifFetchedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Spell"> | Date | string | null
   isCustom?: Prisma.BoolWithAggregatesFilter<"Spell"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Spell"> | Date | string
@@ -360,8 +380,10 @@ export type SpellCreateInput = {
   difficulty?: $Enums.SpellDifficulty
   manaCost?: number | null
   imageUrl?: string | null
+  imagePath?: string | null
   gifQuery?: string | null
   gifUrls?: Prisma.SpellCreategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellCreategifPathsInput | string[]
   gifFetchedAt?: Date | string | null
   isCustom?: boolean
   createdAt?: Date | string
@@ -377,8 +399,10 @@ export type SpellUncheckedCreateInput = {
   difficulty?: $Enums.SpellDifficulty
   manaCost?: number | null
   imageUrl?: string | null
+  imagePath?: string | null
   gifQuery?: string | null
   gifUrls?: Prisma.SpellCreategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellCreategifPathsInput | string[]
   gifFetchedAt?: Date | string | null
   isCustom?: boolean
   createdAt?: Date | string
@@ -394,8 +418,10 @@ export type SpellUpdateInput = {
   difficulty?: Prisma.EnumSpellDifficultyFieldUpdateOperationsInput | $Enums.SpellDifficulty
   manaCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifQuery?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifUrls?: Prisma.SpellUpdategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellUpdategifPathsInput | string[]
   gifFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isCustom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -411,8 +437,10 @@ export type SpellUncheckedUpdateInput = {
   difficulty?: Prisma.EnumSpellDifficultyFieldUpdateOperationsInput | $Enums.SpellDifficulty
   manaCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifQuery?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifUrls?: Prisma.SpellUpdategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellUpdategifPathsInput | string[]
   gifFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isCustom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -428,8 +456,10 @@ export type SpellCreateManyInput = {
   difficulty?: $Enums.SpellDifficulty
   manaCost?: number | null
   imageUrl?: string | null
+  imagePath?: string | null
   gifQuery?: string | null
   gifUrls?: Prisma.SpellCreategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellCreategifPathsInput | string[]
   gifFetchedAt?: Date | string | null
   isCustom?: boolean
   createdAt?: Date | string
@@ -444,8 +474,10 @@ export type SpellUpdateManyMutationInput = {
   difficulty?: Prisma.EnumSpellDifficultyFieldUpdateOperationsInput | $Enums.SpellDifficulty
   manaCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifQuery?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifUrls?: Prisma.SpellUpdategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellUpdategifPathsInput | string[]
   gifFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isCustom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -460,8 +492,10 @@ export type SpellUncheckedUpdateManyInput = {
   difficulty?: Prisma.EnumSpellDifficultyFieldUpdateOperationsInput | $Enums.SpellDifficulty
   manaCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifQuery?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifUrls?: Prisma.SpellUpdategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellUpdategifPathsInput | string[]
   gifFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isCustom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -484,8 +518,10 @@ export type SpellCountOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   manaCost?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   gifQuery?: Prisma.SortOrder
   gifUrls?: Prisma.SortOrder
+  gifPaths?: Prisma.SortOrder
   gifFetchedAt?: Prisma.SortOrder
   isCustom?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -503,6 +539,7 @@ export type SpellMaxOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   manaCost?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   gifQuery?: Prisma.SortOrder
   gifFetchedAt?: Prisma.SortOrder
   isCustom?: Prisma.SortOrder
@@ -517,6 +554,7 @@ export type SpellMinOrderByAggregateInput = {
   difficulty?: Prisma.SortOrder
   manaCost?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePath?: Prisma.SortOrder
   gifQuery?: Prisma.SortOrder
   gifFetchedAt?: Prisma.SortOrder
   isCustom?: Prisma.SortOrder
@@ -541,6 +579,10 @@ export type SpellCreategifUrlsInput = {
   set: string[]
 }
 
+export type SpellCreategifPathsInput = {
+  set: string[]
+}
+
 export type SpellUpdateincantationsInput = {
   set?: string[]
   push?: string | string[]
@@ -551,6 +593,11 @@ export type EnumSpellDifficultyFieldUpdateOperationsInput = {
 }
 
 export type SpellUpdategifUrlsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type SpellUpdategifPathsInput = {
   set?: string[]
   push?: string | string[]
 }
@@ -587,8 +634,10 @@ export type SpellCreateWithoutCastsInput = {
   difficulty?: $Enums.SpellDifficulty
   manaCost?: number | null
   imageUrl?: string | null
+  imagePath?: string | null
   gifQuery?: string | null
   gifUrls?: Prisma.SpellCreategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellCreategifPathsInput | string[]
   gifFetchedAt?: Date | string | null
   isCustom?: boolean
   createdAt?: Date | string
@@ -603,8 +652,10 @@ export type SpellUncheckedCreateWithoutCastsInput = {
   difficulty?: $Enums.SpellDifficulty
   manaCost?: number | null
   imageUrl?: string | null
+  imagePath?: string | null
   gifQuery?: string | null
   gifUrls?: Prisma.SpellCreategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellCreategifPathsInput | string[]
   gifFetchedAt?: Date | string | null
   isCustom?: boolean
   createdAt?: Date | string
@@ -635,8 +686,10 @@ export type SpellUpdateWithoutCastsInput = {
   difficulty?: Prisma.EnumSpellDifficultyFieldUpdateOperationsInput | $Enums.SpellDifficulty
   manaCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifQuery?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifUrls?: Prisma.SpellUpdategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellUpdategifPathsInput | string[]
   gifFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isCustom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -651,8 +704,10 @@ export type SpellUncheckedUpdateWithoutCastsInput = {
   difficulty?: Prisma.EnumSpellDifficultyFieldUpdateOperationsInput | $Enums.SpellDifficulty
   manaCost?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifQuery?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gifUrls?: Prisma.SpellUpdategifUrlsInput | string[]
+  gifPaths?: Prisma.SpellUpdategifPathsInput | string[]
   gifFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isCustom?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -698,8 +753,10 @@ export type SpellSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   difficulty?: boolean
   manaCost?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   gifQuery?: boolean
   gifUrls?: boolean
+  gifPaths?: boolean
   gifFetchedAt?: boolean
   isCustom?: boolean
   createdAt?: boolean
@@ -716,8 +773,10 @@ export type SpellSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   difficulty?: boolean
   manaCost?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   gifQuery?: boolean
   gifUrls?: boolean
+  gifPaths?: boolean
   gifFetchedAt?: boolean
   isCustom?: boolean
   createdAt?: boolean
@@ -732,8 +791,10 @@ export type SpellSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   difficulty?: boolean
   manaCost?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   gifQuery?: boolean
   gifUrls?: boolean
+  gifPaths?: boolean
   gifFetchedAt?: boolean
   isCustom?: boolean
   createdAt?: boolean
@@ -748,15 +809,17 @@ export type SpellSelectScalar = {
   difficulty?: boolean
   manaCost?: boolean
   imageUrl?: boolean
+  imagePath?: boolean
   gifQuery?: boolean
   gifUrls?: boolean
+  gifPaths?: boolean
   gifFetchedAt?: boolean
   isCustom?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SpellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "incantations" | "description" | "difficulty" | "manaCost" | "imageUrl" | "gifQuery" | "gifUrls" | "gifFetchedAt" | "isCustom" | "createdAt" | "updatedAt", ExtArgs["result"]["spell"]>
+export type SpellOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "incantations" | "description" | "difficulty" | "manaCost" | "imageUrl" | "imagePath" | "gifQuery" | "gifUrls" | "gifPaths" | "gifFetchedAt" | "isCustom" | "createdAt" | "updatedAt", ExtArgs["result"]["spell"]>
 export type SpellInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   casts?: boolean | Prisma.Spell$castsArgs<ExtArgs>
   _count?: boolean | Prisma.SpellCountOutputTypeDefaultArgs<ExtArgs>
@@ -777,8 +840,10 @@ export type $SpellPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     difficulty: $Enums.SpellDifficulty
     manaCost: number | null
     imageUrl: string | null
+    imagePath: string | null
     gifQuery: string | null
     gifUrls: string[]
+    gifPaths: string[]
     gifFetchedAt: Date | null
     isCustom: boolean
     createdAt: Date
@@ -1214,8 +1279,10 @@ export interface SpellFieldRefs {
   readonly difficulty: Prisma.FieldRef<"Spell", 'SpellDifficulty'>
   readonly manaCost: Prisma.FieldRef<"Spell", 'Int'>
   readonly imageUrl: Prisma.FieldRef<"Spell", 'String'>
+  readonly imagePath: Prisma.FieldRef<"Spell", 'String'>
   readonly gifQuery: Prisma.FieldRef<"Spell", 'String'>
   readonly gifUrls: Prisma.FieldRef<"Spell", 'String[]'>
+  readonly gifPaths: Prisma.FieldRef<"Spell", 'String[]'>
   readonly gifFetchedAt: Prisma.FieldRef<"Spell", 'DateTime'>
   readonly isCustom: Prisma.FieldRef<"Spell", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Spell", 'DateTime'>

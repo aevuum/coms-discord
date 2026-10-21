@@ -4,6 +4,7 @@ import type { BaseInteraction, Client } from "discord.js";
 
 import type { RollEntry } from "../../../database/generated/prisma/client.js";
 
+import { Storage } from "../../../lib/storage.js";
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { ROLL_KINDS } from "../lib/rollKinds.js";
 import { ROLL_SEED } from "../lib/rollSeed.js";
@@ -129,7 +130,12 @@ export class RollService {
 
     this.assertTotal(entries, null, data.chance);
 
-    return RollRepository.create(kind, data);
+    const image = await this.image(input, null);
+
+    return RollRepository.create(kind, { ...data, ...image }).catch(async (error) => {
+      await Storage.delete(image.imagePath);
+      throw error;
+    });
   }
 
   public static async update(client: Client, id: string, input: RollEntryInput) {
@@ -141,7 +147,18 @@ export class RollService {
       this.assertTotal(await RollRepository.list(entry.kind), entry.id, data.chance);
     }
 
-    return RollRepository.update(entry.id, data);
+    const image = await this.image(input, entry);
+
+    const updated = await RollRepository.update(entry.id, { ...data, ...image }).catch(async (error) => {
+      await Storage.delete(image.imagePath);
+      throw error;
+    });
+
+    if ("imagePath" in image) {
+      await Storage.delete(entry.imagePath);
+    }
+
+    return updated;
   }
 
   public static async delete(id: string) {
@@ -152,8 +169,19 @@ export class RollService {
     }
 
     await RollRepository.delete(entry.id);
+    await Storage.delete(entry.imagePath);
 
     return entry;
+  }
+
+  private static async image(input: RollEntryInput, entry: RollEntry | null) {
+    const imagePath = await Storage.fromLink(
+      input.imageUrl,
+      entry?.imagePath ?? null,
+      entry?.imageUrl ?? null,
+    );
+
+    return imagePath === undefined ? {} : { imagePath, imageUrl: null };
   }
 
   private static assertTotal(entries: RollEntry[], exceptId: string | null, chance: number) {
@@ -181,17 +209,10 @@ export class RollService {
       throw new RollError("Описание должно быть не длиннее 500 символов.");
     }
 
-    const imageUrl = input.imageUrl.trim();
-
-    if (imageUrl && !/^https:\/\/\S+$/i.test(imageUrl)) {
-      throw new RollError("Ссылка на картинку должна начинаться с https://.");
-    }
-
     return {
       name,
       description: description || null,
       emoji: this.parseEmoji(client, input.emoji),
-      imageUrl: imageUrl || null,
       chance: isDefault ? 0 : this.parseChance(input.chance ?? ""),
     };
   }

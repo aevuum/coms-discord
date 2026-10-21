@@ -9,7 +9,8 @@ export type SpellData = {
   incantations: string[];
   difficulty: SpellDifficulty;
   manaCost: number | null;
-  imageUrl: string | null;
+  imagePath?: string | null;
+  imageUrl?: null;
 };
 
 export class SpellRepository {
@@ -63,19 +64,21 @@ export class SpellRepository {
       data: {
         ...data,
         gifUrls: [],
+        gifPaths: [],
         gifFetchedAt: null,
       },
     });
   }
 
-  public static async updateGifs(id: string, gifUrls: string[]) {
+  public static async updateGifs(id: string, gifPaths: string[]) {
     return prisma.spell.update({
       where: {
         id,
       },
 
       data: {
-        gifUrls,
+        gifUrls: [],
+        gifPaths,
         gifFetchedAt: new Date(),
       },
     });

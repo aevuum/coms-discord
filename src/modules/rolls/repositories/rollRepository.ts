@@ -6,7 +6,8 @@ export type RollEntryData = {
   name: string;
   description: string | null;
   emoji: string | null;
-  imageUrl: string | null;
+  imageUrl?: string | null;
+  imagePath?: string | null;
   chance: number;
 };
 

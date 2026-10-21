@@ -168,8 +168,10 @@ model Spell {
   manaCost   Int?
 
   imageUrl     String?
+  imagePath    String?
   gifQuery     String?
   gifUrls      String[]
+  gifPaths     String[]
   gifFetchedAt DateTime?
 
   isCustom Boolean @default(false)
@@ -522,6 +524,7 @@ model RollEntry {
   description String?
   emoji       String?
   imageUrl    String?
+  imagePath   String?
 
   chance    Int     @default(0)
   isDefault Boolean @default(false)

@@ -19,7 +19,7 @@ export const PING_ROLE_SEED: PingRoleSeed[] = [
   {
     id: "1442138634202644510",
     label: "Розыгрыши",
-    emoji: "🎁",
+    emoji: "<:sec_giveaway:1562521778125799554>",
     description: "Пинг о новых розыгрышах и конкурсах.",
   },
   {
