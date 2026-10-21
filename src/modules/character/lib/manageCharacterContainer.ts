@@ -23,6 +23,9 @@ import {
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
+import { RUNE_MAX_PROGRESS } from "../../runes/lib/runeCatalog.js";
+import { RuneContainer } from "../../runes/lib/runeContainer.js";
+import type { LearnedRune } from "../../runes/service/runeService.js";
 import { ManageCharacterComponents } from "./manageCharacterComponents.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
@@ -138,6 +141,7 @@ export class ManageCharacterContainer {
     items: InventoryListItem[],
     tab: CharacterTab,
     notice: string | null = null,
+    runes: LearnedRune[] = [],
   ) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
@@ -190,13 +194,23 @@ export class ManageCharacterContainer {
         this.statusTab(container, character);
         break;
 
+      case CharacterTab.Runes:
+        this.runesTab(container, runes);
+        break;
+
       default:
         this.profileTab(container, character);
     }
 
-    container.addActionRowComponents(
-      ManageCharacterComponents.tabActions(discordId, character, tab, Boolean(character.familiar)),
-    );
+    if (tab === CharacterTab.Runes) {
+      container.addActionRowComponents(
+        ...ManageCharacterComponents.runeRows(discordId, character.id, runes),
+      );
+    } else {
+      container.addActionRowComponents(
+        ManageCharacterComponents.tabActions(discordId, character, tab, Boolean(character.familiar)),
+      );
+    }
 
     container.addSeparatorComponents(
       new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
@@ -299,6 +313,21 @@ export class ManageCharacterContainer {
         ),
       );
     }
+  }
+
+  private static runesTab(container: ContainerBuilder, runes: LearnedRune[]) {
+    this.text(container, [
+      "### <:elder_ansuz:1562468430295334952> Руны",
+      runes.length
+        ? runes
+            .map(
+              (entry) =>
+                `${entry.rune.emoji} **${entry.rune.name}** · ${entry.progress} / ${RUNE_MAX_PROGRESS} · ${RuneContainer.stage(entry.progress)}`,
+            )
+            .join("\n")
+        : `${ARROW} Персонаж ещё не изучил ни одной руны.`,
+      "-# Выберите руну в меню ниже и укажите степень изучения от 0 до 100. Игрок видит свои руны по команде /rune.",
+    ]);
   }
 
   private static statusTab(container: ContainerBuilder, character: ManagedCharacter) {

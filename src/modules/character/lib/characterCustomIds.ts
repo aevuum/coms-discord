@@ -10,6 +10,8 @@ export enum CharacterPanelAction {
   Act = "act",
   Tab = "tab",
   FamiliarModal = "familiar_modal",
+  RuneSelect = "rune_select",
+  RuneModal = "rune_modal",
   Confirm = "confirm",
   CreateModal = "create_modal",
   GiveModal = "give_modal",
@@ -38,6 +40,7 @@ export const CharacterModalFields = {
   FamiliarName: "familiar_name",
   FamiliarDescription: "familiar_description",
   FamiliarImage: "familiar_image",
+  RuneProgress: "rune_progress",
 } as const;
 
 export class CharacterCustomIds {

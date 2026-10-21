@@ -20,6 +20,7 @@ import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { FamiliarService } from "../service/familiarService.js";
+import { RuneService } from "../../runes/service/runeService.js";
 import { CharacterTab } from "../types/character.js";
 import { Mana } from "../../spells/lib/mana.js";
 import { Currency } from "../../economy/lib/currency.js";
@@ -33,6 +34,7 @@ const MODAL_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.BalanceModal,
   CharacterPanelAction.EditModal,
   CharacterPanelAction.FamiliarModal,
+  CharacterPanelAction.RuneModal,
 ]);
 
 export class CharacterModalHandler extends InteractionHandler {
@@ -180,6 +182,25 @@ export class CharacterModalHandler extends InteractionHandler {
           characterId,
           CharacterTab.Profile,
           `Персонаж **${character.rpName}** изменён.`,
+        );
+      }
+
+      case CharacterPanelAction.RuneModal: {
+        await CharacterInventoryService.getOwnedCharacter(discordId, characterId);
+
+        const saved = await RuneService.set(
+          characterId,
+          result.args[2],
+          field(CharacterModalFields.RuneProgress),
+        );
+
+        return ManageCharacterView.character(
+          discordId,
+          characterId,
+          CharacterTab.Runes,
+          saved.progress === null
+            ? `Руна ${saved.rune.emoji} **${saved.rune.name}** убрана у персонажа.`
+            : `Руна ${saved.rune.emoji} **${saved.rune.name}**: ${saved.progress} / 100.`,
         );
       }
 

@@ -63,6 +63,7 @@ export const ModelName = {
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
   CommandPermission: 'CommandPermission',
+  CharacterRune: 'CharacterRune',
   CharacterFamiliar: 'CharacterFamiliar',
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
@@ -283,6 +284,18 @@ export const CommandPermissionScalarFieldEnum = {
 } as const
 
 export type CommandPermissionScalarFieldEnum = (typeof CommandPermissionScalarFieldEnum)[keyof typeof CommandPermissionScalarFieldEnum]
+
+
+export const CharacterRuneScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  runeKey: 'runeKey',
+  progress: 'progress',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterRuneScalarFieldEnum = (typeof CharacterRuneScalarFieldEnum)[keyof typeof CharacterRuneScalarFieldEnum]
 
 
 export const CharacterFamiliarScalarFieldEnum = {

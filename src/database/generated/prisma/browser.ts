@@ -78,6 +78,11 @@ export type CharacterInventoryItem = Prisma.CharacterInventoryItemModel
  */
 export type CommandPermission = Prisma.CommandPermissionModel
 /**
+ * Model CharacterRune
+ * 
+ */
+export type CharacterRune = Prisma.CharacterRuneModel
+/**
  * Model CharacterFamiliar
  * 
  */

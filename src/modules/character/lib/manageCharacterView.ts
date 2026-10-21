@@ -1,6 +1,7 @@
 import { MemberSearchService } from "../../manage/service/memberSearchService.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { RuneService } from "../../runes/service/runeService.js";
 import { CharacterTab } from "../types/character.js";
 import { ManageCharacterContainer } from "./manageCharacterContainer.js";
 
@@ -25,10 +26,11 @@ export class ManageCharacterView {
     tab: CharacterTab = CharacterTab.Profile,
     notice: string | null = null,
   ) {
-    const [member, character, items] = await Promise.all([
+    const [member, character, items, runes] = await Promise.all([
       MemberSearchService.getMember(discordId),
       CharacterInventoryService.getOwnedCharacter(discordId, characterId),
       CharacterInventoryService.list(characterId),
+      RuneService.learned(characterId),
     ]);
 
     return ManageCharacterContainer.dashboard(
@@ -38,6 +40,7 @@ export class ManageCharacterView {
       items,
       tab,
       notice,
+      runes,
     );
   }
 }

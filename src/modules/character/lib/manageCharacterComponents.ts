@@ -23,6 +23,14 @@ import { Currency } from "../../economy/lib/currency.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "../../spells/lib/mana.js";
 import {
+  RUNE_ALPHABETS,
+  RUNE_MAX_PROGRESS,
+  RuneAlphabet,
+  runesOf,
+  type Rune,
+} from "../../runes/lib/runeCatalog.js";
+import type { LearnedRune } from "../../runes/service/runeService.js";
+import {
   ACTION_TABS,
   CharacterTab,
   ManageCharacterAction,
@@ -52,6 +60,7 @@ export const CHARACTER_TABS: {
   { id: CharacterTab.Inventory, label: "Инвентарь", description: "Выдача и изъятие предметов", emoji: "<:inventory:1562485572008673340>" },
   { id: CharacterTab.Stats, label: "Мана и деньги", description: "Текущая мана и баланс персонажа", emoji: "<:29865potionwhite:1518587289989550100>" },
   { id: CharacterTab.Familiar, label: "Фамильяр", description: "Регистрация и привязка фамильяра", emoji: "<:familiar:1562485560533319720>" },
+  { id: CharacterTab.Runes, label: "Руны", description: "Изученные руны и степень их изучения", emoji: "<:elder_ansuz:1562468430295334952>" },
   { id: CharacterTab.Status, label: "Статус", description: "Заморозка, смерть и удаление", emoji: "<:char_frozen:1562490458725425172>" },
 ];
 
@@ -121,6 +130,61 @@ export class ManageCharacterComponents {
           ),
         ),
     );
+  }
+
+  public static runeRows(discordId: string, characterId: string, learned: LearnedRune[]) {
+    return [RuneAlphabet.Elder, RuneAlphabet.Younger].map((alphabet) =>
+      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+        new StringSelectMenuBuilder()
+          .setCustomId(
+            CharacterCustomIds.build(CharacterPanelAction.RuneSelect, discordId, characterId, alphabet),
+          )
+          .setPlaceholder(`${RUNE_ALPHABETS[alphabet].label}: выберите руну`)
+          .addOptions(
+            runesOf(alphabet).map((rune) => {
+              const entry = learned.find((item) => item.rune.key === rune.key);
+
+              return new StringSelectMenuOptionBuilder()
+                .setLabel(`${rune.name} — ${rune.meaning}`.slice(0, 100))
+                .setDescription(
+                  entry ? `Изучена: ${entry.progress} / ${RUNE_MAX_PROGRESS}` : "Не изучена",
+                )
+                .setEmoji(rune.emoji)
+                .setValue(rune.key);
+            }),
+          ),
+      ),
+    );
+  }
+
+  public static runeModal(
+    discordId: string,
+    character: Character,
+    rune: Rune,
+    progress: number | null,
+  ) {
+    const input = new TextInputBuilder()
+      .setCustomId(CharacterModalFields.RuneProgress)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(false)
+      .setMaxLength(3)
+      .setPlaceholder("0–100");
+
+    if (progress !== null) {
+      input.setValue(String(progress));
+    }
+
+    return new ModalBuilder()
+      .setCustomId(
+        CharacterCustomIds.build(CharacterPanelAction.RuneModal, discordId, character.id, rune.key),
+      )
+      .setTitle(`${rune.name} · ${character.rpName}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Степень изучения")
+          .setDescription("От 0 до 100. Оставьте пустым, чтобы убрать руну у персонажа")
+          .setTextInputComponent(input),
+      );
   }
 
   public static tabActions(

@@ -117,6 +117,7 @@ model Character {
 
   tupper   CharacterTupper?
   familiar CharacterFamiliar?
+  runes    CharacterRune[]
 
   rpName     String
   avatarUrl  String?
@@ -301,6 +302,21 @@ model CommandPermission {
 
   @@unique([guildId, commandName, roleId])
   @@index([guildId])
+}
+
+model CharacterRune {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  runeKey  String
+  progress Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([characterId, runeKey])
 }
 
 model CharacterFamiliar {

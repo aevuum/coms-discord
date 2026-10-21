@@ -14,13 +14,16 @@ import { ManageCharacterComponents } from "../lib/manageCharacterComponents.js";
 import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
-import { CharacterTab } from "../types/character.js";
+import { getRune } from "../../runes/lib/runeCatalog.js";
+import { RuneService } from "../../runes/service/runeService.js";
+import { CharacterError, CharacterTab } from "../types/character.js";
 
 const SELECT_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.Member,
   CharacterPanelAction.Pick,
   CharacterPanelAction.TakeSelect,
   CharacterPanelAction.Tab,
+  CharacterPanelAction.RuneSelect,
 ]);
 
 export class CharacterSelectHandler extends InteractionHandler {
@@ -66,6 +69,29 @@ export class CharacterSelectHandler extends InteractionHandler {
 
         await interaction.showModal(
           ManageCharacterComponents.takeItemModal(discordId, characterId, item),
+        );
+
+        return;
+      }
+
+      if (result.action === CharacterPanelAction.RuneSelect) {
+        const [discordId, characterId] = result.args;
+        const rune = getRune(result.value);
+
+        if (!rune) {
+          throw new CharacterError("Руна не найдена.");
+        }
+
+        const character = await CharacterInventoryService.getOwnedCharacter(discordId, characterId);
+        const learned = await RuneService.learned(character.id);
+
+        await interaction.showModal(
+          ManageCharacterComponents.runeModal(
+            discordId,
+            character,
+            rune,
+            learned.find((entry) => entry.rune.key === rune.key)?.progress ?? null,
+          ),
         );
 
         return;

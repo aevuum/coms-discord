@@ -29,6 +29,7 @@ export enum CharacterTab {
   Inventory = "inventory",
   Stats = "stats",
   Familiar = "familiar",
+  Runes = "runes",
   Status = "status",
 }
 
