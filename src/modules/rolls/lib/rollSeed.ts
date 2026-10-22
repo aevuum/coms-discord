@@ -8,6 +8,7 @@ export type SeedEntry = {
   imageUrl: string | null;
   chance: number;
   isDefault?: boolean;
+  replaces?: string[];
 };
 
 export const ROLL_SEED: SeedEntry[] = [
@@ -68,7 +69,8 @@ export const ROLL_SEED: SeedEntry[] = [
     kind: RollKind.TRAIT,
     name: "Легилименция",
     description: "Врождённый талант проникать в чужое сознание, читать мысли и воспоминания.",
-    emoji: "🧠",
+    emoji: "<:gift_legilimency:1562933927025311744>",
+    replaces: ["🧠"],
     imageUrl: null,
     chance: 300,
   },
@@ -76,7 +78,8 @@ export const ROLL_SEED: SeedEntry[] = [
     kind: RollKind.TRAIT,
     name: "Окклюменция",
     description: "Природная способность закрывать разум от чужого вторжения.",
-    emoji: "🛡️",
+    emoji: "<:gift_occlumency:1562933932125724793>",
+    replaces: ["🛡️", "🛡"],
     imageUrl: null,
     chance: 300,
   },
@@ -84,7 +87,8 @@ export const ROLL_SEED: SeedEntry[] = [
     kind: RollKind.TRAIT,
     name: "Провидец",
     description: "Редкий дар видеть обрывки будущего и делать настоящие пророчества.",
-    emoji: "🔮",
+    emoji: "<:gift_seer:1562933937209344010>",
+    replaces: ["🔮"],
     imageUrl: null,
     chance: 200,
   },
@@ -92,7 +96,8 @@ export const ROLL_SEED: SeedEntry[] = [
     kind: RollKind.TRAIT,
     name: "Врождённый анимаг",
     description: "Склонность к анимагии: превращение в животное даётся легче, чем другим.",
-    emoji: "🐾",
+    emoji: "<:gift_animagus:1562933924567589015>",
+    replaces: ["🐾"],
     imageUrl: null,
     chance: 150,
   },
@@ -100,7 +105,8 @@ export const ROLL_SEED: SeedEntry[] = [
     kind: RollKind.TRAIT,
     name: "Метаморфомаг",
     description: "Способность по желанию менять внешность без зелий и заклинаний.",
-    emoji: "🎭",
+    emoji: "<:gift_metamorph:1562933929034522644>",
+    replaces: ["🎭"],
     imageUrl: null,
     chance: 100,
   },
@@ -108,7 +114,8 @@ export const ROLL_SEED: SeedEntry[] = [
     kind: RollKind.TRAIT,
     name: "Змееуст",
     description: "Редчайший дар понимать змей и говорить на парселтанге.",
-    emoji: "🐍",
+    emoji: "<:gift_parseltongue:1562933934826856538>",
+    replaces: ["🐍"],
     imageUrl: null,
     chance: 50,
   },
