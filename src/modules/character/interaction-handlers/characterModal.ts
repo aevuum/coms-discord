@@ -142,7 +142,9 @@ export class CharacterModalHandler extends InteractionHandler {
           discordId,
           characterId,
           CharacterTab.Stats,
-          `Мана установлена: ${Mana.format(character.mana, character.maxMana)}`,
+          Mana.hasMagic(character.maxMana)
+            ? `Мана установлена: ${Mana.format(character.mana, character.maxMana)}`
+            : "Мана 0 / 0: персонаж больше не владеет магией.",
         );
       }
 

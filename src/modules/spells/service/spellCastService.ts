@@ -32,7 +32,7 @@ export class SpellCastService {
     for (let attempt = 0; attempt < this.MAX_ATTEMPTS; attempt++) {
       const character = await ManaRepository.getCharacter(characterId);
 
-      if (!character) {
+      if (!character || !Mana.hasMagic(character.maxMana)) {
         return null;
       }
 

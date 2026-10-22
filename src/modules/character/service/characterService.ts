@@ -144,13 +144,17 @@ export class CharacterService {
 
     const maxMana = this.parseInteger(maxInput, "Максимальная мана");
 
-    if (maxMana < 1 || maxMana > this.MAX_MANA) {
+    if (maxMana < 0 || maxMana > this.MAX_MANA) {
       throw new CharacterError(
-        `Максимальная мана должна быть от 1 до ${this.MAX_MANA}.`,
+        `Максимальная мана должна быть от 0 до ${this.MAX_MANA}. 0 — персонаж не владеет магией.`,
       );
     }
 
     const mana = this.parseInteger(currentInput, "Текущая мана");
+
+    if (maxMana === 0 && mana !== 0) {
+      throw new CharacterError("У сквиба или маггла мана должна быть 0 / 0.");
+    }
 
     if (mana > maxMana || mana < -this.MAX_MANA) {
       throw new CharacterError(
