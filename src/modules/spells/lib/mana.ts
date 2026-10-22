@@ -165,11 +165,23 @@ export class Mana {
     }).join("");
   }
 
+  public static hasMagic(maxMana: number) {
+    return maxMana > 0;
+  }
+
   public static format(mana: number, maxMana: number) {
-    return `${this.bar(mana, maxMana)} ${this.digits(mana, mana < 0 ? RED_DIGITS : WHITE_DIGITS)}${GRAY_SLASH}${this.digits(maxMana, GRAY_DIGITS)}`;
+    if (!this.hasMagic(maxMana)) {
+      return "нет";
+    }
+
+    return`${this.bar(mana, maxMana)} ${this.digits(mana, mana < 0 ? RED_DIGITS : WHITE_DIGITS)}${GRAY_SLASH}${this.digits(maxMana, GRAY_DIGITS)}`;
   }
 
   public static caption(mana: number, maxMana: number, timeToFull: string | null = null) {
+    if (!this.hasMagic(maxMana)) {
+      return "-# Персонаж не владеет магией: сквиб или маггл";
+    }
+
     if (mana < 0) {
       return Math.abs(mana) / Math.max(maxMana, 1) < CRITICAL_LIFE_RATIO
         ? DANGER_CAPTION

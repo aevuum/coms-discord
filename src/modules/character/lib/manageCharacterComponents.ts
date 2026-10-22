@@ -598,6 +598,7 @@ export class ManageCharacterComponents {
           ),
         new LabelBuilder()
           .setLabel("Максимальная мана")
+          .setDescription("0 / 0 — сквиб или маггл: магии нет, заклинания не работают")
           .setTextInputComponent(
             new TextInputBuilder()
               .setCustomId(CharacterModalFields.ManaMax)
