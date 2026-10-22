@@ -21,6 +21,12 @@ export class RollReadyListener extends Listener {
       if (created) {
         this.container.logger.info(`Seeded ${created} race and trait entries`);
       }
+
+      const refreshed = await RollService.refreshSeedEmojis();
+
+      if (refreshed) {
+        this.container.logger.info(`Updated emojis of ${refreshed} race and trait entries`);
+      }
     } catch (error) {
       this.container.logger.error(error);
     }

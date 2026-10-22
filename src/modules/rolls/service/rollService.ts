@@ -4,6 +4,7 @@ import type { BaseInteraction, Client } from "discord.js";
 
 import type { RollEntry } from "../../../database/generated/prisma/client.js";
 
+import prisma from "../../../database/prisma.js";
 import { Storage } from "../../../lib/storage.js";
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { ROLL_KINDS } from "../lib/rollKinds.js";
@@ -49,6 +50,21 @@ export class RollService {
     }
 
     return created;
+  }
+
+  public static async refreshSeedEmojis() {
+    let updated = 0;
+
+    for (const entry of ROLL_SEED.filter((seed) => seed.replaces?.length && seed.emoji)) {
+      const result = await prisma.rollEntry.updateMany({
+        where: { kind: entry.kind, name: entry.name, emoji: { in: entry.replaces } },
+        data: { emoji: entry.emoji },
+      });
+
+      updated += result.count;
+    }
+
+    return updated;
   }
 
   public static list(kind: RollKind) {
