@@ -10,6 +10,7 @@ export enum CharacterPanelAction {
   Act = "act",
   Tab = "tab",
   FamiliarModal = "familiar_modal",
+  TraitSelect = "trait_select",
   Confirm = "confirm",
   CreateModal = "create_modal",
   GiveModal = "give_modal",

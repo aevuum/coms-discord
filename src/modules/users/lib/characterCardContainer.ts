@@ -16,6 +16,7 @@ import type {
   Character,
   CharacterFamiliar,
   CharacterTupper,
+  RollEntry,
 } from "../../../database/generated/prisma/client.js";
 
 import { Storage } from "../../../lib/storage.js";
@@ -39,6 +40,7 @@ export enum FamiliarCardAction {
 type CardCharacter = Character & {
   tupper: CharacterTupper | null;
   familiar: CharacterFamiliar | null;
+  trait: RollEntry | null;
 };
 
 export type CardItem = {
@@ -59,6 +61,7 @@ export class CharacterCardContainer {
       [
         `## ${this.title(character)}`,
         `> **Статус персонажа:** ${CharacterFormatter.status(character.status)}`,
+        `> **Магический дар:** ${CharacterFormatter.trait(character.trait)}`,
         `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
         `> ${Mana.caption(mana, character.maxMana, Mana.timeToFull(mana, character.maxMana))}`,
         `-# ${PAD}`,

@@ -24,7 +24,11 @@ export class PendingTraitService {
     return { entry, entries, rolledAt: saved.rolledAt, repeated: false };
   }
 
-  public static consume(discordId: string) {
-    return prisma.pendingTraitRoll.deleteMany({ where: { discordId } });
+  public static async consume(discordId: string) {
+    const pending = await prisma.pendingTraitRoll.findUnique({ where: { discordId } });
+
+    await prisma.pendingTraitRoll.deleteMany({ where: { discordId } });
+
+    return pending?.rollEntryId ?? null;
   }
 }

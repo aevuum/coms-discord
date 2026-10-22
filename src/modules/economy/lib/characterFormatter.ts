@@ -1,6 +1,7 @@
 import {
   CharacterFaculty,
   CharacterStatus,
+  type RollEntry,
 } from "../../../database/generated/prisma/client.js";
 
 const facultyLabels: Record<CharacterFaculty, string> = {
@@ -60,6 +61,14 @@ export class CharacterFormatter {
 
   public static facultyEmoji(faculty: CharacterFaculty) {
     return facultyEmojis[faculty] ?? "🎓";
+  }
+
+  public static trait(trait: Pick<RollEntry, "name" | "emoji"> | null) {
+    if (!trait) {
+      return "не указан";
+    }
+
+    return trait.emoji ? `${trait.emoji} ${trait.name}` : trait.name;
   }
 
   public static statusLabel(status: CharacterStatus) {

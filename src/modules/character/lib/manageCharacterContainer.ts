@@ -12,6 +12,7 @@ import {
 import type {
   Character,
   CharacterFamiliar,
+  RollEntry,
 } from "../../../database/generated/prisma/client.js";
 
 import { Storage } from "../../../lib/storage.js";
@@ -64,6 +65,7 @@ export const ACTION_RESULTS: Record<ManageCharacterAction, string> = {
 export type ManagedCharacter = Character & {
   tupper?: { name: string; prefix: string } | null;
   familiar?: CharacterFamiliar | null;
+  trait?: RollEntry | null;
 };
 
 export class ManageCharacterContainer {
@@ -138,6 +140,7 @@ export class ManageCharacterContainer {
     items: InventoryListItem[],
     tab: CharacterTab,
     notice: string | null = null,
+    traits: RollEntry[] = [],
   ) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
@@ -194,6 +197,12 @@ export class ManageCharacterContainer {
         this.profileTab(container, character);
     }
 
+    if (tab === CharacterTab.Profile && traits.length) {
+      container.addActionRowComponents(
+        ManageCharacterComponents.traitSelect(discordId, character.id, traits, character.traitId),
+      );
+    }
+
     container.addActionRowComponents(
       ManageCharacterComponents.tabActions(discordId, character, tab, Boolean(character.familiar)),
     );
@@ -221,8 +230,9 @@ export class ManageCharacterContainer {
       `> **Возраст:** ${character.age !== null ? CharacterFormatter.age(character.age) : "не указан"}`,
       `> **Факультет:** ${CharacterFormatter.faculty(character.faculty)}`,
       `> **Особая роль:** ${character.specialRole ?? "нет"}`,
+      `> **Магический дар:** ${CharacterFormatter.trait(character.trait ?? null)}`,
       `> **Таппер:** ${character.tupper ? `${character.tupper.name} · \`${character.tupper.prefix}\`` : "не настроен"}`,
-      "-# Имя, возраст, факультет, особая роль и аватар меняются через «Изменить анкету».",
+      "-# Имя, возраст, факультет, особая роль и аватар меняются через «Изменить анкету», магический дар — в меню ниже.",
     ]);
   }
 

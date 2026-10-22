@@ -40,6 +40,7 @@ export class CharacterRepository {
         user: true,
         tupper: true,
         familiar: true,
+        trait: true,
       },
       orderBy: {
         createdAt: "asc",
@@ -56,6 +57,7 @@ export class CharacterRepository {
         user: true,
         tupper: true,
         familiar: true,
+        trait: true,
       },
     });
   }
@@ -115,6 +117,17 @@ export class CharacterRepository {
         id,
       },
       data,
+    });
+  }
+
+  public static async updateTrait(id: string, traitId: string | null) {
+    return prisma.character.update({
+      where: {
+        id,
+      },
+      data: {
+        traitId,
+      },
     });
   }
 

@@ -14,6 +14,7 @@ import { ManageCharacterComponents } from "../lib/manageCharacterComponents.js";
 import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { CharacterTab } from "../types/character.js";
 
 const SELECT_ACTIONS = new Set<CharacterPanelAction>([
@@ -21,6 +22,7 @@ const SELECT_ACTIONS = new Set<CharacterPanelAction>([
   CharacterPanelAction.Pick,
   CharacterPanelAction.TakeSelect,
   CharacterPanelAction.Tab,
+  CharacterPanelAction.TraitSelect,
 ]);
 
 export class CharacterSelectHandler extends InteractionHandler {
@@ -72,6 +74,25 @@ export class CharacterSelectHandler extends InteractionHandler {
       }
 
       await CharacterService.assertCanManage(interaction);
+
+      if (result.action === CharacterPanelAction.TraitSelect) {
+        const [discordId, characterId] = result.args;
+        const { trait } = await CharacterService.setTrait(discordId, characterId, result.value);
+
+        await interaction.update({
+          flags: MessageFlags.IsComponentsV2,
+          components: [
+            await ManageCharacterView.character(
+              discordId,
+              characterId,
+              CharacterTab.Profile,
+              `Магический дар: ${CharacterFormatter.trait(trait)}.`,
+            ),
+          ],
+        });
+
+        return;
+      }
 
       const container =
         result.action === CharacterPanelAction.Member
