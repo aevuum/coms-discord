@@ -50,6 +50,7 @@ export type CharacterMinAggregateOutputType = {
   balanceKnuts: number | null
   age: number | null
   specialRole: string | null
+  traitId: string | null
   mana: number | null
   maxMana: number | null
   manaUpdatedAt: Date | null
@@ -68,6 +69,7 @@ export type CharacterMaxAggregateOutputType = {
   balanceKnuts: number | null
   age: number | null
   specialRole: string | null
+  traitId: string | null
   mana: number | null
   maxMana: number | null
   manaUpdatedAt: Date | null
@@ -86,6 +88,7 @@ export type CharacterCountAggregateOutputType = {
   balanceKnuts: number
   age: number
   specialRole: number
+  traitId: number
   mana: number
   maxMana: number
   manaUpdatedAt: number
@@ -120,6 +123,7 @@ export type CharacterMinAggregateInputType = {
   balanceKnuts?: true
   age?: true
   specialRole?: true
+  traitId?: true
   mana?: true
   maxMana?: true
   manaUpdatedAt?: true
@@ -138,6 +142,7 @@ export type CharacterMaxAggregateInputType = {
   balanceKnuts?: true
   age?: true
   specialRole?: true
+  traitId?: true
   mana?: true
   maxMana?: true
   manaUpdatedAt?: true
@@ -156,6 +161,7 @@ export type CharacterCountAggregateInputType = {
   balanceKnuts?: true
   age?: true
   specialRole?: true
+  traitId?: true
   mana?: true
   maxMana?: true
   manaUpdatedAt?: true
@@ -261,6 +267,7 @@ export type CharacterGroupByOutputType = {
   balanceKnuts: number
   age: number | null
   specialRole: string | null
+  traitId: string | null
   mana: number
   maxMana: number
   manaUpdatedAt: Date
@@ -302,6 +309,7 @@ export type CharacterWhereInput = {
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
   age?: Prisma.IntNullableFilter<"Character"> | number | null
   specialRole?: Prisma.StringNullableFilter<"Character"> | string | null
+  traitId?: Prisma.StringNullableFilter<"Character"> | string | null
   mana?: Prisma.IntFilter<"Character"> | number
   maxMana?: Prisma.IntFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -311,6 +319,7 @@ export type CharacterWhereInput = {
   tupper?: Prisma.XOR<Prisma.CharacterTupperNullableScalarRelationFilter, Prisma.CharacterTupperWhereInput> | null
   familiar?: Prisma.XOR<Prisma.CharacterFamiliarNullableScalarRelationFilter, Prisma.CharacterFamiliarWhereInput> | null
   runes?: Prisma.CharacterRuneListRelationFilter
+  trait?: Prisma.XOR<Prisma.RollEntryNullableScalarRelationFilter, Prisma.RollEntryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transactions?: Prisma.CharacterTransactionListRelationFilter
   inventoryItems?: Prisma.CharacterInventoryItemListRelationFilter
@@ -327,6 +336,7 @@ export type CharacterOrderByWithRelationInput = {
   balanceKnuts?: Prisma.SortOrder
   age?: Prisma.SortOrderInput | Prisma.SortOrder
   specialRole?: Prisma.SortOrderInput | Prisma.SortOrder
+  traitId?: Prisma.SortOrderInput | Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -336,6 +346,7 @@ export type CharacterOrderByWithRelationInput = {
   tupper?: Prisma.CharacterTupperOrderByWithRelationInput
   familiar?: Prisma.CharacterFamiliarOrderByWithRelationInput
   runes?: Prisma.CharacterRuneOrderByRelationAggregateInput
+  trait?: Prisma.RollEntryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   transactions?: Prisma.CharacterTransactionOrderByRelationAggregateInput
   inventoryItems?: Prisma.CharacterInventoryItemOrderByRelationAggregateInput
@@ -355,6 +366,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
   age?: Prisma.IntNullableFilter<"Character"> | number | null
   specialRole?: Prisma.StringNullableFilter<"Character"> | string | null
+  traitId?: Prisma.StringNullableFilter<"Character"> | string | null
   mana?: Prisma.IntFilter<"Character"> | number
   maxMana?: Prisma.IntFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -364,6 +376,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   tupper?: Prisma.XOR<Prisma.CharacterTupperNullableScalarRelationFilter, Prisma.CharacterTupperWhereInput> | null
   familiar?: Prisma.XOR<Prisma.CharacterFamiliarNullableScalarRelationFilter, Prisma.CharacterFamiliarWhereInput> | null
   runes?: Prisma.CharacterRuneListRelationFilter
+  trait?: Prisma.XOR<Prisma.RollEntryNullableScalarRelationFilter, Prisma.RollEntryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transactions?: Prisma.CharacterTransactionListRelationFilter
   inventoryItems?: Prisma.CharacterInventoryItemListRelationFilter
@@ -380,6 +393,7 @@ export type CharacterOrderByWithAggregationInput = {
   balanceKnuts?: Prisma.SortOrder
   age?: Prisma.SortOrderInput | Prisma.SortOrder
   specialRole?: Prisma.SortOrderInput | Prisma.SortOrder
+  traitId?: Prisma.SortOrderInput | Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -406,6 +420,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   balanceKnuts?: Prisma.IntWithAggregatesFilter<"Character"> | number
   age?: Prisma.IntNullableWithAggregatesFilter<"Character"> | number | null
   specialRole?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
+  traitId?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   mana?: Prisma.IntWithAggregatesFilter<"Character"> | number
   maxMana?: Prisma.IntWithAggregatesFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
@@ -432,6 +447,7 @@ export type CharacterCreateInput = {
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -448,6 +464,7 @@ export type CharacterUncheckedCreateInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -480,6 +497,7 @@ export type CharacterUpdateInput = {
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -496,6 +514,7 @@ export type CharacterUncheckedUpdateInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -520,6 +539,7 @@ export type CharacterCreateManyInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -555,6 +575,7 @@ export type CharacterUncheckedUpdateManyInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -583,6 +604,7 @@ export type CharacterCountOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
   age?: Prisma.SortOrder
   specialRole?: Prisma.SortOrder
+  traitId?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -608,6 +630,7 @@ export type CharacterMaxOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
   age?: Prisma.SortOrder
   specialRole?: Prisma.SortOrder
+  traitId?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -626,6 +649,7 @@ export type CharacterMinOrderByAggregateInput = {
   balanceKnuts?: Prisma.SortOrder
   age?: Prisma.SortOrder
   specialRole?: Prisma.SortOrder
+  traitId?: Prisma.SortOrder
   mana?: Prisma.SortOrder
   maxMana?: Prisma.SortOrder
   manaUpdatedAt?: Prisma.SortOrder
@@ -788,6 +812,48 @@ export type CharacterUpdateOneRequiredWithoutTupperNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutTupperInput, Prisma.CharacterUpdateWithoutTupperInput>, Prisma.CharacterUncheckedUpdateWithoutTupperInput>
 }
 
+export type CharacterCreateNestedManyWithoutTraitInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutTraitInput, Prisma.CharacterUncheckedCreateWithoutTraitInput> | Prisma.CharacterCreateWithoutTraitInput[] | Prisma.CharacterUncheckedCreateWithoutTraitInput[]
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTraitInput | Prisma.CharacterCreateOrConnectWithoutTraitInput[]
+  createMany?: Prisma.CharacterCreateManyTraitInputEnvelope
+  connect?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+}
+
+export type CharacterUncheckedCreateNestedManyWithoutTraitInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutTraitInput, Prisma.CharacterUncheckedCreateWithoutTraitInput> | Prisma.CharacterCreateWithoutTraitInput[] | Prisma.CharacterUncheckedCreateWithoutTraitInput[]
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTraitInput | Prisma.CharacterCreateOrConnectWithoutTraitInput[]
+  createMany?: Prisma.CharacterCreateManyTraitInputEnvelope
+  connect?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+}
+
+export type CharacterUpdateManyWithoutTraitNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutTraitInput, Prisma.CharacterUncheckedCreateWithoutTraitInput> | Prisma.CharacterCreateWithoutTraitInput[] | Prisma.CharacterUncheckedCreateWithoutTraitInput[]
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTraitInput | Prisma.CharacterCreateOrConnectWithoutTraitInput[]
+  upsert?: Prisma.CharacterUpsertWithWhereUniqueWithoutTraitInput | Prisma.CharacterUpsertWithWhereUniqueWithoutTraitInput[]
+  createMany?: Prisma.CharacterCreateManyTraitInputEnvelope
+  set?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  disconnect?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  delete?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  connect?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  update?: Prisma.CharacterUpdateWithWhereUniqueWithoutTraitInput | Prisma.CharacterUpdateWithWhereUniqueWithoutTraitInput[]
+  updateMany?: Prisma.CharacterUpdateManyWithWhereWithoutTraitInput | Prisma.CharacterUpdateManyWithWhereWithoutTraitInput[]
+  deleteMany?: Prisma.CharacterScalarWhereInput | Prisma.CharacterScalarWhereInput[]
+}
+
+export type CharacterUncheckedUpdateManyWithoutTraitNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutTraitInput, Prisma.CharacterUncheckedCreateWithoutTraitInput> | Prisma.CharacterCreateWithoutTraitInput[] | Prisma.CharacterUncheckedCreateWithoutTraitInput[]
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTraitInput | Prisma.CharacterCreateOrConnectWithoutTraitInput[]
+  upsert?: Prisma.CharacterUpsertWithWhereUniqueWithoutTraitInput | Prisma.CharacterUpsertWithWhereUniqueWithoutTraitInput[]
+  createMany?: Prisma.CharacterCreateManyTraitInputEnvelope
+  set?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  disconnect?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  delete?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  connect?: Prisma.CharacterWhereUniqueInput | Prisma.CharacterWhereUniqueInput[]
+  update?: Prisma.CharacterUpdateWithWhereUniqueWithoutTraitInput | Prisma.CharacterUpdateWithWhereUniqueWithoutTraitInput[]
+  updateMany?: Prisma.CharacterUpdateManyWithWhereWithoutTraitInput | Prisma.CharacterUpdateManyWithWhereWithoutTraitInput[]
+  deleteMany?: Prisma.CharacterScalarWhereInput | Prisma.CharacterScalarWhereInput[]
+}
+
 export type CharacterCreateWithoutUserInput = {
   id?: string
   rpName: string
@@ -806,6 +872,7 @@ export type CharacterCreateWithoutUserInput = {
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
@@ -821,6 +888,7 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -873,6 +941,7 @@ export type CharacterScalarWhereInput = {
   balanceKnuts?: Prisma.IntFilter<"Character"> | number
   age?: Prisma.IntNullableFilter<"Character"> | number | null
   specialRole?: Prisma.StringNullableFilter<"Character"> | string | null
+  traitId?: Prisma.StringNullableFilter<"Character"> | string | null
   mana?: Prisma.IntFilter<"Character"> | number
   maxMana?: Prisma.IntFilter<"Character"> | number
   manaUpdatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
@@ -899,6 +968,7 @@ export type CharacterCreateWithoutSpellCastsInput = {
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -914,6 +984,7 @@ export type CharacterUncheckedCreateWithoutSpellCastsInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -961,6 +1032,7 @@ export type CharacterUpdateWithoutSpellCastsInput = {
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -976,6 +1048,7 @@ export type CharacterUncheckedUpdateWithoutSpellCastsInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1007,6 +1080,7 @@ export type CharacterCreateWithoutTransactionsInput = {
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
@@ -1022,6 +1096,7 @@ export type CharacterUncheckedCreateWithoutTransactionsInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1069,6 +1144,7 @@ export type CharacterUpdateWithoutTransactionsInput = {
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
@@ -1084,6 +1160,7 @@ export type CharacterUncheckedUpdateWithoutTransactionsInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1115,6 +1192,7 @@ export type CharacterCreateWithoutInventoryItemsInput = {
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
@@ -1130,6 +1208,7 @@ export type CharacterUncheckedCreateWithoutInventoryItemsInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1177,6 +1256,7 @@ export type CharacterUpdateWithoutInventoryItemsInput = {
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
@@ -1192,6 +1272,7 @@ export type CharacterUncheckedUpdateWithoutInventoryItemsInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1222,6 +1303,7 @@ export type CharacterCreateWithoutRunesInput = {
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -1238,6 +1320,7 @@ export type CharacterUncheckedCreateWithoutRunesInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1284,6 +1367,7 @@ export type CharacterUpdateWithoutRunesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -1300,6 +1384,7 @@ export type CharacterUncheckedUpdateWithoutRunesInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1330,6 +1415,7 @@ export type CharacterCreateWithoutFamiliarInput = {
   updatedAt?: Date | string
   tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -1346,6 +1432,7 @@ export type CharacterUncheckedCreateWithoutFamiliarInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1392,6 +1479,7 @@ export type CharacterUpdateWithoutFamiliarInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -1408,6 +1496,7 @@ export type CharacterUncheckedUpdateWithoutFamiliarInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1438,6 +1527,7 @@ export type CharacterCreateWithoutTupperInput = {
   updatedAt?: Date | string
   familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
   runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -1454,6 +1544,7 @@ export type CharacterUncheckedCreateWithoutTupperInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1500,6 +1591,7 @@ export type CharacterUpdateWithoutTupperInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -1516,6 +1608,7 @@ export type CharacterUncheckedUpdateWithoutTupperInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1529,6 +1622,80 @@ export type CharacterUncheckedUpdateWithoutTupperInput = {
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
 
+export type CharacterCreateWithoutTraitInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  avatarPath?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  age?: number | null
+  specialRole?: string | null
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
+  familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
+  runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  user: Prisma.UserCreateNestedOneWithoutCharactersInput
+  transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
+  inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterUncheckedCreateWithoutTraitInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  avatarPath?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  age?: number | null
+  specialRole?: string | null
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
+  familiar?: Prisma.CharacterFamiliarUncheckedCreateNestedOneWithoutCharacterInput
+  runes?: Prisma.CharacterRuneUncheckedCreateNestedManyWithoutCharacterInput
+  transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
+  inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterCreateOrConnectWithoutTraitInput = {
+  where: Prisma.CharacterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutTraitInput, Prisma.CharacterUncheckedCreateWithoutTraitInput>
+}
+
+export type CharacterCreateManyTraitInputEnvelope = {
+  data: Prisma.CharacterCreateManyTraitInput | Prisma.CharacterCreateManyTraitInput[]
+  skipDuplicates?: boolean
+}
+
+export type CharacterUpsertWithWhereUniqueWithoutTraitInput = {
+  where: Prisma.CharacterWhereUniqueInput
+  update: Prisma.XOR<Prisma.CharacterUpdateWithoutTraitInput, Prisma.CharacterUncheckedUpdateWithoutTraitInput>
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutTraitInput, Prisma.CharacterUncheckedCreateWithoutTraitInput>
+}
+
+export type CharacterUpdateWithWhereUniqueWithoutTraitInput = {
+  where: Prisma.CharacterWhereUniqueInput
+  data: Prisma.XOR<Prisma.CharacterUpdateWithoutTraitInput, Prisma.CharacterUncheckedUpdateWithoutTraitInput>
+}
+
+export type CharacterUpdateManyWithWhereWithoutTraitInput = {
+  where: Prisma.CharacterScalarWhereInput
+  data: Prisma.XOR<Prisma.CharacterUpdateManyMutationInput, Prisma.CharacterUncheckedUpdateManyWithoutTraitInput>
+}
+
 export type CharacterCreateManyUserInput = {
   id?: string
   rpName: string
@@ -1539,6 +1706,7 @@ export type CharacterCreateManyUserInput = {
   balanceKnuts: number
   age?: number | null
   specialRole?: string | null
+  traitId?: string | null
   mana?: number
   maxMana?: number
   manaUpdatedAt?: Date | string
@@ -1564,6 +1732,7 @@ export type CharacterUpdateWithoutUserInput = {
   tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
   familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
   runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
@@ -1579,6 +1748,7 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1602,11 +1772,96 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
   balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
   age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mana?: Prisma.IntFieldUpdateOperationsInput | number
   maxMana?: Prisma.IntFieldUpdateOperationsInput | number
   manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CharacterCreateManyTraitInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  avatarPath?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  age?: number | null
+  specialRole?: string | null
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+}
+
+export type CharacterUpdateWithoutTraitInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
+  familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
+  runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
+  transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
+  inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterUncheckedUpdateWithoutTraitInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
+  familiar?: Prisma.CharacterFamiliarUncheckedUpdateOneWithoutCharacterNestedInput
+  runes?: Prisma.CharacterRuneUncheckedUpdateManyWithoutCharacterNestedInput
+  transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
+  inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterUncheckedUpdateManyWithoutTraitInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -1677,6 +1932,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   balanceKnuts?: boolean
   age?: boolean
   specialRole?: boolean
+  traitId?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
@@ -1686,6 +1942,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   tupper?: boolean | Prisma.Character$tupperArgs<ExtArgs>
   familiar?: boolean | Prisma.Character$familiarArgs<ExtArgs>
   runes?: boolean | Prisma.Character$runesArgs<ExtArgs>
+  trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Character$transactionsArgs<ExtArgs>
   inventoryItems?: boolean | Prisma.Character$inventoryItemsArgs<ExtArgs>
@@ -1703,12 +1960,14 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   balanceKnuts?: boolean
   age?: boolean
   specialRole?: boolean
+  traitId?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
+  trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
 
@@ -1722,12 +1981,14 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   balanceKnuts?: boolean
   age?: boolean
   specialRole?: boolean
+  traitId?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
+  trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
 
@@ -1741,6 +2002,7 @@ export type CharacterSelectScalar = {
   balanceKnuts?: boolean
   age?: boolean
   specialRole?: boolean
+  traitId?: boolean
   mana?: boolean
   maxMana?: boolean
   manaUpdatedAt?: boolean
@@ -1749,11 +2011,12 @@ export type CharacterSelectScalar = {
   userId?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rpName" | "avatarUrl" | "avatarPath" | "faculty" | "status" | "balanceKnuts" | "age" | "specialRole" | "mana" | "maxMana" | "manaUpdatedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rpName" | "avatarUrl" | "avatarPath" | "faculty" | "status" | "balanceKnuts" | "age" | "specialRole" | "traitId" | "mana" | "maxMana" | "manaUpdatedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tupper?: boolean | Prisma.Character$tupperArgs<ExtArgs>
   familiar?: boolean | Prisma.Character$familiarArgs<ExtArgs>
   runes?: boolean | Prisma.Character$runesArgs<ExtArgs>
+  trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Character$transactionsArgs<ExtArgs>
   inventoryItems?: boolean | Prisma.Character$inventoryItemsArgs<ExtArgs>
@@ -1761,9 +2024,11 @@ export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   _count?: boolean | Prisma.CharacterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CharacterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type CharacterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -1773,6 +2038,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     tupper: Prisma.$CharacterTupperPayload<ExtArgs> | null
     familiar: Prisma.$CharacterFamiliarPayload<ExtArgs> | null
     runes: Prisma.$CharacterRunePayload<ExtArgs>[]
+    trait: Prisma.$RollEntryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
     transactions: Prisma.$CharacterTransactionPayload<ExtArgs>[]
     inventoryItems: Prisma.$CharacterInventoryItemPayload<ExtArgs>[]
@@ -1788,6 +2054,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     balanceKnuts: number
     age: number | null
     specialRole: string | null
+    traitId: string | null
     mana: number
     maxMana: number
     manaUpdatedAt: Date
@@ -2191,6 +2458,7 @@ export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtim
   tupper<T extends Prisma.Character$tupperArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$tupperArgs<ExtArgs>>): Prisma.Prisma__CharacterTupperClient<runtime.Types.Result.GetResult<Prisma.$CharacterTupperPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   familiar<T extends Prisma.Character$familiarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$familiarArgs<ExtArgs>>): Prisma.Prisma__CharacterFamiliarClient<runtime.Types.Result.GetResult<Prisma.$CharacterFamiliarPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   runes<T extends Prisma.Character$runesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$runesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterRunePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  trait<T extends Prisma.Character$traitArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$traitArgs<ExtArgs>>): Prisma.Prisma__RollEntryClient<runtime.Types.Result.GetResult<Prisma.$RollEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   transactions<T extends Prisma.Character$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   inventoryItems<T extends Prisma.Character$inventoryItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$inventoryItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterInventoryItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2233,6 +2501,7 @@ export interface CharacterFieldRefs {
   readonly balanceKnuts: Prisma.FieldRef<"Character", 'Int'>
   readonly age: Prisma.FieldRef<"Character", 'Int'>
   readonly specialRole: Prisma.FieldRef<"Character", 'String'>
+  readonly traitId: Prisma.FieldRef<"Character", 'String'>
   readonly mana: Prisma.FieldRef<"Character", 'Int'>
   readonly maxMana: Prisma.FieldRef<"Character", 'Int'>
   readonly manaUpdatedAt: Prisma.FieldRef<"Character", 'DateTime'>
@@ -2699,6 +2968,25 @@ export type Character$runesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.CharacterRuneScalarFieldEnum | Prisma.CharacterRuneScalarFieldEnum[]
+}
+
+/**
+ * Character.trait
+ */
+export type Character$traitArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RollEntry
+   */
+  select?: Prisma.RollEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RollEntry
+   */
+  omit?: Prisma.RollEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  where?: Prisma.RollEntryWhereInput
 }
 
 /**

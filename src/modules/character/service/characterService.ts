@@ -12,6 +12,8 @@ import { Storage } from "../../../lib/storage.js";
 import { CharacterRepository } from "../repositories/characterRepository.js";
 import { TupperService } from "../../tupper/service/tupperService.js";
 import { PendingTraitService } from "../../rolls/service/pendingTraitService.js";
+import { RollService } from "../../rolls/service/rollService.js";
+import { RollKind } from "../../rolls/types/rolls.js";
 import {
   CharacterError,
   ManageCharacterAction,
@@ -64,9 +66,27 @@ export class CharacterService {
       throw error;
     }
 
-    await PendingTraitService.consume(discordId).catch(() => null);
+    const rolledTraitId = await PendingTraitService.consume(discordId).catch(() => null);
+
+    if (rolledTraitId) {
+      await CharacterRepository.updateTrait(character.id, rolledTraitId).catch(() => null);
+    }
 
     return character;
+  }
+
+  public static async setTrait(discordId: string, characterId: string, traitId: string) {
+    const character = await this.getOwned(discordId, characterId);
+
+    const trait = (await RollService.list(RollKind.TRAIT)).find((entry) => entry.id === traitId);
+
+    if (!trait) {
+      throw new CharacterError("Такого трейта нет в списке /trait.");
+    }
+
+    await CharacterRepository.updateTrait(character.id, trait.id);
+
+    return { character, trait };
   }
 
   public static async getCharacters(discordId: string) {

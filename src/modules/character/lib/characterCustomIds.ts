@@ -12,6 +12,7 @@ export enum CharacterPanelAction {
   FamiliarModal = "familiar_modal",
   RuneSelect = "rune_select",
   RuneModal = "rune_modal",
+  TraitSelect = "trait_select",
   Confirm = "confirm",
   CreateModal = "create_modal",
   GiveModal = "give_modal",

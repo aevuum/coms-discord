@@ -264,6 +264,7 @@ export type RollEntryWhereInput = {
   isDefault?: Prisma.BoolFilter<"RollEntry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RollEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RollEntry"> | Date | string
+  characters?: Prisma.CharacterListRelationFilter
 }
 
 export type RollEntryOrderByWithRelationInput = {
@@ -278,6 +279,7 @@ export type RollEntryOrderByWithRelationInput = {
   isDefault?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  characters?: Prisma.CharacterOrderByRelationAggregateInput
 }
 
 export type RollEntryWhereUniqueInput = Prisma.AtLeast<{
@@ -295,6 +297,7 @@ export type RollEntryWhereUniqueInput = Prisma.AtLeast<{
   isDefault?: Prisma.BoolFilter<"RollEntry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"RollEntry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"RollEntry"> | Date | string
+  characters?: Prisma.CharacterListRelationFilter
 }, "id">
 
 export type RollEntryOrderByWithAggregationInput = {
@@ -345,6 +348,7 @@ export type RollEntryCreateInput = {
   isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  characters?: Prisma.CharacterCreateNestedManyWithoutTraitInput
 }
 
 export type RollEntryUncheckedCreateInput = {
@@ -359,6 +363,7 @@ export type RollEntryUncheckedCreateInput = {
   isDefault?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  characters?: Prisma.CharacterUncheckedCreateNestedManyWithoutTraitInput
 }
 
 export type RollEntryUpdateInput = {
@@ -373,6 +378,7 @@ export type RollEntryUpdateInput = {
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  characters?: Prisma.CharacterUpdateManyWithoutTraitNestedInput
 }
 
 export type RollEntryUncheckedUpdateInput = {
@@ -387,6 +393,7 @@ export type RollEntryUncheckedUpdateInput = {
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  characters?: Prisma.CharacterUncheckedUpdateManyWithoutTraitNestedInput
 }
 
 export type RollEntryCreateManyInput = {
@@ -429,6 +436,11 @@ export type RollEntryUncheckedUpdateManyInput = {
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RollEntryNullableScalarRelationFilter = {
+  is?: Prisma.RollEntryWhereInput | null
+  isNot?: Prisma.RollEntryWhereInput | null
 }
 
 export type RollEntryCountOrderByAggregateInput = {
@@ -481,10 +493,127 @@ export type RollEntrySumOrderByAggregateInput = {
   chance?: Prisma.SortOrder
 }
 
+export type RollEntryCreateNestedOneWithoutCharactersInput = {
+  create?: Prisma.XOR<Prisma.RollEntryCreateWithoutCharactersInput, Prisma.RollEntryUncheckedCreateWithoutCharactersInput>
+  connectOrCreate?: Prisma.RollEntryCreateOrConnectWithoutCharactersInput
+  connect?: Prisma.RollEntryWhereUniqueInput
+}
+
+export type RollEntryUpdateOneWithoutCharactersNestedInput = {
+  create?: Prisma.XOR<Prisma.RollEntryCreateWithoutCharactersInput, Prisma.RollEntryUncheckedCreateWithoutCharactersInput>
+  connectOrCreate?: Prisma.RollEntryCreateOrConnectWithoutCharactersInput
+  upsert?: Prisma.RollEntryUpsertWithoutCharactersInput
+  disconnect?: Prisma.RollEntryWhereInput | boolean
+  delete?: Prisma.RollEntryWhereInput | boolean
+  connect?: Prisma.RollEntryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RollEntryUpdateToOneWithWhereWithoutCharactersInput, Prisma.RollEntryUpdateWithoutCharactersInput>, Prisma.RollEntryUncheckedUpdateWithoutCharactersInput>
+}
+
 export type EnumRollKindFieldUpdateOperationsInput = {
   set?: $Enums.RollKind
 }
 
+export type RollEntryCreateWithoutCharactersInput = {
+  id?: string
+  kind: $Enums.RollKind
+  name: string
+  description?: string | null
+  emoji?: string | null
+  imageUrl?: string | null
+  imagePath?: string | null
+  chance?: number
+  isDefault?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RollEntryUncheckedCreateWithoutCharactersInput = {
+  id?: string
+  kind: $Enums.RollKind
+  name: string
+  description?: string | null
+  emoji?: string | null
+  imageUrl?: string | null
+  imagePath?: string | null
+  chance?: number
+  isDefault?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type RollEntryCreateOrConnectWithoutCharactersInput = {
+  where: Prisma.RollEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.RollEntryCreateWithoutCharactersInput, Prisma.RollEntryUncheckedCreateWithoutCharactersInput>
+}
+
+export type RollEntryUpsertWithoutCharactersInput = {
+  update: Prisma.XOR<Prisma.RollEntryUpdateWithoutCharactersInput, Prisma.RollEntryUncheckedUpdateWithoutCharactersInput>
+  create: Prisma.XOR<Prisma.RollEntryCreateWithoutCharactersInput, Prisma.RollEntryUncheckedCreateWithoutCharactersInput>
+  where?: Prisma.RollEntryWhereInput
+}
+
+export type RollEntryUpdateToOneWithWhereWithoutCharactersInput = {
+  where?: Prisma.RollEntryWhereInput
+  data: Prisma.XOR<Prisma.RollEntryUpdateWithoutCharactersInput, Prisma.RollEntryUncheckedUpdateWithoutCharactersInput>
+}
+
+export type RollEntryUpdateWithoutCharactersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumRollKindFieldUpdateOperationsInput | $Enums.RollKind
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chance?: Prisma.IntFieldUpdateOperationsInput | number
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RollEntryUncheckedUpdateWithoutCharactersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumRollKindFieldUpdateOperationsInput | $Enums.RollKind
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emoji?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  chance?: Prisma.IntFieldUpdateOperationsInput | number
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type RollEntryCountOutputType
+ */
+
+export type RollEntryCountOutputType = {
+  characters: number
+}
+
+export type RollEntryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  characters?: boolean | RollEntryCountOutputTypeCountCharactersArgs
+}
+
+/**
+ * RollEntryCountOutputType without action
+ */
+export type RollEntryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RollEntryCountOutputType
+   */
+  select?: Prisma.RollEntryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * RollEntryCountOutputType without action
+ */
+export type RollEntryCountOutputTypeCountCharactersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CharacterWhereInput
+}
 
 
 export type RollEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -499,6 +628,8 @@ export type RollEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   isDefault?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  characters?: boolean | Prisma.RollEntry$charactersArgs<ExtArgs>
+  _count?: boolean | Prisma.RollEntryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["rollEntry"]>
 
 export type RollEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -544,10 +675,18 @@ export type RollEntrySelectScalar = {
 }
 
 export type RollEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "name" | "description" | "emoji" | "imageUrl" | "imagePath" | "chance" | "isDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["rollEntry"]>
+export type RollEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  characters?: boolean | Prisma.RollEntry$charactersArgs<ExtArgs>
+  _count?: boolean | Prisma.RollEntryCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type RollEntryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type RollEntryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $RollEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RollEntry"
-  objects: {}
+  objects: {
+    characters: Prisma.$CharacterPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     kind: $Enums.RollKind
@@ -954,6 +1093,7 @@ readonly fields: RollEntryFieldRefs;
  */
 export interface Prisma__RollEntryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  characters<T extends Prisma.RollEntry$charactersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RollEntry$charactersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1011,6 +1151,10 @@ export type RollEntryFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  /**
    * Filter, which RollEntry to fetch.
    */
   where: Prisma.RollEntryWhereUniqueInput
@@ -1029,6 +1173,10 @@ export type RollEntryFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  /**
    * Filter, which RollEntry to fetch.
    */
   where: Prisma.RollEntryWhereUniqueInput
@@ -1046,6 +1194,10 @@ export type RollEntryFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the RollEntry
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
   /**
    * Filter, which RollEntry to fetch.
    */
@@ -1095,6 +1247,10 @@ export type RollEntryFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  /**
    * Filter, which RollEntry to fetch.
    */
   where?: Prisma.RollEntryWhereInput
@@ -1142,6 +1298,10 @@ export type RollEntryFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RollEntry
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
   /**
    * Filter, which RollEntries to fetch.
    */
@@ -1191,6 +1351,10 @@ export type RollEntryCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  /**
    * The data needed to create a RollEntry.
    */
   data: Prisma.XOR<Prisma.RollEntryCreateInput, Prisma.RollEntryUncheckedCreateInput>
@@ -1238,6 +1402,10 @@ export type RollEntryUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the RollEntry
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
   /**
    * The data needed to update a RollEntry.
    */
@@ -1305,6 +1473,10 @@ export type RollEntryUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  /**
    * The filter to search for the RollEntry to update in case it exists.
    */
   where: Prisma.RollEntryWhereUniqueInput
@@ -1331,6 +1503,10 @@ export type RollEntryDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
+  /**
    * Filter which RollEntry to delete.
    */
   where: Prisma.RollEntryWhereUniqueInput
@@ -1351,6 +1527,30 @@ export type RollEntryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * RollEntry.characters
+ */
+export type RollEntry$charactersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Character
+   */
+  select?: Prisma.CharacterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Character
+   */
+  omit?: Prisma.CharacterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CharacterInclude<ExtArgs> | null
+  where?: Prisma.CharacterWhereInput
+  orderBy?: Prisma.CharacterOrderByWithRelationInput | Prisma.CharacterOrderByWithRelationInput[]
+  cursor?: Prisma.CharacterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CharacterScalarFieldEnum | Prisma.CharacterScalarFieldEnum[]
+}
+
+/**
  * RollEntry without action
  */
 export type RollEntryDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1362,4 +1562,8 @@ export type RollEntryDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the RollEntry
    */
   omit?: Prisma.RollEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RollEntryInclude<ExtArgs> | null
 }

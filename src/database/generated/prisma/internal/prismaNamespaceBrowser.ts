@@ -170,6 +170,7 @@ export const CharacterScalarFieldEnum = {
   balanceKnuts: 'balanceKnuts',
   age: 'age',
   specialRole: 'specialRole',
+  traitId: 'traitId',
   mana: 'mana',
   maxMana: 'maxMana',
   manaUpdatedAt: 'manaUpdatedAt',

@@ -132,6 +132,9 @@ model Character {
 
   specialRole String?
 
+  traitId String?
+  trait   RollEntry? @relation(fields: [traitId], references: [id], onDelete: SetNull)
+
   mana          Int      @default(100)
   maxMana       Int      @default(100)
   manaUpdatedAt DateTime @default(now())
@@ -528,6 +531,8 @@ model RollEntry {
 
   chance    Int     @default(0)
   isDefault Boolean @default(false)
+
+  characters Character[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

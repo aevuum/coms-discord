@@ -16,6 +16,7 @@ import {
   CharacterStatus,
   type Character,
   type CharacterFamiliar,
+  type RollEntry,
 } from "../../../database/generated/prisma/client.js";
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
@@ -260,6 +261,30 @@ export class ManageCharacterComponents {
           act(ManageCharacterAction.Edit, "Изменить анкету", "<:984149edit:1518587370474176612>", ButtonStyle.Primary),
         );
     }
+  }
+
+  public static traitSelect(
+    discordId: string,
+    characterId: string,
+    traits: RollEntry[],
+    currentId: string | null,
+  ) {
+    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId(CharacterCustomIds.build(CharacterPanelAction.TraitSelect, discordId, characterId))
+        .setPlaceholder("Магический дар не указан")
+        .addOptions(
+          traits.slice(0, 25).map((trait) => {
+            const option = new StringSelectMenuOptionBuilder()
+              .setLabel(trait.name.slice(0, 100))
+              .setDescription((trait.description ?? "Магический дар").slice(0, 100))
+              .setValue(trait.id)
+              .setDefault(trait.id === currentId);
+
+            return trait.emoji ? option.setEmoji(trait.emoji) : option;
+          }),
+        ),
+    );
   }
 
   public static navRow(discordId: string) {
