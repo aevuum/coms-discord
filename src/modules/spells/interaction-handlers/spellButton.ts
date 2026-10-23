@@ -17,6 +17,7 @@ const BUTTON_ACTIONS = new Set<SpellAction>([
   SpellAction.Open,
   SpellAction.Create,
   SpellAction.Edit,
+  SpellAction.Description,
   SpellAction.Delete,
   SpellAction.DeleteConfirm,
 ]);
@@ -95,6 +96,18 @@ export class SpellButtonHandler extends InteractionHandler {
 
           await interaction.showModal(
             SpellComponents.spellModal(spell, Number(page) || 0),
+          );
+
+          return;
+        }
+
+        case SpellAction.Description: {
+          const [spellId, page] = result.args;
+
+          const spell = await SpellService.getSpell(spellId);
+
+          await interaction.showModal(
+            SpellComponents.descriptionModal(spell, Number(page) || 0),
           );
 
           return;

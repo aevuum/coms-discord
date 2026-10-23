@@ -61,7 +61,6 @@ export class CharacterCardContainer {
       [
         `## ${this.title(character)}`,
         `> **Статус персонажа:** ${CharacterFormatter.status(character.status)}`,
-        `> **Магический дар:** ${CharacterFormatter.trait(character.trait)}`,
         `> **Мана:** ${Mana.format(mana, character.maxMana)}`,
         `> ${Mana.caption(mana, character.maxMana, Mana.timeToFull(mana, character.maxMana))}`,
         `-# ${PAD}`,
@@ -222,8 +221,9 @@ export class CharacterCardContainer {
   private static title(character: CardCharacter) {
     const age = character.age !== null ? `, ${CharacterFormatter.age(character.age)}` : "";
     const role = character.specialRole ? ` | ${character.specialRole}` : "";
+    const gift = character.trait?.emoji ? `${character.trait.emoji} ` : "";
 
-    return `${character.rpName}${age} (${CharacterFormatter.facultyLabel(character.faculty)})${role}`;
+    return `${gift}${character.rpName}${age} (${CharacterFormatter.facultyLabel(character.faculty)})${role}`;
   }
 
   private static itemLine(item: CardItem) {

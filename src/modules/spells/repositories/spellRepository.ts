@@ -70,6 +70,18 @@ export class SpellRepository {
     });
   }
 
+  public static async setDescription(id: string, description: string | null) {
+    return prisma.spell.update({
+      where: {
+        id,
+      },
+
+      data: {
+        description,
+      },
+    });
+  }
+
   public static async updateGifs(id: string, gifPaths: string[]) {
     return prisma.spell.update({
       where: {
