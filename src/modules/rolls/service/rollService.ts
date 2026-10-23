@@ -5,6 +5,7 @@ import type { BaseInteraction, Client } from "discord.js";
 import type { RollEntry } from "../../../database/generated/prisma/client.js";
 
 import prisma from "../../../database/prisma.js";
+import { EmojiAccess } from "../../../lib/emojiAccess.js";
 import { Storage } from "../../../lib/storage.js";
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { ROLL_KINDS } from "../lib/rollKinds.js";
@@ -142,7 +143,7 @@ export class RollService {
       throw new RollError(`Вариантов не может быть больше ${this.MAX_ENTRIES}.`);
     }
 
-    const data = this.parse(client, input, false);
+    const data = await this.parse(client, input, false);
 
     this.assertTotal(entries, null, data.chance);
 
@@ -157,7 +158,7 @@ export class RollService {
   public static async update(client: Client, id: string, input: RollEntryInput) {
     const entry = await this.get(id);
 
-    const data = this.parse(client, input, entry.isDefault);
+    const data = await this.parse(client, input, entry.isDefault);
 
     if (!entry.isDefault) {
       this.assertTotal(await RollRepository.list(entry.kind), entry.id, data.chance);
@@ -212,7 +213,7 @@ export class RollService {
     }
   }
 
-  private static parse(client: Client, input: RollEntryInput, isDefault: boolean): RollEntryData {
+  private static async parse(client: Client, input: RollEntryInput, isDefault: boolean): Promise<RollEntryData> {
     const name = input.name.trim().replace(/\s+/g, " ");
 
     if (name.length < 2 || name.length > 40) {
@@ -228,7 +229,7 @@ export class RollService {
     return {
       name,
       description: description || null,
-      emoji: this.parseEmoji(client, input.emoji),
+      emoji: await this.parseEmoji(client, input.emoji),
       chance: isDefault ? 0 : this.parseChance(input.chance ?? ""),
     };
   }
@@ -249,7 +250,7 @@ export class RollService {
     return chance;
   }
 
-  private static parseEmoji(client: Client, input: string) {
+  private static async parseEmoji(client: Client, input: string) {
     const text = input.trim();
 
     if (!text) {
@@ -259,8 +260,8 @@ export class RollService {
     const custom = text.match(/^<a?:\w{2,32}:(\d{17,20})>$/);
 
     if (custom) {
-      if (!client.emojis.cache.has(custom[1])) {
-        throw new RollError("Бот не может использовать этот эмодзи. Выберите эмодзи с сервера или обычный.");
+      if (!(await EmojiAccess.canUse(client, custom[1]))) {
+        throw new RollError("Бот не может использовать этот эмодзи. Выберите эмодзи бота, сервера или обычный.");
       }
 
       return text;

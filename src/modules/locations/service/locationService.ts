@@ -1,5 +1,6 @@
 import { ChannelType, type BaseInteraction, type Client } from "discord.js";
 
+import { EmojiAccess } from "../../../lib/emojiAccess.js";
 import { PermissionService } from "../../permissions/service/permissionService.js";
 import { SEED_LOCATIONS, SEED_ROUTES } from "../lib/locationSeed.js";
 import { LocationRepository } from "../repositories/locationRepository.js";
@@ -126,7 +127,7 @@ export class LocationService {
       guildId,
       roleId,
       name: this.parseName(nameInput),
-      emoji: this.parseEmoji(client, emojiInput),
+      emoji: await this.parseEmoji(client, emojiInput),
       description: this.parseDescription(descriptionInput),
       sortOrder: await LocationRepository.count(guildId),
     });
@@ -144,7 +145,7 @@ export class LocationService {
 
     return LocationRepository.update(id, {
       name: this.parseName(nameInput),
-      emoji: this.parseEmoji(client, emojiInput),
+      emoji: await this.parseEmoji(client, emojiInput),
       description: this.parseDescription(descriptionInput),
     });
   }
@@ -388,7 +389,7 @@ export class LocationService {
     return description || null;
   }
 
-  private static parseEmoji(client: Client, input: string) {
+  private static async parseEmoji(client: Client, input: string) {
     const text = input.trim();
 
     if (!text) {
@@ -398,8 +399,8 @@ export class LocationService {
     const custom = text.match(/^<a?:\w{2,32}:(\d{17,20})>$/);
 
     if (custom) {
-      if (!client.emojis.cache.has(custom[1])) {
-        throw new LocationError("Бот не может использовать этот эмодзи. Выберите эмодзи с сервера или обычный.");
+      if (!(await EmojiAccess.canUse(client, custom[1]))) {
+        throw new LocationError("Бот не может использовать этот эмодзи. Выберите эмодзи бота, сервера или обычный.");
       }
 
       return text;

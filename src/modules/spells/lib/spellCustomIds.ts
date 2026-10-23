@@ -8,6 +8,8 @@ export enum SpellAction {
   CreateModal = "create_modal",
   Edit = "edit",
   EditModal = "edit_modal",
+  Description = "description",
+  DescriptionModal = "description_modal",
   Delete = "delete",
   DeleteConfirm = "delete_confirm",
 }
@@ -18,6 +20,7 @@ export const SpellModalFields = {
   Difficulty: "difficulty",
   ManaCost: "mana_cost",
   ImageUrl: "image_url",
+  Description: "description",
 } as const;
 
 export class SpellCustomIds {
@@ -49,6 +52,14 @@ export class SpellCustomIds {
 
   public static editModal(spellId: string, page: number) {
     return `${this.PREFIX}:${SpellMode.Manage}:${SpellAction.EditModal}:${spellId}:${page}`;
+  }
+
+  public static description(spellId: string, page: number) {
+    return `${this.PREFIX}:${SpellMode.Manage}:${SpellAction.Description}:${spellId}:${page}`;
+  }
+
+  public static descriptionModal(spellId: string, page: number) {
+    return `${this.PREFIX}:${SpellMode.Manage}:${SpellAction.DescriptionModal}:${spellId}:${page}`;
   }
 
   public static delete(spellId: string, page: number) {

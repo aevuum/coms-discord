@@ -84,6 +84,12 @@ export class SpellComponents {
           .setStyle(ButtonStyle.Primary),
 
         new ButtonBuilder()
+          .setCustomId(SpellCustomIds.description(spell.id, page))
+          .setLabel("Описание")
+          .setEmoji("<:984149edit:1518587370474176612>")
+          .setStyle(ButtonStyle.Secondary),
+
+        new ButtonBuilder()
           .setCustomId(SpellCustomIds.delete(spell.id, page))
           .setLabel("Удалить")
           .setEmoji("<:14605delete:1518587266505642074>")
@@ -116,6 +122,28 @@ export class SpellComponents {
     return new ActionRowBuilder<ButtonBuilder>().addComponents(
       this.backButton(mode, page),
     );
+  }
+
+  public static descriptionModal(spell: Spell, page: number) {
+    const description = new TextInputBuilder()
+      .setCustomId(SpellModalFields.Description)
+      .setStyle(TextInputStyle.Paragraph)
+      .setRequired(false)
+      .setMaxLength(1000);
+
+    if (spell.description) {
+      description.setValue(spell.description);
+    }
+
+    return new ModalBuilder()
+      .setCustomId(SpellCustomIds.descriptionModal(spell.id, page))
+      .setTitle(`Описание · ${spell.name}`.slice(0, 45))
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Описание заклинания")
+          .setDescription("Что делает заклинание. Оставьте пустым, чтобы убрать описание")
+          .setTextInputComponent(description),
+      );
   }
 
   public static spellModal(spell?: Spell, page = 0) {

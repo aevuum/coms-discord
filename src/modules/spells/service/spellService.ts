@@ -135,6 +135,22 @@ export class SpellService {
     return spell;
   }
 
+  public static async setDescription(spellId: string, input: string) {
+    await this.getSpell(spellId);
+
+    const description = input.trim();
+
+    if (description.length > 1000) {
+      throw new SpellError("Описание должно быть не длиннее 1000 символов.");
+    }
+
+    const spell = await SpellRepository.setDescription(spellId, description || null);
+
+    SpellCache.update(spell);
+
+    return spell;
+  }
+
   public static async delete(spellId: string) {
     const spell = await this.getSpell(spellId);
 

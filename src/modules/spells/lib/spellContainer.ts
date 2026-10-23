@@ -85,7 +85,7 @@ export class SpellContainer {
           `-# ${this.difficulty(spell.difficulty)} · ${
             spell.isCustom ? "пользовательское" : "каноническое"
           }`,
-          spell.description ? `> ${spell.description}` : null,
+          spell.description ? `> ${spell.description.replace(/\n/g, "\n> ")}` : null,
         ]
           .filter((line) => line !== null)
           .join("\n"),
@@ -197,7 +197,7 @@ export class SpellContainer {
           [
             `## ${WAND} ${cast.spell.incantations[0] ?? cast.spell.name}`,
             `-# ${cast.spell.name} · ${this.difficulty(cast.spell.difficulty)} · −${cast.manaCost} маны`,
-            cast.spell.description ? `> *${cast.spell.description}*` : null,
+            cast.spell.description ? `> *${cast.spell.description.replace(/\s*\n\s*/g, " ")}*` : null,
           ]
             .filter((line) => line !== null)
             .join("\n"),
