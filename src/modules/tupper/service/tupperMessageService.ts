@@ -3,6 +3,7 @@ import type { Message } from "discord.js";
 
 import { TupperCache } from "../cache/tupperCache.js";
 import { MessageFormatter } from "../lib/messageFormatter.js";
+import { MessageSplitter } from "../lib/messageSplitter.js";
 import { TupperRepository } from "../repositories/tupperRepository.js";
 import { WebhookService } from "./webhookService.js";
 import { SpellCastService } from "../../spells/service/spellCastService.js";
@@ -42,21 +43,26 @@ export class TupperMessageService {
 
     const formatted = await MessageFormatter.format(message, text);
 
+    const chunks = MessageSplitter.split(formatted, MAX_CONTENT_LENGTH);
+
+    const payload = (content: string | undefined, withFiles: boolean) => ({
+      content,
+      username: tupper.name,
+      avatarURL:
+        Storage.media(tupper.character.avatarPath, tupper.character.avatarUrl) ?? undefined,
+      files: withFiles ? files : [],
+      allowedMentions: {
+        parse: ["users" as const],
+      },
+    });
+
     let sent: Message | null;
 
     try {
-      sent = await WebhookService.send(message.channel, {
-        content:
-          (formatted.length <= MAX_CONTENT_LENGTH ? formatted : text) ||
-          undefined,
-        username: tupper.name,
-        avatarURL:
-          Storage.media(tupper.character.avatarPath, tupper.character.avatarUrl) ?? undefined,
-        files,
-        allowedMentions: {
-          parse: ["users"],
-        },
-      });
+      sent = await WebhookService.send(
+        message.channel,
+        payload(chunks[0], chunks.length <= 1),
+      );
 
       if (!sent) {
         return false;
@@ -64,6 +70,13 @@ export class TupperMessageService {
     } catch (error) {
       container.logger.error(error);
       return false;
+    }
+
+    for (const [index, chunk] of chunks.slice(1).entries()) {
+      await WebhookService.send(
+        message.channel,
+        payload(chunk, index === chunks.length - 2),
+      ).catch((error) => container.logger.error(error));
     }
 
     await message.delete().catch(() => {});
