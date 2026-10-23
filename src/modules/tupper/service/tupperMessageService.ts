@@ -6,6 +6,7 @@ import { MessageFormatter } from "../lib/messageFormatter.js";
 import { TupperRepository } from "../repositories/tupperRepository.js";
 import { WebhookService } from "./webhookService.js";
 import { SpellCastService } from "../../spells/service/spellCastService.js";
+import { EmojiAccess } from "../../../lib/emojiAccess.js";
 import { Storage } from "../../../lib/storage.js";
 
 const MAX_CONTENT_LENGTH = 2000;
@@ -37,14 +38,16 @@ export class TupperMessageService {
       return false;
     }
 
-    const formatted = await MessageFormatter.format(message, content);
+    const text = await EmojiAccess.resolveShortcodes(message.client, message.guildId, content);
+
+    const formatted = await MessageFormatter.format(message, text);
 
     let sent: Message | null;
 
     try {
       sent = await WebhookService.send(message.channel, {
         content:
-          (formatted.length <= MAX_CONTENT_LENGTH ? formatted : content) ||
+          (formatted.length <= MAX_CONTENT_LENGTH ? formatted : text) ||
           undefined,
         username: tupper.name,
         avatarURL:
