@@ -27,19 +27,20 @@ export type AggregateCharacterRune = {
 }
 
 export type CharacterRuneAvgAggregateOutputType = {
-  progress: number | null
+  mastery: number | null
 }
 
 export type CharacterRuneSumAggregateOutputType = {
-  progress: number | null
+  mastery: number | null
 }
 
 export type CharacterRuneMinAggregateOutputType = {
   id: string | null
   characterId: string | null
   runeKey: string | null
-  progress: number | null
-  createdAt: Date | null
+  mastery: number | null
+  learnedAt: Date | null
+  confirmedById: string | null
   updatedAt: Date | null
 }
 
@@ -47,8 +48,9 @@ export type CharacterRuneMaxAggregateOutputType = {
   id: string | null
   characterId: string | null
   runeKey: string | null
-  progress: number | null
-  createdAt: Date | null
+  mastery: number | null
+  learnedAt: Date | null
+  confirmedById: string | null
   updatedAt: Date | null
 }
 
@@ -56,27 +58,29 @@ export type CharacterRuneCountAggregateOutputType = {
   id: number
   characterId: number
   runeKey: number
-  progress: number
-  createdAt: number
+  mastery: number
+  learnedAt: number
+  confirmedById: number
   updatedAt: number
   _all: number
 }
 
 
 export type CharacterRuneAvgAggregateInputType = {
-  progress?: true
+  mastery?: true
 }
 
 export type CharacterRuneSumAggregateInputType = {
-  progress?: true
+  mastery?: true
 }
 
 export type CharacterRuneMinAggregateInputType = {
   id?: true
   characterId?: true
   runeKey?: true
-  progress?: true
-  createdAt?: true
+  mastery?: true
+  learnedAt?: true
+  confirmedById?: true
   updatedAt?: true
 }
 
@@ -84,8 +88,9 @@ export type CharacterRuneMaxAggregateInputType = {
   id?: true
   characterId?: true
   runeKey?: true
-  progress?: true
-  createdAt?: true
+  mastery?: true
+  learnedAt?: true
+  confirmedById?: true
   updatedAt?: true
 }
 
@@ -93,8 +98,9 @@ export type CharacterRuneCountAggregateInputType = {
   id?: true
   characterId?: true
   runeKey?: true
-  progress?: true
-  createdAt?: true
+  mastery?: true
+  learnedAt?: true
+  confirmedById?: true
   updatedAt?: true
   _all?: true
 }
@@ -189,8 +195,9 @@ export type CharacterRuneGroupByOutputType = {
   id: string
   characterId: string
   runeKey: string
-  progress: number
-  createdAt: Date
+  mastery: number
+  learnedAt: Date
+  confirmedById: string
   updatedAt: Date
   _count: CharacterRuneCountAggregateOutputType | null
   _avg: CharacterRuneAvgAggregateOutputType | null
@@ -221,20 +228,24 @@ export type CharacterRuneWhereInput = {
   id?: Prisma.StringFilter<"CharacterRune"> | string
   characterId?: Prisma.StringFilter<"CharacterRune"> | string
   runeKey?: Prisma.StringFilter<"CharacterRune"> | string
-  progress?: Prisma.IntFilter<"CharacterRune"> | number
-  createdAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+  mastery?: Prisma.IntFilter<"CharacterRune"> | number
+  learnedAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+  confirmedById?: Prisma.StringFilter<"CharacterRune"> | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
+  rune?: Prisma.XOR<Prisma.RuneScalarRelationFilter, Prisma.RuneWhereInput>
 }
 
 export type CharacterRuneOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   runeKey?: Prisma.SortOrder
-  progress?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
+  learnedAt?: Prisma.SortOrder
+  confirmedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   character?: Prisma.CharacterOrderByWithRelationInput
+  rune?: Prisma.RuneOrderByWithRelationInput
 }
 
 export type CharacterRuneWhereUniqueInput = Prisma.AtLeast<{
@@ -245,18 +256,21 @@ export type CharacterRuneWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CharacterRuneWhereInput | Prisma.CharacterRuneWhereInput[]
   characterId?: Prisma.StringFilter<"CharacterRune"> | string
   runeKey?: Prisma.StringFilter<"CharacterRune"> | string
-  progress?: Prisma.IntFilter<"CharacterRune"> | number
-  createdAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+  mastery?: Prisma.IntFilter<"CharacterRune"> | number
+  learnedAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+  confirmedById?: Prisma.StringFilter<"CharacterRune"> | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
+  rune?: Prisma.XOR<Prisma.RuneScalarRelationFilter, Prisma.RuneWhereInput>
 }, "id" | "characterId_runeKey">
 
 export type CharacterRuneOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   runeKey?: Prisma.SortOrder
-  progress?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
+  learnedAt?: Prisma.SortOrder
+  confirmedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CharacterRuneCountOrderByAggregateInput
   _avg?: Prisma.CharacterRuneAvgOrderByAggregateInput
@@ -272,44 +286,49 @@ export type CharacterRuneScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"CharacterRune"> | string
   characterId?: Prisma.StringWithAggregatesFilter<"CharacterRune"> | string
   runeKey?: Prisma.StringWithAggregatesFilter<"CharacterRune"> | string
-  progress?: Prisma.IntWithAggregatesFilter<"CharacterRune"> | number
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterRune"> | Date | string
+  mastery?: Prisma.IntWithAggregatesFilter<"CharacterRune"> | number
+  learnedAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterRune"> | Date | string
+  confirmedById?: Prisma.StringWithAggregatesFilter<"CharacterRune"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CharacterRune"> | Date | string
 }
 
 export type CharacterRuneCreateInput = {
   id?: string
-  runeKey: string
-  progress?: number
-  createdAt?: Date | string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
   updatedAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutRunesInput
+  rune: Prisma.RuneCreateNestedOneWithoutCharactersInput
 }
 
 export type CharacterRuneUncheckedCreateInput = {
   id?: string
   characterId: string
   runeKey: string
-  progress?: number
-  createdAt?: Date | string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
   updatedAt?: Date | string
 }
 
 export type CharacterRuneUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutRunesNestedInput
+  rune?: Prisma.RuneUpdateOneRequiredWithoutCharactersNestedInput
 }
 
 export type CharacterRuneUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
   runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -317,16 +336,17 @@ export type CharacterRuneCreateManyInput = {
   id?: string
   characterId: string
   runeKey: string
-  progress?: number
-  createdAt?: Date | string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
   updatedAt?: Date | string
 }
 
 export type CharacterRuneUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -334,8 +354,9 @@ export type CharacterRuneUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
   runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -358,21 +379,23 @@ export type CharacterRuneCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   runeKey?: Prisma.SortOrder
-  progress?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
+  learnedAt?: Prisma.SortOrder
+  confirmedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CharacterRuneAvgOrderByAggregateInput = {
-  progress?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
 }
 
 export type CharacterRuneMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   runeKey?: Prisma.SortOrder
-  progress?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
+  learnedAt?: Prisma.SortOrder
+  confirmedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -380,13 +403,14 @@ export type CharacterRuneMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
   runeKey?: Prisma.SortOrder
-  progress?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
+  learnedAt?: Prisma.SortOrder
+  confirmedById?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CharacterRuneSumOrderByAggregateInput = {
-  progress?: Prisma.SortOrder
+  mastery?: Prisma.SortOrder
 }
 
 export type CharacterRuneCreateNestedManyWithoutCharacterInput = {
@@ -431,19 +455,63 @@ export type CharacterRuneUncheckedUpdateManyWithoutCharacterNestedInput = {
   deleteMany?: Prisma.CharacterRuneScalarWhereInput | Prisma.CharacterRuneScalarWhereInput[]
 }
 
+export type CharacterRuneCreateNestedManyWithoutRuneInput = {
+  create?: Prisma.XOR<Prisma.CharacterRuneCreateWithoutRuneInput, Prisma.CharacterRuneUncheckedCreateWithoutRuneInput> | Prisma.CharacterRuneCreateWithoutRuneInput[] | Prisma.CharacterRuneUncheckedCreateWithoutRuneInput[]
+  connectOrCreate?: Prisma.CharacterRuneCreateOrConnectWithoutRuneInput | Prisma.CharacterRuneCreateOrConnectWithoutRuneInput[]
+  createMany?: Prisma.CharacterRuneCreateManyRuneInputEnvelope
+  connect?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+}
+
+export type CharacterRuneUncheckedCreateNestedManyWithoutRuneInput = {
+  create?: Prisma.XOR<Prisma.CharacterRuneCreateWithoutRuneInput, Prisma.CharacterRuneUncheckedCreateWithoutRuneInput> | Prisma.CharacterRuneCreateWithoutRuneInput[] | Prisma.CharacterRuneUncheckedCreateWithoutRuneInput[]
+  connectOrCreate?: Prisma.CharacterRuneCreateOrConnectWithoutRuneInput | Prisma.CharacterRuneCreateOrConnectWithoutRuneInput[]
+  createMany?: Prisma.CharacterRuneCreateManyRuneInputEnvelope
+  connect?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+}
+
+export type CharacterRuneUpdateManyWithoutRuneNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterRuneCreateWithoutRuneInput, Prisma.CharacterRuneUncheckedCreateWithoutRuneInput> | Prisma.CharacterRuneCreateWithoutRuneInput[] | Prisma.CharacterRuneUncheckedCreateWithoutRuneInput[]
+  connectOrCreate?: Prisma.CharacterRuneCreateOrConnectWithoutRuneInput | Prisma.CharacterRuneCreateOrConnectWithoutRuneInput[]
+  upsert?: Prisma.CharacterRuneUpsertWithWhereUniqueWithoutRuneInput | Prisma.CharacterRuneUpsertWithWhereUniqueWithoutRuneInput[]
+  createMany?: Prisma.CharacterRuneCreateManyRuneInputEnvelope
+  set?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  disconnect?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  delete?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  connect?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  update?: Prisma.CharacterRuneUpdateWithWhereUniqueWithoutRuneInput | Prisma.CharacterRuneUpdateWithWhereUniqueWithoutRuneInput[]
+  updateMany?: Prisma.CharacterRuneUpdateManyWithWhereWithoutRuneInput | Prisma.CharacterRuneUpdateManyWithWhereWithoutRuneInput[]
+  deleteMany?: Prisma.CharacterRuneScalarWhereInput | Prisma.CharacterRuneScalarWhereInput[]
+}
+
+export type CharacterRuneUncheckedUpdateManyWithoutRuneNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterRuneCreateWithoutRuneInput, Prisma.CharacterRuneUncheckedCreateWithoutRuneInput> | Prisma.CharacterRuneCreateWithoutRuneInput[] | Prisma.CharacterRuneUncheckedCreateWithoutRuneInput[]
+  connectOrCreate?: Prisma.CharacterRuneCreateOrConnectWithoutRuneInput | Prisma.CharacterRuneCreateOrConnectWithoutRuneInput[]
+  upsert?: Prisma.CharacterRuneUpsertWithWhereUniqueWithoutRuneInput | Prisma.CharacterRuneUpsertWithWhereUniqueWithoutRuneInput[]
+  createMany?: Prisma.CharacterRuneCreateManyRuneInputEnvelope
+  set?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  disconnect?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  delete?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  connect?: Prisma.CharacterRuneWhereUniqueInput | Prisma.CharacterRuneWhereUniqueInput[]
+  update?: Prisma.CharacterRuneUpdateWithWhereUniqueWithoutRuneInput | Prisma.CharacterRuneUpdateWithWhereUniqueWithoutRuneInput[]
+  updateMany?: Prisma.CharacterRuneUpdateManyWithWhereWithoutRuneInput | Prisma.CharacterRuneUpdateManyWithWhereWithoutRuneInput[]
+  deleteMany?: Prisma.CharacterRuneScalarWhereInput | Prisma.CharacterRuneScalarWhereInput[]
+}
+
 export type CharacterRuneCreateWithoutCharacterInput = {
   id?: string
-  runeKey: string
-  progress?: number
-  createdAt?: Date | string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
   updatedAt?: Date | string
+  rune: Prisma.RuneCreateNestedOneWithoutCharactersInput
 }
 
 export type CharacterRuneUncheckedCreateWithoutCharacterInput = {
   id?: string
   runeKey: string
-  progress?: number
-  createdAt?: Date | string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
   updatedAt?: Date | string
 }
 
@@ -480,40 +548,125 @@ export type CharacterRuneScalarWhereInput = {
   id?: Prisma.StringFilter<"CharacterRune"> | string
   characterId?: Prisma.StringFilter<"CharacterRune"> | string
   runeKey?: Prisma.StringFilter<"CharacterRune"> | string
-  progress?: Prisma.IntFilter<"CharacterRune"> | number
-  createdAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+  mastery?: Prisma.IntFilter<"CharacterRune"> | number
+  learnedAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+  confirmedById?: Prisma.StringFilter<"CharacterRune"> | string
   updatedAt?: Prisma.DateTimeFilter<"CharacterRune"> | Date | string
+}
+
+export type CharacterRuneCreateWithoutRuneInput = {
+  id?: string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
+  updatedAt?: Date | string
+  character: Prisma.CharacterCreateNestedOneWithoutRunesInput
+}
+
+export type CharacterRuneUncheckedCreateWithoutRuneInput = {
+  id?: string
+  characterId: string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
+  updatedAt?: Date | string
+}
+
+export type CharacterRuneCreateOrConnectWithoutRuneInput = {
+  where: Prisma.CharacterRuneWhereUniqueInput
+  create: Prisma.XOR<Prisma.CharacterRuneCreateWithoutRuneInput, Prisma.CharacterRuneUncheckedCreateWithoutRuneInput>
+}
+
+export type CharacterRuneCreateManyRuneInputEnvelope = {
+  data: Prisma.CharacterRuneCreateManyRuneInput | Prisma.CharacterRuneCreateManyRuneInput[]
+  skipDuplicates?: boolean
+}
+
+export type CharacterRuneUpsertWithWhereUniqueWithoutRuneInput = {
+  where: Prisma.CharacterRuneWhereUniqueInput
+  update: Prisma.XOR<Prisma.CharacterRuneUpdateWithoutRuneInput, Prisma.CharacterRuneUncheckedUpdateWithoutRuneInput>
+  create: Prisma.XOR<Prisma.CharacterRuneCreateWithoutRuneInput, Prisma.CharacterRuneUncheckedCreateWithoutRuneInput>
+}
+
+export type CharacterRuneUpdateWithWhereUniqueWithoutRuneInput = {
+  where: Prisma.CharacterRuneWhereUniqueInput
+  data: Prisma.XOR<Prisma.CharacterRuneUpdateWithoutRuneInput, Prisma.CharacterRuneUncheckedUpdateWithoutRuneInput>
+}
+
+export type CharacterRuneUpdateManyWithWhereWithoutRuneInput = {
+  where: Prisma.CharacterRuneScalarWhereInput
+  data: Prisma.XOR<Prisma.CharacterRuneUpdateManyMutationInput, Prisma.CharacterRuneUncheckedUpdateManyWithoutRuneInput>
 }
 
 export type CharacterRuneCreateManyCharacterInput = {
   id?: string
   runeKey: string
-  progress?: number
-  createdAt?: Date | string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
   updatedAt?: Date | string
 }
 
 export type CharacterRuneUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rune?: Prisma.RuneUpdateOneRequiredWithoutCharactersNestedInput
 }
 
 export type CharacterRuneUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CharacterRuneUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   runeKey?: Prisma.StringFieldUpdateOperationsInput | string
-  progress?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CharacterRuneCreateManyRuneInput = {
+  id?: string
+  characterId: string
+  mastery?: number
+  learnedAt?: Date | string
+  confirmedById: string
+  updatedAt?: Date | string
+}
+
+export type CharacterRuneUpdateWithoutRuneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  character?: Prisma.CharacterUpdateOneRequiredWithoutRunesNestedInput
+}
+
+export type CharacterRuneUncheckedUpdateWithoutRuneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CharacterRuneUncheckedUpdateManyWithoutRuneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  mastery?: Prisma.IntFieldUpdateOperationsInput | number
+  learnedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  confirmedById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -523,63 +676,75 @@ export type CharacterRuneSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   characterId?: boolean
   runeKey?: boolean
-  progress?: boolean
-  createdAt?: boolean
+  mastery?: boolean
+  learnedAt?: boolean
+  confirmedById?: boolean
   updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
+  rune?: boolean | Prisma.RuneDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterRune"]>
 
 export type CharacterRuneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   characterId?: boolean
   runeKey?: boolean
-  progress?: boolean
-  createdAt?: boolean
+  mastery?: boolean
+  learnedAt?: boolean
+  confirmedById?: boolean
   updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
+  rune?: boolean | Prisma.RuneDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterRune"]>
 
 export type CharacterRuneSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   characterId?: boolean
   runeKey?: boolean
-  progress?: boolean
-  createdAt?: boolean
+  mastery?: boolean
+  learnedAt?: boolean
+  confirmedById?: boolean
   updatedAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
+  rune?: boolean | Prisma.RuneDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterRune"]>
 
 export type CharacterRuneSelectScalar = {
   id?: boolean
   characterId?: boolean
   runeKey?: boolean
-  progress?: boolean
-  createdAt?: boolean
+  mastery?: boolean
+  learnedAt?: boolean
+  confirmedById?: boolean
   updatedAt?: boolean
 }
 
-export type CharacterRuneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "runeKey" | "progress" | "createdAt" | "updatedAt", ExtArgs["result"]["characterRune"]>
+export type CharacterRuneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "runeKey" | "mastery" | "learnedAt" | "confirmedById" | "updatedAt", ExtArgs["result"]["characterRune"]>
 export type CharacterRuneInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
+  rune?: boolean | Prisma.RuneDefaultArgs<ExtArgs>
 }
 export type CharacterRuneIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
+  rune?: boolean | Prisma.RuneDefaultArgs<ExtArgs>
 }
 export type CharacterRuneIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
+  rune?: boolean | Prisma.RuneDefaultArgs<ExtArgs>
 }
 
 export type $CharacterRunePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CharacterRune"
   objects: {
     character: Prisma.$CharacterPayload<ExtArgs>
+    rune: Prisma.$RunePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     characterId: string
     runeKey: string
-    progress: number
-    createdAt: Date
+    mastery: number
+    learnedAt: Date
+    confirmedById: string
     updatedAt: Date
   }, ExtArgs["result"]["characterRune"]>
   composites: {}
@@ -976,6 +1141,7 @@ readonly fields: CharacterRuneFieldRefs;
 export interface Prisma__CharacterRuneClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   character<T extends Prisma.CharacterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CharacterDefaultArgs<ExtArgs>>): Prisma.Prisma__CharacterClient<runtime.Types.Result.GetResult<Prisma.$CharacterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  rune<T extends Prisma.RuneDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RuneDefaultArgs<ExtArgs>>): Prisma.Prisma__RuneClient<runtime.Types.Result.GetResult<Prisma.$RunePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1008,8 +1174,9 @@ export interface CharacterRuneFieldRefs {
   readonly id: Prisma.FieldRef<"CharacterRune", 'String'>
   readonly characterId: Prisma.FieldRef<"CharacterRune", 'String'>
   readonly runeKey: Prisma.FieldRef<"CharacterRune", 'String'>
-  readonly progress: Prisma.FieldRef<"CharacterRune", 'Int'>
-  readonly createdAt: Prisma.FieldRef<"CharacterRune", 'DateTime'>
+  readonly mastery: Prisma.FieldRef<"CharacterRune", 'Int'>
+  readonly learnedAt: Prisma.FieldRef<"CharacterRune", 'DateTime'>
+  readonly confirmedById: Prisma.FieldRef<"CharacterRune", 'String'>
   readonly updatedAt: Prisma.FieldRef<"CharacterRune", 'DateTime'>
 }
     

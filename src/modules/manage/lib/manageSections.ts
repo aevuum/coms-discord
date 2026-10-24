@@ -59,6 +59,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Runes,
+    key: "manage.runes",
+    label: "Руны и артефакты",
+    emoji: "<:elder_ansuz:1562468430295334952>",
+    description: "Заявки на изучение, формулы заклинаний, рецепты артефактов",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Applications,
     key: "manage.applications",
     label: "Набор в команду",

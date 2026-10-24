@@ -1,6 +1,7 @@
 import { MemberSearchService } from "../../manage/service/memberSearchService.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
+import { RuneRegistry } from "../../runes/service/runeRegistry.js";
 import { RuneService } from "../../runes/service/runeService.js";
 import { RollService } from "../../rolls/service/rollService.js";
 import { RollKind } from "../../rolls/types/rolls.js";
@@ -28,12 +29,13 @@ export class ManageCharacterView {
     tab: CharacterTab = CharacterTab.Profile,
     notice: string | null = null,
   ) {
-    const [member, character, items, runes, traits] = await Promise.all([
+    const [member, character, items, runes, traits, catalog] = await Promise.all([
       MemberSearchService.getMember(discordId),
       CharacterInventoryService.getOwnedCharacter(discordId, characterId),
       CharacterInventoryService.list(characterId),
       RuneService.learned(characterId),
       RollService.list(RollKind.TRAIT),
+      RuneRegistry.all(),
     ]);
 
     return ManageCharacterContainer.dashboard(
@@ -45,6 +47,7 @@ export class ManageCharacterView {
       notice,
       runes,
       traits,
+      catalog,
     );
   }
 }

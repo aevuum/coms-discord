@@ -26,6 +26,7 @@ const USER_ERRORS = new Set([
   "PingRoleError",
   "SuggestionError",
   "StorageError",
+  "RuneError",
 ]);
 
 export class ManageError extends Error {

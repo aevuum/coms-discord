@@ -153,3 +153,100 @@ export const SuggestionStatus = {
 } as const
 
 export type SuggestionStatus = (typeof SuggestionStatus)[keyof typeof SuggestionStatus]
+
+
+export const RuneFuthark = {
+  ELDER: 'ELDER',
+  YOUNGER: 'YOUNGER'
+} as const
+
+export type RuneFuthark = (typeof RuneFuthark)[keyof typeof RuneFuthark]
+
+
+export const RuneDesignStatus = {
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  DISABLED: 'DISABLED'
+} as const
+
+export type RuneDesignStatus = (typeof RuneDesignStatus)[keyof typeof RuneDesignStatus]
+
+
+export const RuneRequestStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type RuneRequestStatus = (typeof RuneRequestStatus)[keyof typeof RuneRequestStatus]
+
+
+export const RuneOutcome = {
+  REFUSE: 'REFUSE',
+  FIZZLE: 'FIZZLE',
+  BACKFIRE: 'BACKFIRE',
+  INJURY: 'INJURY',
+  MATERIALS_LOST: 'MATERIALS_LOST',
+  DAMAGED: 'DAMAGED',
+  UNSTABLE: 'UNSTABLE',
+  DESTROYED: 'DESTROYED'
+} as const
+
+export type RuneOutcome = (typeof RuneOutcome)[keyof typeof RuneOutcome]
+
+
+export const ArtifactStatus = {
+  ACTIVE: 'ACTIVE',
+  UNSTABLE: 'UNSTABLE',
+  DAMAGED: 'DAMAGED',
+  DESTROYED: 'DESTROYED'
+} as const
+
+export type ArtifactStatus = (typeof ArtifactStatus)[keyof typeof ArtifactStatus]
+
+
+export const RuneOperationKind = {
+  FORMULA_CAST: 'FORMULA_CAST',
+  ARTIFACT_CRAFT: 'ARTIFACT_CRAFT'
+} as const
+
+export type RuneOperationKind = (typeof RuneOperationKind)[keyof typeof RuneOperationKind]
+
+
+export const RuneOperationStatus = {
+  PENDING: 'PENDING',
+  DONE: 'DONE',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type RuneOperationStatus = (typeof RuneOperationStatus)[keyof typeof RuneOperationStatus]
+
+
+export const RuneAuditAction = {
+  RUNE_UPDATED: 'RUNE_UPDATED',
+  RUNE_LEARNED: 'RUNE_LEARNED',
+  RUNE_FORGOTTEN: 'RUNE_FORGOTTEN',
+  MASTERY_CHANGED: 'MASTERY_CHANGED',
+  STUDY_REQUESTED: 'STUDY_REQUESTED',
+  STUDY_REJECTED: 'STUDY_REJECTED',
+  FORMULA_PROPOSED: 'FORMULA_PROPOSED',
+  FORMULA_CREATED: 'FORMULA_CREATED',
+  FORMULA_UPDATED: 'FORMULA_UPDATED',
+  FORMULA_APPROVED: 'FORMULA_APPROVED',
+  FORMULA_REJECTED: 'FORMULA_REJECTED',
+  FORMULA_DISABLED: 'FORMULA_DISABLED',
+  FORMULA_CAST: 'FORMULA_CAST',
+  RECIPE_CREATED: 'RECIPE_CREATED',
+  RECIPE_UPDATED: 'RECIPE_UPDATED',
+  RECIPE_APPROVED: 'RECIPE_APPROVED',
+  RECIPE_REJECTED: 'RECIPE_REJECTED',
+  RECIPE_DISABLED: 'RECIPE_DISABLED',
+  ARTIFACT_CRAFTED: 'ARTIFACT_CRAFTED',
+  MATERIAL_CHANGED: 'MATERIAL_CHANGED',
+  BLANK_CHANGED: 'BLANK_CHANGED',
+  SETTINGS_UPDATED: 'SETTINGS_UPDATED'
+} as const
+
+export type RuneAuditAction = (typeof RuneAuditAction)[keyof typeof RuneAuditAction]

@@ -63,7 +63,6 @@ export const ModelName = {
   InventoryItem: 'InventoryItem',
   CharacterInventoryItem: 'CharacterInventoryItem',
   CommandPermission: 'CommandPermission',
-  CharacterRune: 'CharacterRune',
   CharacterFamiliar: 'CharacterFamiliar',
   CharacterTupper: 'CharacterTupper',
   CoinTransaction: 'CoinTransaction',
@@ -89,7 +88,21 @@ export const ModelName = {
   SuggestionRating: 'SuggestionRating',
   PingRole: 'PingRole',
   ProphetState: 'ProphetState',
-  PendingTraitRoll: 'PendingTraitRoll'
+  PendingTraitRoll: 'PendingTraitRoll',
+  Rune: 'Rune',
+  CharacterRune: 'CharacterRune',
+  RuneStudyRequest: 'RuneStudyRequest',
+  SpellFormula: 'SpellFormula',
+  ArtifactMaterial: 'ArtifactMaterial',
+  ArtifactBlank: 'ArtifactBlank',
+  ArtifactRecipe: 'ArtifactRecipe',
+  ArtifactRecipeRune: 'ArtifactRecipeRune',
+  ArtifactRecipeMaterial: 'ArtifactRecipeMaterial',
+  Artifact: 'Artifact',
+  ArtifactRune: 'ArtifactRune',
+  RuneOperation: 'RuneOperation',
+  RuneAuditLog: 'RuneAuditLog',
+  RuneSettings: 'RuneSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -287,18 +300,6 @@ export const CommandPermissionScalarFieldEnum = {
 } as const
 
 export type CommandPermissionScalarFieldEnum = (typeof CommandPermissionScalarFieldEnum)[keyof typeof CommandPermissionScalarFieldEnum]
-
-
-export const CharacterRuneScalarFieldEnum = {
-  id: 'id',
-  characterId: 'characterId',
-  runeKey: 'runeKey',
-  progress: 'progress',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CharacterRuneScalarFieldEnum = (typeof CharacterRuneScalarFieldEnum)[keyof typeof CharacterRuneScalarFieldEnum]
 
 
 export const CharacterFamiliarScalarFieldEnum = {
@@ -670,6 +671,230 @@ export const PendingTraitRollScalarFieldEnum = {
 } as const
 
 export type PendingTraitRollScalarFieldEnum = (typeof PendingTraitRollScalarFieldEnum)[keyof typeof PendingTraitRollScalarFieldEnum]
+
+
+export const RuneScalarFieldEnum = {
+  key: 'key',
+  futhark: 'futhark',
+  name: 'name',
+  emoji: 'emoji',
+  sortOrder: 'sortOrder',
+  meaning: 'meaning',
+  domain: 'domain',
+  principle: 'principle',
+  modifies: 'modifies',
+  spellUse: 'spellUse',
+  artifactUse: 'artifactUse',
+  restrictions: 'restrictions',
+  load: 'load',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RuneScalarFieldEnum = (typeof RuneScalarFieldEnum)[keyof typeof RuneScalarFieldEnum]
+
+
+export const CharacterRuneScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  runeKey: 'runeKey',
+  mastery: 'mastery',
+  learnedAt: 'learnedAt',
+  confirmedById: 'confirmedById',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CharacterRuneScalarFieldEnum = (typeof CharacterRuneScalarFieldEnum)[keyof typeof CharacterRuneScalarFieldEnum]
+
+
+export const RuneStudyRequestScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  runeKey: 'runeKey',
+  postUrl: 'postUrl',
+  note: 'note',
+  status: 'status',
+  reviewerId: 'reviewerId',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  reviewedAt: 'reviewedAt'
+} as const
+
+export type RuneStudyRequestScalarFieldEnum = (typeof RuneStudyRequestScalarFieldEnum)[keyof typeof RuneStudyRequestScalarFieldEnum]
+
+
+export const SpellFormulaScalarFieldEnum = {
+  id: 'id',
+  spellId: 'spellId',
+  runeKey: 'runeKey',
+  incantation: 'incantation',
+  incantationKey: 'incantationKey',
+  effect: 'effect',
+  mechanics: 'mechanics',
+  restrictions: 'restrictions',
+  minMastery: 'minMastery',
+  baseRisk: 'baseRisk',
+  complexity: 'complexity',
+  failureOutcome: 'failureOutcome',
+  status: 'status',
+  authorId: 'authorId',
+  authorCharacterId: 'authorCharacterId',
+  reviewerId: 'reviewerId',
+  reviewReason: 'reviewReason',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpellFormulaScalarFieldEnum = (typeof SpellFormulaScalarFieldEnum)[keyof typeof SpellFormulaScalarFieldEnum]
+
+
+export const ArtifactMaterialScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  capacityBonus: 'capacityBonus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ArtifactMaterialScalarFieldEnum = (typeof ArtifactMaterialScalarFieldEnum)[keyof typeof ArtifactMaterialScalarFieldEnum]
+
+
+export const ArtifactBlankScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  kind: 'kind',
+  description: 'description',
+  baseCapacity: 'baseCapacity',
+  qualityPercent: 'qualityPercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ArtifactBlankScalarFieldEnum = (typeof ArtifactBlankScalarFieldEnum)[keyof typeof ArtifactBlankScalarFieldEnum]
+
+
+export const ArtifactRecipeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  effect: 'effect',
+  description: 'description',
+  blankId: 'blankId',
+  minMastery: 'minMastery',
+  baseRisk: 'baseRisk',
+  complexity: 'complexity',
+  overloadOutcome: 'overloadOutcome',
+  failureOutcome: 'failureOutcome',
+  status: 'status',
+  authorId: 'authorId',
+  reviewerId: 'reviewerId',
+  reviewReason: 'reviewReason',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ArtifactRecipeScalarFieldEnum = (typeof ArtifactRecipeScalarFieldEnum)[keyof typeof ArtifactRecipeScalarFieldEnum]
+
+
+export const ArtifactRecipeRuneScalarFieldEnum = {
+  recipeId: 'recipeId',
+  runeKey: 'runeKey',
+  critical: 'critical'
+} as const
+
+export type ArtifactRecipeRuneScalarFieldEnum = (typeof ArtifactRecipeRuneScalarFieldEnum)[keyof typeof ArtifactRecipeRuneScalarFieldEnum]
+
+
+export const ArtifactRecipeMaterialScalarFieldEnum = {
+  recipeId: 'recipeId',
+  materialId: 'materialId',
+  quantity: 'quantity'
+} as const
+
+export type ArtifactRecipeMaterialScalarFieldEnum = (typeof ArtifactRecipeMaterialScalarFieldEnum)[keyof typeof ArtifactRecipeMaterialScalarFieldEnum]
+
+
+export const ArtifactScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  recipeId: 'recipeId',
+  operationId: 'operationId',
+  name: 'name',
+  effect: 'effect',
+  status: 'status',
+  capacity: 'capacity',
+  load: 'load',
+  quality: 'quality',
+  createdAt: 'createdAt'
+} as const
+
+export type ArtifactScalarFieldEnum = (typeof ArtifactScalarFieldEnum)[keyof typeof ArtifactScalarFieldEnum]
+
+
+export const ArtifactRuneScalarFieldEnum = {
+  artifactId: 'artifactId',
+  runeKey: 'runeKey',
+  load: 'load',
+  critical: 'critical'
+} as const
+
+export type ArtifactRuneScalarFieldEnum = (typeof ArtifactRuneScalarFieldEnum)[keyof typeof ArtifactRuneScalarFieldEnum]
+
+
+export const RuneOperationScalarFieldEnum = {
+  id: 'id',
+  kind: 'kind',
+  status: 'status',
+  characterId: 'characterId',
+  actorId: 'actorId',
+  formulaId: 'formulaId',
+  recipeId: 'recipeId',
+  extraMaterialIds: 'extraMaterialIds',
+  risk: 'risk',
+  roll: 'roll',
+  success: 'success',
+  outcome: 'outcome',
+  quality: 'quality',
+  details: 'details',
+  createdAt: 'createdAt',
+  resolvedAt: 'resolvedAt'
+} as const
+
+export type RuneOperationScalarFieldEnum = (typeof RuneOperationScalarFieldEnum)[keyof typeof RuneOperationScalarFieldEnum]
+
+
+export const RuneAuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  actorId: 'actorId',
+  characterId: 'characterId',
+  runeKey: 'runeKey',
+  formulaId: 'formulaId',
+  recipeId: 'recipeId',
+  fromValue: 'fromValue',
+  toValue: 'toValue',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type RuneAuditLogScalarFieldEnum = (typeof RuneAuditLogScalarFieldEnum)[keyof typeof RuneAuditLogScalarFieldEnum]
+
+
+export const RuneSettingsScalarFieldEnum = {
+  id: 'id',
+  elderLoad: 'elderLoad',
+  youngerLoad: 'youngerLoad',
+  masteryReductionPct: 'masteryReductionPct',
+  minRisk: 'minRisk',
+  maxRisk: 'maxRisk',
+  defaultBaseRisk: 'defaultBaseRisk',
+  defaultInitialMastery: 'defaultInitialMastery',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RuneSettingsScalarFieldEnum = (typeof RuneSettingsScalarFieldEnum)[keyof typeof RuneSettingsScalarFieldEnum]
 
 
 export const SortOrder = {

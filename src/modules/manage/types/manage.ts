@@ -13,6 +13,7 @@ export enum ManageSectionId {
   Giveaways = "giveaways",
   PingRoles = "pingroles",
   Permissions = "permissions",
+  Runes = "runes",
 }
 
 export type ManageSection = {

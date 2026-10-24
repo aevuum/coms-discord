@@ -20,6 +20,7 @@ import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
 import { CharacterService } from "../service/characterService.js";
 import { FamiliarService } from "../service/familiarService.js";
+import { RuneAudit } from "../../runes/service/runeAudit.js";
 import { RuneService } from "../../runes/service/runeService.js";
 import { CharacterTab } from "../types/character.js";
 import { Mana } from "../../spells/lib/mana.js";
@@ -188,21 +189,23 @@ export class CharacterModalHandler extends InteractionHandler {
       }
 
       case CharacterPanelAction.RuneModal: {
+        await RuneAudit.assertCurator(interaction);
         await CharacterInventoryService.getOwnedCharacter(discordId, characterId);
 
-        const saved = await RuneService.set(
+        const saved = await RuneService.setMastery(
           characterId,
           result.args[2],
           field(CharacterModalFields.RuneProgress),
+          interaction.user.id,
         );
 
         return ManageCharacterView.character(
           discordId,
           characterId,
           CharacterTab.Runes,
-          saved.progress === null
+          saved.mastery === null
             ? `Руна ${saved.rune.emoji} **${saved.rune.name}** убрана у персонажа.`
-            : `Руна ${saved.rune.emoji} **${saved.rune.name}**: ${saved.progress} / 100.`,
+            : `Руна ${saved.rune.emoji} **${saved.rune.name}**: владение ${saved.mastery} / 100.`,
         );
       }
 

@@ -1,13 +1,45 @@
 export enum RuneAction {
   Pick = "pick",
-  Page = "page",
   Back = "back",
+  Tab = "tab",
+  Page = "page",
+  Info = "info",
+  Study = "study",
+  StudyModal = "study_modal",
+  Formula = "formula",
+  Try = "try",
+  Cast = "cast",
+  Cancel = "cancel",
+  Propose = "propose",
+  ProposeModal = "propose_modal",
+  Artifact = "artifact",
+  Recipe = "recipe",
+  Extras = "extras",
+  Craft = "craft",
 }
+
+export enum RuneTab {
+  Runes = "runes",
+  Catalog = "catalog",
+  Formulas = "formulas",
+  Artifacts = "artifacts",
+  Requests = "requests",
+}
+
+export const RuneModalFields = {
+  PostUrl: "post_url",
+  Note: "note",
+  Spell: "spell",
+  Rune: "rune",
+  Incantation: "incantation",
+  Effect: "effect",
+  Mechanics: "mechanics",
+} as const;
 
 export class RuneCustomIds {
   private static readonly PREFIX = "rune";
 
-  public static build(action: RuneAction, ...args: string[]) {
+  public static build(action: RuneAction, ...args: (string | number)[]) {
     return [this.PREFIX, action, ...args].join(":");
   }
 

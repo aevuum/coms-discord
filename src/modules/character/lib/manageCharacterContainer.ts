@@ -13,6 +13,7 @@ import type {
   Character,
   CharacterFamiliar,
   RollEntry,
+  Rune,
 } from "../../../database/generated/prisma/client.js";
 
 import { Storage } from "../../../lib/storage.js";
@@ -24,8 +25,8 @@ import {
   ManageCharacterAction,
   type InventoryListItem,
 } from "../types/character.js";
-import { RUNE_MAX_PROGRESS } from "../../runes/lib/runeCatalog.js";
-import { RuneContainer } from "../../runes/lib/runeContainer.js";
+import { RUNE_MAX_MASTERY } from "../../runes/lib/runeCatalog.js";
+import { RuneFormat } from "../../runes/lib/runeFormat.js";
 import type { LearnedRune } from "../../runes/service/runeService.js";
 import { ManageCharacterComponents } from "./manageCharacterComponents.js";
 
@@ -145,6 +146,7 @@ export class ManageCharacterContainer {
     notice: string | null = null,
     runes: LearnedRune[] = [],
     traits: RollEntry[] = [],
+    catalog: Rune[] = [],
   ) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
 
@@ -213,7 +215,7 @@ export class ManageCharacterContainer {
 
     if (tab === CharacterTab.Runes) {
       container.addActionRowComponents(
-        ...ManageCharacterComponents.runeRows(discordId, character.id, runes),
+        ...ManageCharacterComponents.runeRows(discordId, character.id, runes, catalog),
       );
     } else {
       container.addActionRowComponents(
@@ -332,7 +334,7 @@ export class ManageCharacterContainer {
         ? runes
             .map(
               (entry) =>
-                `${entry.rune.emoji} **${entry.rune.name}** · ${entry.progress} / ${RUNE_MAX_PROGRESS} · ${RuneContainer.stage(entry.progress)}`,
+                `${entry.rune.emoji} **${entry.rune.name}** · ${entry.mastery} / ${RUNE_MAX_MASTERY} · ${RuneFormat.stage(entry.mastery)}`,
             )
             .join("\n")
         : `${ARROW} Персонаж ещё не изучил ни одной руны.`,

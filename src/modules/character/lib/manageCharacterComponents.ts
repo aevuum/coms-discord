@@ -17,19 +17,15 @@ import {
   type Character,
   type CharacterFamiliar,
   type RollEntry,
+  type Rune,
+  RuneFuthark,
 } from "../../../database/generated/prisma/client.js";
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { Currency } from "../../economy/lib/currency.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "../../spells/lib/mana.js";
-import {
-  RUNE_ALPHABETS,
-  RUNE_MAX_PROGRESS,
-  RuneAlphabet,
-  runesOf,
-  type Rune,
-} from "../../runes/lib/runeCatalog.js";
+import { FUTHARK_LABELS, RUNE_MAX_MASTERY } from "../../runes/lib/runeCatalog.js";
 import type { LearnedRune } from "../../runes/service/runeService.js";
 import {
   ACTION_TABS,
@@ -133,22 +129,22 @@ export class ManageCharacterComponents {
     );
   }
 
-  public static runeRows(discordId: string, characterId: string, learned: LearnedRune[]) {
-    return [RuneAlphabet.Elder, RuneAlphabet.Younger].map((alphabet) =>
+  public static runeRows(discordId: string, characterId: string, learned: LearnedRune[], catalog: Rune[]) {
+    return [RuneFuthark.ELDER, RuneFuthark.YOUNGER].map((alphabet) =>
       new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId(
             CharacterCustomIds.build(CharacterPanelAction.RuneSelect, discordId, characterId, alphabet),
           )
-          .setPlaceholder(`${RUNE_ALPHABETS[alphabet].label}: выберите руну`)
+          .setPlaceholder(`${FUTHARK_LABELS[alphabet]}: выберите руну`)
           .addOptions(
-            runesOf(alphabet).map((rune) => {
+            catalog.filter((rune) => rune.futhark === alphabet).slice(0, 25).map((rune) => {
               const entry = learned.find((item) => item.rune.key === rune.key);
 
               return new StringSelectMenuOptionBuilder()
                 .setLabel(`${rune.name} — ${rune.meaning}`.slice(0, 100))
                 .setDescription(
-                  entry ? `Изучена: ${entry.progress} / ${RUNE_MAX_PROGRESS}` : "Не изучена",
+                  entry ? `Изучена: владение ${entry.mastery} / ${RUNE_MAX_MASTERY}` : "Не изучена",
                 )
                 .setEmoji(rune.emoji)
                 .setValue(rune.key);
@@ -162,7 +158,7 @@ export class ManageCharacterComponents {
     discordId: string,
     character: Character,
     rune: Rune,
-    progress: number | null,
+    mastery: number | null,
   ) {
     const input = new TextInputBuilder()
       .setCustomId(CharacterModalFields.RuneProgress)
@@ -171,8 +167,8 @@ export class ManageCharacterComponents {
       .setMaxLength(3)
       .setPlaceholder("0–100");
 
-    if (progress !== null) {
-      input.setValue(String(progress));
+    if (mastery !== null) {
+      input.setValue(String(mastery));
     }
 
     return new ModalBuilder()
@@ -182,8 +178,8 @@ export class ManageCharacterComponents {
       .setTitle(`${rune.name} · ${character.rpName}`.slice(0, 45))
       .addLabelComponents(
         new LabelBuilder()
-          .setLabel("Степень изучения")
-          .setDescription("От 0 до 100. Оставьте пустым, чтобы убрать руну у персонажа")
+          .setLabel("Владение руной")
+          .setDescription("От 0 до 100. Если руна не изучена, она будет открыта. Пусто — убрать руну")
           .setTextInputComponent(input),
       );
   }

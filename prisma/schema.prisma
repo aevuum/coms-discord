@@ -118,6 +118,11 @@ model Character {
   tupper   CharacterTupper?
   familiar CharacterFamiliar?
   runes    CharacterRune[]
+  runeStudyRequests RuneStudyRequest[]
+  runeFormulas      SpellFormula[]
+  artifacts         Artifact[]
+  runeOperations    RuneOperation[]
+  runeAudit         RuneAuditLog[]
 
   rpName     String
   avatarUrl  String?
@@ -183,6 +188,7 @@ model Spell {
   updatedAt DateTime @updatedAt
 
   casts SpellCast[]
+  formulas SpellFormula[]
 }
 
 model SpellCast {
@@ -309,20 +315,6 @@ model CommandPermission {
   @@index([guildId])
 }
 
-model CharacterRune {
-  id String @id @default(cuid())
-
-  characterId String
-  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
-
-  runeKey  String
-  progress Int    @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([characterId, runeKey])
-}
 
 model CharacterFamiliar {
   id String @id @default(cuid())
@@ -815,4 +807,379 @@ model PendingTraitRoll {
   rollEntryId String
 
   rolledAt DateTime @default(now())
+}
+
+enum RuneFuthark {
+  ELDER
+  YOUNGER
+}
+
+enum RuneDesignStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  DISABLED
+}
+
+enum RuneRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RuneOutcome {
+  REFUSE
+  FIZZLE
+  BACKFIRE
+  INJURY
+  MATERIALS_LOST
+  DAMAGED
+  UNSTABLE
+  DESTROYED
+}
+
+enum ArtifactStatus {
+  ACTIVE
+  UNSTABLE
+  DAMAGED
+  DESTROYED
+}
+
+enum RuneOperationKind {
+  FORMULA_CAST
+  ARTIFACT_CRAFT
+}
+
+enum RuneOperationStatus {
+  PENDING
+  DONE
+  CANCELLED
+}
+
+enum RuneAuditAction {
+  RUNE_UPDATED
+  RUNE_LEARNED
+  RUNE_FORGOTTEN
+  MASTERY_CHANGED
+  STUDY_REQUESTED
+  STUDY_REJECTED
+  FORMULA_PROPOSED
+  FORMULA_CREATED
+  FORMULA_UPDATED
+  FORMULA_APPROVED
+  FORMULA_REJECTED
+  FORMULA_DISABLED
+  FORMULA_CAST
+  RECIPE_CREATED
+  RECIPE_UPDATED
+  RECIPE_APPROVED
+  RECIPE_REJECTED
+  RECIPE_DISABLED
+  ARTIFACT_CRAFTED
+  MATERIAL_CHANGED
+  BLANK_CHANGED
+  SETTINGS_UPDATED
+}
+
+model Rune {
+  key       String      @id
+  futhark   RuneFuthark
+  name      String
+  emoji     String
+  sortOrder Int         @default(0)
+
+  meaning      String
+  domain       String?
+  principle    String?
+  modifies     String?
+  spellUse     String?
+  artifactUse  String?
+  restrictions String?
+  load         Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  characters    CharacterRune[]
+  studyRequests RuneStudyRequest[]
+  formulas      SpellFormula[]
+  recipeRunes   ArtifactRecipeRune[]
+  artifactRunes ArtifactRune[]
+
+  @@index([futhark, sortOrder])
+}
+
+model CharacterRune {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  runeKey String
+  rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Cascade)
+
+  mastery       Int      @default(0)
+  learnedAt     DateTime @default(now())
+  confirmedById String
+
+  updatedAt DateTime @updatedAt
+
+  @@unique([characterId, runeKey])
+}
+
+model RuneStudyRequest {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  runeKey String
+  rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Cascade)
+
+  postUrl String
+  note    String?
+
+  status     RuneRequestStatus @default(PENDING)
+  reviewerId String?
+  reason     String?
+
+  createdAt  DateTime  @default(now())
+  reviewedAt DateTime?
+
+  @@index([status, createdAt])
+  @@index([characterId])
+}
+
+model SpellFormula {
+  id String @id @default(cuid())
+
+  spellId String
+  spell   Spell  @relation(fields: [spellId], references: [id], onDelete: Cascade)
+
+  runeKey String
+  rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Cascade)
+
+  incantation    String
+  incantationKey String @unique
+  effect         String
+  mechanics      String?
+  restrictions   String?
+
+  minMastery     Int         @default(0)
+  baseRisk       Int         @default(15)
+  complexity     Int         @default(0)
+  failureOutcome RuneOutcome @default(FIZZLE)
+
+  status RuneDesignStatus @default(PENDING)
+
+  authorId          String
+  authorCharacterId String?
+  authorCharacter   Character? @relation(fields: [authorCharacterId], references: [id], onDelete: SetNull)
+
+  reviewerId   String?
+  reviewReason String?
+  reviewedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  operations RuneOperation[]
+
+  @@index([status])
+  @@index([runeKey])
+  @@index([spellId])
+}
+
+model ArtifactMaterial {
+  id String @id @default(cuid())
+
+  name          String  @unique
+  description   String?
+  capacityBonus Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes ArtifactRecipeMaterial[]
+}
+
+model ArtifactBlank {
+  id String @id @default(cuid())
+
+  name           String  @unique
+  kind           String?
+  description    String?
+  baseCapacity   Int
+  qualityPercent Int     @default(100)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes ArtifactRecipe[]
+}
+
+model ArtifactRecipe {
+  id String @id @default(cuid())
+
+  name        String
+  effect      String
+  description String?
+
+  blankId String
+  blank   ArtifactBlank @relation(fields: [blankId], references: [id], onDelete: Restrict)
+
+  minMastery      Int         @default(0)
+  baseRisk        Int         @default(15)
+  complexity      Int         @default(0)
+  overloadOutcome RuneOutcome @default(REFUSE)
+  failureOutcome  RuneOutcome @default(MATERIALS_LOST)
+
+  status RuneDesignStatus @default(PENDING)
+
+  authorId     String
+  reviewerId   String?
+  reviewReason String?
+  reviewedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  runes      ArtifactRecipeRune[]
+  materials  ArtifactRecipeMaterial[]
+  artifacts  Artifact[]
+  operations RuneOperation[]
+
+  @@index([status])
+}
+
+model ArtifactRecipeRune {
+  recipeId String
+  recipe   ArtifactRecipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  runeKey String
+  rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Restrict)
+
+  critical Boolean @default(false)
+
+  @@id([recipeId, runeKey])
+}
+
+model ArtifactRecipeMaterial {
+  recipeId String
+  recipe   ArtifactRecipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  materialId String
+  material   ArtifactMaterial @relation(fields: [materialId], references: [id], onDelete: Restrict)
+
+  quantity Int @default(1)
+
+  @@id([recipeId, materialId])
+}
+
+model Artifact {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  recipeId String?
+  recipe   ArtifactRecipe? @relation(fields: [recipeId], references: [id], onDelete: SetNull)
+
+  operationId String? @unique
+
+  name     String
+  effect   String
+  status   ArtifactStatus @default(ACTIVE)
+  capacity Int
+  load     Int
+  quality  Int
+
+  createdAt DateTime @default(now())
+
+  runes ArtifactRune[]
+
+  @@index([characterId])
+}
+
+model ArtifactRune {
+  artifactId String
+  artifact   Artifact @relation(fields: [artifactId], references: [id], onDelete: Cascade)
+
+  runeKey String
+  rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Restrict)
+
+  load     Int
+  critical Boolean @default(false)
+
+  @@id([artifactId, runeKey])
+}
+
+model RuneOperation {
+  id String @id @default(cuid())
+
+  kind   RuneOperationKind
+  status RuneOperationStatus @default(PENDING)
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  actorId String
+
+  formulaId String?
+  formula   SpellFormula? @relation(fields: [formulaId], references: [id], onDelete: SetNull)
+
+  recipeId String?
+  recipe   ArtifactRecipe? @relation(fields: [recipeId], references: [id], onDelete: SetNull)
+
+  extraMaterialIds String[]
+
+  risk    Int
+  roll    Int?
+  success Boolean?
+  outcome RuneOutcome?
+  quality Int?
+  details Json?
+
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+
+  @@index([characterId, createdAt])
+}
+
+model RuneAuditLog {
+  id String @id @default(cuid())
+
+  action  RuneAuditAction
+  actorId String
+
+  characterId String?
+  character   Character? @relation(fields: [characterId], references: [id], onDelete: SetNull)
+
+  runeKey   String?
+  formulaId String?
+  recipeId  String?
+
+  fromValue Int?
+  toValue   Int?
+  note      String?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([characterId, createdAt])
+}
+
+model RuneSettings {
+  id String @id @default("global")
+
+  elderLoad             Int @default(3)
+  youngerLoad           Int @default(2)
+  masteryReductionPct   Int @default(40)
+  minRisk               Int @default(1)
+  maxRisk               Int @default(95)
+  defaultBaseRisk       Int @default(15)
+  defaultInitialMastery Int @default(5)
+
+  updatedAt DateTime @updatedAt
 }

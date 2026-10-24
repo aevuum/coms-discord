@@ -102,11 +102,6 @@ export type CharacterInventoryItem = Prisma.CharacterInventoryItemModel
  */
 export type CommandPermission = Prisma.CommandPermissionModel
 /**
- * Model CharacterRune
- * 
- */
-export type CharacterRune = Prisma.CharacterRuneModel
-/**
  * Model CharacterFamiliar
  * 
  */
@@ -236,3 +231,73 @@ export type ProphetState = Prisma.ProphetStateModel
  * 
  */
 export type PendingTraitRoll = Prisma.PendingTraitRollModel
+/**
+ * Model Rune
+ * 
+ */
+export type Rune = Prisma.RuneModel
+/**
+ * Model CharacterRune
+ * 
+ */
+export type CharacterRune = Prisma.CharacterRuneModel
+/**
+ * Model RuneStudyRequest
+ * 
+ */
+export type RuneStudyRequest = Prisma.RuneStudyRequestModel
+/**
+ * Model SpellFormula
+ * 
+ */
+export type SpellFormula = Prisma.SpellFormulaModel
+/**
+ * Model ArtifactMaterial
+ * 
+ */
+export type ArtifactMaterial = Prisma.ArtifactMaterialModel
+/**
+ * Model ArtifactBlank
+ * 
+ */
+export type ArtifactBlank = Prisma.ArtifactBlankModel
+/**
+ * Model ArtifactRecipe
+ * 
+ */
+export type ArtifactRecipe = Prisma.ArtifactRecipeModel
+/**
+ * Model ArtifactRecipeRune
+ * 
+ */
+export type ArtifactRecipeRune = Prisma.ArtifactRecipeRuneModel
+/**
+ * Model ArtifactRecipeMaterial
+ * 
+ */
+export type ArtifactRecipeMaterial = Prisma.ArtifactRecipeMaterialModel
+/**
+ * Model Artifact
+ * 
+ */
+export type Artifact = Prisma.ArtifactModel
+/**
+ * Model ArtifactRune
+ * 
+ */
+export type ArtifactRune = Prisma.ArtifactRuneModel
+/**
+ * Model RuneOperation
+ * 
+ */
+export type RuneOperation = Prisma.RuneOperationModel
+/**
+ * Model RuneAuditLog
+ * 
+ */
+export type RuneAuditLog = Prisma.RuneAuditLogModel
+/**
+ * Model RuneSettings
+ * 
+ */
+export type RuneSettings = Prisma.RuneSettingsModel
