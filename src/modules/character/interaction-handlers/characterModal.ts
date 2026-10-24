@@ -15,6 +15,7 @@ import {
   CharacterCustomIds,
   CharacterModalFields,
   CharacterPanelAction,
+  RuneModes,
 } from "../lib/characterCustomIds.js";
 import { ManageCharacterView } from "../lib/manageCharacterView.js";
 import { CharacterInventoryService } from "../service/characterInventoryService.js";
@@ -192,10 +193,12 @@ export class CharacterModalHandler extends InteractionHandler {
         await RuneAudit.assertCurator(interaction);
         await CharacterInventoryService.getOwnedCharacter(discordId, characterId);
 
+        const remove = interaction.fields.getStringSelectValues(CharacterModalFields.RuneMode)[0] === RuneModes.Remove;
+
         const saved = await RuneService.setMastery(
           characterId,
           result.args[2],
-          field(CharacterModalFields.RuneProgress),
+          remove ? "" : field(CharacterModalFields.RuneProgress).trim() || "0",
           interaction.user.id,
         );
 

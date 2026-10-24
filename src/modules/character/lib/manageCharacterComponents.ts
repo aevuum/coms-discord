@@ -37,6 +37,7 @@ import {
   CharacterCustomIds,
   CharacterModalFields,
   CharacterPanelAction,
+  RuneModes,
 } from "./characterCustomIds.js";
 
 const FACULTY_ORDER: CharacterFaculty[] = [
@@ -178,8 +179,26 @@ export class ManageCharacterComponents {
       .setTitle(`${rune.name} · ${character.rpName}`.slice(0, 45))
       .addLabelComponents(
         new LabelBuilder()
+          .setLabel("Действие")
+          .setStringSelectMenuComponent(
+            new StringSelectMenuBuilder()
+              .setCustomId(CharacterModalFields.RuneMode)
+              .setRequired(true)
+              .addOptions(
+                new StringSelectMenuOptionBuilder()
+                  .setLabel(mastery === null ? "Выдать руну" : "Изменить владение")
+                  .setDescription(mastery === null ? "Руна появится у персонажа без заявки" : `Сейчас: ${mastery} / ${RUNE_MAX_MASTERY}`)
+                  .setValue(RuneModes.Grant)
+                  .setDefault(true),
+                new StringSelectMenuOptionBuilder()
+                  .setLabel("Убрать руну")
+                  .setDescription(mastery === null ? "Руна и так не изучена" : "Персонаж потеряет руну и владение ею")
+                  .setValue(RuneModes.Remove),
+              ),
+          ),
+        new LabelBuilder()
           .setLabel("Владение руной")
-          .setDescription("От 0 до 100. Если руна не изучена, она будет открыта. Пусто — убрать руну")
+          .setDescription(`От 0 до ${RUNE_MAX_MASTERY}. Пусто — 0. При удалении не учитывается`)
           .setTextInputComponent(input),
       );
   }

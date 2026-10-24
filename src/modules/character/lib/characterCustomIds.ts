@@ -42,6 +42,12 @@ export const CharacterModalFields = {
   FamiliarDescription: "familiar_description",
   FamiliarImage: "familiar_image",
   RuneProgress: "rune_progress",
+  RuneMode: "rune_mode",
+} as const;
+
+export const RuneModes = {
+  Grant: "grant",
+  Remove: "remove",
 } as const;
 
 export class CharacterCustomIds {
