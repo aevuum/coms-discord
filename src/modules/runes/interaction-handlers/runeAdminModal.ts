@@ -18,6 +18,7 @@ import { RuneService } from "../service/runeService.js";
 const MODAL_ACTIONS = new Set<RuneAdminAction>([
   RuneAdminAction.RequestApproveModal,
   RuneAdminAction.RequestRejectModal,
+  RuneAdminAction.AttemptReviewModal,
   RuneAdminAction.FormulaCreateModal,
   RuneAdminAction.FormulaEditModal,
   RuneAdminAction.FormulaApproveModal,
@@ -58,13 +59,18 @@ export class RuneAdminModalHandler extends InteractionHandler {
       await ManageResponder.defer(interaction);
       await RuneAudit.assertCurator(interaction);
 
-      await ManageResponder.send(interaction, await this.resolve(interaction, result.action, result.args[0]));
+      await ManageResponder.send(interaction, await this.resolve(interaction, result.action, result.args[0], result.args[1]));
     } catch (error) {
       await ManageResponder.error(interaction, error);
     }
   }
 
-  private async resolve(interaction: ModalSubmitInteraction, action: RuneAdminAction, id: string): Promise<ContainerBuilder> {
+  private async resolve(
+    interaction: ModalSubmitInteraction,
+    action: RuneAdminAction,
+    id: string,
+    extra?: string,
+  ): Promise<ContainerBuilder> {
     const actorId = interaction.user.id;
     const field = (name: string) => {
       try {
@@ -85,6 +91,16 @@ export class RuneAdminModalHandler extends InteractionHandler {
       case RuneAdminAction.RequestRejectModal: {
         const request = await RuneService.rejectRequest(id, actorId, field(RuneAdminFields.Reason));
         return RuneAdminViews.section(RuneAdminSection.Requests, `Заявка на руну ${request.rune.name} отклонена.`);
+      }
+
+      case RuneAdminAction.AttemptReviewModal: {
+        const success = extra === "1";
+        const attempt = await FormulaService.reviewAttempt(id, actorId, success, field(RuneAdminFields.Verdict));
+
+        return RuneAdminViews.section(
+          RuneAdminSection.Attempts,
+          `Попытка «${attempt.formula?.incantation ?? "?"}» (${attempt.character.rpName}): ${success ? "получилось" : "не получилось"}.`,
+        );
       }
 
       case RuneAdminAction.FormulaCreateModal: {

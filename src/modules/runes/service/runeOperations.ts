@@ -50,13 +50,6 @@ export class RuneOperations {
     });
   }
 
-  public static async cancel(operationId: string, actorId: string) {
-    await prisma.runeOperation.updateMany({
-      where: { id: operationId, actorId, status: RuneOperationStatus.PENDING },
-      data: { status: RuneOperationStatus.CANCELLED, resolvedAt: new Date() },
-    });
-  }
-
   public static resolve<T>(
     operationId: string,
     actorId: string,

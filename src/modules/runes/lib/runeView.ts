@@ -34,7 +34,7 @@ export class RuneView {
   ) {
     const character = await RuneService.getOwnedCharacter(discordId, characterId);
 
-    const [characters, learned, runes, formulas, artifacts, recipes, requests, proposals] = await Promise.all([
+    const [characters, learned, runes, formulas, artifacts, recipes, requests, proposals, attempts] = await Promise.all([
       RuneService.getCharacters(discordId),
       RuneService.learned(character.id),
       RuneRegistry.all(),
@@ -43,12 +43,13 @@ export class RuneView {
       ArtifactService.craftable(character.id),
       RuneService.characterRequests(character.id),
       FormulaService.byAuthorCharacter(character.id),
+      FormulaService.characterAttempts(character.id),
     ]);
 
     return RuneContainer.view(
       character,
       Object.values(RuneTab).includes(tab) ? tab : RuneTab.Runes,
-      { learned, runes, formulas, artifacts, recipes, requests, proposals },
+      { learned, runes, formulas, artifacts, recipes, requests, proposals, attempts },
       page,
       characters.length > 1,
       notice,

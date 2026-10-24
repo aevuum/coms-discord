@@ -46,6 +46,10 @@ export type RuneOperationMinAggregateOutputType = {
   actorId: string | null
   formulaId: string | null
   recipeId: string | null
+  postUrl: string | null
+  note: string | null
+  reviewerId: string | null
+  verdict: string | null
   risk: number | null
   roll: number | null
   success: boolean | null
@@ -63,6 +67,10 @@ export type RuneOperationMaxAggregateOutputType = {
   actorId: string | null
   formulaId: string | null
   recipeId: string | null
+  postUrl: string | null
+  note: string | null
+  reviewerId: string | null
+  verdict: string | null
   risk: number | null
   roll: number | null
   success: boolean | null
@@ -81,6 +89,10 @@ export type RuneOperationCountAggregateOutputType = {
   formulaId: number
   recipeId: number
   extraMaterialIds: number
+  postUrl: number
+  note: number
+  reviewerId: number
+  verdict: number
   risk: number
   roll: number
   success: number
@@ -113,6 +125,10 @@ export type RuneOperationMinAggregateInputType = {
   actorId?: true
   formulaId?: true
   recipeId?: true
+  postUrl?: true
+  note?: true
+  reviewerId?: true
+  verdict?: true
   risk?: true
   roll?: true
   success?: true
@@ -130,6 +146,10 @@ export type RuneOperationMaxAggregateInputType = {
   actorId?: true
   formulaId?: true
   recipeId?: true
+  postUrl?: true
+  note?: true
+  reviewerId?: true
+  verdict?: true
   risk?: true
   roll?: true
   success?: true
@@ -148,6 +168,10 @@ export type RuneOperationCountAggregateInputType = {
   formulaId?: true
   recipeId?: true
   extraMaterialIds?: true
+  postUrl?: true
+  note?: true
+  reviewerId?: true
+  verdict?: true
   risk?: true
   roll?: true
   success?: true
@@ -254,6 +278,10 @@ export type RuneOperationGroupByOutputType = {
   formulaId: string | null
   recipeId: string | null
   extraMaterialIds: string[]
+  postUrl: string | null
+  note: string | null
+  reviewerId: string | null
+  verdict: string | null
   risk: number
   roll: number | null
   success: boolean | null
@@ -296,6 +324,10 @@ export type RuneOperationWhereInput = {
   formulaId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   recipeId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   extraMaterialIds?: Prisma.StringNullableListFilter<"RuneOperation">
+  postUrl?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  note?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  reviewerId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  verdict?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   risk?: Prisma.IntFilter<"RuneOperation"> | number
   roll?: Prisma.IntNullableFilter<"RuneOperation"> | number | null
   success?: Prisma.BoolNullableFilter<"RuneOperation"> | boolean | null
@@ -318,6 +350,10 @@ export type RuneOperationOrderByWithRelationInput = {
   formulaId?: Prisma.SortOrderInput | Prisma.SortOrder
   recipeId?: Prisma.SortOrderInput | Prisma.SortOrder
   extraMaterialIds?: Prisma.SortOrder
+  postUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  verdict?: Prisma.SortOrderInput | Prisma.SortOrder
   risk?: Prisma.SortOrder
   roll?: Prisma.SortOrderInput | Prisma.SortOrder
   success?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -343,6 +379,10 @@ export type RuneOperationWhereUniqueInput = Prisma.AtLeast<{
   formulaId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   recipeId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   extraMaterialIds?: Prisma.StringNullableListFilter<"RuneOperation">
+  postUrl?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  note?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  reviewerId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  verdict?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   risk?: Prisma.IntFilter<"RuneOperation"> | number
   roll?: Prisma.IntNullableFilter<"RuneOperation"> | number | null
   success?: Prisma.BoolNullableFilter<"RuneOperation"> | boolean | null
@@ -365,6 +405,10 @@ export type RuneOperationOrderByWithAggregationInput = {
   formulaId?: Prisma.SortOrderInput | Prisma.SortOrder
   recipeId?: Prisma.SortOrderInput | Prisma.SortOrder
   extraMaterialIds?: Prisma.SortOrder
+  postUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  note?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  verdict?: Prisma.SortOrderInput | Prisma.SortOrder
   risk?: Prisma.SortOrder
   roll?: Prisma.SortOrderInput | Prisma.SortOrder
   success?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -392,6 +436,10 @@ export type RuneOperationScalarWhereWithAggregatesInput = {
   formulaId?: Prisma.StringNullableWithAggregatesFilter<"RuneOperation"> | string | null
   recipeId?: Prisma.StringNullableWithAggregatesFilter<"RuneOperation"> | string | null
   extraMaterialIds?: Prisma.StringNullableListFilter<"RuneOperation">
+  postUrl?: Prisma.StringNullableWithAggregatesFilter<"RuneOperation"> | string | null
+  note?: Prisma.StringNullableWithAggregatesFilter<"RuneOperation"> | string | null
+  reviewerId?: Prisma.StringNullableWithAggregatesFilter<"RuneOperation"> | string | null
+  verdict?: Prisma.StringNullableWithAggregatesFilter<"RuneOperation"> | string | null
   risk?: Prisma.IntWithAggregatesFilter<"RuneOperation"> | number
   roll?: Prisma.IntNullableWithAggregatesFilter<"RuneOperation"> | number | null
   success?: Prisma.BoolNullableWithAggregatesFilter<"RuneOperation"> | boolean | null
@@ -408,6 +456,10 @@ export type RuneOperationCreateInput = {
   status?: $Enums.RuneOperationStatus
   actorId: string
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -430,6 +482,10 @@ export type RuneOperationUncheckedCreateInput = {
   formulaId?: string | null
   recipeId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -446,6 +502,10 @@ export type RuneOperationUpdateInput = {
   status?: Prisma.EnumRuneOperationStatusFieldUpdateOperationsInput | $Enums.RuneOperationStatus
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -468,6 +528,10 @@ export type RuneOperationUncheckedUpdateInput = {
   formulaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -487,6 +551,10 @@ export type RuneOperationCreateManyInput = {
   formulaId?: string | null
   recipeId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -503,6 +571,10 @@ export type RuneOperationUpdateManyMutationInput = {
   status?: Prisma.EnumRuneOperationStatusFieldUpdateOperationsInput | $Enums.RuneOperationStatus
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -522,6 +594,10 @@ export type RuneOperationUncheckedUpdateManyInput = {
   formulaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -551,6 +627,10 @@ export type RuneOperationCountOrderByAggregateInput = {
   formulaId?: Prisma.SortOrder
   recipeId?: Prisma.SortOrder
   extraMaterialIds?: Prisma.SortOrder
+  postUrl?: Prisma.SortOrder
+  note?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrder
+  verdict?: Prisma.SortOrder
   risk?: Prisma.SortOrder
   roll?: Prisma.SortOrder
   success?: Prisma.SortOrder
@@ -575,6 +655,10 @@ export type RuneOperationMaxOrderByAggregateInput = {
   actorId?: Prisma.SortOrder
   formulaId?: Prisma.SortOrder
   recipeId?: Prisma.SortOrder
+  postUrl?: Prisma.SortOrder
+  note?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrder
+  verdict?: Prisma.SortOrder
   risk?: Prisma.SortOrder
   roll?: Prisma.SortOrder
   success?: Prisma.SortOrder
@@ -592,6 +676,10 @@ export type RuneOperationMinOrderByAggregateInput = {
   actorId?: Prisma.SortOrder
   formulaId?: Prisma.SortOrder
   recipeId?: Prisma.SortOrder
+  postUrl?: Prisma.SortOrder
+  note?: Prisma.SortOrder
+  reviewerId?: Prisma.SortOrder
+  verdict?: Prisma.SortOrder
   risk?: Prisma.SortOrder
   roll?: Prisma.SortOrder
   success?: Prisma.SortOrder
@@ -764,6 +852,10 @@ export type RuneOperationCreateWithoutCharacterInput = {
   status?: $Enums.RuneOperationStatus
   actorId: string
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -784,6 +876,10 @@ export type RuneOperationUncheckedCreateWithoutCharacterInput = {
   formulaId?: string | null
   recipeId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -832,6 +928,10 @@ export type RuneOperationScalarWhereInput = {
   formulaId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   recipeId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   extraMaterialIds?: Prisma.StringNullableListFilter<"RuneOperation">
+  postUrl?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  note?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  reviewerId?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
+  verdict?: Prisma.StringNullableFilter<"RuneOperation"> | string | null
   risk?: Prisma.IntFilter<"RuneOperation"> | number
   roll?: Prisma.IntNullableFilter<"RuneOperation"> | number | null
   success?: Prisma.BoolNullableFilter<"RuneOperation"> | boolean | null
@@ -848,6 +948,10 @@ export type RuneOperationCreateWithoutFormulaInput = {
   status?: $Enums.RuneOperationStatus
   actorId: string
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -868,6 +972,10 @@ export type RuneOperationUncheckedCreateWithoutFormulaInput = {
   actorId: string
   recipeId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -910,6 +1018,10 @@ export type RuneOperationCreateWithoutRecipeInput = {
   status?: $Enums.RuneOperationStatus
   actorId: string
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -930,6 +1042,10 @@ export type RuneOperationUncheckedCreateWithoutRecipeInput = {
   actorId: string
   formulaId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -974,6 +1090,10 @@ export type RuneOperationCreateManyCharacterInput = {
   formulaId?: string | null
   recipeId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -990,6 +1110,10 @@ export type RuneOperationUpdateWithoutCharacterInput = {
   status?: Prisma.EnumRuneOperationStatusFieldUpdateOperationsInput | $Enums.RuneOperationStatus
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1010,6 +1134,10 @@ export type RuneOperationUncheckedUpdateWithoutCharacterInput = {
   formulaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1028,6 +1156,10 @@ export type RuneOperationUncheckedUpdateManyWithoutCharacterInput = {
   formulaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1046,6 +1178,10 @@ export type RuneOperationCreateManyFormulaInput = {
   actorId: string
   recipeId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -1062,6 +1198,10 @@ export type RuneOperationUpdateWithoutFormulaInput = {
   status?: Prisma.EnumRuneOperationStatusFieldUpdateOperationsInput | $Enums.RuneOperationStatus
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1082,6 +1222,10 @@ export type RuneOperationUncheckedUpdateWithoutFormulaInput = {
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   recipeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1100,6 +1244,10 @@ export type RuneOperationUncheckedUpdateManyWithoutFormulaInput = {
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   recipeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1118,6 +1266,10 @@ export type RuneOperationCreateManyRecipeInput = {
   actorId: string
   formulaId?: string | null
   extraMaterialIds?: Prisma.RuneOperationCreateextraMaterialIdsInput | string[]
+  postUrl?: string | null
+  note?: string | null
+  reviewerId?: string | null
+  verdict?: string | null
   risk: number
   roll?: number | null
   success?: boolean | null
@@ -1134,6 +1286,10 @@ export type RuneOperationUpdateWithoutRecipeInput = {
   status?: Prisma.EnumRuneOperationStatusFieldUpdateOperationsInput | $Enums.RuneOperationStatus
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1154,6 +1310,10 @@ export type RuneOperationUncheckedUpdateWithoutRecipeInput = {
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   formulaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1172,6 +1332,10 @@ export type RuneOperationUncheckedUpdateManyWithoutRecipeInput = {
   actorId?: Prisma.StringFieldUpdateOperationsInput | string
   formulaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   extraMaterialIds?: Prisma.RuneOperationUpdateextraMaterialIdsInput | string[]
+  postUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   risk?: Prisma.IntFieldUpdateOperationsInput | number
   roll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   success?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
@@ -1193,6 +1357,10 @@ export type RuneOperationSelect<ExtArgs extends runtime.Types.Extensions.Interna
   formulaId?: boolean
   recipeId?: boolean
   extraMaterialIds?: boolean
+  postUrl?: boolean
+  note?: boolean
+  reviewerId?: boolean
+  verdict?: boolean
   risk?: boolean
   roll?: boolean
   success?: boolean
@@ -1215,6 +1383,10 @@ export type RuneOperationSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   formulaId?: boolean
   recipeId?: boolean
   extraMaterialIds?: boolean
+  postUrl?: boolean
+  note?: boolean
+  reviewerId?: boolean
+  verdict?: boolean
   risk?: boolean
   roll?: boolean
   success?: boolean
@@ -1237,6 +1409,10 @@ export type RuneOperationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   formulaId?: boolean
   recipeId?: boolean
   extraMaterialIds?: boolean
+  postUrl?: boolean
+  note?: boolean
+  reviewerId?: boolean
+  verdict?: boolean
   risk?: boolean
   roll?: boolean
   success?: boolean
@@ -1259,6 +1435,10 @@ export type RuneOperationSelectScalar = {
   formulaId?: boolean
   recipeId?: boolean
   extraMaterialIds?: boolean
+  postUrl?: boolean
+  note?: boolean
+  reviewerId?: boolean
+  verdict?: boolean
   risk?: boolean
   roll?: boolean
   success?: boolean
@@ -1269,7 +1449,7 @@ export type RuneOperationSelectScalar = {
   resolvedAt?: boolean
 }
 
-export type RuneOperationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "status" | "characterId" | "actorId" | "formulaId" | "recipeId" | "extraMaterialIds" | "risk" | "roll" | "success" | "outcome" | "quality" | "details" | "createdAt" | "resolvedAt", ExtArgs["result"]["runeOperation"]>
+export type RuneOperationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "status" | "characterId" | "actorId" | "formulaId" | "recipeId" | "extraMaterialIds" | "postUrl" | "note" | "reviewerId" | "verdict" | "risk" | "roll" | "success" | "outcome" | "quality" | "details" | "createdAt" | "resolvedAt", ExtArgs["result"]["runeOperation"]>
 export type RuneOperationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
   formula?: boolean | Prisma.RuneOperation$formulaArgs<ExtArgs>
@@ -1302,6 +1482,10 @@ export type $RuneOperationPayload<ExtArgs extends runtime.Types.Extensions.Inter
     formulaId: string | null
     recipeId: string | null
     extraMaterialIds: string[]
+    postUrl: string | null
+    note: string | null
+    reviewerId: string | null
+    verdict: string | null
     risk: number
     roll: number | null
     success: boolean | null
@@ -1744,6 +1928,10 @@ export interface RuneOperationFieldRefs {
   readonly formulaId: Prisma.FieldRef<"RuneOperation", 'String'>
   readonly recipeId: Prisma.FieldRef<"RuneOperation", 'String'>
   readonly extraMaterialIds: Prisma.FieldRef<"RuneOperation", 'String[]'>
+  readonly postUrl: Prisma.FieldRef<"RuneOperation", 'String'>
+  readonly note: Prisma.FieldRef<"RuneOperation", 'String'>
+  readonly reviewerId: Prisma.FieldRef<"RuneOperation", 'String'>
+  readonly verdict: Prisma.FieldRef<"RuneOperation", 'String'>
   readonly risk: Prisma.FieldRef<"RuneOperation", 'Int'>
   readonly roll: Prisma.FieldRef<"RuneOperation", 'Int'>
   readonly success: Prisma.FieldRef<"RuneOperation", 'Boolean'>

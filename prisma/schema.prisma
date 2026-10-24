@@ -870,7 +870,8 @@ enum RuneAuditAction {
   FORMULA_APPROVED
   FORMULA_REJECTED
   FORMULA_DISABLED
-  FORMULA_CAST
+  FORMULA_ATTEMPTED
+  FORMULA_REVIEWED
   RECIPE_CREATED
   RECIPE_UPDATED
   RECIPE_APPROVED
@@ -1134,6 +1135,11 @@ model RuneOperation {
 
   extraMaterialIds String[]
 
+  postUrl    String?
+  note       String?
+  reviewerId String?
+  verdict    String?
+
   risk    Int
   roll    Int?
   success Boolean?
@@ -1144,6 +1150,7 @@ model RuneOperation {
   createdAt  DateTime  @default(now())
   resolvedAt DateTime?
 
+  @@index([kind, status])
   @@index([characterId, createdAt])
 }
 

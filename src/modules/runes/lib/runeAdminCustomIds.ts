@@ -6,6 +6,9 @@ export enum RuneAdminAction {
   RequestApproveModal = "req_ok_m",
   RequestReject = "req_no",
   RequestRejectModal = "req_no_m",
+  Attempt = "att",
+  AttemptReview = "att_review",
+  AttemptReviewModal = "att_review_m",
   Formula = "f",
   FormulaCreate = "f_new",
   FormulaCreateModal = "f_new_m",
@@ -46,6 +49,7 @@ export enum RuneAdminAction {
 
 export enum RuneAdminSection {
   Requests = "requests",
+  Attempts = "attempts",
   Formulas = "formulas",
   Recipes = "recipes",
   Runes = "runes",
@@ -57,6 +61,7 @@ export enum RuneAdminSection {
 
 export const RuneAdminFields = {
   Mastery: "mastery",
+  Verdict: "verdict",
   Reason: "reason",
   Spell: "spell",
   Rune: "rune",

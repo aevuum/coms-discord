@@ -17,6 +17,7 @@ import { RuneError, RuneRegistry } from "../service/runeRegistry.js";
 const MODAL_ACTIONS = new Set<RuneAdminAction>([
   RuneAdminAction.RequestApprove,
   RuneAdminAction.RequestReject,
+  RuneAdminAction.AttemptReview,
   RuneAdminAction.FormulaCreate,
   RuneAdminAction.FormulaEdit,
   RuneAdminAction.FormulaApprove,
@@ -66,7 +67,7 @@ export class RuneAdminButtonHandler extends InteractionHandler {
   public override async run(interaction: ButtonInteraction, result: { action: RuneAdminAction; args: string[] }) {
     try {
       if (MODAL_ACTIONS.has(result.action)) {
-        await interaction.showModal(await this.modal(result.action, result.args[0]));
+        await interaction.showModal(await this.modal(result.action, result.args[0], result.args[1]));
         return;
       }
 
@@ -81,12 +82,14 @@ export class RuneAdminButtonHandler extends InteractionHandler {
     }
   }
 
-  private async modal(action: RuneAdminAction, id: string): Promise<ModalBuilder> {
+  private async modal(action: RuneAdminAction, id: string, extra?: string): Promise<ModalBuilder> {
     switch (action) {
       case RuneAdminAction.RequestApprove:
         return RuneAdminModals.approveRequest(id, await RuneRegistry.getSettings());
       case RuneAdminAction.RequestReject:
         return RuneAdminModals.reason(RuneAdminAction.RequestRejectModal, id, "Отказ в изучении руны");
+      case RuneAdminAction.AttemptReview:
+        return RuneAdminModals.attemptReview(id, extra === "1");
       case RuneAdminAction.FormulaCreate:
         return RuneAdminModals.formulaCreate();
       case RuneAdminAction.FormulaEdit:

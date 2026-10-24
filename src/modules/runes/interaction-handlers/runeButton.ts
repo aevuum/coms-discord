@@ -11,7 +11,6 @@ import { RuneResponder } from "../lib/runeResponder.js";
 import { RuneView } from "../lib/runeView.js";
 import { ArtifactService } from "../service/artifactService.js";
 import { FormulaService } from "../service/formulaService.js";
-import { RuneOperations } from "../service/runeOperations.js";
 import { RuneRegistry } from "../service/runeRegistry.js";
 import { RuneService } from "../service/runeService.js";
 
@@ -20,8 +19,6 @@ const BUTTON_ACTIONS = new Set<RuneAction>([
   RuneAction.Page,
   RuneAction.Study,
   RuneAction.Try,
-  RuneAction.Cast,
-  RuneAction.Cancel,
   RuneAction.Propose,
   RuneAction.Craft,
 ]);
@@ -64,6 +61,12 @@ export class RuneButtonHandler extends InteractionHandler {
         return;
       }
 
+      if (result.action === RuneAction.Try) {
+        await RuneService.getOwnedCharacter(userId, characterId);
+        await interaction.showModal(RuneContainer.attemptModal(characterId, await FormulaService.get(result.args[1])));
+        return;
+      }
+
       if (result.action === RuneAction.Propose) {
         await RuneService.getOwnedCharacter(userId, characterId);
         await interaction.showModal(RuneContainer.proposeModal(characterId, await RuneService.learned(characterId)));
@@ -88,20 +91,8 @@ export class RuneButtonHandler extends InteractionHandler {
       case RuneAction.Page:
         return RuneView.character(userId, characterId, args[1] as RuneTab, Number(args[2]) || 0);
 
-      case RuneAction.Try: {
-        const { operation, formula, risk } = await FormulaService.prepareCast(userId, characterId, args[1]);
-        return RuneContainer.castConfirm(characterId, operation.id, formula, risk);
-      }
-
-      case RuneAction.Cast:
-        return RuneContainer.castResult(characterId, await FormulaService.confirmCast(userId, args[1]));
-
       case RuneAction.Craft:
         return RuneContainer.craftResult(characterId, await ArtifactService.confirmCraft(userId, args[1]));
-
-      case RuneAction.Cancel:
-        await RuneOperations.cancel(args[1], userId);
-        return RuneView.character(userId, characterId, args[2] as RuneTab, 0, "Попытка отменена.");
 
       default:
         return RuneView.start(userId);

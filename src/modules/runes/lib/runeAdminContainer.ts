@@ -22,7 +22,7 @@ import {
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import type { RecipeWithRelations } from "../service/artifactService.js";
 import { AUDIT_LABELS } from "../service/runeAudit.js";
-import type { FormulaWithRelations } from "../service/formulaService.js";
+import type { FormulaAttempt, FormulaWithRelations } from "../service/formulaService.js";
 import type { RuneService } from "../service/runeService.js";
 import type { RuneAudit } from "../service/runeAudit.js";
 import { FUTHARK_LABELS } from "./runeCatalog.js";
@@ -44,12 +44,14 @@ type AuditRecord = Awaited<ReturnType<typeof RuneAudit.recent>>[number];
 
 export type RuneAdminCounts = {
   requests: number;
+  attempts: number;
   formulas: number;
   recipes: number;
 };
 
 const SECTIONS: { id: RuneAdminSection; label: string; description: string; emoji: string }[] = [
   { id: RuneAdminSection.Requests, label: "Заявки на изучение", description: "Подтверждение и отклонение изучения рун", emoji: "<:12784editor:1518587261707616407>" },
+  { id: RuneAdminSection.Attempts, label: "Попытки формул", description: "RP-посты с применением формул: получилось или нет", emoji: "<:wand:1562520778828677280>" },
   { id: RuneAdminSection.Formulas, label: "Формулы заклинаний", description: "Утверждение, правка и отключение модификаций", emoji: "<:wand:1562520778828677280>" },
   { id: RuneAdminSection.Recipes, label: "Рецепты артефактов", description: "Руны, заготовка, материалы и риски", emoji: "<:inventory:1562485572008673340>" },
   { id: RuneAdminSection.Runes, label: "Справочник рун", description: "Принципы, применение, нагрузка", emoji: RUNE_HEADER },
@@ -119,6 +121,7 @@ export class RuneAdminContainer {
     const container = this.base(`${RUNE_HEADER} Руны и артефакты`, [
       "",
       `${RUNE_ARROW} Заявок на изучение: **${counts.requests}**`,
+      `${RUNE_ARROW} Попыток формул на проверке: **${counts.attempts}**`,
       `${RUNE_ARROW} Формул на проверке: **${counts.formulas}**`,
       `${RUNE_ARROW} Рецептов на проверке: **${counts.recipes}**`,
       "-# Игроки изучают руны через RP-посты и подают заявки в /rune. Куратор подтверждает изучение, повышает владение и утверждает формулы и рецепты — бот проверяет требования, считает риск и хранит историю.",
@@ -190,6 +193,63 @@ export class RuneAdminContainer {
     );
 
     return this.nav(container, sectionButton(RuneAdminSection.Requests));
+  }
+
+  public static attempts(attempts: FormulaAttempt[], notice: string | null = null) {
+    const container = this.base("<:wand:1562520778828677280> Попытки формул", [
+      "",
+      attempts.length
+        ? attempts
+            .map((attempt) => `${attempt.formula?.rune.emoji ?? ""} **${attempt.formula?.incantation ?? "?"}** · ${attempt.character.rpName} · <t:${Math.floor(attempt.createdAt.getTime() / 1000)}:R>`)
+            .join("\n")
+        : `${RUNE_ARROW} Попыток на проверке нет.`,
+      "-# Игрок применяет утверждённую формулу в RP-посте и отправляет его сюда. Куратор читает пост и решает, получилось ли заклинание.",
+    ], notice);
+
+    if (attempts.length) {
+      container.addActionRowComponents(
+        this.select(
+          RuneAdminAction.Attempt,
+          "Открыть попытку",
+          attempts.map((attempt) =>
+            new StringSelectMenuOptionBuilder()
+              .setLabel(`${attempt.formula?.incantation ?? "?"} · ${attempt.character.rpName}`.slice(0, 100))
+              .setValue(attempt.id),
+          ),
+        ),
+      );
+    }
+
+    return this.nav(container);
+  }
+
+  public static attempt(attempt: FormulaAttempt, mastery: number | null) {
+    const formula = attempt.formula!;
+
+    const container = this.base(`${formula.rune.emoji} ${formula.incantation}`, [
+      `-# ${formula.spell.name} + руна ${formula.rune.name}`,
+      "",
+      `**Персонаж:** ${attempt.character.rpName} · <@${attempt.character.user.discordId}>`,
+      `**RP-пост:** ${attempt.postUrl}`,
+      attempt.note ? `**Комментарий:** ${attempt.note}` : null,
+      "",
+      `> **Эффект формулы:** ${formula.effect}`,
+      formula.mechanics ? `> **Механика:** ${formula.mechanics}` : null,
+      formula.restrictions ? `> **Ограничения:** ${formula.restrictions}` : null,
+      "",
+      `**Владение руной:** ${mastery ?? "руна больше не изучена"} · требуется ${formula.minMastery}`,
+      `**Ориентир сложности:** ${attempt.risk}% · **возможная неудача:** ${OUTCOME_LABELS[formula.failureOutcome]}`,
+      "-# Решение и описание итога игрок увидит во вкладке «Заявки» в /rune.",
+    ]);
+
+    container.addActionRowComponents(
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        button(RuneAdminAction.AttemptReview, "Получилось", ButtonStyle.Success, RUNE_SUCCESS, attempt.id, "1"),
+        button(RuneAdminAction.AttemptReview, "Не получилось", ButtonStyle.Danger, "<:240191mark:1518581039172292688>", attempt.id, "0"),
+      ),
+    );
+
+    return this.nav(container, sectionButton(RuneAdminSection.Attempts));
   }
 
   public static formulas(formulas: FormulaWithRelations[], notice: string | null = null) {
