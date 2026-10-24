@@ -102,7 +102,8 @@ export const ModelName = {
   ArtifactRune: 'ArtifactRune',
   RuneOperation: 'RuneOperation',
   RuneAuditLog: 'RuneAuditLog',
-  RuneSettings: 'RuneSettings'
+  RuneSettings: 'RuneSettings',
+  TupperMessage: 'TupperMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -226,6 +227,8 @@ export const SpellCastScalarFieldEnum = {
   manaAfter: 'manaAfter',
   channelId: 'channelId',
   messageId: 'messageId',
+  announceMessageId: 'announceMessageId',
+  refundedAt: 'refundedAt',
   createdAt: 'createdAt'
 } as const
 
@@ -900,6 +903,20 @@ export const RuneSettingsScalarFieldEnum = {
 } as const
 
 export type RuneSettingsScalarFieldEnum = (typeof RuneSettingsScalarFieldEnum)[keyof typeof RuneSettingsScalarFieldEnum]
+
+
+export const TupperMessageScalarFieldEnum = {
+  messageId: 'messageId',
+  groupId: 'groupId',
+  characterId: 'characterId',
+  ownerId: 'ownerId',
+  channelId: 'channelId',
+  threadId: 'threadId',
+  webhookId: 'webhookId',
+  createdAt: 'createdAt'
+} as const
+
+export type TupperMessageScalarFieldEnum = (typeof TupperMessageScalarFieldEnum)[keyof typeof TupperMessageScalarFieldEnum]
 
 
 export const SortOrder = {

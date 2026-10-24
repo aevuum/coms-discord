@@ -435,7 +435,8 @@ export const ModelName = {
   ArtifactRune: 'ArtifactRune',
   RuneOperation: 'RuneOperation',
   RuneAuditLog: 'RuneAuditLog',
-  RuneSettings: 'RuneSettings'
+  RuneSettings: 'RuneSettings',
+  TupperMessage: 'TupperMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -451,7 +452,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll" | "rune" | "characterRune" | "runeStudyRequest" | "spellFormula" | "artifactMaterial" | "artifactBlank" | "artifactRecipe" | "artifactRecipeRune" | "artifactRecipeMaterial" | "artifact" | "artifactRune" | "runeOperation" | "runeAuditLog" | "runeSettings"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll" | "rune" | "characterRune" | "runeStudyRequest" | "spellFormula" | "artifactMaterial" | "artifactBlank" | "artifactRecipe" | "artifactRecipeRune" | "artifactRecipeMaterial" | "artifact" | "artifactRune" | "runeOperation" | "runeAuditLog" | "runeSettings" | "tupperMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4303,6 +4304,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TupperMessage: {
+      payload: Prisma.$TupperMessagePayload<ExtArgs>
+      fields: Prisma.TupperMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TupperMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TupperMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.TupperMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TupperMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>
+        }
+        findMany: {
+          args: Prisma.TupperMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>[]
+        }
+        create: {
+          args: Prisma.TupperMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>
+        }
+        createMany: {
+          args: Prisma.TupperMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TupperMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.TupperMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>
+        }
+        update: {
+          args: Prisma.TupperMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.TupperMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TupperMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TupperMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.TupperMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TupperMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.TupperMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTupperMessage>
+        }
+        groupBy: {
+          args: Prisma.TupperMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TupperMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TupperMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TupperMessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4447,6 +4522,8 @@ export const SpellCastScalarFieldEnum = {
   manaAfter: 'manaAfter',
   channelId: 'channelId',
   messageId: 'messageId',
+  announceMessageId: 'announceMessageId',
+  refundedAt: 'refundedAt',
   createdAt: 'createdAt'
 } as const
 
@@ -5123,6 +5200,20 @@ export const RuneSettingsScalarFieldEnum = {
 export type RuneSettingsScalarFieldEnum = (typeof RuneSettingsScalarFieldEnum)[keyof typeof RuneSettingsScalarFieldEnum]
 
 
+export const TupperMessageScalarFieldEnum = {
+  messageId: 'messageId',
+  groupId: 'groupId',
+  characterId: 'characterId',
+  ownerId: 'ownerId',
+  channelId: 'channelId',
+  threadId: 'threadId',
+  webhookId: 'webhookId',
+  createdAt: 'createdAt'
+} as const
+
+export type TupperMessageScalarFieldEnum = (typeof TupperMessageScalarFieldEnum)[keyof typeof TupperMessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -5751,6 +5842,7 @@ export type GlobalOmitConfig = {
   runeOperation?: Prisma.RuneOperationOmit
   runeAuditLog?: Prisma.RuneAuditLogOmit
   runeSettings?: Prisma.RuneSettingsOmit
+  tupperMessage?: Prisma.TupperMessageOmit
 }
 
 /* Types for Logging */

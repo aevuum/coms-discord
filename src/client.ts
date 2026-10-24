@@ -21,6 +21,7 @@ ApplicationCommandRegistries.setDefaultBehaviorWhenNotIdentical(
 const intents = [
   GatewayIntentBits.Guilds,
   GatewayIntentBits.GuildMessages,
+  GatewayIntentBits.GuildMessageReactions,
   GatewayIntentBits.MessageContent,
   GatewayIntentBits.GuildVoiceStates,
   GatewayIntentBits.DirectMessages,
@@ -36,7 +37,7 @@ if (await hasGuildMembersIntent(process.env.DISCORD_TOKEN)) {
 
 const client = new SapphireClient({
   intents,
-  partials: [Partials.Channel],
+  partials: [Partials.Channel, Partials.Message, Partials.Reaction, Partials.User],
 });
 
 registerModulePaths(client, join(__dirname, "modules"));

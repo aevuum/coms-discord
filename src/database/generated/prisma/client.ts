@@ -301,3 +301,8 @@ export type RuneAuditLog = Prisma.RuneAuditLogModel
  * 
  */
 export type RuneSettings = Prisma.RuneSettingsModel
+/**
+ * Model TupperMessage
+ * 
+ */
+export type TupperMessage = Prisma.TupperMessageModel

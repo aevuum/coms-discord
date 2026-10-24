@@ -324,6 +324,7 @@ export type CharacterWhereInput = {
   artifacts?: Prisma.ArtifactListRelationFilter
   runeOperations?: Prisma.RuneOperationListRelationFilter
   runeAudit?: Prisma.RuneAuditLogListRelationFilter
+  tupperMessages?: Prisma.TupperMessageListRelationFilter
   trait?: Prisma.XOR<Prisma.RollEntryNullableScalarRelationFilter, Prisma.RollEntryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transactions?: Prisma.CharacterTransactionListRelationFilter
@@ -356,6 +357,7 @@ export type CharacterOrderByWithRelationInput = {
   artifacts?: Prisma.ArtifactOrderByRelationAggregateInput
   runeOperations?: Prisma.RuneOperationOrderByRelationAggregateInput
   runeAudit?: Prisma.RuneAuditLogOrderByRelationAggregateInput
+  tupperMessages?: Prisma.TupperMessageOrderByRelationAggregateInput
   trait?: Prisma.RollEntryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   transactions?: Prisma.CharacterTransactionOrderByRelationAggregateInput
@@ -391,6 +393,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   artifacts?: Prisma.ArtifactListRelationFilter
   runeOperations?: Prisma.RuneOperationListRelationFilter
   runeAudit?: Prisma.RuneAuditLogListRelationFilter
+  tupperMessages?: Prisma.TupperMessageListRelationFilter
   trait?: Prisma.XOR<Prisma.RollEntryNullableScalarRelationFilter, Prisma.RollEntryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transactions?: Prisma.CharacterTransactionListRelationFilter
@@ -467,6 +470,7 @@ export type CharacterCreateInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -499,6 +503,7 @@ export type CharacterUncheckedCreateInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -527,6 +532,7 @@ export type CharacterUpdateInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -559,6 +565,7 @@ export type CharacterUncheckedUpdateInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -968,6 +975,20 @@ export type CharacterUpdateOneWithoutRuneAuditNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutRuneAuditInput, Prisma.CharacterUpdateWithoutRuneAuditInput>, Prisma.CharacterUncheckedUpdateWithoutRuneAuditInput>
 }
 
+export type CharacterCreateNestedOneWithoutTupperMessagesInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutTupperMessagesInput, Prisma.CharacterUncheckedCreateWithoutTupperMessagesInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTupperMessagesInput
+  connect?: Prisma.CharacterWhereUniqueInput
+}
+
+export type CharacterUpdateOneRequiredWithoutTupperMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutTupperMessagesInput, Prisma.CharacterUncheckedCreateWithoutTupperMessagesInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutTupperMessagesInput
+  upsert?: Prisma.CharacterUpsertWithoutTupperMessagesInput
+  connect?: Prisma.CharacterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutTupperMessagesInput, Prisma.CharacterUpdateWithoutTupperMessagesInput>, Prisma.CharacterUncheckedUpdateWithoutTupperMessagesInput>
+}
+
 export type CharacterCreateWithoutUserInput = {
   id?: string
   rpName: string
@@ -991,6 +1012,7 @@ export type CharacterCreateWithoutUserInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -1021,6 +1043,7 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -1097,6 +1120,7 @@ export type CharacterCreateWithoutSpellCastsInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -1128,6 +1152,7 @@ export type CharacterUncheckedCreateWithoutSpellCastsInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -1171,6 +1196,7 @@ export type CharacterUpdateWithoutSpellCastsInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -1202,6 +1228,7 @@ export type CharacterUncheckedUpdateWithoutSpellCastsInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -1229,6 +1256,7 @@ export type CharacterCreateWithoutTransactionsInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -1260,6 +1288,7 @@ export type CharacterUncheckedCreateWithoutTransactionsInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -1303,6 +1332,7 @@ export type CharacterUpdateWithoutTransactionsInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -1334,6 +1364,7 @@ export type CharacterUncheckedUpdateWithoutTransactionsInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -1361,6 +1392,7 @@ export type CharacterCreateWithoutInventoryItemsInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -1392,6 +1424,7 @@ export type CharacterUncheckedCreateWithoutInventoryItemsInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
 }
@@ -1435,6 +1468,7 @@ export type CharacterUpdateWithoutInventoryItemsInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -1466,6 +1500,7 @@ export type CharacterUncheckedUpdateWithoutInventoryItemsInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
 }
@@ -1492,6 +1527,7 @@ export type CharacterCreateWithoutFamiliarInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -1523,6 +1559,7 @@ export type CharacterUncheckedCreateWithoutFamiliarInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -1566,6 +1603,7 @@ export type CharacterUpdateWithoutFamiliarInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -1597,6 +1635,7 @@ export type CharacterUncheckedUpdateWithoutFamiliarInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1624,6 +1663,7 @@ export type CharacterCreateWithoutTupperInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -1655,6 +1695,7 @@ export type CharacterUncheckedCreateWithoutTupperInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -1698,6 +1739,7 @@ export type CharacterUpdateWithoutTupperInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -1729,6 +1771,7 @@ export type CharacterUncheckedUpdateWithoutTupperInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1757,6 +1800,7 @@ export type CharacterCreateWithoutTraitInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
@@ -1787,6 +1831,7 @@ export type CharacterUncheckedCreateWithoutTraitInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -1840,6 +1885,7 @@ export type CharacterCreateWithoutRunesInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -1871,6 +1917,7 @@ export type CharacterUncheckedCreateWithoutRunesInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -1914,6 +1961,7 @@ export type CharacterUpdateWithoutRunesInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -1945,6 +1993,7 @@ export type CharacterUncheckedUpdateWithoutRunesInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1972,6 +2021,7 @@ export type CharacterCreateWithoutRuneStudyRequestsInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -2003,6 +2053,7 @@ export type CharacterUncheckedCreateWithoutRuneStudyRequestsInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -2046,6 +2097,7 @@ export type CharacterUpdateWithoutRuneStudyRequestsInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -2077,6 +2129,7 @@ export type CharacterUncheckedUpdateWithoutRuneStudyRequestsInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2104,6 +2157,7 @@ export type CharacterCreateWithoutRuneFormulasInput = {
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -2135,6 +2189,7 @@ export type CharacterUncheckedCreateWithoutRuneFormulasInput = {
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -2178,6 +2233,7 @@ export type CharacterUpdateWithoutRuneFormulasInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -2209,6 +2265,7 @@ export type CharacterUncheckedUpdateWithoutRuneFormulasInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2236,6 +2293,7 @@ export type CharacterCreateWithoutArtifactsInput = {
   runeFormulas?: Prisma.SpellFormulaCreateNestedManyWithoutAuthorCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -2267,6 +2325,7 @@ export type CharacterUncheckedCreateWithoutArtifactsInput = {
   runeFormulas?: Prisma.SpellFormulaUncheckedCreateNestedManyWithoutAuthorCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -2310,6 +2369,7 @@ export type CharacterUpdateWithoutArtifactsInput = {
   runeFormulas?: Prisma.SpellFormulaUpdateManyWithoutAuthorCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -2341,6 +2401,7 @@ export type CharacterUncheckedUpdateWithoutArtifactsInput = {
   runeFormulas?: Prisma.SpellFormulaUncheckedUpdateManyWithoutAuthorCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2368,6 +2429,7 @@ export type CharacterCreateWithoutRuneOperationsInput = {
   runeFormulas?: Prisma.SpellFormulaCreateNestedManyWithoutAuthorCharacterInput
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -2399,6 +2461,7 @@ export type CharacterUncheckedCreateWithoutRuneOperationsInput = {
   runeFormulas?: Prisma.SpellFormulaUncheckedCreateNestedManyWithoutAuthorCharacterInput
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -2442,6 +2505,7 @@ export type CharacterUpdateWithoutRuneOperationsInput = {
   runeFormulas?: Prisma.SpellFormulaUpdateManyWithoutAuthorCharacterNestedInput
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -2473,6 +2537,7 @@ export type CharacterUncheckedUpdateWithoutRuneOperationsInput = {
   runeFormulas?: Prisma.SpellFormulaUncheckedUpdateManyWithoutAuthorCharacterNestedInput
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2500,6 +2565,7 @@ export type CharacterCreateWithoutRuneAuditInput = {
   runeFormulas?: Prisma.SpellFormulaCreateNestedManyWithoutAuthorCharacterInput
   artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageCreateNestedManyWithoutCharacterInput
   trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
@@ -2531,6 +2597,7 @@ export type CharacterUncheckedCreateWithoutRuneAuditInput = {
   runeFormulas?: Prisma.SpellFormulaUncheckedCreateNestedManyWithoutAuthorCharacterInput
   artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
   runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
+  tupperMessages?: Prisma.TupperMessageUncheckedCreateNestedManyWithoutCharacterInput
   transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
   spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
@@ -2574,6 +2641,7 @@ export type CharacterUpdateWithoutRuneAuditInput = {
   runeFormulas?: Prisma.SpellFormulaUpdateManyWithoutAuthorCharacterNestedInput
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
@@ -2605,6 +2673,143 @@ export type CharacterUncheckedUpdateWithoutRuneAuditInput = {
   runeFormulas?: Prisma.SpellFormulaUncheckedUpdateManyWithoutAuthorCharacterNestedInput
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
+  transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
+  inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterCreateWithoutTupperMessagesInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  avatarPath?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  age?: number | null
+  specialRole?: string | null
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tupper?: Prisma.CharacterTupperCreateNestedOneWithoutCharacterInput
+  familiar?: Prisma.CharacterFamiliarCreateNestedOneWithoutCharacterInput
+  runes?: Prisma.CharacterRuneCreateNestedManyWithoutCharacterInput
+  runeStudyRequests?: Prisma.RuneStudyRequestCreateNestedManyWithoutCharacterInput
+  runeFormulas?: Prisma.SpellFormulaCreateNestedManyWithoutAuthorCharacterInput
+  artifacts?: Prisma.ArtifactCreateNestedManyWithoutCharacterInput
+  runeOperations?: Prisma.RuneOperationCreateNestedManyWithoutCharacterInput
+  runeAudit?: Prisma.RuneAuditLogCreateNestedManyWithoutCharacterInput
+  trait?: Prisma.RollEntryCreateNestedOneWithoutCharactersInput
+  user: Prisma.UserCreateNestedOneWithoutCharactersInput
+  transactions?: Prisma.CharacterTransactionCreateNestedManyWithoutCharacterInput
+  inventoryItems?: Prisma.CharacterInventoryItemCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterUncheckedCreateWithoutTupperMessagesInput = {
+  id?: string
+  rpName: string
+  avatarUrl?: string | null
+  avatarPath?: string | null
+  faculty: $Enums.CharacterFaculty
+  status?: $Enums.CharacterStatus
+  balanceKnuts: number
+  age?: number | null
+  specialRole?: string | null
+  traitId?: string | null
+  mana?: number
+  maxMana?: number
+  manaUpdatedAt?: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId: string
+  tupper?: Prisma.CharacterTupperUncheckedCreateNestedOneWithoutCharacterInput
+  familiar?: Prisma.CharacterFamiliarUncheckedCreateNestedOneWithoutCharacterInput
+  runes?: Prisma.CharacterRuneUncheckedCreateNestedManyWithoutCharacterInput
+  runeStudyRequests?: Prisma.RuneStudyRequestUncheckedCreateNestedManyWithoutCharacterInput
+  runeFormulas?: Prisma.SpellFormulaUncheckedCreateNestedManyWithoutAuthorCharacterInput
+  artifacts?: Prisma.ArtifactUncheckedCreateNestedManyWithoutCharacterInput
+  runeOperations?: Prisma.RuneOperationUncheckedCreateNestedManyWithoutCharacterInput
+  runeAudit?: Prisma.RuneAuditLogUncheckedCreateNestedManyWithoutCharacterInput
+  transactions?: Prisma.CharacterTransactionUncheckedCreateNestedManyWithoutCharacterInput
+  inventoryItems?: Prisma.CharacterInventoryItemUncheckedCreateNestedManyWithoutCharacterInput
+  spellCasts?: Prisma.SpellCastUncheckedCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterCreateOrConnectWithoutTupperMessagesInput = {
+  where: Prisma.CharacterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutTupperMessagesInput, Prisma.CharacterUncheckedCreateWithoutTupperMessagesInput>
+}
+
+export type CharacterUpsertWithoutTupperMessagesInput = {
+  update: Prisma.XOR<Prisma.CharacterUpdateWithoutTupperMessagesInput, Prisma.CharacterUncheckedUpdateWithoutTupperMessagesInput>
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutTupperMessagesInput, Prisma.CharacterUncheckedCreateWithoutTupperMessagesInput>
+  where?: Prisma.CharacterWhereInput
+}
+
+export type CharacterUpdateToOneWithWhereWithoutTupperMessagesInput = {
+  where?: Prisma.CharacterWhereInput
+  data: Prisma.XOR<Prisma.CharacterUpdateWithoutTupperMessagesInput, Prisma.CharacterUncheckedUpdateWithoutTupperMessagesInput>
+}
+
+export type CharacterUpdateWithoutTupperMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tupper?: Prisma.CharacterTupperUpdateOneWithoutCharacterNestedInput
+  familiar?: Prisma.CharacterFamiliarUpdateOneWithoutCharacterNestedInput
+  runes?: Prisma.CharacterRuneUpdateManyWithoutCharacterNestedInput
+  runeStudyRequests?: Prisma.RuneStudyRequestUpdateManyWithoutCharacterNestedInput
+  runeFormulas?: Prisma.SpellFormulaUpdateManyWithoutAuthorCharacterNestedInput
+  artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
+  runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
+  runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
+  transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
+  inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
+  spellCasts?: Prisma.SpellCastUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterUncheckedUpdateWithoutTupperMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  rpName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  faculty?: Prisma.EnumCharacterFacultyFieldUpdateOperationsInput | $Enums.CharacterFaculty
+  status?: Prisma.EnumCharacterStatusFieldUpdateOperationsInput | $Enums.CharacterStatus
+  balanceKnuts?: Prisma.IntFieldUpdateOperationsInput | number
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  specialRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  traitId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mana?: Prisma.IntFieldUpdateOperationsInput | number
+  maxMana?: Prisma.IntFieldUpdateOperationsInput | number
+  manaUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  tupper?: Prisma.CharacterTupperUncheckedUpdateOneWithoutCharacterNestedInput
+  familiar?: Prisma.CharacterFamiliarUncheckedUpdateOneWithoutCharacterNestedInput
+  runes?: Prisma.CharacterRuneUncheckedUpdateManyWithoutCharacterNestedInput
+  runeStudyRequests?: Prisma.RuneStudyRequestUncheckedUpdateManyWithoutCharacterNestedInput
+  runeFormulas?: Prisma.SpellFormulaUncheckedUpdateManyWithoutAuthorCharacterNestedInput
+  artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
+  runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
+  runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2651,6 +2856,7 @@ export type CharacterUpdateWithoutUserInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   trait?: Prisma.RollEntryUpdateOneWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -2681,6 +2887,7 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2745,6 +2952,7 @@ export type CharacterUpdateWithoutTraitInput = {
   artifacts?: Prisma.ArtifactUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUpdateManyWithoutCharacterNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   transactions?: Prisma.CharacterTransactionUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUpdateManyWithoutCharacterNestedInput
@@ -2775,6 +2983,7 @@ export type CharacterUncheckedUpdateWithoutTraitInput = {
   artifacts?: Prisma.ArtifactUncheckedUpdateManyWithoutCharacterNestedInput
   runeOperations?: Prisma.RuneOperationUncheckedUpdateManyWithoutCharacterNestedInput
   runeAudit?: Prisma.RuneAuditLogUncheckedUpdateManyWithoutCharacterNestedInput
+  tupperMessages?: Prisma.TupperMessageUncheckedUpdateManyWithoutCharacterNestedInput
   transactions?: Prisma.CharacterTransactionUncheckedUpdateManyWithoutCharacterNestedInput
   inventoryItems?: Prisma.CharacterInventoryItemUncheckedUpdateManyWithoutCharacterNestedInput
   spellCasts?: Prisma.SpellCastUncheckedUpdateManyWithoutCharacterNestedInput
@@ -2810,6 +3019,7 @@ export type CharacterCountOutputType = {
   artifacts: number
   runeOperations: number
   runeAudit: number
+  tupperMessages: number
   transactions: number
   inventoryItems: number
   spellCasts: number
@@ -2822,6 +3032,7 @@ export type CharacterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensi
   artifacts?: boolean | CharacterCountOutputTypeCountArtifactsArgs
   runeOperations?: boolean | CharacterCountOutputTypeCountRuneOperationsArgs
   runeAudit?: boolean | CharacterCountOutputTypeCountRuneAuditArgs
+  tupperMessages?: boolean | CharacterCountOutputTypeCountTupperMessagesArgs
   transactions?: boolean | CharacterCountOutputTypeCountTransactionsArgs
   inventoryItems?: boolean | CharacterCountOutputTypeCountInventoryItemsArgs
   spellCasts?: boolean | CharacterCountOutputTypeCountSpellCastsArgs
@@ -2882,6 +3093,13 @@ export type CharacterCountOutputTypeCountRuneAuditArgs<ExtArgs extends runtime.T
 /**
  * CharacterCountOutputType without action
  */
+export type CharacterCountOutputTypeCountTupperMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TupperMessageWhereInput
+}
+
+/**
+ * CharacterCountOutputType without action
+ */
 export type CharacterCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CharacterTransactionWhereInput
 }
@@ -2926,6 +3144,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   artifacts?: boolean | Prisma.Character$artifactsArgs<ExtArgs>
   runeOperations?: boolean | Prisma.Character$runeOperationsArgs<ExtArgs>
   runeAudit?: boolean | Prisma.Character$runeAuditArgs<ExtArgs>
+  tupperMessages?: boolean | Prisma.Character$tupperMessagesArgs<ExtArgs>
   trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Character$transactionsArgs<ExtArgs>
@@ -3005,6 +3224,7 @@ export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   artifacts?: boolean | Prisma.Character$artifactsArgs<ExtArgs>
   runeOperations?: boolean | Prisma.Character$runeOperationsArgs<ExtArgs>
   runeAudit?: boolean | Prisma.Character$runeAuditArgs<ExtArgs>
+  tupperMessages?: boolean | Prisma.Character$tupperMessagesArgs<ExtArgs>
   trait?: boolean | Prisma.Character$traitArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transactions?: boolean | Prisma.Character$transactionsArgs<ExtArgs>
@@ -3032,6 +3252,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     artifacts: Prisma.$ArtifactPayload<ExtArgs>[]
     runeOperations: Prisma.$RuneOperationPayload<ExtArgs>[]
     runeAudit: Prisma.$RuneAuditLogPayload<ExtArgs>[]
+    tupperMessages: Prisma.$TupperMessagePayload<ExtArgs>[]
     trait: Prisma.$RollEntryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
     transactions: Prisma.$CharacterTransactionPayload<ExtArgs>[]
@@ -3457,6 +3678,7 @@ export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtim
   artifacts<T extends Prisma.Character$artifactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$artifactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArtifactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   runeOperations<T extends Prisma.Character$runeOperationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$runeOperationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RuneOperationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   runeAudit<T extends Prisma.Character$runeAuditArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$runeAuditArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RuneAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tupperMessages<T extends Prisma.Character$tupperMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$tupperMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TupperMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   trait<T extends Prisma.Character$traitArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$traitArgs<ExtArgs>>): Prisma.Prisma__RollEntryClient<runtime.Types.Result.GetResult<Prisma.$RollEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   transactions<T extends Prisma.Character$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4087,6 +4309,30 @@ export type Character$runeAuditArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.RuneAuditLogScalarFieldEnum | Prisma.RuneAuditLogScalarFieldEnum[]
+}
+
+/**
+ * Character.tupperMessages
+ */
+export type Character$tupperMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TupperMessage
+   */
+  select?: Prisma.TupperMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TupperMessage
+   */
+  omit?: Prisma.TupperMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TupperMessageInclude<ExtArgs> | null
+  where?: Prisma.TupperMessageWhereInput
+  orderBy?: Prisma.TupperMessageOrderByWithRelationInput | Prisma.TupperMessageOrderByWithRelationInput[]
+  cursor?: Prisma.TupperMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TupperMessageScalarFieldEnum | Prisma.TupperMessageScalarFieldEnum[]
 }
 
 /**

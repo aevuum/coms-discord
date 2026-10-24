@@ -25,6 +25,13 @@ export class ManaRepository {
     });
   }
 
+  public static setAnnouncement(messageId: string, announceMessageId: string) {
+    return prisma.spellCast.updateMany({
+      where: { messageId },
+      data: { announceMessageId },
+    });
+  }
+
   public static async applyCast(
     characterId: string,
     expected: ManaState,

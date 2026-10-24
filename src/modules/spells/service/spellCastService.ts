@@ -103,7 +103,7 @@ export class SpellCastService {
 
   private static async announce(message: Message, result: CastResult) {
     try {
-      await message.reply({
+      const reply = await message.reply({
         flags: MessageFlags.IsComponentsV2,
         components: [SpellContainer.cast(result)],
         allowedMentions: {
@@ -111,6 +111,8 @@ export class SpellCastService {
           repliedUser: false,
         },
       });
+
+      await ManaRepository.setAnnouncement(message.id, reply.id);
     } catch (error) {
       container.logger.error(error);
     }

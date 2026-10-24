@@ -5,6 +5,7 @@ import { TupperCache } from "../cache/tupperCache.js";
 import { MessageFormatter } from "../lib/messageFormatter.js";
 import { MessageSplitter } from "../lib/messageSplitter.js";
 import { TupperRepository } from "../repositories/tupperRepository.js";
+import { TupperMessageActions } from "./tupperMessageActions.js";
 import { WebhookService } from "./webhookService.js";
 import { SpellCastService } from "../../spells/service/spellCastService.js";
 import { EmojiAccess } from "../../../lib/emojiAccess.js";
@@ -72,12 +73,30 @@ export class TupperMessageService {
       return false;
     }
 
+    const sentMessages: Message[] = [sent];
+
     for (const [index, chunk] of chunks.slice(1).entries()) {
-      await WebhookService.send(
+      const next = await WebhookService.send(
         message.channel,
         payload(chunk, index === chunks.length - 2),
-      ).catch((error) => container.logger.error(error));
+      ).catch((error) => {
+        container.logger.error(error);
+        return null;
+      });
+
+      if (next) {
+        sentMessages.push(next);
+      }
     }
+
+    await TupperMessageActions.record(
+      sentMessages,
+      tupper.character.id,
+      message.author.id,
+      message.channel.isThread() ? message.channelId : null,
+    ).catch((error) =>
+      container.logger.error(error),
+    );
 
     await message.delete().catch(() => {});
 

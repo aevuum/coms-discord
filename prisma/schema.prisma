@@ -123,6 +123,7 @@ model Character {
   artifacts         Artifact[]
   runeOperations    RuneOperation[]
   runeAudit         RuneAuditLog[]
+  tupperMessages    TupperMessage[]
 
   rpName     String
   avatarUrl  String?
@@ -209,9 +210,12 @@ model SpellCast {
 
   channelId String
   messageId String?
+  announceMessageId String?
+  refundedAt        DateTime?
 
   createdAt DateTime @default(now())
 
+  @@index([messageId])
   @@index([characterId, createdAt])
 }
 
@@ -1194,4 +1198,22 @@ model RuneSettings {
   defaultInitialMastery Int @default(5)
 
   updatedAt DateTime @updatedAt
+}
+
+model TupperMessage {
+  messageId String @id
+  groupId   String
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  ownerId   String
+  channelId String
+  threadId  String?
+  webhookId String
+
+  createdAt DateTime @default(now())
+
+  @@index([groupId])
+  @@index([createdAt])
 }

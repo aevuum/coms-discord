@@ -45,6 +45,8 @@ export type SpellCastMinAggregateOutputType = {
   manaAfter: number | null
   channelId: string | null
   messageId: string | null
+  announceMessageId: string | null
+  refundedAt: Date | null
   createdAt: Date | null
 }
 
@@ -57,6 +59,8 @@ export type SpellCastMaxAggregateOutputType = {
   manaAfter: number | null
   channelId: string | null
   messageId: string | null
+  announceMessageId: string | null
+  refundedAt: Date | null
   createdAt: Date | null
 }
 
@@ -69,6 +73,8 @@ export type SpellCastCountAggregateOutputType = {
   manaAfter: number
   channelId: number
   messageId: number
+  announceMessageId: number
+  refundedAt: number
   createdAt: number
   _all: number
 }
@@ -93,6 +99,8 @@ export type SpellCastMinAggregateInputType = {
   manaAfter?: true
   channelId?: true
   messageId?: true
+  announceMessageId?: true
+  refundedAt?: true
   createdAt?: true
 }
 
@@ -105,6 +113,8 @@ export type SpellCastMaxAggregateInputType = {
   manaAfter?: true
   channelId?: true
   messageId?: true
+  announceMessageId?: true
+  refundedAt?: true
   createdAt?: true
 }
 
@@ -117,6 +127,8 @@ export type SpellCastCountAggregateInputType = {
   manaAfter?: true
   channelId?: true
   messageId?: true
+  announceMessageId?: true
+  refundedAt?: true
   createdAt?: true
   _all?: true
 }
@@ -216,6 +228,8 @@ export type SpellCastGroupByOutputType = {
   manaAfter: number
   channelId: string
   messageId: string | null
+  announceMessageId: string | null
+  refundedAt: Date | null
   createdAt: Date
   _count: SpellCastCountAggregateOutputType | null
   _avg: SpellCastAvgAggregateOutputType | null
@@ -251,6 +265,8 @@ export type SpellCastWhereInput = {
   manaAfter?: Prisma.IntFilter<"SpellCast"> | number
   channelId?: Prisma.StringFilter<"SpellCast"> | string
   messageId?: Prisma.StringNullableFilter<"SpellCast"> | string | null
+  announceMessageId?: Prisma.StringNullableFilter<"SpellCast"> | string | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"SpellCast"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"SpellCast"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
   spell?: Prisma.XOR<Prisma.SpellNullableScalarRelationFilter, Prisma.SpellWhereInput> | null
@@ -265,6 +281,8 @@ export type SpellCastOrderByWithRelationInput = {
   manaAfter?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  announceMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   character?: Prisma.CharacterOrderByWithRelationInput
   spell?: Prisma.SpellOrderByWithRelationInput
@@ -282,6 +300,8 @@ export type SpellCastWhereUniqueInput = Prisma.AtLeast<{
   manaAfter?: Prisma.IntFilter<"SpellCast"> | number
   channelId?: Prisma.StringFilter<"SpellCast"> | string
   messageId?: Prisma.StringNullableFilter<"SpellCast"> | string | null
+  announceMessageId?: Prisma.StringNullableFilter<"SpellCast"> | string | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"SpellCast"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"SpellCast"> | Date | string
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
   spell?: Prisma.XOR<Prisma.SpellNullableScalarRelationFilter, Prisma.SpellWhereInput> | null
@@ -296,6 +316,8 @@ export type SpellCastOrderByWithAggregationInput = {
   manaAfter?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  announceMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.SpellCastCountOrderByAggregateInput
   _avg?: Prisma.SpellCastAvgOrderByAggregateInput
@@ -316,6 +338,8 @@ export type SpellCastScalarWhereWithAggregatesInput = {
   manaAfter?: Prisma.IntWithAggregatesFilter<"SpellCast"> | number
   channelId?: Prisma.StringWithAggregatesFilter<"SpellCast"> | string
   messageId?: Prisma.StringNullableWithAggregatesFilter<"SpellCast"> | string | null
+  announceMessageId?: Prisma.StringNullableWithAggregatesFilter<"SpellCast"> | string | null
+  refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SpellCast"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SpellCast"> | Date | string
 }
 
@@ -326,6 +350,8 @@ export type SpellCastCreateInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutSpellCastsInput
   spell?: Prisma.SpellCreateNestedOneWithoutCastsInput
@@ -340,6 +366,8 @@ export type SpellCastUncheckedCreateInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -350,6 +378,8 @@ export type SpellCastUpdateInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutSpellCastsNestedInput
   spell?: Prisma.SpellUpdateOneWithoutCastsNestedInput
@@ -364,6 +394,8 @@ export type SpellCastUncheckedUpdateInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -376,6 +408,8 @@ export type SpellCastCreateManyInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -386,6 +420,8 @@ export type SpellCastUpdateManyMutationInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -398,6 +434,8 @@ export type SpellCastUncheckedUpdateManyInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -420,6 +458,8 @@ export type SpellCastCountOrderByAggregateInput = {
   manaAfter?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  announceMessageId?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -437,6 +477,8 @@ export type SpellCastMaxOrderByAggregateInput = {
   manaAfter?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  announceMessageId?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -449,6 +491,8 @@ export type SpellCastMinOrderByAggregateInput = {
   manaAfter?: Prisma.SortOrder
   channelId?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  announceMessageId?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -548,6 +592,8 @@ export type SpellCastCreateWithoutCharacterInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
   spell?: Prisma.SpellCreateNestedOneWithoutCastsInput
 }
@@ -560,6 +606,8 @@ export type SpellCastUncheckedCreateWithoutCharacterInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -601,6 +649,8 @@ export type SpellCastScalarWhereInput = {
   manaAfter?: Prisma.IntFilter<"SpellCast"> | number
   channelId?: Prisma.StringFilter<"SpellCast"> | string
   messageId?: Prisma.StringNullableFilter<"SpellCast"> | string | null
+  announceMessageId?: Prisma.StringNullableFilter<"SpellCast"> | string | null
+  refundedAt?: Prisma.DateTimeNullableFilter<"SpellCast"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"SpellCast"> | Date | string
 }
 
@@ -611,6 +661,8 @@ export type SpellCastCreateWithoutSpellInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
   character: Prisma.CharacterCreateNestedOneWithoutSpellCastsInput
 }
@@ -623,6 +675,8 @@ export type SpellCastUncheckedCreateWithoutSpellInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -660,6 +714,8 @@ export type SpellCastCreateManyCharacterInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -670,6 +726,8 @@ export type SpellCastUpdateWithoutCharacterInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   spell?: Prisma.SpellUpdateOneWithoutCastsNestedInput
 }
@@ -682,6 +740,8 @@ export type SpellCastUncheckedUpdateWithoutCharacterInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -693,6 +753,8 @@ export type SpellCastUncheckedUpdateManyWithoutCharacterInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -704,6 +766,8 @@ export type SpellCastCreateManySpellInput = {
   manaAfter: number
   channelId: string
   messageId?: string | null
+  announceMessageId?: string | null
+  refundedAt?: Date | string | null
   createdAt?: Date | string
 }
 
@@ -714,6 +778,8 @@ export type SpellCastUpdateWithoutSpellInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   character?: Prisma.CharacterUpdateOneRequiredWithoutSpellCastsNestedInput
 }
@@ -726,6 +792,8 @@ export type SpellCastUncheckedUpdateWithoutSpellInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -737,6 +805,8 @@ export type SpellCastUncheckedUpdateManyWithoutSpellInput = {
   manaAfter?: Prisma.IntFieldUpdateOperationsInput | number
   channelId?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  announceMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -751,6 +821,8 @@ export type SpellCastSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   manaAfter?: boolean
   channelId?: boolean
   messageId?: boolean
+  announceMessageId?: boolean
+  refundedAt?: boolean
   createdAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
   spell?: boolean | Prisma.SpellCast$spellArgs<ExtArgs>
@@ -765,6 +837,8 @@ export type SpellCastSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   manaAfter?: boolean
   channelId?: boolean
   messageId?: boolean
+  announceMessageId?: boolean
+  refundedAt?: boolean
   createdAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
   spell?: boolean | Prisma.SpellCast$spellArgs<ExtArgs>
@@ -779,6 +853,8 @@ export type SpellCastSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   manaAfter?: boolean
   channelId?: boolean
   messageId?: boolean
+  announceMessageId?: boolean
+  refundedAt?: boolean
   createdAt?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
   spell?: boolean | Prisma.SpellCast$spellArgs<ExtArgs>
@@ -793,10 +869,12 @@ export type SpellCastSelectScalar = {
   manaAfter?: boolean
   channelId?: boolean
   messageId?: boolean
+  announceMessageId?: boolean
+  refundedAt?: boolean
   createdAt?: boolean
 }
 
-export type SpellCastOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "spellId" | "spellName" | "manaCost" | "manaAfter" | "channelId" | "messageId" | "createdAt", ExtArgs["result"]["spellCast"]>
+export type SpellCastOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "characterId" | "spellId" | "spellName" | "manaCost" | "manaAfter" | "channelId" | "messageId" | "announceMessageId" | "refundedAt" | "createdAt", ExtArgs["result"]["spellCast"]>
 export type SpellCastInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
   spell?: boolean | Prisma.SpellCast$spellArgs<ExtArgs>
@@ -825,6 +903,8 @@ export type $SpellCastPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     manaAfter: number
     channelId: string
     messageId: string | null
+    announceMessageId: string | null
+    refundedAt: Date | null
     createdAt: Date
   }, ExtArgs["result"]["spellCast"]>
   composites: {}
@@ -1259,6 +1339,8 @@ export interface SpellCastFieldRefs {
   readonly manaAfter: Prisma.FieldRef<"SpellCast", 'Int'>
   readonly channelId: Prisma.FieldRef<"SpellCast", 'String'>
   readonly messageId: Prisma.FieldRef<"SpellCast", 'String'>
+  readonly announceMessageId: Prisma.FieldRef<"SpellCast", 'String'>
+  readonly refundedAt: Prisma.FieldRef<"SpellCast", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"SpellCast", 'DateTime'>
 }
     
