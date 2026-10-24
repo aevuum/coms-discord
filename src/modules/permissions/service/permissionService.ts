@@ -366,7 +366,7 @@ export class PermissionService {
 
     const command = container.stores.get("commands").get(key);
 
-    if (!command?.supportsChatInputCommands()) {
+    if (!command || (!command.supportsChatInputCommands() && !command.supportsContextMenuCommands())) {
       return null;
     }
 
