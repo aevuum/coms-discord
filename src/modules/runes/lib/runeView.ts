@@ -1,6 +1,5 @@
 import { RuneRequestStatus } from "../../../database/generated/prisma/client.js";
 
-import { ArtifactService } from "../service/artifactService.js";
 import { FormulaService } from "../service/formulaService.js";
 import { RuneRegistry } from "../service/runeRegistry.js";
 import { RuneService } from "../service/runeService.js";
@@ -34,21 +33,18 @@ export class RuneView {
   ) {
     const character = await RuneService.getOwnedCharacter(discordId, characterId);
 
-    const [characters, learned, runes, formulas, artifacts, recipes, requests, proposals] = await Promise.all([
+    const [characters, learned, runes, formulas, requests] = await Promise.all([
       RuneService.getCharacters(discordId),
       RuneService.learned(character.id),
       RuneRegistry.all(),
       FormulaService.available(character.id),
-      ArtifactService.characterArtifacts(character.id),
-      ArtifactService.craftable(character.id),
       RuneService.characterRequests(character.id),
-      FormulaService.byAuthorCharacter(character.id),
     ]);
 
     return RuneContainer.view(
       character,
       Object.values(RuneTab).includes(tab) ? tab : RuneTab.Runes,
-      { learned, runes, formulas, artifacts, recipes, requests, proposals },
+      { learned, runes, formulas, requests },
       page,
       characters.length > 1,
       notice,
@@ -78,27 +74,5 @@ export class RuneView {
     }
 
     return RuneContainer.formulaDetail(character.id, entry);
-  }
-
-  public static async craft(discordId: string, characterId: string, recipeId: string, extras: string[]) {
-    const character = await RuneService.getOwnedCharacter(discordId, characterId);
-    const [preview, materials] = await Promise.all([
-      ArtifactService.preview(character.id, recipeId, extras),
-      ArtifactService.listMaterials(),
-    ]);
-
-    if (preview.blockers.length) {
-      return RuneContainer.craftPreview(character.id, preview, materials, null);
-    }
-
-    const { operation } = await ArtifactService.prepareCraft(discordId, character.id, recipeId, preview.extraMaterialIds);
-
-    return RuneContainer.craftPreview(character.id, preview, materials, operation.id);
-  }
-
-  public static async artifact(discordId: string, characterId: string, artifactId: string) {
-    const character = await RuneService.getOwnedCharacter(discordId, characterId);
-
-    return RuneContainer.artifactDetail(character.id, await ArtifactService.getArtifact(character.id, artifactId));
   }
 }

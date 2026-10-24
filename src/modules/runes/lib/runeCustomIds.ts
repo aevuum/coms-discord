@@ -7,30 +7,18 @@ export enum RuneAction {
   Study = "study",
   StudyModal = "study_modal",
   Formula = "formula",
-  Propose = "propose",
-  ProposeModal = "propose_modal",
-  Artifact = "artifact",
-  Recipe = "recipe",
-  Extras = "extras",
-  Craft = "craft",
 }
 
 export enum RuneTab {
   Runes = "runes",
   Catalog = "catalog",
   Formulas = "formulas",
-  Artifacts = "artifacts",
   Requests = "requests",
 }
 
 export const RuneModalFields = {
   PostUrl: "post_url",
   Note: "note",
-  Spell: "spell",
-  Rune: "rune",
-  Incantation: "incantation",
-  Effect: "effect",
-  Mechanics: "mechanics",
 } as const;
 
 export class RuneCustomIds {

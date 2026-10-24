@@ -8,12 +8,10 @@ import { MessageFlags, ModalSubmitInteraction } from "discord.js";
 import { RuneAction, RuneCustomIds, RuneModalFields, RuneTab } from "../lib/runeCustomIds.js";
 import { RuneResponder } from "../lib/runeResponder.js";
 import { RuneView } from "../lib/runeView.js";
-import { FormulaService } from "../service/formulaService.js";
 import { RuneService } from "../service/runeService.js";
 
 const MODAL_ACTIONS = new Set<RuneAction>([
   RuneAction.StudyModal,
-  RuneAction.ProposeModal,
 ]);
 
 export class RuneModalHandler extends InteractionHandler {
@@ -49,30 +47,15 @@ export class RuneModalHandler extends InteractionHandler {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
       }
 
-      let notice: string;
+      const { rune } = await RuneService.requestStudy(
+        userId,
+        characterId,
+        result.args[1],
+        field(RuneModalFields.PostUrl),
+        field(RuneModalFields.Note),
+      );
 
-      if (result.action === RuneAction.StudyModal) {
-        const { rune } = await RuneService.requestStudy(
-          userId,
-          characterId,
-          result.args[1],
-          field(RuneModalFields.PostUrl),
-          field(RuneModalFields.Note),
-        );
-
-        notice = `Заявка на изучение руны ${rune.emoji} ${rune.name} отправлена кураторам.`;
-
-      } else {
-        const formula = await FormulaService.propose(userId, characterId, {
-          spellQuery: field(RuneModalFields.Spell),
-          runeKey: interaction.fields.getStringSelectValues(RuneModalFields.Rune)[0] ?? "",
-          incantation: field(RuneModalFields.Incantation),
-          effect: field(RuneModalFields.Effect),
-          mechanics: field(RuneModalFields.Mechanics),
-        });
-
-        notice = `Формула «${formula.incantation}» отправлена кураторам на проверку.`;
-      }
+      const notice = `Заявка на изучение руны ${rune.emoji} ${rune.name} отправлена кураторам.`;
 
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,

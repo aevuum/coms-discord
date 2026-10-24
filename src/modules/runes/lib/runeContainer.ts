@@ -18,9 +18,6 @@ import {
 
 import {
   RuneFuthark,
-  type Artifact,
-  type ArtifactMaterial,
-  type ArtifactRune,
   type Character,
   type Rune,
   type RuneSettings,
@@ -29,15 +26,11 @@ import {
 
 import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
-import type { CraftPreview, RecipeWithRelations } from "../service/artifactService.js";
-import type { AvailableFormula, FormulaWithRelations } from "../service/formulaService.js";
+import type { AvailableFormula } from "../service/formulaService.js";
 import type { LearnedRune } from "../service/runeService.js";
 import { FUTHARK_DESCRIPTIONS, FUTHARK_LABELS, RUNE_MAX_MASTERY } from "./runeCatalog.js";
 import { RuneAction, RuneCustomIds, RuneModalFields, RuneTab } from "./runeCustomIds.js";
 import {
-  ARTIFACT_STATUS_LABELS,
-  DESIGN_STATUS_DOTS,
-  DESIGN_STATUS_LABELS,
   REQUEST_STATUS_LABELS,
   RUNE_ARROW,
   RUNE_BACK,
@@ -55,18 +48,14 @@ const TABS: { id: RuneTab; label: string; description: string; emoji: string }[]
   { id: RuneTab.Runes, label: "Мои руны", description: "Изученные руны и владение", emoji: RUNE_HEADER },
   { id: RuneTab.Catalog, label: "Справочник", description: "Все руны футарков и заявки на изучение", emoji: "<:6849serverguide:1518587250802426078>" },
   { id: RuneTab.Formulas, label: "Формулы", description: "Модификации заклинаний рунами", emoji: "<:wand:1562520778828677280>" },
-  { id: RuneTab.Artifacts, label: "Артефакты", description: "Созданные предметы и рецепты", emoji: "<:inventory:1562485572008673340>" },
-  { id: RuneTab.Requests, label: "Заявки", description: "Статус заявок на изучение и формул", emoji: "<:dot_yellow:1562262864939589673>" },
+  { id: RuneTab.Requests, label: "Заявки", description: "Статус заявок на изучение рун", emoji: "<:dot_yellow:1562262864939589673>" },
 ];
 
 export type RuneTabData = {
   learned: LearnedRune[];
   runes: Rune[];
   formulas: AvailableFormula[];
-  artifacts: (Artifact & { runes: ArtifactRune[] })[];
-  recipes: { recipe: RecipeWithRelations; learnedAll: boolean }[];
   requests: (RuneStudyRequest & { rune: Rune })[];
-  proposals: FormulaWithRelations[];
 };
 
 const text = (container: ContainerBuilder, lines: (string | null | false)[]) =>
@@ -143,9 +132,6 @@ export class RuneContainer {
       case RuneTab.Formulas:
         this.formulasTab(container, character, data);
         break;
-      case RuneTab.Artifacts:
-        this.artifactsTab(container, character, data);
-        break;
       case RuneTab.Requests:
         this.requestsTab(container, data);
         break;
@@ -175,7 +161,7 @@ export class RuneContainer {
     const header = new TextDisplayBuilder().setContent(
       [
         `# ${RUNE_HEADER} Руны · ${character.rpName}`,
-        `-# Изучено рун: **${data.learned.length}** из ${data.runes.length} · артефактов: ${data.artifacts.length}`,
+        `-# Изучено рун: **${data.learned.length}** из ${data.runes.length}`,
         notice ? `${RUNE_SUCCESS} ${notice}` : null,
         `-# ${RUNE_PAD}`,
       ]
@@ -283,17 +269,8 @@ export class RuneContainer {
             )
             .join("\n")
         : `${RUNE_ARROW} Для изученных рун пока нет утверждённых формул.`,
-      "-# Формула — утверждённое сочетание руны и базового заклинания. Её прононс работает через туппер, если владение руной не ниже требуемого. Новую формулу можно предложить кураторам.",
+      "-# Формула — утверждённое сочетание руны и базового заклинания. Её прононс работает через туппер, если владение руной не ниже требуемого. Новые формулы регистрируют кураторы.",
     ]);
-
-    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder()
-        .setCustomId(RuneCustomIds.build(RuneAction.Propose, character.id))
-        .setLabel("Предложить формулу")
-        .setEmoji("<:6509addguild:1518587247769817088>")
-        .setStyle(ButtonStyle.Primary)
-        .setDisabled(!data.learned.length),
-    );
 
     if (data.formulas.length) {
       container.addActionRowComponents(
@@ -313,63 +290,6 @@ export class RuneContainer {
         ),
       );
     }
-
-    container.addActionRowComponents(row);
-  }
-
-  private static artifactsTab(container: ContainerBuilder, character: Character, data: RuneTabData) {
-    text(container, [
-      "### <:inventory:1562485572008673340> Артефакты",
-      data.artifacts.length
-        ? data.artifacts
-            .map(
-              (artifact) =>
-                `${RUNE_ARROW} **${artifact.name}** · ${ARTIFACT_STATUS_LABELS[artifact.status]} · нагрузка ${artifact.load}/${artifact.capacity} · качество ${artifact.quality}`,
-            )
-            .join("\n")
-        : `${RUNE_ARROW} У персонажа пока нет артефактов.`,
-      "-# Заготовка и материалы берутся из инвентаря персонажа и тратятся при создании.",
-    ]);
-
-    if (data.artifacts.length) {
-      container.addActionRowComponents(
-        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId(RuneCustomIds.build(RuneAction.Artifact, character.id))
-            .setPlaceholder("Открыть артефакт")
-            .addOptions(
-              data.artifacts.map((artifact) =>
-                new StringSelectMenuOptionBuilder()
-                  .setLabel(artifact.name.slice(0, 100))
-                  .setDescription(`Нагрузка ${artifact.load}/${artifact.capacity} · качество ${artifact.quality}`)
-                  .setValue(artifact.id),
-              ),
-            ),
-        ),
-      );
-    }
-
-    if (data.recipes.length) {
-      container.addActionRowComponents(
-        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId(RuneCustomIds.build(RuneAction.Recipe, character.id))
-            .setPlaceholder("Создать артефакт: выберите рецепт")
-            .addOptions(
-              data.recipes.map(({ recipe, learnedAll }) =>
-                new StringSelectMenuOptionBuilder()
-                  .setLabel(recipe.name.slice(0, 100))
-                  .setDescription(
-                    `${recipe.blank.name} · ${recipe.runes.map((entry) => entry.rune.name).join(", ")}${learnedAll ? "" : " · не все руны изучены"}`.slice(0, 100),
-                  )
-                  .setValue(recipe.id),
-              ),
-            ),
-        ),
-      );
-    } else {
-      text(container, ["-# Утверждённых рецептов артефактов пока нет."]);
-    }
   }
 
   private static requestsTab(container: ContainerBuilder, data: RuneTabData) {
@@ -383,15 +303,6 @@ export class RuneContainer {
             )
             .join("\n")
         : `${RUNE_ARROW} Заявок пока нет.`,
-      "### Предложенные формулы",
-      data.proposals.length
-        ? data.proposals
-            .map(
-              (formula) =>
-                `${DESIGN_STATUS_DOTS[formula.status]} **${formula.incantation}** (${formula.spell.name} + ${formula.rune.name}) · ${DESIGN_STATUS_LABELS[formula.status]}${formula.reviewReason ? `\n-# Причина: ${formula.reviewReason}` : ""}`,
-            )
-            .join("\n")
-        : `${RUNE_ARROW} Формул пока не предлагали.`,
     ]);
   }
 
@@ -487,44 +398,6 @@ export class RuneContainer {
       );
   }
 
-  public static proposeModal(characterId: string, learned: LearnedRune[]) {
-    const runes = new StringSelectMenuBuilder()
-      .setCustomId(RuneModalFields.Rune)
-      .setPlaceholder("Изученная руна")
-      .setRequired(true)
-      .addOptions(
-        learned.slice(0, 25).map((entry) =>
-          new StringSelectMenuOptionBuilder()
-            .setLabel(`${entry.rune.name} — ${entry.rune.meaning}`.slice(0, 100))
-            .setEmoji(entry.rune.emoji)
-            .setValue(entry.rune.key),
-        ),
-      );
-
-    const input = (id: string, style: TextInputStyle, required: boolean, max: number, placeholder: string) =>
-      new TextInputBuilder().setCustomId(id).setStyle(style).setRequired(required).setMaxLength(max).setPlaceholder(placeholder);
-
-    return new ModalBuilder()
-      .setCustomId(RuneCustomIds.build(RuneAction.ProposeModal, characterId))
-      .setTitle("Новая формула модификации")
-      .addLabelComponents(
-        new LabelBuilder()
-          .setLabel("Базовое заклинание")
-          .setDescription("Название или формула из справочника заклинаний")
-          .setTextInputComponent(input(RuneModalFields.Spell, TextInputStyle.Short, true, 80, "Инсендио")),
-        new LabelBuilder().setLabel("Руна-модификатор").setStringSelectMenuComponent(runes),
-        new LabelBuilder()
-          .setLabel("Новый прононс")
-          .setTextInputComponent(input(RuneModalFields.Incantation, TextInputStyle.Short, true, 80, "Альгиз Инсендио")),
-        new LabelBuilder()
-          .setLabel("Эффект")
-          .setTextInputComponent(input(RuneModalFields.Effect, TextInputStyle.Paragraph, true, 1000, "Огонь сворачивается в щит перед заклинателем…")),
-        new LabelBuilder()
-          .setLabel("Что меняется механически")
-          .setTextInputComponent(input(RuneModalFields.Mechanics, TextInputStyle.Paragraph, false, 1000, "Цель, форма, длительность, ограничения")),
-      );
-  }
-
   public static formulaDetail(characterId: string, entry: AvailableFormula) {
     const { formula } = entry;
     const container = new ContainerBuilder().setAccentColor(0x475b56);
@@ -548,118 +421,6 @@ export class RuneContainer {
     ]);
 
     container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(back(characterId, RuneTab.Formulas)));
-
-    return container;
-  }
-
-  public static craftPreview(
-    characterId: string,
-    preview: CraftPreview,
-    materials: ArtifactMaterial[],
-    operationId: string | null,
-  ) {
-    const { recipe } = preview;
-    const container = new ContainerBuilder().setAccentColor(0x475b56);
-
-    text(container, [
-      `# <:inventory:1562485572008673340> ${recipe.name}`,
-      `> ${recipe.effect}`,
-      "",
-      `**Заготовка:** ${recipe.blank.name} · вместимость ${recipe.blank.baseCapacity} × ${recipe.blank.qualityPercent}%`,
-      `**Руны:** ${preview.runeLoads
-        .map((entry) => {
-          const rune = recipe.runes.find((item) => item.runeKey === entry.runeKey)!.rune;
-          return `${rune.emoji} ${rune.name}${entry.critical ? "*" : ""} (${entry.load})`;
-        })
-        .join(", ")}`,
-      `**Нагрузка / вместимость:** ${preview.load} / ${preview.capacity}${preview.overloaded ? ` · ${RUNE_ERROR} перегрузка` : ""}`,
-      `**Материалы:**`,
-      ...preview.needs.map((need) => `${need.have >= need.need ? RUNE_SUCCESS : RUNE_ERROR} ${need.name}: ${need.have}/${need.need}`),
-      `**Решающее владение:** ${preview.mastery}${recipe.runes.some((entry) => entry.critical) ? " (слабейшая критическая руна)" : " (слабейшая руна)"}`,
-      `**Риск неудачи:** ${RuneFormat.risk(preview.risk)} · при неудаче: ${OUTCOME_LABELS[recipe.failureOutcome]}`,
-      preview.overloaded ? `**При перегрузке:** ${OUTCOME_LABELS[recipe.overloadOutcome]}` : null,
-      preview.blockers.length ? `\n${preview.blockers.map((entry) => `${RUNE_ERROR} ${entry}`).join("\n")}` : null,
-      "-# * — критическая руна. Дополнительные материалы из меню ниже повышают вместимость и тоже тратятся.",
-    ]);
-
-    if (materials.length) {
-      container.addActionRowComponents(
-        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-          new StringSelectMenuBuilder()
-            .setCustomId(RuneCustomIds.build(RuneAction.Extras, characterId, recipe.id))
-            .setPlaceholder("Дополнительные материалы для вместимости")
-            .setMinValues(0)
-            .setMaxValues(Math.min(materials.length, 10))
-            .addOptions(
-              materials.slice(0, 25).map((material) =>
-                new StringSelectMenuOptionBuilder()
-                  .setLabel(material.name.slice(0, 100))
-                  .setDescription(`Вместимость ${material.capacityBonus >= 0 ? "+" : ""}${material.capacityBonus}`)
-                  .setValue(material.id)
-                  .setDefault(preview.extraMaterialIds.includes(material.id)),
-              ),
-            ),
-        ),
-      );
-    }
-
-    const row = new ActionRowBuilder<ButtonBuilder>();
-
-    if (operationId) {
-      row.addComponents(
-        new ButtonBuilder()
-          .setCustomId(RuneCustomIds.build(RuneAction.Craft, characterId, operationId))
-          .setLabel("Создать артефакт")
-          .setEmoji(RUNE_SUCCESS)
-          .setStyle(ButtonStyle.Success),
-      );
-    }
-
-    row.addComponents(back(characterId, RuneTab.Artifacts));
-    container.addActionRowComponents(row);
-
-    return container;
-  }
-
-  public static craftResult(
-    characterId: string,
-    result: { preview: CraftPreview; roll: number; success: boolean; outcome: string | null; quality: number | null; artifact: Artifact | null },
-  ) {
-    const { preview } = result;
-    const container = new ContainerBuilder().setAccentColor(0x475b56);
-
-    text(container, [
-      `# ${result.success ? RUNE_SUCCESS : RUNE_ERROR} ${preview.recipe.name}`,
-      `-# Бросок ${result.roll} против риска ${preview.risk}%${preview.overloaded ? " · перегрузка" : ""}`,
-      "",
-      result.success
-        ? `Артефакт создан. **Качество:** ${result.quality}/100\n> ${preview.recipe.effect}`
-        : `**Итог:** ${OUTCOME_LABELS[result.outcome as keyof typeof OUTCOME_LABELS]}`,
-      result.artifact && !result.success ? `Предмет получен со статусом: ${ARTIFACT_STATUS_LABELS[result.artifact.status]}` : null,
-      "-# Заготовка и материалы списаны из инвентаря персонажа.",
-      `-# ${RUNE_PAD}`,
-    ]);
-
-    container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(back(characterId, RuneTab.Artifacts, "К артефактам")));
-
-    return container;
-  }
-
-  public static artifactDetail(characterId: string, artifact: Artifact & { runes: (ArtifactRune & { rune: Rune })[]; recipe: { name: string } | null }) {
-    const container = new ContainerBuilder().setAccentColor(0x475b56);
-
-    text(container, [
-      `# <:inventory:1562485572008673340> ${artifact.name}`,
-      `-# ${ARTIFACT_STATUS_LABELS[artifact.status]} · создан <t:${Math.floor(artifact.createdAt.getTime() / 1000)}:D>`,
-      `> ${artifact.effect}`,
-      "",
-      `**Нагрузка / вместимость:** ${artifact.load} / ${artifact.capacity}`,
-      `**Качество:** ${artifact.quality}/100`,
-      `**Нанесённые руны:** ${artifact.runes.map((entry) => `${entry.rune.emoji} ${entry.rune.name}${entry.critical ? "*" : ""} (${entry.load})`).join(", ")}`,
-      `-# ${RUNE_PAD}`,
-    ]);
-
-    container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(back(characterId, RuneTab.Artifacts)));
 
     return container;
   }

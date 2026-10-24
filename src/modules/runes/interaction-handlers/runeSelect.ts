@@ -14,9 +14,6 @@ const SELECT_ACTIONS = new Set<RuneAction>([
   RuneAction.Tab,
   RuneAction.Info,
   RuneAction.Formula,
-  RuneAction.Artifact,
-  RuneAction.Recipe,
-  RuneAction.Extras,
 ]);
 
 export class RuneSelectHandler extends InteractionHandler {
@@ -67,14 +64,8 @@ export class RuneSelectHandler extends InteractionHandler {
         return RuneView.character(userId, characterId, value as RuneTab);
       case RuneAction.Info:
         return RuneView.runeInfo(userId, characterId, value);
-      case RuneAction.Formula:
-        return RuneView.formula(userId, characterId, value);
-      case RuneAction.Artifact:
-        return RuneView.artifact(userId, characterId, value);
-      case RuneAction.Recipe:
-        return RuneView.craft(userId, characterId, value, []);
       default:
-        return RuneView.craft(userId, characterId, result.args[1], result.values);
+        return RuneView.formula(userId, characterId, value);
     }
   }
 }

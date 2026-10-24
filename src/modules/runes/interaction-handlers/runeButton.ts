@@ -9,7 +9,6 @@ import { RuneContainer } from "../lib/runeContainer.js";
 import { RuneAction, RuneCustomIds, RuneTab } from "../lib/runeCustomIds.js";
 import { RuneResponder } from "../lib/runeResponder.js";
 import { RuneView } from "../lib/runeView.js";
-import { ArtifactService } from "../service/artifactService.js";
 import { RuneRegistry } from "../service/runeRegistry.js";
 import { RuneService } from "../service/runeService.js";
 
@@ -17,8 +16,6 @@ const BUTTON_ACTIONS = new Set<RuneAction>([
   RuneAction.Back,
   RuneAction.Page,
   RuneAction.Study,
-  RuneAction.Propose,
-  RuneAction.Craft,
 ]);
 
 export class RuneButtonHandler extends InteractionHandler {
@@ -59,12 +56,6 @@ export class RuneButtonHandler extends InteractionHandler {
         return;
       }
 
-      if (result.action === RuneAction.Propose) {
-        await RuneService.getOwnedCharacter(userId, characterId);
-        await interaction.showModal(RuneContainer.proposeModal(characterId, await RuneService.learned(characterId)));
-        return;
-      }
-
       await interaction.deferUpdate();
 
       await interaction.editReply({
@@ -76,15 +67,12 @@ export class RuneButtonHandler extends InteractionHandler {
     }
   }
 
-  private async resolve(userId: string, action: RuneAction, args: string[]): Promise<ContainerBuilder> {
+  private resolve(userId: string, action: RuneAction, args: string[]): Promise<ContainerBuilder> {
     const [characterId] = args;
 
     switch (action) {
       case RuneAction.Page:
         return RuneView.character(userId, characterId, args[1] as RuneTab, Number(args[2]) || 0);
-
-      case RuneAction.Craft:
-        return RuneContainer.craftResult(characterId, await ArtifactService.confirmCraft(userId, args[1]));
 
       default:
         return RuneView.start(userId);

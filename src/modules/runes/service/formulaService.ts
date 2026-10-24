@@ -187,35 +187,6 @@ export class FormulaService {
     return prisma.spellFormula.count({ where: { status } });
   }
 
-  public static byAuthorCharacter(characterId: string) {
-    return prisma.spellFormula.findMany({
-      where: { authorCharacterId: characterId },
-      orderBy: { createdAt: "desc" },
-      take: 10,
-      include: FORMULA_INCLUDE,
-    });
-  }
-
-  public static async propose(discordId: string, characterId: string, draft: FormulaDraft) {
-    const character = await RuneService.getOwnedCharacter(discordId, characterId);
-
-    if ((await RuneService.mastery(character.id, draft.runeKey)) === null) {
-      throw new RuneError("Предложить формулу можно только с изученной руной.");
-    }
-
-    const formula = await this.store(draft, discordId, RuneDesignStatus.PENDING, character.id);
-
-    await RuneAudit.write({
-      action: RuneAuditAction.FORMULA_PROPOSED,
-      actorId: discordId,
-      characterId: character.id,
-      runeKey: formula.runeKey,
-      formulaId: formula.id,
-    });
-
-    return formula;
-  }
-
   public static async create(actorId: string, draft: FormulaDraft) {
     const formula = await this.store(draft, actorId, RuneDesignStatus.PENDING, null);
 
