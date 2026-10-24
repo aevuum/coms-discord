@@ -6,6 +6,7 @@ import { Mana } from "../lib/mana.js";
 import { SpellContainer } from "../lib/spellContainer.js";
 import { ManaRepository } from "../repositories/manaRepository.js";
 import type { CastResult } from "../types/spells.js";
+import { FormulaService } from "../../runes/service/formulaService.js";
 import { SpellService } from "./spellService.js";
 
 export class SpellCastService {
@@ -16,7 +17,14 @@ export class SpellCastService {
     content: string,
     message: Message,
   ) {
-    const spells = await SpellService.match(content);
+    const matched = await SpellService.match(content);
+
+    const allowedFormulas = await FormulaService.castable(
+      characterId,
+      matched.flatMap((spell) => (spell.formulaId ? [spell.formulaId] : [])),
+    );
+
+    const spells = matched.filter((spell) => !spell.formulaId || allowedFormulas.has(spell.formulaId));
 
     if (!spells.length) {
       return null;

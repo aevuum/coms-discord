@@ -210,7 +210,8 @@ export const SpellScalarFieldEnum = {
   gifFetchedAt: 'gifFetchedAt',
   isCustom: 'isCustom',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  formulaId: 'formulaId'
 } as const
 
 export type SpellScalarFieldEnum = (typeof SpellScalarFieldEnum)[keyof typeof SpellScalarFieldEnum]

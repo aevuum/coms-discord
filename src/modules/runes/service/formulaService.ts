@@ -10,6 +10,8 @@ import {
 import prisma from "../../../database/prisma.js";
 import { SpellCache } from "../../spells/cache/spellCache.js";
 import { SpellMatcher } from "../../spells/lib/spellMatcher.js";
+import { Storage } from "../../../lib/storage.js";
+import { Mana } from "../../spells/lib/mana.js";
 import { SpellService } from "../../spells/service/spellService.js";
 import { RUNE_MAX_MASTERY } from "../lib/runeCatalog.js";
 import { FORMULA_OUTCOMES, RuneRules } from "../lib/runeRules.js";
@@ -78,6 +80,98 @@ export class FormulaService {
     }
 
     return spell;
+  }
+
+  public static async syncSpell(formulaId: string) {
+    await SpellService.ensureCache();
+
+    const formula = await prisma.spellFormula.findUnique({
+      where: { id: formulaId },
+      include: { spell: true, rune: true, registeredSpell: true },
+    });
+
+    if (!formula) {
+      return null;
+    }
+
+    const registered = formula.registeredSpell;
+
+    if (formula.status !== RuneDesignStatus.APPROVED) {
+      if (registered) {
+        await prisma.spell.delete({ where: { id: registered.id } });
+        SpellCache.remove(registered.id);
+        await Promise.all(registered.gifPaths.map((path) => Storage.delete(path)));
+      }
+
+      return null;
+    }
+
+    const base = formula.spell;
+    const gifQuery =
+      base.gifQuery ?? base.incantations.find((incantation) => /^[a-z\s']+$/i.test(incantation)) ?? base.name;
+
+    const data = {
+      name: `${base.name} · ${formula.rune.name}`.slice(0, 80),
+      incantations: [formula.incantation],
+      description: formula.effect.slice(0, 1000),
+      difficulty: base.difficulty,
+      manaCost: base.manaCost ?? Mana.spellCost(base),
+      gifQuery,
+      isCustom: true,
+    };
+
+    const spell = await prisma.spell.upsert({
+      where: { formulaId: formula.id },
+      create: { ...data, formulaId: formula.id },
+      update: data,
+    });
+
+    SpellCache.update(spell);
+
+    return spell;
+  }
+
+  public static async syncAll() {
+    const formulas = await prisma.spellFormula.findMany({
+      where: {
+        OR: [
+          { status: RuneDesignStatus.APPROVED, registeredSpell: null },
+          { status: { not: RuneDesignStatus.APPROVED }, registeredSpell: { isNot: null } },
+        ],
+      },
+      select: { id: true },
+    });
+
+    for (const formula of formulas) {
+      await this.syncSpell(formula.id);
+    }
+
+    return formulas.length;
+  }
+
+  public static async castable(characterId: string, formulaIds: string[]) {
+    if (!formulaIds.length) {
+      return new Set<string>();
+    }
+
+    const formulas = await prisma.spellFormula.findMany({
+      where: { id: { in: formulaIds }, status: RuneDesignStatus.APPROVED },
+      select: { id: true, runeKey: true, minMastery: true },
+    });
+
+    const records = await prisma.characterRune.findMany({
+      where: { characterId, runeKey: { in: formulas.map((formula) => formula.runeKey) } },
+      select: { runeKey: true, mastery: true },
+    });
+
+    return new Set(
+      formulas
+        .filter((formula) => {
+          const record = records.find((entry) => entry.runeKey === formula.runeKey);
+          return record !== undefined && record.mastery >= formula.minMastery;
+        })
+        .map((formula) => formula.id),
+    );
   }
 
   public static async get(id: string) {
@@ -160,6 +254,8 @@ export class FormulaService {
       formulaId: formula.id,
     });
 
+    await this.syncSpell(updated.id);
+
     return updated;
   }
 
@@ -199,6 +295,8 @@ export class FormulaService {
       formulaId: formula.id,
     });
 
+    await this.syncSpell(updated.id);
+
     return updated;
   }
 
@@ -225,6 +323,8 @@ export class FormulaService {
       note: reason,
     });
 
+    await this.syncSpell(updated.id);
+
     return updated;
   }
 
@@ -245,6 +345,8 @@ export class FormulaService {
       runeKey: formula.runeKey,
       formulaId: formula.id,
     });
+
+    await this.syncSpell(updated.id);
 
     return updated;
   }
@@ -475,6 +577,7 @@ export class FormulaService {
     await SpellService.ensureCache();
 
     const clash = SpellCache.all().find((spell) =>
+      spell.formulaId !== formulaId &&
       spell.incantations.some((other) => SpellMatcher.normalize(other) === incantationKey),
     );
 

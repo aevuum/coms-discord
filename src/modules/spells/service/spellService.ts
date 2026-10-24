@@ -112,7 +112,7 @@ export class SpellService {
   }
 
   public static async update(spellId: string, input: SpellInput) {
-    const previous = await this.getSpell(spellId);
+    const previous = this.assertEditable(await this.getSpell(spellId));
 
     const data = await this.parseInput(input, previous);
 
@@ -136,7 +136,7 @@ export class SpellService {
   }
 
   public static async setDescription(spellId: string, input: string) {
-    await this.getSpell(spellId);
+    this.assertEditable(await this.getSpell(spellId));
 
     const description = input.trim();
 
@@ -152,13 +152,21 @@ export class SpellService {
   }
 
   public static async delete(spellId: string) {
-    const spell = await this.getSpell(spellId);
+    const spell = this.assertEditable(await this.getSpell(spellId));
 
     await SpellRepository.delete(spell.id);
 
     SpellCache.remove(spell.id);
 
     await Promise.all([spell.imagePath, ...spell.gifPaths].map((path) => Storage.delete(path)));
+
+    return spell;
+  }
+
+  private static assertEditable(spell: Spell) {
+    if (spell.formulaId) {
+      throw new SpellError("Это заклинание создано формулой рун. Меняйте его в /manage → Руны и артефакты → Формулы.");
+    }
 
     return spell;
   }

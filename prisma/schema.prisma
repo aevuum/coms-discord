@@ -188,7 +188,10 @@ model Spell {
   updatedAt DateTime @updatedAt
 
   casts SpellCast[]
-  formulas SpellFormula[]
+  formulas SpellFormula[] @relation("FormulaBase")
+
+  formulaId String?       @unique
+  formula   SpellFormula? @relation("FormulaSpell", fields: [formulaId], references: [id], onDelete: Cascade)
 }
 
 model SpellCast {
@@ -956,7 +959,9 @@ model SpellFormula {
   id String @id @default(cuid())
 
   spellId String
-  spell   Spell  @relation(fields: [spellId], references: [id], onDelete: Cascade)
+  spell   Spell  @relation("FormulaBase", fields: [spellId], references: [id], onDelete: Cascade)
+
+  registeredSpell Spell? @relation("FormulaSpell")
 
   runeKey String
   rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Cascade)
