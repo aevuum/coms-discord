@@ -10,7 +10,7 @@ import {
   type ContextMenuCommandInteraction,
 } from "discord.js";
 
-import { TupperMessageActions, TupperMessageError } from "../service/tupperMessageActions.js";
+import { TupperMessageError } from "../service/tupperMessageActions.js";
 
 export const TUPPER_EDIT_MENU = "Изменить сообщение туппера";
 export const TUPPER_EDIT_MODAL = "tupper_edit";
@@ -39,7 +39,9 @@ export class TupperEditCommand extends Command {
     const message = interaction.targetMessage;
 
     try {
-      await TupperMessageActions.assertOwner(message.id, interaction.user.id);
+      if (!message.webhookId) {
+        throw new TupperMessageError("Это не сообщение туппера.");
+      }
 
       const content = new TextInputBuilder()
         .setCustomId(TUPPER_EDIT_FIELD)
