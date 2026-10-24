@@ -53,16 +53,15 @@ export class RuneView {
 
   public static async runeInfo(discordId: string, characterId: string, runeKey: string) {
     const character = await RuneService.getOwnedCharacter(discordId, characterId);
-    const [rune, settings, mastery, requests] = await Promise.all([
+    const [rune, mastery, requests] = await Promise.all([
       RuneRegistry.get(runeKey),
-      RuneRegistry.getSettings(),
       RuneService.mastery(character.id, runeKey),
       RuneService.characterRequests(character.id),
     ]);
 
     const pending = requests.some((request) => request.runeKey === runeKey && request.status === RuneRequestStatus.PENDING);
 
-    return RuneContainer.runeInfo(character, rune, settings, mastery, pending);
+    return RuneContainer.runeInfo(character, rune, mastery, pending);
   }
 
   public static async formula(discordId: string, characterId: string, formulaId: string) {

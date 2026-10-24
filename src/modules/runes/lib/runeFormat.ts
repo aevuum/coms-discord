@@ -83,6 +83,10 @@ export class RuneFormat {
     ].filter((line): line is string => line !== null);
   }
 
+  public static playerCard(rune: Rune) {
+    return [`-# ${FUTHARK_LABELS[rune.futhark]}`, `> **Значение:** ${rune.meaning}`];
+  }
+
   public static risk(risk: number) {
     return `**${risk}%**`;
   }

@@ -20,7 +20,6 @@ import {
   RuneFuthark,
   type Character,
   type Rune,
-  type RuneSettings,
   type RuneStudyRequest,
 } from "../../../database/generated/prisma/client.js";
 
@@ -334,7 +333,6 @@ export class RuneContainer {
   public static runeInfo(
     character: Character,
     rune: Rune,
-    settings: RuneSettings,
     mastery: number | null,
     pending: boolean,
   ) {
@@ -342,7 +340,7 @@ export class RuneContainer {
 
     text(container, [
       `# ${rune.emoji} ${rune.name}`,
-      ...RuneFormat.runeCard(rune, settings),
+      ...RuneFormat.playerCard(rune),
       "",
       mastery !== null
         ? `**Владение ${character.rpName}:** ${RuneFormat.masteryBar(mastery)}\n-# ${RuneFormat.stage(mastery)}`
