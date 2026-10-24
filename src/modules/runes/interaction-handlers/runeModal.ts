@@ -14,7 +14,6 @@ import { RuneService } from "../service/runeService.js";
 const MODAL_ACTIONS = new Set<RuneAction>([
   RuneAction.StudyModal,
   RuneAction.ProposeModal,
-  RuneAction.AttemptModal,
 ]);
 
 export class RuneModalHandler extends InteractionHandler {
@@ -62,16 +61,7 @@ export class RuneModalHandler extends InteractionHandler {
         );
 
         notice = `Заявка на изучение руны ${rune.emoji} ${rune.name} отправлена кураторам.`;
-      } else if (result.action === RuneAction.AttemptModal) {
-        const { formula } = await FormulaService.submitAttempt(
-          userId,
-          characterId,
-          result.args[1],
-          field(RuneModalFields.PostUrl),
-          field(RuneModalFields.Note),
-        );
 
-        notice = `Попытка «${formula.incantation}» отправлена куратору. Итог появится здесь.`;
       } else {
         const formula = await FormulaService.propose(userId, characterId, {
           spellQuery: field(RuneModalFields.Spell),

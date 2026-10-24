@@ -7,8 +7,6 @@ export enum RuneAction {
   Study = "study",
   StudyModal = "study_modal",
   Formula = "formula",
-  Try = "try",
-  AttemptModal = "attempt_modal",
   Propose = "propose",
   ProposeModal = "propose_modal",
   Artifact = "artifact",

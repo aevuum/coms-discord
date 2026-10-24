@@ -15,7 +15,6 @@ import { RuneAudit } from "../service/runeAudit.js";
 const SELECT_ACTIONS = new Set<RuneAdminAction>([
   RuneAdminAction.Section,
   RuneAdminAction.Request,
-  RuneAdminAction.Attempt,
   RuneAdminAction.Formula,
   RuneAdminAction.Recipe,
   RuneAdminAction.Rune,
@@ -63,8 +62,6 @@ export class RuneAdminSelectHandler extends InteractionHandler {
         return RuneAdminViews.section(value as RuneAdminSection);
       case RuneAdminAction.Request:
         return RuneAdminViews.request(value);
-      case RuneAdminAction.Attempt:
-        return RuneAdminViews.attempt(value);
       case RuneAdminAction.Formula:
         return RuneAdminViews.formula(value);
       case RuneAdminAction.Recipe:

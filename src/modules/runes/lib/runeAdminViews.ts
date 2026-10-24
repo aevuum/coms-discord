@@ -18,23 +18,19 @@ const ALL_STATUSES = [
 
 export class RuneAdminViews {
   public static async root(notice: string | null = null) {
-    const [requests, attempts, formulas, recipes] = await Promise.all([
+    const [requests, formulas, recipes] = await Promise.all([
       RuneService.pendingRequests(),
-      FormulaService.pendingAttempts(),
       FormulaService.count(RuneDesignStatus.PENDING),
       ArtifactService.countRecipes(RuneDesignStatus.PENDING),
     ]);
 
-    return RuneAdminContainer.root({ requests: requests.length, attempts: attempts.length, formulas, recipes }, notice);
+    return RuneAdminContainer.root({ requests: requests.length, formulas, recipes }, notice);
   }
 
   public static async section(section: RuneAdminSection, notice: string | null = null) {
     switch (section) {
       case RuneAdminSection.Requests:
         return RuneAdminContainer.requests(await RuneService.pendingRequests(), notice);
-
-      case RuneAdminSection.Attempts:
-        return RuneAdminContainer.attempts(await FormulaService.pendingAttempts(), notice);
 
       case RuneAdminSection.Formulas:
         return RuneAdminContainer.formulas(await FormulaService.list(ALL_STATUSES), notice);
@@ -70,12 +66,6 @@ export class RuneAdminViews {
 
   public static async request(id: string) {
     return RuneAdminContainer.request(await RuneService.getRequest(id), await RuneRegistry.getSettings());
-  }
-
-  public static async attempt(id: string) {
-    const attempt = await FormulaService.getAttempt(id);
-
-    return RuneAdminContainer.attempt(attempt, await RuneService.mastery(attempt.characterId, attempt.formula!.runeKey));
   }
 
   public static async formula(id: string, notice: string | null = null) {

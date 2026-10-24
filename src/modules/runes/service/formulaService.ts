@@ -2,8 +2,6 @@ import {
   Prisma,
   RuneAuditAction,
   RuneDesignStatus,
-  RuneOperationKind,
-  RuneOperationStatus,
   RuneOutcome,
 } from "../../../database/generated/prisma/client.js";
 
@@ -27,14 +25,6 @@ const FORMULA_INCLUDE = {
 
 export type FormulaWithRelations = Prisma.SpellFormulaGetPayload<{ include: typeof FORMULA_INCLUDE }>;
 
-const ATTEMPT_INCLUDE = {
-  formula: { include: { spell: true, rune: true } },
-  character: { include: { user: true } },
-} satisfies Prisma.RuneOperationInclude;
-
-export type FormulaAttempt = Prisma.RuneOperationGetPayload<{ include: typeof ATTEMPT_INCLUDE }>;
-
-const POST_LINK = /^https:\/\/(ptb\.|canary\.)?discord(app)?\.com\/channels\/\d+\/\d+\/\d+$/;
 
 export type FormulaDraft = {
   spellQuery: string;
@@ -375,166 +365,6 @@ export class FormulaService {
         allowed: mastery >= formula.minMastery,
       };
     });
-  }
-
-  public static async submitAttempt(
-    discordId: string,
-    characterId: string,
-    formulaId: string,
-    postInput: string,
-    noteInput: string,
-  ) {
-    const character = await RuneService.getOwnedCharacter(discordId, characterId);
-    const { formula, risk } = await this.assertUsable(character.id, formulaId);
-
-    const postUrl = postInput.trim();
-
-    if (!POST_LINK.test(postUrl)) {
-      throw new RuneError("Укажите ссылку на RP-пост с применением формулы: ПКМ по сообщению → «Копировать ссылку на сообщение».");
-    }
-
-    const pending = await prisma.runeOperation.findFirst({
-      where: {
-        kind: RuneOperationKind.FORMULA_CAST,
-        status: RuneOperationStatus.PENDING,
-        characterId: character.id,
-        formulaId: formula.id,
-        postUrl,
-      },
-    });
-
-    if (pending) {
-      throw new RuneError("Этот пост уже отправлен куратору и ждёт решения.");
-    }
-
-    const attempt = await prisma.runeOperation.create({
-      data: {
-        kind: RuneOperationKind.FORMULA_CAST,
-        characterId: character.id,
-        actorId: discordId,
-        formulaId: formula.id,
-        risk,
-        postUrl,
-        note: noteInput.trim().slice(0, 500) || null,
-      },
-    });
-
-    await RuneAudit.write({
-      action: RuneAuditAction.FORMULA_ATTEMPTED,
-      actorId: discordId,
-      characterId: character.id,
-      runeKey: formula.runeKey,
-      formulaId: formula.id,
-      note: postUrl,
-    });
-
-    return { attempt, formula };
-  }
-
-  public static pendingAttempts() {
-    return prisma.runeOperation.findMany({
-      where: { kind: RuneOperationKind.FORMULA_CAST, status: RuneOperationStatus.PENDING },
-      orderBy: { createdAt: "asc" },
-      take: 25,
-      include: ATTEMPT_INCLUDE,
-    });
-  }
-
-  public static characterAttempts(characterId: string) {
-    return prisma.runeOperation.findMany({
-      where: { kind: RuneOperationKind.FORMULA_CAST, characterId, status: { not: RuneOperationStatus.CANCELLED } },
-      orderBy: { createdAt: "desc" },
-      take: 10,
-      include: ATTEMPT_INCLUDE,
-    });
-  }
-
-  public static async getAttempt(id: string) {
-    const attempt = await prisma.runeOperation.findFirst({
-      where: { id, kind: RuneOperationKind.FORMULA_CAST },
-      include: ATTEMPT_INCLUDE,
-    });
-
-    if (!attempt?.formula) {
-      throw new RuneError("Попытка не найдена.");
-    }
-
-    return attempt;
-  }
-
-  public static async reviewAttempt(id: string, reviewerId: string, success: boolean, verdictInput: string) {
-    const verdict = verdictInput.trim();
-
-    if (verdict.length < 3) {
-      throw new RuneError("Опишите, что получилось в итоге.");
-    }
-
-    return prisma.$transaction(async (tx) => {
-      const claimed = await tx.runeOperation.updateMany({
-        where: { id, kind: RuneOperationKind.FORMULA_CAST, status: RuneOperationStatus.PENDING },
-        data: {
-          status: RuneOperationStatus.DONE,
-          success,
-          reviewerId,
-          verdict: verdict.slice(0, 1500),
-          resolvedAt: new Date(),
-        },
-      });
-
-      if (!claimed.count) {
-        throw new RuneError("Эту попытку уже рассмотрели.");
-      }
-
-      const attempt = await tx.runeOperation.findUniqueOrThrow({ where: { id }, include: ATTEMPT_INCLUDE });
-
-      await RuneAudit.write(
-        {
-          action: RuneAuditAction.FORMULA_REVIEWED,
-          actorId: reviewerId,
-          characterId: attempt.characterId,
-          runeKey: attempt.formula?.runeKey,
-          formulaId: attempt.formulaId,
-          note: `${success ? "получилось" : "не получилось"}: ${verdict}`,
-        },
-        tx,
-      );
-
-      return attempt;
-    });
-  }
-
-  private static async assertUsable(characterId: string, formulaId: string, client: Prisma.TransactionClient | typeof prisma = prisma) {
-    const formula = await client.spellFormula.findUnique({ where: { id: formulaId }, include: FORMULA_INCLUDE });
-
-    if (!formula) {
-      throw new RuneError("Формула не найдена.");
-    }
-
-    if (formula.status !== RuneDesignStatus.APPROVED) {
-      throw new RuneError("Эта формула не утверждена или отключена и не может использоваться.");
-    }
-
-    const record = await client.characterRune.findUnique({
-      where: { characterId_runeKey: { characterId, runeKey: formula.runeKey } },
-    });
-
-    if (!record) {
-      throw new RuneError(`Руна ${formula.rune.name} не изучена персонажем.`);
-    }
-
-    if (record.mastery < formula.minMastery) {
-      throw new RuneError(
-        `Для формулы нужно владение руной ${formula.rune.name} не ниже ${formula.minMastery}, сейчас ${record.mastery}.`,
-      );
-    }
-
-    const settings = await RuneRegistry.getSettings();
-    const risk = RuneRules.risk(
-      { baseRisk: formula.baseRisk, complexity: formula.complexity, mastery: record.mastery },
-      settings,
-    );
-
-    return { formula, risk, mastery: record.mastery };
   }
 
   private static async store(draft: FormulaDraft, authorId: string, status: RuneDesignStatus, characterId: string | null) {

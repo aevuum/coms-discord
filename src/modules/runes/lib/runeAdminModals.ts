@@ -84,21 +84,6 @@ export class RuneAdminModals {
     );
   }
 
-  public static attemptReview(attemptId: string, success: boolean) {
-    return modal(
-      RuneAdminAction.AttemptReviewModal,
-      success ? "Заклинание получилось" : "Заклинание не получилось",
-      attemptId,
-      success ? "1" : "0",
-    ).addLabelComponents(
-      label(
-        "Что произошло",
-        input(RuneAdminFields.Verdict, { style: TextInputStyle.Paragraph, required: true, max: 1500 }),
-        success ? "Опишите, как проявился эффект" : "Опишите, что пошло не так и чем это обернулось",
-      ),
-    );
-  }
-
   public static reason(action: RuneAdminAction, id: string, title: string) {
     return modal(action, title, id).addLabelComponents(
       label("Причина", input(RuneAdminFields.Reason, { style: TextInputStyle.Paragraph, required: true, max: 500 }), "Игрок увидит её в /rune"),

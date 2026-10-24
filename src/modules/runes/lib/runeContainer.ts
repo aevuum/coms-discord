@@ -18,7 +18,6 @@ import {
 
 import {
   RuneFuthark,
-  RuneOperationStatus,
   type Artifact,
   type ArtifactMaterial,
   type ArtifactRune,
@@ -31,7 +30,7 @@ import {
 import { Storage } from "../../../lib/storage.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import type { CraftPreview, RecipeWithRelations } from "../service/artifactService.js";
-import type { AvailableFormula, FormulaAttempt, FormulaWithRelations } from "../service/formulaService.js";
+import type { AvailableFormula, FormulaWithRelations } from "../service/formulaService.js";
 import type { LearnedRune } from "../service/runeService.js";
 import { FUTHARK_DESCRIPTIONS, FUTHARK_LABELS, RUNE_MAX_MASTERY } from "./runeCatalog.js";
 import { RuneAction, RuneCustomIds, RuneModalFields, RuneTab } from "./runeCustomIds.js";
@@ -68,7 +67,6 @@ export type RuneTabData = {
   recipes: { recipe: RecipeWithRelations; learnedAll: boolean }[];
   requests: (RuneStudyRequest & { rune: Rune })[];
   proposals: FormulaWithRelations[];
-  attempts: FormulaAttempt[];
 };
 
 const text = (container: ContainerBuilder, lines: (string | null | false)[]) =>
@@ -285,7 +283,7 @@ export class RuneContainer {
             )
             .join("\n")
         : `${RUNE_ARROW} Для изученных рун пока нет утверждённых формул.`,
-      "-# Формула — утверждённое сочетание руны и базового заклинания со своим прононсом. Новую формулу можно предложить кураторам.",
+      "-# Формула — утверждённое сочетание руны и базового заклинания. Её прононс работает через туппер, если владение руной не ниже требуемого. Новую формулу можно предложить кураторам.",
     ]);
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -394,23 +392,6 @@ export class RuneContainer {
             )
             .join("\n")
         : `${RUNE_ARROW} Формул пока не предлагали.`,
-      "### Попытки формул",
-      data.attempts.length
-        ? data.attempts
-            .map((attempt) => {
-              const status =
-                attempt.status === RuneOperationStatus.PENDING
-                  ? "<:dot_yellow:1562262864939589673> ждёт куратора"
-                  : attempt.success
-                    ? `${RUNE_SUCCESS} получилось`
-                    : `${RUNE_ERROR} не получилось`;
-
-              const verdict = attempt.verdict ? `\n> ${attempt.verdict.replace(/\n/g, "\n> ")}` : "";
-
-              return `**${attempt.formula?.incantation ?? "Формула удалена"}** · ${status}${verdict}`;
-            })
-            .join("\n")
-        : `${RUNE_ARROW} Формулы пока не применялись.`,
     ]);
   }
 
@@ -560,51 +541,15 @@ export class RuneContainer {
       `**Сложность для вашего владения:** ${RuneFormat.risk(entry.risk)}`,
       `**Возможная неудача:** ${OUTCOME_LABELS[formula.failureOutcome]}`,
       entry.allowed ? null : `${RUNE_ERROR} Недостаточно владения руной ${formula.rune.name}.`,
-      "-# Чтобы применить формулу, напишите RP-пост и отправьте его куратору: он решит, получилось ли заклинание, и опишет итог.",
+      entry.allowed
+        ? "-# Произнесите прононс через туппер — заклинание сработает как обычное и потратит ману."
+        : "-# Пока владение ниже требуемого, прононс через туппер не сработает.",
       `-# ${RUNE_PAD}`,
     ]);
 
-    container.addActionRowComponents(
-      new ActionRowBuilder<ButtonBuilder>().addComponents(
-        new ButtonBuilder()
-          .setCustomId(RuneCustomIds.build(RuneAction.Try, characterId, formula.id))
-          .setLabel("Отправить попытку куратору")
-          .setEmoji("<:wand:1562520778828677280>")
-          .setStyle(ButtonStyle.Primary)
-          .setDisabled(!entry.allowed),
-        back(characterId, RuneTab.Formulas),
-      ),
-    );
+    container.addActionRowComponents(new ActionRowBuilder<ButtonBuilder>().addComponents(back(characterId, RuneTab.Formulas)));
 
     return container;
-  }
-
-  public static attemptModal(characterId: string, formula: FormulaWithRelations) {
-    return new ModalBuilder()
-      .setCustomId(RuneCustomIds.build(RuneAction.AttemptModal, characterId, formula.id))
-      .setTitle(`Попытка · ${formula.incantation}`.slice(0, 45))
-      .addLabelComponents(
-        new LabelBuilder()
-          .setLabel("Ссылка на RP-пост")
-          .setDescription("Пост, где персонаж применяет формулу")
-          .setTextInputComponent(
-            new TextInputBuilder()
-              .setCustomId(RuneModalFields.PostUrl)
-              .setStyle(TextInputStyle.Short)
-              .setRequired(true)
-              .setMaxLength(200)
-              .setPlaceholder("https://discord.com/channels/…"),
-          ),
-        new LabelBuilder()
-          .setLabel("Комментарий куратору")
-          .setTextInputComponent(
-            new TextInputBuilder()
-              .setCustomId(RuneModalFields.Note)
-              .setStyle(TextInputStyle.Paragraph)
-              .setRequired(false)
-              .setMaxLength(500),
-          ),
-      );
   }
 
   public static craftPreview(
