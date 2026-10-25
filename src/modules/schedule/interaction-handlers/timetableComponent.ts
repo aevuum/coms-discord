@@ -38,7 +38,7 @@ export class TimetableComponentHandler extends InteractionHandler {
     try {
       const ephemeral = interaction.message.flags.has(MessageFlags.Ephemeral);
       const own = ephemeral || interaction.message.interactionMetadata?.user.id === interaction.user.id;
-      const fresh = !own || result.args[0] === "self";
+      const fresh = !own;
 
       if (fresh) {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -55,7 +55,7 @@ export class TimetableComponentHandler extends InteractionHandler {
       const [characterId, offset] =
         result.action === TimetableAction.Character && interaction.isStringSelectMenu()
           ? [own ? interaction.values[0] : null, Number(result.args[0])]
-          : [own && result.args[0] !== "self" ? result.args[0] : null, own ? Number(result.args[1]) : 0];
+          : [own ? result.args[0] : null, own ? Number(result.args[1]) : 0];
 
       const view = await TimetableView.open(interaction.user.id, subject.guildId, characterId, offset);
 

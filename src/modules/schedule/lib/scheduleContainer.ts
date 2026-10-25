@@ -36,7 +36,7 @@ import {
 } from "./lessonCard.js";
 import { MoscowTime } from "./moscowTime.js";
 import { TIMETABLE_FILE } from "./timetableCard.js";
-import { MAX_WEEK_OFFSET, TimetableAction, TimetableView } from "./timetableView.js";
+import { MAX_WEEK_OFFSET } from "./timetableView.js";
 import { ScheduleAction, ScheduleCustomIds, ScheduleFields } from "./scheduleCustomIds.js";
 
 const EDIT = "<:12784editor:1518587261707616407>";
@@ -114,11 +114,6 @@ export class ScheduleContainer {
           .setLabel("Новое занятие")
           .setEmoji(ADD)
           .setStyle(ButtonStyle.Primary),
-        new ButtonBuilder()
-          .setCustomId(TimetableView.customId(TimetableAction.Week, "self", 0))
-          .setLabel("Как ученик")
-          .setEmoji(SCHEDULE_HEADER)
-          .setStyle(ButtonStyle.Secondary),
       ),
       new ActionRowBuilder<ButtonBuilder>().addComponents(
         new ButtonBuilder()

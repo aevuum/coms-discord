@@ -3,6 +3,7 @@ import { AttachmentBuilder, type BaseInteraction, type GuildMember } from "disco
 import { CharacterFaculty, LessonStatus } from "../../../database/generated/prisma/client.js";
 
 import { LessonRepository } from "../repositories/lessonRepository.js";
+import { ScheduleRepository } from "../repositories/scheduleRepository.js";
 import { LessonService } from "../service/lessonService.js";
 import { ScheduleContainer } from "./scheduleContainer.js";
 import { TIMETABLE_FILE, TimetableCard } from "./timetableCard.js";
@@ -11,7 +12,15 @@ import { MAX_WEEK_OFFSET, WEEK_MS } from "./timetableView.js";
 const HISTORY_DAYS = 30;
 
 export class ScheduleView {
-  public static teacherName(interaction: BaseInteraction) {
+  public static async teacherName(interaction: BaseInteraction) {
+    const characters = await ScheduleRepository.ownCharacters(interaction.user.id);
+    const adults = characters.filter((character) => character.faculty === CharacterFaculty.ADULT);
+    const professor = adults.find((character) => character.specialRole) ?? adults[0] ?? characters[0];
+
+    if (professor) {
+      return professor.rpName;
+    }
+
     const member = interaction.member as GuildMember | null;
 
     return member?.displayName ?? interaction.user.displayName;
@@ -31,7 +40,7 @@ export class ScheduleView {
     const image = await TimetableCard.render({
       faculty: CharacterFaculty.ADULT,
       title: "Преподаватель",
-      ownerName: this.teacherName(interaction),
+      ownerName: await this.teacherName(interaction),
       weekStart,
       legend: "teacher",
       lessons: weekLessons.map((lesson) => ({
