@@ -50,7 +50,7 @@ export class ScheduleAdminContainer {
 
     text(container, [
       `# ${SCHEDULE_HEADER} Расписание`,
-      `-# Предметов: ${subjects} · заявки: ${settings?.reviewChannelId ? `<#${settings.reviewChannelId}>` : "только здесь"} · напоминание за ${settings?.reminderMinutes ?? 15} мин.`,
+      `-# Предметов: ${subjects} · заявки: ${settings?.reviewChannelId ? `<#${settings.reviewChannelId}>` : "только здесь"} · табель: ${settings?.gradesChannelId ? `<#${settings.gradesChannelId}>` : "не публикуется"} · напоминание за ${settings?.reminderMinutes ?? 15} мин.`,
       notice ? `${SUCCESS} ${notice}` : null,
       "",
       "### Ждут утверждения",
@@ -209,15 +209,15 @@ export class ScheduleAdminContainer {
   }
 
   public static settingsModal(settings: ScheduleSettings | null) {
-    const channel = new ChannelSelectMenuBuilder()
-      .setCustomId(ScheduleFields.ReviewChannel)
-      .setChannelTypes(ChannelType.GuildText)
-      .setPlaceholder("Канал для заявок на занятия")
-      .setRequired(false);
+    const channelSelect = (id: string, placeholder: string, current: string | null | undefined) => {
+      const select = new ChannelSelectMenuBuilder()
+        .setCustomId(id)
+        .setChannelTypes(ChannelType.GuildText)
+        .setPlaceholder(placeholder)
+        .setRequired(false);
 
-    if (settings?.reviewChannelId) {
-      channel.setDefaultChannels(settings.reviewChannelId);
-    }
+      return current ? select.setDefaultChannels(current) : select;
+    };
 
     return new ModalBuilder()
       .setCustomId(ScheduleCustomIds.admin(ScheduleAdminAction.SettingsModal))
@@ -226,7 +226,11 @@ export class ScheduleAdminContainer {
         new LabelBuilder()
           .setLabel("Канал заявок")
           .setDescription("Сюда бот присылает новые занятия с кнопками утверждения. Пусто — только в /manage")
-          .setChannelSelectMenuComponent(channel),
+          .setChannelSelectMenuComponent(channelSelect(ScheduleFields.ReviewChannel, "Канал для заявок на занятия", settings?.reviewChannelId)),
+        new LabelBuilder()
+          .setLabel("Канал табеля")
+          .setDescription("Бот держит здесь общий табель всех учеников. Пусто — не публиковать")
+          .setChannelSelectMenuComponent(channelSelect(ScheduleFields.GradesChannel, "Канал для табеля успеваемости", settings?.gradesChannelId)),
         new LabelBuilder()
           .setLabel("Напоминание, минут до начала")
           .setTextInputComponent(

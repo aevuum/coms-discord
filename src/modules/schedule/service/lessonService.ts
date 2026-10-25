@@ -20,6 +20,7 @@ import {
   type LessonDraft,
   type LessonWithSubject,
 } from "../types/schedule.js";
+import { GradeBoardService } from "./gradeBoardService.js";
 import { LessonPublisher } from "./lessonPublisher.js";
 
 const CHANGED = "Занятие уже изменилось — откройте его заново.";
@@ -279,6 +280,8 @@ export class LessonService {
       lesson.id,
       absentCharacterIds.filter((characterId) => enrolled.has(characterId)),
     );
+
+    GradeBoardService.scheduleRefresh(lesson.guildId);
   }
 
   private static async afterReview(client: Client, lesson: LessonWithSubject) {

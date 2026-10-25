@@ -38,6 +38,8 @@ export type ScheduleSettingsMinAggregateOutputType = {
   guildId: string | null
   reviewChannelId: string | null
   reminderMinutes: number | null
+  gradesChannelId: string | null
+  gradesMessageId: string | null
   updatedAt: Date | null
 }
 
@@ -45,6 +47,8 @@ export type ScheduleSettingsMaxAggregateOutputType = {
   guildId: string | null
   reviewChannelId: string | null
   reminderMinutes: number | null
+  gradesChannelId: string | null
+  gradesMessageId: string | null
   updatedAt: Date | null
 }
 
@@ -52,6 +56,8 @@ export type ScheduleSettingsCountAggregateOutputType = {
   guildId: number
   reviewChannelId: number
   reminderMinutes: number
+  gradesChannelId: number
+  gradesMessageId: number
   updatedAt: number
   _all: number
 }
@@ -69,6 +75,8 @@ export type ScheduleSettingsMinAggregateInputType = {
   guildId?: true
   reviewChannelId?: true
   reminderMinutes?: true
+  gradesChannelId?: true
+  gradesMessageId?: true
   updatedAt?: true
 }
 
@@ -76,6 +84,8 @@ export type ScheduleSettingsMaxAggregateInputType = {
   guildId?: true
   reviewChannelId?: true
   reminderMinutes?: true
+  gradesChannelId?: true
+  gradesMessageId?: true
   updatedAt?: true
 }
 
@@ -83,6 +93,8 @@ export type ScheduleSettingsCountAggregateInputType = {
   guildId?: true
   reviewChannelId?: true
   reminderMinutes?: true
+  gradesChannelId?: true
+  gradesMessageId?: true
   updatedAt?: true
   _all?: true
 }
@@ -177,6 +189,8 @@ export type ScheduleSettingsGroupByOutputType = {
   guildId: string
   reviewChannelId: string | null
   reminderMinutes: number
+  gradesChannelId: string | null
+  gradesMessageId: string | null
   updatedAt: Date
   _count: ScheduleSettingsCountAggregateOutputType | null
   _avg: ScheduleSettingsAvgAggregateOutputType | null
@@ -207,6 +221,8 @@ export type ScheduleSettingsWhereInput = {
   guildId?: Prisma.StringFilter<"ScheduleSettings"> | string
   reviewChannelId?: Prisma.StringNullableFilter<"ScheduleSettings"> | string | null
   reminderMinutes?: Prisma.IntFilter<"ScheduleSettings"> | number
+  gradesChannelId?: Prisma.StringNullableFilter<"ScheduleSettings"> | string | null
+  gradesMessageId?: Prisma.StringNullableFilter<"ScheduleSettings"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"ScheduleSettings"> | Date | string
 }
 
@@ -214,6 +230,8 @@ export type ScheduleSettingsOrderByWithRelationInput = {
   guildId?: Prisma.SortOrder
   reviewChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
   reminderMinutes?: Prisma.SortOrder
+  gradesChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  gradesMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -224,6 +242,8 @@ export type ScheduleSettingsWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ScheduleSettingsWhereInput | Prisma.ScheduleSettingsWhereInput[]
   reviewChannelId?: Prisma.StringNullableFilter<"ScheduleSettings"> | string | null
   reminderMinutes?: Prisma.IntFilter<"ScheduleSettings"> | number
+  gradesChannelId?: Prisma.StringNullableFilter<"ScheduleSettings"> | string | null
+  gradesMessageId?: Prisma.StringNullableFilter<"ScheduleSettings"> | string | null
   updatedAt?: Prisma.DateTimeFilter<"ScheduleSettings"> | Date | string
 }, "guildId">
 
@@ -231,6 +251,8 @@ export type ScheduleSettingsOrderByWithAggregationInput = {
   guildId?: Prisma.SortOrder
   reviewChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
   reminderMinutes?: Prisma.SortOrder
+  gradesChannelId?: Prisma.SortOrderInput | Prisma.SortOrder
+  gradesMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ScheduleSettingsCountOrderByAggregateInput
   _avg?: Prisma.ScheduleSettingsAvgOrderByAggregateInput
@@ -246,6 +268,8 @@ export type ScheduleSettingsScalarWhereWithAggregatesInput = {
   guildId?: Prisma.StringWithAggregatesFilter<"ScheduleSettings"> | string
   reviewChannelId?: Prisma.StringNullableWithAggregatesFilter<"ScheduleSettings"> | string | null
   reminderMinutes?: Prisma.IntWithAggregatesFilter<"ScheduleSettings"> | number
+  gradesChannelId?: Prisma.StringNullableWithAggregatesFilter<"ScheduleSettings"> | string | null
+  gradesMessageId?: Prisma.StringNullableWithAggregatesFilter<"ScheduleSettings"> | string | null
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ScheduleSettings"> | Date | string
 }
 
@@ -253,6 +277,8 @@ export type ScheduleSettingsCreateInput = {
   guildId: string
   reviewChannelId?: string | null
   reminderMinutes?: number
+  gradesChannelId?: string | null
+  gradesMessageId?: string | null
   updatedAt?: Date | string
 }
 
@@ -260,6 +286,8 @@ export type ScheduleSettingsUncheckedCreateInput = {
   guildId: string
   reviewChannelId?: string | null
   reminderMinutes?: number
+  gradesChannelId?: string | null
+  gradesMessageId?: string | null
   updatedAt?: Date | string
 }
 
@@ -267,6 +295,8 @@ export type ScheduleSettingsUpdateInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminderMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  gradesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradesMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -274,6 +304,8 @@ export type ScheduleSettingsUncheckedUpdateInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminderMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  gradesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradesMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -281,6 +313,8 @@ export type ScheduleSettingsCreateManyInput = {
   guildId: string
   reviewChannelId?: string | null
   reminderMinutes?: number
+  gradesChannelId?: string | null
+  gradesMessageId?: string | null
   updatedAt?: Date | string
 }
 
@@ -288,6 +322,8 @@ export type ScheduleSettingsUpdateManyMutationInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminderMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  gradesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradesMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -295,6 +331,8 @@ export type ScheduleSettingsUncheckedUpdateManyInput = {
   guildId?: Prisma.StringFieldUpdateOperationsInput | string
   reviewChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reminderMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  gradesChannelId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gradesMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -302,6 +340,8 @@ export type ScheduleSettingsCountOrderByAggregateInput = {
   guildId?: Prisma.SortOrder
   reviewChannelId?: Prisma.SortOrder
   reminderMinutes?: Prisma.SortOrder
+  gradesChannelId?: Prisma.SortOrder
+  gradesMessageId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -313,6 +353,8 @@ export type ScheduleSettingsMaxOrderByAggregateInput = {
   guildId?: Prisma.SortOrder
   reviewChannelId?: Prisma.SortOrder
   reminderMinutes?: Prisma.SortOrder
+  gradesChannelId?: Prisma.SortOrder
+  gradesMessageId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -320,6 +362,8 @@ export type ScheduleSettingsMinOrderByAggregateInput = {
   guildId?: Prisma.SortOrder
   reviewChannelId?: Prisma.SortOrder
   reminderMinutes?: Prisma.SortOrder
+  gradesChannelId?: Prisma.SortOrder
+  gradesMessageId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -333,6 +377,8 @@ export type ScheduleSettingsSelect<ExtArgs extends runtime.Types.Extensions.Inte
   guildId?: boolean
   reviewChannelId?: boolean
   reminderMinutes?: boolean
+  gradesChannelId?: boolean
+  gradesMessageId?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["scheduleSettings"]>
 
@@ -340,6 +386,8 @@ export type ScheduleSettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   guildId?: boolean
   reviewChannelId?: boolean
   reminderMinutes?: boolean
+  gradesChannelId?: boolean
+  gradesMessageId?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["scheduleSettings"]>
 
@@ -347,6 +395,8 @@ export type ScheduleSettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   guildId?: boolean
   reviewChannelId?: boolean
   reminderMinutes?: boolean
+  gradesChannelId?: boolean
+  gradesMessageId?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["scheduleSettings"]>
 
@@ -354,10 +404,12 @@ export type ScheduleSettingsSelectScalar = {
   guildId?: boolean
   reviewChannelId?: boolean
   reminderMinutes?: boolean
+  gradesChannelId?: boolean
+  gradesMessageId?: boolean
   updatedAt?: boolean
 }
 
-export type ScheduleSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"guildId" | "reviewChannelId" | "reminderMinutes" | "updatedAt", ExtArgs["result"]["scheduleSettings"]>
+export type ScheduleSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"guildId" | "reviewChannelId" | "reminderMinutes" | "gradesChannelId" | "gradesMessageId" | "updatedAt", ExtArgs["result"]["scheduleSettings"]>
 
 export type $ScheduleSettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ScheduleSettings"
@@ -366,6 +418,8 @@ export type $ScheduleSettingsPayload<ExtArgs extends runtime.Types.Extensions.In
     guildId: string
     reviewChannelId: string | null
     reminderMinutes: number
+    gradesChannelId: string | null
+    gradesMessageId: string | null
     updatedAt: Date
   }, ExtArgs["result"]["scheduleSettings"]>
   composites: {}
@@ -793,6 +847,8 @@ export interface ScheduleSettingsFieldRefs {
   readonly guildId: Prisma.FieldRef<"ScheduleSettings", 'String'>
   readonly reviewChannelId: Prisma.FieldRef<"ScheduleSettings", 'String'>
   readonly reminderMinutes: Prisma.FieldRef<"ScheduleSettings", 'Int'>
+  readonly gradesChannelId: Prisma.FieldRef<"ScheduleSettings", 'String'>
+  readonly gradesMessageId: Prisma.FieldRef<"ScheduleSettings", 'String'>
   readonly updatedAt: Prisma.FieldRef<"ScheduleSettings", 'DateTime'>
 }
     

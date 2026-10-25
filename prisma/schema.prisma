@@ -1372,6 +1372,8 @@ model ScheduleSettings {
 
   reviewChannelId String?
   reminderMinutes Int     @default(15)
+  gradesChannelId String?
+  gradesMessageId String?
 
   updatedAt DateTime @updatedAt
 }

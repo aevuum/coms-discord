@@ -1,4 +1,6 @@
 import {
+  CharacterFaculty,
+  CharacterStatus,
   LessonStatus,
   type GradeWorkType,
 } from "../../../database/generated/prisma/client.js";
@@ -29,6 +31,31 @@ export class GradeRepository {
       where: { characterId, gradedAt: { gte: from, lt: to } },
       orderBy: { gradedAt: "asc" },
       include: { subject: true },
+    });
+  }
+
+  public static students() {
+    return prisma.character.findMany({
+      where: { status: CharacterStatus.ALIVE, faculty: { not: CharacterFaculty.ADULT } },
+      orderBy: [{ faculty: "asc" }, { rpName: "asc" }],
+      select: { id: true, rpName: true, faculty: true },
+    });
+  }
+
+  public static monthGrades(characterIds: string[], from: Date, to: Date) {
+    return prisma.characterGrade.findMany({
+      where: { characterId: { in: characterIds }, gradedAt: { gte: from, lt: to } },
+      select: { characterId: true, value: true, subject: true },
+    });
+  }
+
+  public static monthAttendance(characterIds: string[], from: Date, to: Date) {
+    return prisma.lessonEnrollment.findMany({
+      where: {
+        characterId: { in: characterIds },
+        lesson: { status: LessonStatus.APPROVED, startsAt: { gte: from, lt: to } },
+      },
+      select: { characterId: true, absent: true, lesson: { select: { startsAt: true } } },
     });
   }
 

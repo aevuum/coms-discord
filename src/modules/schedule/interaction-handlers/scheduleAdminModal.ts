@@ -9,6 +9,7 @@ import { LessonCard } from "../lib/lessonCard.js";
 import { ScheduleAdminViews } from "../lib/scheduleAdminViews.js";
 import { REVIEW_FLAG, ScheduleAdminAction, ScheduleCustomIds, ScheduleFields } from "../lib/scheduleCustomIds.js";
 import { ScheduleResponder } from "../lib/scheduleResponder.js";
+import { GradeBoardService } from "../service/gradeBoardService.js";
 import { LessonService } from "../service/lessonService.js";
 import { SubjectService } from "../service/subjectService.js";
 
@@ -86,9 +87,10 @@ export class ScheduleAdminModalHandler extends InteractionHandler {
       }
 
       default: {
-        const channel = interaction.fields.getSelectedChannels(ScheduleFields.ReviewChannel)?.first() ?? null;
+        const channel = (key: string) => interaction.fields.getSelectedChannels(key)?.first()?.id ?? null;
 
-        await SubjectService.saveSettings(guildId, channel?.id ?? null, field(ScheduleFields.ReminderMinutes));
+        await SubjectService.saveSettings(guildId, channel(ScheduleFields.ReviewChannel), field(ScheduleFields.ReminderMinutes));
+        await GradeBoardService.setChannel(interaction.client, guildId, channel(ScheduleFields.GradesChannel));
 
         return ScheduleAdminViews.root(guildId, "Настройки сохранены.");
       }

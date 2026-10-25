@@ -5751,6 +5751,8 @@ export const ScheduleSettingsScalarFieldEnum = {
   guildId: 'guildId',
   reviewChannelId: 'reviewChannelId',
   reminderMinutes: 'reminderMinutes',
+  gradesChannelId: 'gradesChannelId',
+  gradesMessageId: 'gradesMessageId',
   updatedAt: 'updatedAt'
 } as const
 

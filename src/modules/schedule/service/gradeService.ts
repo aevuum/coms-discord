@@ -13,6 +13,7 @@ import {
   ScheduleError,
   type GradeDraft,
 } from "../types/schedule.js";
+import { GradeBoardService } from "./gradeBoardService.js";
 import { LessonService } from "./lessonService.js";
 
 export type SubjectReport = {
@@ -69,6 +70,8 @@ export class GradeService {
       value,
     });
 
+    GradeBoardService.scheduleRefresh(lesson.guildId);
+
     return { name: enrollment.character.rpName, title, value };
   }
 
@@ -78,6 +81,8 @@ export class GradeService {
     if (!(await GradeRepository.deleteFromLesson(gradeId, lesson.id))) {
       throw new ScheduleError("Оценка уже удалена.");
     }
+
+    GradeBoardService.scheduleRefresh(lesson.guildId);
   }
 
   public static async assertCanView(interaction: BaseInteraction, ownerId: string) {

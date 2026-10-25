@@ -31,7 +31,10 @@ export class ScheduleRepository {
     return prisma.scheduleSettings.findMany();
   }
 
-  public static saveSettings(guildId: string, data: { reviewChannelId: string | null; reminderMinutes: number }) {
+  public static saveSettings(
+    guildId: string,
+    data: { reviewChannelId?: string | null; reminderMinutes?: number; gradesChannelId?: string | null; gradesMessageId?: string | null },
+  ) {
     return prisma.scheduleSettings.upsert({
       where: { guildId },
       create: { guildId, ...data },

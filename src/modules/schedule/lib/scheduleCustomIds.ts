@@ -59,6 +59,7 @@ export const ScheduleFields = {
   Emoji: "emoji",
   Order: "order",
   ReviewChannel: "review_channel",
+  GradesChannel: "grades_channel",
   ReminderMinutes: "reminder_minutes",
 } as const;
 
