@@ -67,6 +67,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Schedule,
+    key: "manage.schedule",
+    label: "Расписание",
+    emoji: "<:scroll:1562262856039145553>",
+    description: "Утверждение занятий преподавателей, предметы и напоминания",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Applications,
     key: "manage.applications",
     label: "Набор в команду",

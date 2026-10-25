@@ -20,6 +20,7 @@ import { PingRoleAdminViews } from "../../roles/lib/pingRoleAdminViews.js";
 import { ReportAdminContainer } from "../../reports/lib/reportAdminContainer.js";
 import { ReportReviewers } from "../../reports/service/reportReviewers.js";
 import { RuneAdminViews } from "../../runes/lib/runeAdminViews.js";
+import { ScheduleAdminViews } from "../../schedule/lib/scheduleAdminViews.js";
 import { ManageContainer } from "../lib/manageContainer.js";
 import { ManageError } from "../lib/manageResponder.js";
 import { getManageSection } from "../lib/manageSections.js";
@@ -84,6 +85,9 @@ export class ManageService {
 
       case ManageSectionId.Runes:
         return RuneAdminViews.root();
+
+      case ManageSectionId.Schedule:
+        return ScheduleAdminViews.root(subject.guildId as string);
 
       case ManageSectionId.Applications:
         return ApplicationAdminViews.root(interaction.client);

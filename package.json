@@ -9,6 +9,7 @@
     "start": "node dist/client.js",
     "build": "tsc",
     "prisma:generate": "prisma generate",
+    "test": "tsx --test tests/**/*.test.ts",
     "add-balance": "tsx src/modules/economy/scripts/addBalance.ts"
   },
   "keywords": [],

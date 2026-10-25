@@ -14,6 +14,7 @@ export enum ManageSectionId {
   PingRoles = "pingroles",
   Permissions = "permissions",
   Runes = "runes",
+  Schedule = "schedule",
 }
 
 export type ManageSection = {

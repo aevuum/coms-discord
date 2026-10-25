@@ -27,6 +27,7 @@ const USER_ERRORS = new Set([
   "SuggestionError",
   "StorageError",
   "RuneError",
+  "ScheduleError",
 ]);
 
 export class ManageError extends Error {

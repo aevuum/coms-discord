@@ -1,0 +1,65 @@
+import { CharacterStatus } from "../../../database/generated/prisma/client.js";
+
+import prisma from "../../../database/prisma.js";
+
+export class ScheduleRepository {
+  public static subjects(includeInactive = false) {
+    return prisma.subject.findMany({
+      where: includeInactive ? {} : { active: true },
+      orderBy: [{ active: "desc" }, { sortOrder: "asc" }, { name: "asc" }],
+      take: 25,
+    });
+  }
+
+  public static subject(id: string) {
+    return prisma.subject.findUnique({ where: { id } });
+  }
+
+  public static createSubject(data: { name: string; emoji: string | null; sortOrder: number }) {
+    return prisma.subject.create({ data });
+  }
+
+  public static updateSubject(id: string, data: { name?: string; emoji?: string | null; sortOrder?: number; active?: boolean }) {
+    return prisma.subject.update({ where: { id }, data });
+  }
+
+  public static settings(guildId: string) {
+    return prisma.scheduleSettings.findUnique({ where: { guildId } });
+  }
+
+  public static allSettings() {
+    return prisma.scheduleSettings.findMany();
+  }
+
+  public static saveSettings(guildId: string, data: { reviewChannelId: string | null; reminderMinutes: number }) {
+    return prisma.scheduleSettings.upsert({
+      where: { guildId },
+      create: { guildId, ...data },
+      update: data,
+    });
+  }
+
+  public static ownCharacters(discordId: string) {
+    return prisma.character.findMany({
+      where: { user: { discordId }, status: CharacterStatus.ALIVE },
+      orderBy: { createdAt: "asc" },
+      take: 25,
+    });
+  }
+
+  public static allCharacters(discordId: string) {
+    return prisma.character.findMany({
+      where: { user: { discordId } },
+      orderBy: { createdAt: "asc" },
+      take: 25,
+      include: { user: { select: { discordId: true } } },
+    });
+  }
+
+  public static character(id: string) {
+    return prisma.character.findUnique({
+      where: { id },
+      include: { user: { select: { discordId: true } } },
+    });
+  }
+}

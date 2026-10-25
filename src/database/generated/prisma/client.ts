@@ -306,3 +306,33 @@ export type RuneSettings = Prisma.RuneSettingsModel
  * 
  */
 export type TupperMessage = Prisma.TupperMessageModel
+/**
+ * Model Subject
+ * 
+ */
+export type Subject = Prisma.SubjectModel
+/**
+ * Model Lesson
+ * 
+ */
+export type Lesson = Prisma.LessonModel
+/**
+ * Model LessonEnrollment
+ * 
+ */
+export type LessonEnrollment = Prisma.LessonEnrollmentModel
+/**
+ * Model LessonNotification
+ * 
+ */
+export type LessonNotification = Prisma.LessonNotificationModel
+/**
+ * Model CharacterGrade
+ * 
+ */
+export type CharacterGrade = Prisma.CharacterGradeModel
+/**
+ * Model ScheduleSettings
+ * 
+ */
+export type ScheduleSettings = Prisma.ScheduleSettingsModel

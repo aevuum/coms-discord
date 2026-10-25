@@ -742,6 +742,74 @@ export type EnumRuneAuditActionWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumRuneAuditActionFilter<$PrismaModel>
 }
 
+export type EnumLessonStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonStatus | Prisma.EnumLessonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonStatusFilter<$PrismaModel> | $Enums.LessonStatus
+}
+
+export type EnumLessonStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonStatus | Prisma.EnumLessonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonStatusWithAggregatesFilter<$PrismaModel> | $Enums.LessonStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLessonStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLessonStatusFilter<$PrismaModel>
+}
+
+export type EnumLessonNotificationKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationKind | Prisma.EnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationKindFilter<$PrismaModel> | $Enums.LessonNotificationKind
+}
+
+export type EnumLessonNotificationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationStatus | Prisma.EnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationStatusFilter<$PrismaModel> | $Enums.LessonNotificationStatus
+}
+
+export type EnumLessonNotificationKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationKind | Prisma.EnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationKindWithAggregatesFilter<$PrismaModel> | $Enums.LessonNotificationKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLessonNotificationKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLessonNotificationKindFilter<$PrismaModel>
+}
+
+export type EnumLessonNotificationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationStatus | Prisma.EnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.LessonNotificationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLessonNotificationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLessonNotificationStatusFilter<$PrismaModel>
+}
+
+export type EnumGradeWorkTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.GradeWorkType | Prisma.EnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel> | $Enums.GradeWorkType
+}
+
+export type EnumGradeWorkTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GradeWorkType | Prisma.EnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGradeWorkTypeWithAggregatesFilter<$PrismaModel> | $Enums.GradeWorkType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1427,6 +1495,74 @@ export type NestedEnumRuneAuditActionWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRuneAuditActionFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRuneAuditActionFilter<$PrismaModel>
+}
+
+export type NestedEnumLessonStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonStatus | Prisma.EnumLessonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonStatusFilter<$PrismaModel> | $Enums.LessonStatus
+}
+
+export type NestedEnumLessonStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonStatus | Prisma.EnumLessonStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonStatus[] | Prisma.ListEnumLessonStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonStatusWithAggregatesFilter<$PrismaModel> | $Enums.LessonStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLessonStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLessonStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLessonNotificationKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationKind | Prisma.EnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationKindFilter<$PrismaModel> | $Enums.LessonNotificationKind
+}
+
+export type NestedEnumLessonNotificationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationStatus | Prisma.EnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationStatusFilter<$PrismaModel> | $Enums.LessonNotificationStatus
+}
+
+export type NestedEnumLessonNotificationKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationKind | Prisma.EnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationKind[] | Prisma.ListEnumLessonNotificationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationKindWithAggregatesFilter<$PrismaModel> | $Enums.LessonNotificationKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLessonNotificationKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLessonNotificationKindFilter<$PrismaModel>
+}
+
+export type NestedEnumLessonNotificationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LessonNotificationStatus | Prisma.EnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LessonNotificationStatus[] | Prisma.ListEnumLessonNotificationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLessonNotificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.LessonNotificationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLessonNotificationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLessonNotificationStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumGradeWorkTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.GradeWorkType | Prisma.EnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel> | $Enums.GradeWorkType
+}
+
+export type NestedEnumGradeWorkTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GradeWorkType | Prisma.EnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GradeWorkType[] | Prisma.ListEnumGradeWorkTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGradeWorkTypeWithAggregatesFilter<$PrismaModel> | $Enums.GradeWorkType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
 }
 
 

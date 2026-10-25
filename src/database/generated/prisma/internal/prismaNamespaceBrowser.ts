@@ -103,7 +103,13 @@ export const ModelName = {
   RuneOperation: 'RuneOperation',
   RuneAuditLog: 'RuneAuditLog',
   RuneSettings: 'RuneSettings',
-  TupperMessage: 'TupperMessage'
+  TupperMessage: 'TupperMessage',
+  Subject: 'Subject',
+  Lesson: 'Lesson',
+  LessonEnrollment: 'LessonEnrollment',
+  LessonNotification: 'LessonNotification',
+  CharacterGrade: 'CharacterGrade',
+  ScheduleSettings: 'ScheduleSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -917,6 +923,99 @@ export const TupperMessageScalarFieldEnum = {
 } as const
 
 export type TupperMessageScalarFieldEnum = (typeof TupperMessageScalarFieldEnum)[keyof typeof TupperMessageScalarFieldEnum]
+
+
+export const SubjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  emoji: 'emoji',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubjectScalarFieldEnum = (typeof SubjectScalarFieldEnum)[keyof typeof SubjectScalarFieldEnum]
+
+
+export const LessonScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  teacherId: 'teacherId',
+  subjectId: 'subjectId',
+  topic: 'topic',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  startsAt: 'startsAt',
+  capacity: 'capacity',
+  enrolledCount: 'enrolledCount',
+  status: 'status',
+  version: 'version',
+  reviewMessageId: 'reviewMessageId',
+  reviewedById: 'reviewedById',
+  reviewReason: 'reviewReason',
+  reviewedAt: 'reviewedAt',
+  cancelReason: 'cancelReason',
+  channelReminderVersion: 'channelReminderVersion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
+
+
+export const LessonEnrollmentScalarFieldEnum = {
+  id: 'id',
+  lessonId: 'lessonId',
+  userId: 'userId',
+  characterId: 'characterId',
+  absent: 'absent',
+  createdAt: 'createdAt'
+} as const
+
+export type LessonEnrollmentScalarFieldEnum = (typeof LessonEnrollmentScalarFieldEnum)[keyof typeof LessonEnrollmentScalarFieldEnum]
+
+
+export const LessonNotificationScalarFieldEnum = {
+  id: 'id',
+  lessonId: 'lessonId',
+  userId: 'userId',
+  kind: 'kind',
+  version: 'version',
+  status: 'status',
+  attempts: 'attempts',
+  lockedAt: 'lockedAt',
+  sentAt: 'sentAt',
+  error: 'error',
+  createdAt: 'createdAt'
+} as const
+
+export type LessonNotificationScalarFieldEnum = (typeof LessonNotificationScalarFieldEnum)[keyof typeof LessonNotificationScalarFieldEnum]
+
+
+export const CharacterGradeScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  subjectId: 'subjectId',
+  lessonId: 'lessonId',
+  teacherId: 'teacherId',
+  title: 'title',
+  workType: 'workType',
+  value: 'value',
+  gradedAt: 'gradedAt'
+} as const
+
+export type CharacterGradeScalarFieldEnum = (typeof CharacterGradeScalarFieldEnum)[keyof typeof CharacterGradeScalarFieldEnum]
+
+
+export const ScheduleSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  reviewChannelId: 'reviewChannelId',
+  reminderMinutes: 'reminderMinutes',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScheduleSettingsScalarFieldEnum = (typeof ScheduleSettingsScalarFieldEnum)[keyof typeof ScheduleSettingsScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -251,3 +251,43 @@ export const RuneAuditAction = {
 } as const
 
 export type RuneAuditAction = (typeof RuneAuditAction)[keyof typeof RuneAuditAction]
+
+
+export const LessonStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type LessonStatus = (typeof LessonStatus)[keyof typeof LessonStatus]
+
+
+export const LessonNotificationKind = {
+  REMINDER: 'REMINDER',
+  RESCHEDULED: 'RESCHEDULED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type LessonNotificationKind = (typeof LessonNotificationKind)[keyof typeof LessonNotificationKind]
+
+
+export const LessonNotificationStatus = {
+  PENDING: 'PENDING',
+  SENDING: 'SENDING',
+  SENT: 'SENT',
+  SKIPPED: 'SKIPPED',
+  FAILED: 'FAILED'
+} as const
+
+export type LessonNotificationStatus = (typeof LessonNotificationStatus)[keyof typeof LessonNotificationStatus]
+
+
+export const GradeWorkType = {
+  THEORY: 'THEORY',
+  PRACTICE: 'PRACTICE',
+  WORK: 'WORK',
+  EXAM: 'EXAM'
+} as const
+
+export type GradeWorkType = (typeof GradeWorkType)[keyof typeof GradeWorkType]

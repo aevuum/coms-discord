@@ -11,7 +11,7 @@ const MS_PER_MANA = (60 * 60 * 1000) / MANA_REGEN_PER_HOUR;
 
 const CRITICAL_LIFE_RATIO = 0.5;
 
-const WHITE_DIGITS = [
+export const WHITE_DIGITS = [
   "<:white_0:1562494276900880485>",
   "<:white_1:1562494278708633651>",
   "<:white_2:1562494280906317854>",

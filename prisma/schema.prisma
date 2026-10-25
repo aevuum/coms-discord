@@ -52,7 +52,7 @@ model User {
 
   weeklyMessages     Int @default(0)
   weeklyVoiceSeconds Int @default(0)
-  voiceSeconds  Int @default(0)
+  voiceSeconds       Int @default(0)
 
   selectedAwardId String?
   awards          UserAward[]
@@ -115,20 +115,22 @@ model Wallet {
 model Character {
   id String @id @default(cuid())
 
-  tupper   CharacterTupper?
-  familiar CharacterFamiliar?
-  runes    CharacterRune[]
+  tupper            CharacterTupper?
+  familiar          CharacterFamiliar?
+  runes             CharacterRune[]
   runeStudyRequests RuneStudyRequest[]
   runeFormulas      SpellFormula[]
   artifacts         Artifact[]
   runeOperations    RuneOperation[]
   runeAudit         RuneAuditLog[]
   tupperMessages    TupperMessage[]
+  lessonEnrollments LessonEnrollment[]
+  grades            CharacterGrade[]
 
   rpName     String
   avatarUrl  String?
   avatarPath String?
-  faculty   CharacterFaculty
+  faculty    CharacterFaculty
 
   status CharacterStatus @default(ALIVE)
 
@@ -188,7 +190,7 @@ model Spell {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  casts SpellCast[]
+  casts    SpellCast[]
   formulas SpellFormula[] @relation("FormulaBase")
 
   formulaId String?       @unique
@@ -208,8 +210,8 @@ model SpellCast {
   manaCost  Int
   manaAfter Int
 
-  channelId String
-  messageId String?
+  channelId         String
+  messageId         String?
   announceMessageId String?
   refundedAt        DateTime?
 
@@ -321,7 +323,6 @@ model CommandPermission {
   @@unique([guildId, commandName, roleId])
   @@index([guildId])
 }
-
 
 model CharacterFamiliar {
   id String @id @default(cuid())
@@ -971,7 +972,7 @@ model SpellFormula {
   rune    Rune   @relation(fields: [runeKey], references: [key], onDelete: Cascade)
 
   incantation    String
-  incantationKey String @unique
+  incantationKey String  @unique
   effect         String
   mechanics      String?
   restrictions   String?
@@ -1216,4 +1217,161 @@ model TupperMessage {
 
   @@index([groupId])
   @@index([createdAt])
+}
+
+enum LessonStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum LessonNotificationKind {
+  REMINDER
+  RESCHEDULED
+  CANCELLED
+}
+
+enum LessonNotificationStatus {
+  PENDING
+  SENDING
+  SENT
+  SKIPPED
+  FAILED
+}
+
+enum GradeWorkType {
+  THEORY
+  PRACTICE
+  WORK
+  EXAM
+}
+
+model Subject {
+  id String @id @default(cuid())
+
+  name      String  @unique
+  emoji     String?
+  sortOrder Int     @default(0)
+  active    Boolean @default(true)
+
+  lessons Lesson[]
+  grades  CharacterGrade[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lesson {
+  id String @id @default(cuid())
+
+  guildId   String
+  teacherId String
+
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+
+  topic     String
+  channelId String
+  messageId String?
+
+  startsAt DateTime
+  capacity Int?
+
+  enrolledCount Int @default(0)
+
+  status  LessonStatus @default(PENDING)
+  version Int          @default(1)
+
+  reviewMessageId String?
+  reviewedById    String?
+  reviewReason    String?
+  reviewedAt      DateTime?
+
+  cancelReason String?
+
+  channelReminderVersion Int @default(0)
+
+  enrollments   LessonEnrollment[]
+  notifications LessonNotification[]
+  grades        CharacterGrade[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, startsAt])
+  @@index([teacherId, startsAt])
+}
+
+model LessonEnrollment {
+  id String @id @default(cuid())
+
+  lessonId String
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  userId String
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  absent Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@unique([lessonId, userId])
+  @@index([characterId])
+}
+
+model LessonNotification {
+  id String @id @default(cuid())
+
+  lessonId String
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  userId  String
+  kind    LessonNotificationKind
+  version Int
+
+  status   LessonNotificationStatus @default(PENDING)
+  attempts Int                      @default(0)
+  lockedAt DateTime?
+  sentAt   DateTime?
+  error    String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([lessonId, userId, kind, version])
+  @@index([status, createdAt])
+}
+
+model CharacterGrade {
+  id String @id @default(cuid())
+
+  characterId String
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  subjectId String
+  subject   Subject @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+
+  lessonId String?
+  lesson   Lesson? @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+
+  teacherId String
+  title     String
+  workType  GradeWorkType
+  value     Int
+
+  gradedAt DateTime @default(now())
+
+  @@index([characterId, gradedAt])
+  @@index([lessonId])
+}
+
+model ScheduleSettings {
+  guildId String @id
+
+  reviewChannelId String?
+  reminderMinutes Int     @default(15)
+
+  updatedAt DateTime @updatedAt
 }
