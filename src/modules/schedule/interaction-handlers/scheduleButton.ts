@@ -70,13 +70,19 @@ export class ScheduleButtonHandler extends InteractionHandler {
           );
           return;
 
-        default:
+        default: {
           await interaction.deferUpdate();
           await LessonService.assertTeacher(interaction);
+
+          const home = await ScheduleView.home(interaction, null, Number(result.args[0]) || 0);
+
           await interaction.editReply({
             flags: MessageFlags.IsComponentsV2,
-            components: [await ScheduleView.home(teacherId)],
+            components: home.components,
+            files: home.files,
+            attachments: [],
           });
+        }
       }
     } catch (error) {
       await ScheduleResponder.error(interaction, error);

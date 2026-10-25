@@ -64,7 +64,10 @@ export class ScheduleModalHandler extends InteractionHandler {
             capacity: field(ScheduleFields.Capacity),
           });
 
-          return await this.reply(interaction, await ScheduleView.lesson(teacherId, lesson.id, "Занятие создано и отправлено на проверку администрации."));
+          return await this.home(
+            interaction,
+            await ScheduleView.home(interaction, `«${lesson.topic}» добавлено в расписание и отправлено на проверку администрации.`, ScheduleView.weekOffset(lesson.startsAt)),
+          );
         }
 
         case ScheduleAction.EditModal: {
@@ -75,24 +78,27 @@ export class ScheduleModalHandler extends InteractionHandler {
             capacity: field(ScheduleFields.Capacity),
           });
 
-          return await this.reply(
+          return await this.home(
             interaction,
-            await ScheduleView.lesson(
-              teacherId,
-              lesson.id,
+            await ScheduleView.home(
+              interaction,
               rescheduled
                 ? "Занятие перенесено, записавшимся отправлены уведомления."
                 : lesson.status === LessonStatus.PENDING
                   ? "Занятие изменено и отправлено на проверку."
                   : "Занятие изменено.",
+              ScheduleView.weekOffset(lesson.startsAt),
             ),
           );
         }
 
         case ScheduleAction.CancelModal: {
-          await LessonService.cancel(interaction.client, lessonId, field(ScheduleFields.Reason), teacherId);
+          const cancelled = await LessonService.cancel(interaction.client, lessonId, field(ScheduleFields.Reason), teacherId);
 
-          return await this.reply(interaction, await ScheduleView.lesson(teacherId, lessonId, "Занятие отменено, записавшиеся получат уведомление."));
+          return await this.home(
+            interaction,
+            await ScheduleView.home(interaction, "Занятие отменено, записавшиеся получат уведомление.", ScheduleView.weekOffset(cancelled.startsAt)),
+          );
         }
 
         default: {
@@ -116,6 +122,10 @@ export class ScheduleModalHandler extends InteractionHandler {
   }
 
   private async reply(interaction: ModalSubmitInteraction, component: Awaited<ReturnType<typeof ScheduleView.lesson>>) {
-    await interaction.editReply({ flags: MessageFlags.IsComponentsV2, components: [component] });
+    await interaction.editReply({ flags: MessageFlags.IsComponentsV2, components: [component], attachments: [] });
+  }
+
+  private async home(interaction: ModalSubmitInteraction, view: Awaited<ReturnType<typeof ScheduleView.home>>) {
+    await interaction.editReply({ flags: MessageFlags.IsComponentsV2, components: view.components, files: view.files, attachments: [] });
   }
 }

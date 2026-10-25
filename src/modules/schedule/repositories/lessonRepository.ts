@@ -111,6 +111,14 @@ export class LessonRepository {
     ]);
   }
 
+  public static teacherWeek(teacherId: string, from: Date, to: Date) {
+    return prisma.lesson.findMany({
+      where: { teacherId, status: { in: [LessonStatus.PENDING, LessonStatus.APPROVED] }, startsAt: { gte: from, lt: to } },
+      orderBy: { startsAt: "asc" },
+      include: { subject: true },
+    });
+  }
+
   public static week(guildId: string, from: Date, to: Date, characterId: string) {
     return prisma.lesson.findMany({
       where: { guildId, status: LessonStatus.APPROVED, startsAt: { gte: from, lt: to } },

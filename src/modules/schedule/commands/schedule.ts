@@ -25,18 +25,22 @@ export class ScheduleCommand extends Command {
 
   public override async chatInputRun(interaction: ChatInputCommandInteraction) {
     try {
-      await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-
       const subject = await PermissionService.resolveSubject(interaction);
+      const teacher = await PermissionService.canUse(subject, SCHEDULE_TEACH_KEY);
+
+      await interaction.deferReply(teacher ? { flags: MessageFlags.Ephemeral } : {});
 
       if (!subject.guildId) {
         throw new ScheduleError("Вы не состоите на сервере бота.");
       }
 
-      if (await PermissionService.canUse(subject, SCHEDULE_TEACH_KEY)) {
+      if (teacher) {
+        const home = await ScheduleView.home(interaction);
+
         await interaction.editReply({
           flags: MessageFlags.IsComponentsV2,
-          components: [await ScheduleView.home(interaction.user.id)],
+          components: home.components,
+          files: home.files,
         });
         return;
       }

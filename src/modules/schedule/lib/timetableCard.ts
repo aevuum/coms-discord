@@ -70,15 +70,18 @@ export type TimetableLesson = {
   startsAt: Date;
   subjectId: string;
   subjectName: string;
-  topic: string;
+  note: string;
   enrolled: boolean;
+  faded: boolean;
 };
 
 export type TimetableInput = {
   faculty: CharacterFaculty;
-  characterName: string;
+  title?: string;
+  ownerName: string;
   weekStart: Date;
   lessons: TimetableLesson[];
+  legend: "student" | "teacher";
 };
 
 type Slot = { minutes: number; label: string };
@@ -102,7 +105,7 @@ export class TimetableCard {
 
     const canvas = createCanvas(W, H);
     const ctx = canvas.getContext("2d");
-    const rnd = random(hash(`${input.characterName}:${input.weekStart.toISOString()}`));
+    const rnd = random(hash(`${input.ownerName}:${input.weekStart.toISOString()}`));
 
     this.backdrop(ctx);
 
@@ -114,7 +117,7 @@ export class TimetableCard {
     this.paper(ctx, rnd);
     await this.header(ctx, input, rnd);
     this.grid(ctx, input, rnd);
-    this.seal(ctx);
+    this.seal(ctx, input.legend);
 
     ctx.restore();
 
@@ -219,8 +222,8 @@ export class TimetableCard {
   }
 
   private static async header(ctx: SKRSContext2D, input: TimetableInput, rnd: () => number) {
-    const title = HOUSE_NAMES[input.faculty].toUpperCase();
-    const size = input.faculty === CharacterFaculty.ADULT ? 54 : 72;
+    const title = (input.title ?? HOUSE_NAMES[input.faculty]).toUpperCase();
+    const size = title.length > 12 ? 54 : 72;
 
     ctx.font = `${size}px ${CAPS}`;
     const spacing = size * 0.12;
@@ -260,7 +263,7 @@ export class TimetableCard {
 
     this.hand(ctx, "Расписание занятий", 70, 92, { font: `46px ${SCRIPT}`, color: INK, angle: -0.05 });
     this.hand(ctx, `неделя ${from} — ${to}`, 76, 134, { font: `26px ${HAND}`, color: PENCIL.replace("0.5", "0.85"), angle: -0.05 });
-    this.hand(ctx, input.characterName, CARD_W - 80, 92, { font: `48px ${SCRIPT}`, color: "#6b2330", angle: 0.05, align: "right", maxWidth: 420 });
+    this.hand(ctx, input.ownerName, CARD_W - 80, 92, { font: `48px ${SCRIPT}`, color: "#6b2330", angle: 0.05, align: "right", maxWidth: 420 });
     this.hand(ctx, "по московскому времени", CARD_W - 84, 134, { font: `24px ${HAND}`, color: PENCIL.replace("0.5", "0.85"), angle: 0.05, align: "right" });
   }
 
@@ -363,9 +366,9 @@ export class TimetableCard {
 
         const rowY = rowTop.get(row)!;
         const [first] = here;
-        const color = INKS[hash(first.subjectId) % INKS.length];
+        const color = first.faded ? PENCIL.replace("0.5", "0.75") : INKS[hash(first.subjectId) % INKS.length];
 
-        if (color === "#8c1d2c" || color === "#7a2457") {
+        if (!first.faded && (color === "#8c1d2c" || color === "#7a2457")) {
           const cx = x + dayWidth / 2;
           const cy = rowY + row.height / 2;
           const wash = ctx.createRadialGradient(cx, cy, 4, cx, cy, dayWidth * 0.55);
@@ -381,7 +384,7 @@ export class TimetableCard {
         this.cellText(ctx, name, x + dayWidth / 2, rowY + row.height / 2 - (topicSpace ? 12 : 0), dayWidth - 18, topicSpace ? row.height - 46 : row.height - 14, color, rnd);
 
         if (topicSpace) {
-          this.hand(ctx, first.topic, x + dayWidth / 2, rowY + row.height - 16, { font: `17px ${HAND}`, color: PENCIL, align: "center", maxWidth: dayWidth - 16 });
+          this.hand(ctx, first.note, x + dayWidth / 2, rowY + row.height - 16, { font: `17px ${HAND}`, color: PENCIL, align: "center", maxWidth: dayWidth - 16 });
         }
 
         if (here.some((lesson) => lesson.enrolled)) {
@@ -529,7 +532,7 @@ export class TimetableCard {
     ctx.restore();
   }
 
-  private static seal(ctx: SKRSContext2D) {
+  private static seal(ctx: SKRSContext2D, legend: TimetableInput["legend"]) {
     const x = CARD_W - 118;
     const y = CARD_H - 40;
 
@@ -552,7 +555,11 @@ export class TimetableCard {
     ctx.restore();
 
     this.hand(ctx, "Администрация школы", CARD_W - 180, CARD_H - 30, { font: `30px ${SCRIPT}`, color: INK, align: "right", angle: -0.03 });
-    this.tick(ctx, 70, CARD_H - 40);
-    this.hand(ctx, "— вы записаны на занятие", 92, CARD_H - 30, { font: `22px ${HAND}`, color: "rgba(140, 29, 44, 0.85)" });
+    if (legend === "teacher") {
+      this.hand(ctx, "карандашом — занятия на проверке у администрации", 60, CARD_H - 30, { font: `22px ${HAND}`, color: PENCIL.replace("0.5", "0.85") });
+    } else {
+      this.tick(ctx, 70, CARD_H - 40);
+      this.hand(ctx, "— вы записаны на занятие", 92, CARD_H - 30, { font: `22px ${HAND}`, color: "rgba(140, 29, 44, 0.85)" });
+    }
   }
 }

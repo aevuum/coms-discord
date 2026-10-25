@@ -22,8 +22,7 @@ import { TIMETABLE_FILE, TimetableCard } from "./timetableCard.js";
 
 export const TIMETABLE_PREFIX = "tcard";
 export const MAX_WEEK_OFFSET = 8;
-
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+export const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const NEXT = "<:48765whitearrow:1518587298281685173>";
 
 export enum TimetableAction {
@@ -65,14 +64,16 @@ export class TimetableView {
 
     const image = await TimetableCard.render({
       faculty: character.faculty,
-      characterName: character.rpName,
+      ownerName: character.rpName,
       weekStart,
+      legend: "student",
       lessons: lessons.map((lesson) => ({
         startsAt: lesson.startsAt,
         subjectId: lesson.subjectId,
         subjectName: lesson.subject.name,
-        topic: lesson.topic,
+        note: lesson.topic,
         enrolled: lesson.enrollments.length > 0,
+        faded: false,
       })),
     });
 

@@ -36,8 +36,9 @@ export class TimetableComponentHandler extends InteractionHandler {
     result: { action: TimetableAction; args: string[] },
   ) {
     try {
-      const fresh =
-        result.action === TimetableAction.Week && (result.args[0] === "self" || !interaction.message.flags.has(MessageFlags.Ephemeral));
+      const ephemeral = interaction.message.flags.has(MessageFlags.Ephemeral);
+      const own = ephemeral || interaction.message.interactionMetadata?.user.id === interaction.user.id;
+      const fresh = !own || result.args[0] === "self";
 
       if (fresh) {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -53,8 +54,8 @@ export class TimetableComponentHandler extends InteractionHandler {
 
       const [characterId, offset] =
         result.action === TimetableAction.Character && interaction.isStringSelectMenu()
-          ? [interaction.values[0], Number(result.args[0])]
-          : [result.args[0] === "self" ? null : result.args[0], Number(result.args[1])];
+          ? [own ? interaction.values[0] : null, Number(result.args[0])]
+          : [own && result.args[0] !== "self" ? result.args[0] : null, own ? Number(result.args[1]) : 0];
 
       const view = await TimetableView.open(interaction.user.id, subject.guildId, characterId, offset);
 

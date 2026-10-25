@@ -6,6 +6,8 @@ import {
   ChannelType,
   ContainerBuilder,
   LabelBuilder,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
   ModalBuilder,
   SeparatorBuilder,
   SeparatorSpacingSize,
@@ -33,7 +35,8 @@ import {
   text,
 } from "./lessonCard.js";
 import { MoscowTime } from "./moscowTime.js";
-import { TimetableAction, TimetableView } from "./timetableView.js";
+import { TIMETABLE_FILE } from "./timetableCard.js";
+import { MAX_WEEK_OFFSET, TimetableAction, TimetableView } from "./timetableView.js";
 import { ScheduleAction, ScheduleCustomIds, ScheduleFields } from "./scheduleCustomIds.js";
 
 const EDIT = "<:12784editor:1518587261707616407>";
@@ -78,23 +81,19 @@ const channelSelect = (current: string | null) => {
 };
 
 export class ScheduleContainer {
-  public static home(teacherId: string, lessons: LessonWithSubject[], notice: string | null = null) {
+  public static home(lessons: LessonWithSubject[], week: number, weekLessons: LessonWithSubject[], notice: string | null = null) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
-    const now = Date.now();
-    const upcoming = lessons.filter((lesson) => lesson.startsAt.getTime() > now || lesson.status === LessonStatus.PENDING);
-    const past = lessons.filter((lesson) => !upcoming.includes(lesson));
+    const pending = weekLessons.filter((lesson) => lesson.status === LessonStatus.PENDING).length;
+
+    container.addMediaGalleryComponents(
+      new MediaGalleryBuilder().addItems(
+        new MediaGalleryItemBuilder().setURL(`attachment://${TIMETABLE_FILE}`).setDescription("Расписание преподавателя на неделю"),
+      ),
+    );
 
     text(container, [
-      `# ${SCHEDULE_HEADER} Расписание`,
-      `-# Преподаватель <@${teacherId}> · время везде московское`,
       notice ? `${SUCCESS} ${notice}` : null,
-      "",
-      "### Предстоящие занятия",
-      upcoming.length ? upcoming.map(lessonLine).join("\n") : `${ARROW} Занятий пока нет — создайте первое.`,
-      past.length ? "\n### Прошедшие (за 30 дней)" : null,
-      past.length ? past.map(lessonLine).join("\n") : null,
-      "-# Новое занятие уходит на проверку администрации и публикуется в кабинете после утверждения. Откройте занятие, чтобы изменить его, отметить посещаемость и выставить оценки.",
-      `-# ${PAD}`,
+      `-# Занятий на неделе: **${weekLessons.length}**${pending ? `, на проверке: **${pending}**` : ""}. Новое занятие появится в расписании сразу, а в кабинете — после утверждения. Откройте занятие, чтобы изменить его, отметить посещаемость и выставить оценки.`,
     ]);
 
     if (lessons.length) {
@@ -117,9 +116,28 @@ export class ScheduleContainer {
           .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setCustomId(TimetableView.customId(TimetableAction.Week, "self", 0))
-          .setLabel("Карточка расписания")
+          .setLabel("Как ученик")
           .setEmoji(SCHEDULE_HEADER)
           .setStyle(ButtonStyle.Secondary),
+      ),
+      new ActionRowBuilder<ButtonBuilder>().addComponents(
+        new ButtonBuilder()
+          .setCustomId(ScheduleCustomIds.teacher(ScheduleAction.Home, week - 1))
+          .setLabel("Прошлая неделя")
+          .setEmoji(BACK)
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(week <= -MAX_WEEK_OFFSET),
+        new ButtonBuilder()
+          .setCustomId(ScheduleCustomIds.teacher(ScheduleAction.Home, 0, "now"))
+          .setLabel("Эта неделя")
+          .setStyle(week === 0 ? ButtonStyle.Primary : ButtonStyle.Secondary)
+          .setDisabled(week === 0),
+        new ButtonBuilder()
+          .setCustomId(ScheduleCustomIds.teacher(ScheduleAction.Home, week + 1))
+          .setLabel("Следующая неделя")
+          .setEmoji("<:48765whitearrow:1518587298281685173>")
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(week >= MAX_WEEK_OFFSET),
       ),
     );
 

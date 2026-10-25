@@ -68,6 +68,7 @@ export class ScheduleSelectHandler extends InteractionHandler {
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,
         components: [await ScheduleView.lesson(teacherId, result.action === ScheduleAction.Open ? value : lessonId, notice)],
+        attachments: [],
       });
     } catch (error) {
       await ScheduleResponder.error(interaction, error);
