@@ -15,7 +15,6 @@ import type { Character } from "../../../database/generated/prisma/client.js";
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
 import { LessonRepository } from "../repositories/lessonRepository.js";
 import { ScheduleRepository } from "../repositories/scheduleRepository.js";
-import { ScheduleError } from "../types/schedule.js";
 import { BACK, SCHEDULE_HEADER, text } from "./lessonCard.js";
 import { MoscowTime } from "./moscowTime.js";
 import { TIMETABLE_FILE, TimetableCard } from "./timetableCard.js";
@@ -46,11 +45,7 @@ export class TimetableView {
   }
 
   public static async open(discordId: string, guildId: string, characterId: string | null, offset: number) {
-    const characters = await ScheduleRepository.ownCharacters(discordId);
-
-    if (!characters.length) {
-      throw new ScheduleError("Расписание показывается для живых персонажей, а у вас таких нет.");
-    }
+    const characters = await ScheduleRepository.students(discordId);
 
     const week = Math.max(-MAX_WEEK_OFFSET, Math.min(MAX_WEEK_OFFSET, Number.isInteger(offset) ? offset : 0));
     const character = characters.find((entry) => entry.id === characterId) ?? (characters.length === 1 ? characters[0] : null);

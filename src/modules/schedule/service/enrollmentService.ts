@@ -16,11 +16,7 @@ export class EnrollmentService {
       throw new ScheduleError(`Вы уже записаны на это занятие персонажем **${existing.character.rpName}**.`);
     }
 
-    const characters = await ScheduleRepository.ownCharacters(userId);
-
-    if (!characters.length) {
-      throw new ScheduleError("Записаться можно только живым персонажем, а у вас таких нет.");
-    }
+    const characters = await ScheduleRepository.students(userId);
 
     if (characters.length === 1) {
       return { message: await this.enroll(userId, lesson.id, characters[0].id), characters: null };
@@ -31,7 +27,7 @@ export class EnrollmentService {
 
   public static async enroll(userId: string, lessonId: string, characterId: string) {
     const lesson = await this.open(lessonId);
-    const character = (await ScheduleRepository.ownCharacters(userId)).find((entry) => entry.id === characterId);
+    const character = (await ScheduleRepository.students(userId)).find((entry) => entry.id === characterId);
 
     if (!character) {
       throw new ScheduleError("Этот персонаж вам не принадлежит или не может посещать занятия.");

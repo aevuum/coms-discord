@@ -1,6 +1,7 @@
-import { CharacterStatus } from "../../../database/generated/prisma/client.js";
+import { CharacterFaculty, CharacterStatus } from "../../../database/generated/prisma/client.js";
 
 import prisma from "../../../database/prisma.js";
+import { ScheduleError } from "../types/schedule.js";
 
 export class ScheduleRepository {
   public static subjects(includeInactive = false) {
@@ -48,6 +49,29 @@ export class ScheduleRepository {
       orderBy: { createdAt: "asc" },
       take: 25,
     });
+  }
+
+  public static async studentCharacters(discordId: string) {
+    const characters = await this.ownCharacters(discordId);
+
+    return {
+      students: characters.filter((character) => character.faculty !== CharacterFaculty.ADULT),
+      adults: characters.filter((character) => character.faculty === CharacterFaculty.ADULT),
+    };
+  }
+
+  public static async students(discordId: string) {
+    const { students, adults } = await this.studentCharacters(discordId);
+
+    if (!students.length) {
+      throw new ScheduleError(
+        adults.length
+          ? `${adults.map((character) => `**${character.rpName}**`).join(", ")} — взрослый волшебник: не ученик и не преподаватель, поэтому расписания и записи на занятия у него нет.`
+          : "У вас нет живых персонажей-учеников.",
+      );
+    }
+
+    return students;
   }
 
   public static allCharacters(discordId: string) {

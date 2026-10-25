@@ -13,9 +13,8 @@ const HISTORY_DAYS = 30;
 
 export class ScheduleView {
   public static async teacherName(interaction: BaseInteraction) {
-    const characters = await ScheduleRepository.ownCharacters(interaction.user.id);
-    const adults = characters.filter((character) => character.faculty === CharacterFaculty.ADULT);
-    const professor = adults.find((character) => character.specialRole) ?? adults[0] ?? characters[0];
+    const { adults } = await ScheduleRepository.studentCharacters(interaction.user.id);
+    const professor = adults.find((character) => character.specialRole) ?? adults[0];
 
     if (professor) {
       return professor.rpName;
