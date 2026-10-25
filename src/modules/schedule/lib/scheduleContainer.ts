@@ -57,11 +57,21 @@ const input = (id: string, style: TextInputStyle, required: boolean, max: number
   return value ? field.setValue(value) : field;
 };
 
+export const LESSON_CHANNEL_TYPES = [
+  ChannelType.GuildText,
+  ChannelType.GuildAnnouncement,
+  ChannelType.PublicThread,
+  ChannelType.PrivateThread,
+  ChannelType.AnnouncementThread,
+  ChannelType.GuildForum,
+  ChannelType.GuildVoice,
+];
+
 const channelSelect = (current: string | null) => {
   const select = new ChannelSelectMenuBuilder()
     .setCustomId(ScheduleFields.Channel)
-    .setChannelTypes(ChannelType.GuildText)
-    .setPlaceholder("Канал, где пройдёт занятие")
+    .setChannelTypes(...LESSON_CHANNEL_TYPES)
+    .setPlaceholder("Канал, ветка или форум, где пройдёт занятие")
     .setRequired(!current);
 
   return current ? select.setDefaultChannels(current) : select;
@@ -269,7 +279,10 @@ export class ScheduleContainer {
           .setLabel("Дата и время начала (МСК)")
           .setDescription("Формат: ДД.ММ.ГГГГ ЧЧ:ММ. Год можно не указывать")
           .setTextInputComponent(input(ScheduleFields.StartsAt, TextInputStyle.Short, true, 20, "25.10.2026 19:00")),
-        new LabelBuilder().setLabel("Кабинет").setChannelSelectMenuComponent(channelSelect(null)),
+        new LabelBuilder()
+          .setLabel("Кабинет")
+          .setDescription("Канал, активная ветка или форум — в форуме бот создаст пост занятия")
+          .setChannelSelectMenuComponent(channelSelect(null)),
         new LabelBuilder()
           .setLabel("Количество мест")
           .setDescription("Пусто — без ограничений")

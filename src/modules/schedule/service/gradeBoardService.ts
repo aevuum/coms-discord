@@ -9,6 +9,7 @@ import { GradeMath } from "../lib/gradeMath.js";
 import { MoscowTime } from "../lib/moscowTime.js";
 import { GradeRepository } from "../repositories/gradeRepository.js";
 import { ScheduleRepository } from "../repositories/scheduleRepository.js";
+import { ScheduleError } from "../types/schedule.js";
 import { LessonPublisher } from "./lessonPublisher.js";
 
 const REFRESH_DELAY_MS = 10_000;
@@ -73,6 +74,10 @@ export class GradeBoardService {
     }
 
     const channel = await LessonPublisher.assertChannel(client, guildId, channelId);
+
+    if (!channel.isSendable()) {
+      throw new ScheduleError("Для табеля выберите текстовый канал или ветку.");
+    }
 
     const message = await channel.send({
       flags: MessageFlags.IsComponentsV2,

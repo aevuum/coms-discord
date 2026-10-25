@@ -1,6 +1,6 @@
 import { container } from "@sapphire/framework";
 
-import { MessageFlags, PermissionFlagsBits, type Client, type ContainerBuilder } from "discord.js";
+import { ChannelFlags, MessageFlags, PermissionFlagsBits, type Client, type ContainerBuilder } from "discord.js";
 
 import { LessonStatus } from "../../../database/generated/prisma/client.js";
 
@@ -21,15 +21,20 @@ export class LessonPublisher {
   public static async assertChannel(client: Client, guildId: string, channelId: string) {
     const channel = await client.channels.fetch(channelId).catch(() => null);
 
-    if (!channel || channel.isDMBased() || !channel.isSendable() || channel.guildId !== guildId) {
-      throw new ScheduleError("Этот канал не подходит для занятия: выберите текстовый канал сервера.");
+    if (!channel || channel.isDMBased() || channel.guildId !== guildId || (!channel.isThreadOnly() && !channel.isSendable())) {
+      throw new ScheduleError("Этот канал не подходит для занятия: выберите текстовый канал, ветку или форум сервера.");
     }
 
     const me = channel.guild.members.me;
     const permissions = me ? channel.permissionsFor(me) : null;
+    const send = channel.isThread() ? PermissionFlagsBits.SendMessagesInThreads : PermissionFlagsBits.SendMessages;
 
-    if (!permissions?.has([PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages])) {
+    if (!permissions?.has([PermissionFlagsBits.ViewChannel, send])) {
       throw new ScheduleError(`У бота нет права писать в <#${channelId}>.`);
+    }
+
+    if (channel.isThread() && channel.locked && !permissions.has(PermissionFlagsBits.ManageThreads)) {
+      throw new ScheduleError(`Ветка <#${channelId}> закрыта — бот не сможет опубликовать в ней занятие.`);
     }
 
     return channel;
@@ -37,12 +42,31 @@ export class LessonPublisher {
 
   public static async publish(client: Client, lesson: LessonWithSubject) {
     const channel = await this.assertChannel(client, lesson.guildId, lesson.channelId);
-
-    const message = await channel.send({
-      flags: MessageFlags.IsComponentsV2,
+    const card = {
+      flags: MessageFlags.IsComponentsV2 as const,
       components: [LessonCard.public(lesson, [])],
       allowedMentions: { parse: [] },
-    });
+    };
+
+    if (channel.isThreadOnly()) {
+      const thread = await channel.threads.create({
+        name: `${lesson.subject.name}: ${lesson.topic}`.slice(0, 100),
+        appliedTags: channel.flags.has(ChannelFlags.RequireTag) && channel.availableTags.length ? [channel.availableTags[0].id] : [],
+        message: card,
+      });
+
+      return LessonRepository.update(lesson.id, { channelId: thread.id, messageId: thread.id });
+    }
+
+    if (channel.isThread() && channel.archived) {
+      await channel.setArchived(false).catch(() => null);
+    }
+
+    if (!channel.isSendable()) {
+      throw new ScheduleError("Этот канал не подходит для занятия.");
+    }
+
+    const message = await channel.send(card);
 
     return LessonRepository.update(lesson.id, { messageId: message.id });
   }
