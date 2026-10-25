@@ -1,42 +1,24 @@
 import {
   ActionRowBuilder,
   ContainerBuilder,
-  SeparatorBuilder,
-  SeparatorSpacingSize,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
   StringSelectMenuBuilder,
   StringSelectMenuOptionBuilder,
 } from "discord.js";
 
-import type { Character, GradeWorkType, Subject } from "../../../database/generated/prisma/client.js";
+import type { Character, Subject } from "../../../database/generated/prisma/client.js";
 
 import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
-import { WHITE_DIGITS } from "../../spells/lib/mana.js";
-import type { ReportCard, SubjectReport } from "../service/gradeService.js";
-import { GradeMath, MAX_GRADE, WORK_TYPE_LABELS } from "./gradeMath.js";
-import { ARROW, PAD, subjectTitle, text } from "./lessonCard.js";
+import type { ReportCard } from "../service/gradeService.js";
+import { GRADES_FILE } from "./gradeCard.js";
+import { ARROW, PAD, text } from "./lessonCard.js";
 import { MoscowTime } from "./moscowTime.js";
 import { GradesAction, ScheduleCustomIds } from "./scheduleCustomIds.js";
 
 export const GRADES_HEADER = "<:teal_feather:1562262848598577284>";
 const ALL = "all";
 const MONTHS_BACK = 12;
-
-const grade = (value: number) => WHITE_DIGITS[value] ?? `**${value}**`;
-
-const SUMMARY_GRADES = 4;
-
-const gradeLines = (report: SubjectReport, limit = report.grades.length) =>
-  report.grades.length
-    ? [
-        ...report.grades
-          .slice(-limit)
-          .map((entry) => `${ARROW} **${entry.title}** · ${WORK_TYPE_LABELS[entry.workType as GradeWorkType]} · ${grade(entry.value)}`),
-        ...(report.grades.length > limit ? [`-# и ещё ${report.grades.length - limit} — выберите предмет, чтобы увидеть все`] : []),
-      ]
-    : ["-# Оценок за этот месяц нет."];
-
-const summary = (average: number | null, attendance: { present: number; total: number }) =>
-  `**Средний балл:** ${average === null ? "—" : `**${GradeMath.formatAverage(average)}** / ${MAX_GRADE}`} · **Посещаемость:** ${attendance.total ? `${attendance.present} из ${attendance.total}` : "—"}`;
 
 export class GradesContainer {
   public static picker(ownerId: string, characters: Character[]) {
@@ -51,37 +33,14 @@ export class GradesContainer {
 
   public static view(report: ReportCard, characters: Character[], subjects: Subject[]) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
-    const single = report.subjectId ? report.subjects[0] ?? null : null;
-    const selectedSubject = report.subjectId ? subjects.find((entry) => entry.id === report.subjectId) ?? null : null;
 
-    text(container, [
-      `# ${GRADES_HEADER} Табель успеваемости`,
-      `-# ${report.character.rpName} · ${selectedSubject ? subjectTitle(selectedSubject) : "Все предметы"} · ${MoscowTime.monthLabel(report.month)}`,
-    ]);
-
-    container.addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small));
-
-    if (report.subjectId) {
-      text(container, single ? gradeLines(single) : ["-# За этот месяц по предмету нет ни оценок, ни занятий."]);
-    } else if (report.subjects.length) {
-      text(
-        container,
-        report.subjects.flatMap((entry) => [
-          `### ${subjectTitle(entry.subject)}`,
-          ...gradeLines(entry, SUMMARY_GRADES),
-          `-# Средний балл ${GradeMath.formatAverage(entry.average)} · посещаемость ${entry.attendance.total ? `${entry.attendance.present} из ${entry.attendance.total}` : "—"}`,
-        ]),
-      );
-    } else {
-      text(container, ["-# За этот месяц нет ни оценок, ни посещённых занятий."]);
-    }
-
-    container.addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small));
-
-    text(container, [
-      single ? summary(single.average, single.attendance) : summary(report.average, report.attendance),
-      `-# ${PAD}`,
-    ]);
+    container.addMediaGalleryComponents(
+      new MediaGalleryBuilder().addItems(
+        new MediaGalleryItemBuilder()
+          .setURL(`attachment://${GRADES_FILE}`)
+          .setDescription(`Табель успеваемости ${report.character.rpName}, ${MoscowTime.monthLabel(report.month)}`),
+      ),
+    );
 
     const subjectKey = report.subjectId ?? ALL;
     const { ownerId, id } = report.character;

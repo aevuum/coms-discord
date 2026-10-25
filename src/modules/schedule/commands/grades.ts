@@ -27,13 +27,17 @@ export class GradesCommand extends Command {
 
   public override async chatInputRun(interaction: ChatInputCommandInteraction) {
     try {
-      await interaction.deferReply({ flags: MessageFlags.Ephemeral });
-
       const owner = interaction.options.getUser("user") ?? interaction.user;
+      const own = owner.id === interaction.user.id;
+
+      await interaction.deferReply(own ? {} : { flags: MessageFlags.Ephemeral });
+
+      const view = await GradesView.open(interaction, owner.id, null);
 
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,
-        components: [await GradesView.open(interaction, owner.id, null)],
+        components: view.components,
+        files: view.files,
       });
     } catch (error) {
       await ScheduleResponder.error(interaction, error);

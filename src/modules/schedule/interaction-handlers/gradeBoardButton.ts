@@ -36,9 +36,12 @@ export class GradeBoardButtonHandler extends InteractionHandler {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
       }
 
+      const board = await GradeBoardService.render(result.month, result.page, true);
+
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,
-        components: [await GradeBoardService.render(result.month, result.page, true)],
+        ...(await board.build()),
+        attachments: [],
       });
     } catch (error) {
       await ScheduleResponder.error(interaction, error);

@@ -33,19 +33,30 @@ export class GradesSelectHandler extends InteractionHandler {
     const [ownerId, characterId, subject, month] = result.args;
 
     try {
-      await interaction.deferUpdate();
+      const ephemeral = interaction.message.flags.has(MessageFlags.Ephemeral);
+      const own = ephemeral || interaction.message.interactionMetadata?.user.id === interaction.user.id;
 
-      await interaction.editReply({
-        flags: MessageFlags.IsComponentsV2,
-        components: [
-          await GradesView.open(
+      if (own) {
+        await interaction.deferUpdate();
+      } else {
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+      }
+
+      const view = own
+        ? await GradesView.open(
             interaction,
             ownerId,
             result.action === GradesAction.Character ? result.value : characterId,
             result.action === GradesAction.Subject ? result.value : subject,
             result.action === GradesAction.Month ? result.value : month,
-          ),
-        ],
+          )
+        : await GradesView.open(interaction, interaction.user.id, null);
+
+      await interaction.editReply({
+        flags: MessageFlags.IsComponentsV2,
+        components: view.components,
+        files: view.files,
+        attachments: [],
       });
     } catch (error) {
       await ScheduleResponder.error(interaction, error);

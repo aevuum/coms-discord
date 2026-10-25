@@ -1,10 +1,11 @@
 import { container } from "@sapphire/framework";
 
-import { MessageFlags, type Client } from "discord.js";
+import { AttachmentBuilder, MessageFlags, type Client } from "discord.js";
 
 import type { Subject } from "../../../database/generated/prisma/client.js";
 
-import { GradeBoardContainer, type BoardStudent } from "../lib/gradeBoardContainer.js";
+import { BOARD_FILE, BOARD_PAGE_SIZE, GradeBoardContainer, type BoardStudent } from "../lib/gradeBoardContainer.js";
+import { GradeCard } from "../lib/gradeCard.js";
 import { GradeMath } from "../lib/gradeMath.js";
 import { MoscowTime } from "../lib/moscowTime.js";
 import { GradeRepository } from "../repositories/gradeRepository.js";
@@ -16,6 +17,8 @@ const REFRESH_DELAY_MS = 10_000;
 
 export class GradeBoardService {
   private static refreshTimers = new Map<string, NodeJS.Timeout>();
+
+  private static lastKeys = new Map<string, string>();
 
   public static async students(month: string): Promise<BoardStudent[]> {
     const { from, to } = MoscowTime.monthRange(month);
@@ -54,7 +57,19 @@ export class GradeBoardService {
   }
 
   public static async render(month: string, page: number, personal: boolean) {
-    return GradeBoardContainer.page(await this.students(month), month, page, personal);
+    const students = await this.students(month);
+    const pages = GradeBoardContainer.pages(students.length);
+    const current = Math.min(Math.max(Number.isInteger(page) ? page : 0, 0), pages - 1);
+    const slice = students.slice(current * BOARD_PAGE_SIZE, (current + 1) * BOARD_PAGE_SIZE);
+    const key = JSON.stringify([month, current, pages, slice]);
+
+    return {
+      key,
+      build: async () => ({
+        components: [GradeBoardContainer.page(month, current, pages, personal)],
+        files: [new AttachmentBuilder(await GradeCard.board(slice, month, current, pages, students.length), { name: BOARD_FILE })],
+      }),
+    };
   }
 
   public static async setChannel(client: Client, guildId: string, channelId: string | null) {
@@ -79,11 +94,14 @@ export class GradeBoardService {
       throw new ScheduleError("Для табеля выберите текстовый канал или ветку.");
     }
 
+    const board = await this.render(MoscowTime.monthKey(new Date()), 0, false);
     const message = await channel.send({
       flags: MessageFlags.IsComponentsV2,
-      components: [await this.render(MoscowTime.monthKey(new Date()), 0, false)],
+      ...(await board.build()),
       allowedMentions: { parse: [] },
     });
+
+    this.lastKeys.set(guildId, board.key);
 
     await ScheduleRepository.saveSettings(guildId, { gradesChannelId: channelId, gradesMessageId: message.id });
   }
@@ -119,7 +137,7 @@ export class GradeBoardService {
       return;
     }
 
-    const component = await this.render(MoscowTime.monthKey(new Date()), 0, false);
+    const board = await this.render(MoscowTime.monthKey(new Date()), 0, false);
     const channel = await client.channels.fetch(settings.gradesChannelId).catch(() => null);
 
     if (!channel?.isTextBased() || channel.isDMBased() || !channel.isSendable()) {
@@ -129,12 +147,18 @@ export class GradeBoardService {
     const message = settings.gradesMessageId ? await channel.messages.fetch(settings.gradesMessageId).catch(() => null) : null;
 
     if (message) {
-      await message.edit({ flags: MessageFlags.IsComponentsV2, components: [component], allowedMentions: { parse: [] } });
+      if (this.lastKeys.get(guildId) === board.key) {
+        return;
+      }
+
+      await message.edit({ flags: MessageFlags.IsComponentsV2, ...(await board.build()), attachments: [], allowedMentions: { parse: [] } });
+      this.lastKeys.set(guildId, board.key);
       return;
     }
 
-    const sent = await channel.send({ flags: MessageFlags.IsComponentsV2, components: [component], allowedMentions: { parse: [] } });
+    const sent = await channel.send({ flags: MessageFlags.IsComponentsV2, ...(await board.build()), allowedMentions: { parse: [] } });
 
+    this.lastKeys.set(guildId, board.key);
     await ScheduleRepository.saveSettings(guildId, { gradesMessageId: sent.id });
   }
 }

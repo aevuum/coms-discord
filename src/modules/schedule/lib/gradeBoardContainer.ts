@@ -3,18 +3,16 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ContainerBuilder,
-  SeparatorBuilder,
-  SeparatorSpacingSize,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
 } from "discord.js";
 
 import type { CharacterFaculty, Subject } from "../../../database/generated/prisma/client.js";
 
-import { CharacterFormatter } from "../../economy/lib/characterFormatter.js";
-import { GradeMath, MAX_GRADE } from "./gradeMath.js";
-import { GRADES_HEADER } from "./gradesContainer.js";
-import { PAD, text } from "./lessonCard.js";
+import { text } from "./lessonCard.js";
 import { MoscowTime } from "./moscowTime.js";
 
+export const BOARD_FILE = "board.jpg";
 export const BOARD_PAGE_SIZE = 8;
 
 export type BoardStudent = {
@@ -48,37 +46,20 @@ export class GradeBoardContainer {
     return Math.max(Math.ceil(total / BOARD_PAGE_SIZE), 1);
   }
 
-  public static page(students: BoardStudent[], month: string, page: number, personal: boolean) {
+  public static page(month: string, current: number, pages: number, personal: boolean) {
     const container = new ContainerBuilder().setAccentColor(0x475b56);
-    const pages = this.pages(students.length);
-    const current = Math.min(Math.max(page, 0), pages - 1);
-    const slice = students.slice(current * BOARD_PAGE_SIZE, (current + 1) * BOARD_PAGE_SIZE);
 
-    text(container, [
-      `# ${GRADES_HEADER} Табель успеваемости`,
-      `-# ${MoscowTime.monthLabel(month)} · учеников: ${students.length}${personal ? " · эту страницу видите только вы" : ""}`,
-    ]);
-
-    container.addSeparatorComponents(new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small));
-
-    text(
-      container,
-      slice.length
-        ? slice.flatMap((student) => [
-            `${CharacterFormatter.facultyEmoji(student.faculty)} **${student.rpName}** · ${
-              student.average === null ? "оценок нет" : `**${GradeMath.formatAverage(student.average)}** / ${MAX_GRADE} · оценок ${student.grades}`
-            } · посещаемость ${student.attendance.total ? `${student.attendance.present} из ${student.attendance.total}` : "—"}`,
-            student.subjects.length
-              ? `-# ${student.subjects.map((entry) => `${entry.subject.name} ${GradeMath.formatAverage(entry.average)}`).join(" · ")}`.slice(0, 300)
-              : null,
-          ])
-        : ["-# Учеников пока нет."],
+    container.addMediaGalleryComponents(
+      new MediaGalleryBuilder().addItems(
+        new MediaGalleryItemBuilder()
+          .setURL(`attachment://${BOARD_FILE}`)
+          .setDescription(`Ведомость успеваемости, ${MoscowTime.monthLabel(month)}, лист ${current + 1} из ${pages}`),
+      ),
     );
 
-    text(container, [
-      "-# Средний балл и посещаемость за месяц. Подробный табель своего персонажа — /grades.",
-      `-# ${PAD}`,
-    ]);
+    if (personal) {
+      text(container, ["-# Этот лист видите только вы."]);
+    }
 
     if (pages > 1) {
       container.addActionRowComponents(
