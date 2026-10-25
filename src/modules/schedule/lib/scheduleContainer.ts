@@ -33,6 +33,7 @@ import {
   text,
 } from "./lessonCard.js";
 import { MoscowTime } from "./moscowTime.js";
+import { TimetableAction, TimetableView } from "./timetableView.js";
 import { ScheduleAction, ScheduleCustomIds, ScheduleFields } from "./scheduleCustomIds.js";
 
 const EDIT = "<:12784editor:1518587261707616407>";
@@ -104,6 +105,11 @@ export class ScheduleContainer {
           .setLabel("Новое занятие")
           .setEmoji(ADD)
           .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+          .setCustomId(TimetableView.customId(TimetableAction.Week, "self", 0))
+          .setLabel("Карточка расписания")
+          .setEmoji(SCHEDULE_HEADER)
+          .setStyle(ButtonStyle.Secondary),
       ),
     );
 

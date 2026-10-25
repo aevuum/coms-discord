@@ -111,6 +111,14 @@ export class LessonRepository {
     ]);
   }
 
+  public static week(guildId: string, from: Date, to: Date, characterId: string) {
+    return prisma.lesson.findMany({
+      where: { guildId, status: LessonStatus.APPROVED, startsAt: { gte: from, lt: to } },
+      orderBy: { startsAt: "asc" },
+      include: { subject: true, enrollments: { where: { characterId }, select: { id: true } } },
+    });
+  }
+
   public static findStartingBetween(from: Date, to: Date) {
     return prisma.lesson.findMany({
       where: { status: LessonStatus.APPROVED, startsAt: { gt: from, lte: to } },

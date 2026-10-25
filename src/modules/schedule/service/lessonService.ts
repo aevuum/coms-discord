@@ -14,7 +14,7 @@ import { MoscowTime } from "../lib/moscowTime.js";
 import { LessonRepository } from "../repositories/lessonRepository.js";
 import { ScheduleRepository } from "../repositories/scheduleRepository.js";
 import {
-  SCHEDULE_COMMAND,
+  SCHEDULE_TEACH_KEY,
   SCHEDULE_MANAGE_KEY,
   ScheduleError,
   type LessonDraft,
@@ -29,7 +29,7 @@ export class LessonService {
   public static async assertTeacher(interaction: BaseInteraction) {
     const subject = await PermissionService.resolveSubject(interaction);
 
-    if (!subject.guildId || !(await PermissionService.canUse(subject, SCHEDULE_COMMAND))) {
+    if (!subject.guildId || !(await PermissionService.canUse(subject, SCHEDULE_TEACH_KEY))) {
       throw new ScheduleError("Расписание доступно только преподавателям.");
     }
 

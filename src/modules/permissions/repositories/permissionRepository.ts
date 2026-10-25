@@ -38,11 +38,15 @@ export class PermissionRepository {
     });
   }
 
-  public static async renameKeys(mapping: Record<string, string>) {
+  public static async renameKeys(mapping: Record<string, string>, onlyIntoEmpty = false) {
     return prisma.$transaction(async (tx) => {
       let moved = 0;
 
       for (const [from, to] of Object.entries(mapping)) {
+        if (onlyIntoEmpty && (await tx.commandPermission.count({ where: { commandName: to } }))) {
+          continue;
+        }
+
         const rows = await tx.commandPermission.findMany({
           where: {
             commandName: from,

@@ -6,6 +6,7 @@ import type {
 } from "../../../database/generated/prisma/client.js";
 
 export const SCHEDULE_COMMAND = "schedule";
+export const SCHEDULE_TEACH_KEY = "schedule.teach";
 export const SCHEDULE_MANAGE_KEY = "manage.schedule";
 
 export const MAX_REMINDER_MINUTES = 120;

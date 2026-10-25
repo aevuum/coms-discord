@@ -8,7 +8,7 @@ import { MoscowTime } from "../lib/moscowTime.js";
 import { GradeRepository } from "../repositories/gradeRepository.js";
 import { ScheduleRepository } from "../repositories/scheduleRepository.js";
 import {
-  SCHEDULE_COMMAND,
+  SCHEDULE_TEACH_KEY,
   SCHEDULE_MANAGE_KEY,
   ScheduleError,
   type GradeDraft,
@@ -32,7 +32,7 @@ export type ReportCard = {
   attendance: { present: number; total: number };
 };
 
-const VIEW_KEYS = [SCHEDULE_COMMAND, SCHEDULE_MANAGE_KEY, "manage.characters"];
+const VIEW_KEYS = [SCHEDULE_TEACH_KEY, SCHEDULE_MANAGE_KEY, "manage.characters"];
 
 export class GradeService {
   public static async add(teacherId: string, lessonId: string, characterId: string, draft: GradeDraft) {

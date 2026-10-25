@@ -116,6 +116,19 @@ export const MANAGE_SECTIONS: ManageSection[] = [
   },
 ];
 
+export const EXTRA_PERMISSION_TARGETS = [
+  {
+    key: "schedule.teach",
+    label: "Преподавание",
+    description: "Создание занятий, оценки и посещаемость в /schedule",
+    access: CommandAccess.Restricted,
+  },
+];
+
+export const MOVED_PERMISSION_KEYS: Record<string, string> = {
+  schedule: "schedule.teach",
+};
+
 export const LEGACY_PERMISSION_KEYS: Record<string, string> = {
   award: "manage.awards",
   "manage-character": "manage.characters",

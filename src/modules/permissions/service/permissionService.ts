@@ -3,8 +3,10 @@ import { container, type ChatInputCommand } from "@sapphire/framework";
 import { PermissionFlagsBits, type BaseInteraction } from "discord.js";
 
 import {
+  EXTRA_PERMISSION_TARGETS,
   LEGACY_PERMISSION_KEYS,
   MANAGE_SECTIONS,
+  MOVED_PERMISSION_KEYS,
 } from "../../manage/lib/manageSections.js";
 import { PermissionCache } from "../cache/permissionCache.js";
 import { PermissionRepository } from "../repositories/permissionRepository.js";
@@ -266,7 +268,9 @@ export class PermissionService {
   }
 
   public static async migrateLegacyKeys() {
-    const moved = await PermissionRepository.renameKeys(LEGACY_PERMISSION_KEYS);
+    const moved =
+      (await PermissionRepository.renameKeys(LEGACY_PERMISSION_KEYS)) +
+      (await PermissionRepository.renameKeys(MOVED_PERMISSION_KEYS, true));
 
     if (moved) {
       PermissionCache.clear();
@@ -364,6 +368,12 @@ export class PermissionService {
       };
     }
 
+    const extra = EXTRA_PERMISSION_TARGETS.find((item) => item.key === key);
+
+    if (extra) {
+      return { ...extra };
+    }
+
     const command = container.stores.get("commands").get(key);
 
     if (!command || (!command.supportsChatInputCommands() && !command.supportsContextMenuCommands())) {
@@ -389,7 +399,11 @@ export class PermissionService {
       this.getTarget(section.key),
     ).filter((target): target is PermissionTarget => target !== null);
 
-    return [...commands, ...sections].filter((target) =>
+    const extras = EXTRA_PERMISSION_TARGETS.map((target) => this.getTarget(target.key)).filter(
+      (target): target is PermissionTarget => target !== null,
+    );
+
+    return [...commands, ...extras, ...sections].filter((target) =>
       this.isConfigurable(target),
     );
   }
