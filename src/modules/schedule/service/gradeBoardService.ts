@@ -1,6 +1,6 @@
 import { container } from "@sapphire/framework";
 
-import { AttachmentBuilder, MessageFlags, type Client } from "discord.js";
+import { AttachmentBuilder, MessageFlags, PermissionFlagsBits, type Client } from "discord.js";
 
 import type { Subject } from "../../../database/generated/prisma/client.js";
 
@@ -76,6 +76,11 @@ export class GradeBoardService {
     const settings = await ScheduleRepository.settings(guildId);
 
     if (settings?.gradesChannelId === channelId && (settings.gradesMessageId || !channelId)) {
+      if (channelId) {
+        this.lastKeys.delete(guildId);
+        await this.refresh(client, guildId);
+      }
+
       return;
     }
 
@@ -92,6 +97,12 @@ export class GradeBoardService {
 
     if (!channel.isSendable()) {
       throw new ScheduleError("Для табеля выберите текстовый канал или ветку.");
+    }
+
+    const me = channel.guild.members.me;
+
+    if (!me || !channel.permissionsFor(me)?.has(PermissionFlagsBits.AttachFiles)) {
+      throw new ScheduleError(`У бота нет права «Прикреплять файлы» в <#${channelId}> — без него ведомость-картинку не отправить.`);
     }
 
     const board = await this.render(MoscowTime.monthKey(new Date()), 0, false);
