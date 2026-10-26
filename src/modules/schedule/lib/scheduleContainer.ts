@@ -75,6 +75,8 @@ const channelSelect = (current: string | null) => {
     .setCustomId(ScheduleFields.Channel)
     .setChannelTypes(...LESSON_CHANNEL_TYPES)
     .setPlaceholder("Канал, ветка или форум, где пройдёт занятие")
+    .setMinValues(current ? 0 : 1)
+    .setMaxValues(1)
     .setRequired(!current);
 
   return current ? select.setDefaultChannels(current) : select;

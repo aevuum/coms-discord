@@ -214,6 +214,8 @@ export class ScheduleAdminContainer {
         .setCustomId(id)
         .setChannelTypes(ChannelType.GuildText)
         .setPlaceholder(placeholder)
+        .setMinValues(0)
+        .setMaxValues(1)
         .setRequired(false);
 
       return current ? select.setDefaultChannels(current) : select;
