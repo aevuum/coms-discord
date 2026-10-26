@@ -77,7 +77,7 @@ export class ScheduleAdminButtonHandler extends InteractionHandler {
         case ScheduleAdminAction.Settings: {
           const guildId = await LessonService.assertAdmin(interaction);
 
-          await interaction.showModal(ScheduleAdminContainer.settingsModal(await ScheduleRepository.settings(guildId)));
+          await interaction.showModal(ScheduleAdminContainer.settingsModal(await ScheduleRepository.settings(guildId), interaction.inGuild()));
           return;
         }
       }

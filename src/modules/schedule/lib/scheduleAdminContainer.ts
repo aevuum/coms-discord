@@ -2,8 +2,6 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChannelSelectMenuBuilder,
-  ChannelType,
   ContainerBuilder,
   LabelBuilder,
   ModalBuilder,
@@ -22,6 +20,7 @@ import {
 } from "../../../database/generated/prisma/client.js";
 
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
+import { ChannelField, SETTINGS_CHANNEL_TYPES } from "./channelField.js";
 import type { LessonDetails, LessonWithSubject } from "../types/schedule.js";
 import { ARROW, BACK, PAD, SCHEDULE_HEADER, SUCCESS, subjectTitle, text } from "./lessonCard.js";
 import { lessonLine, lessonOption, ScheduleContainer } from "./scheduleContainer.js";
@@ -208,31 +207,34 @@ export class ScheduleAdminContainer {
       );
   }
 
-  public static settingsModal(settings: ScheduleSettings | null) {
-    const channelSelect = (id: string, placeholder: string, current: string | null | undefined) => {
-      const select = new ChannelSelectMenuBuilder()
-        .setCustomId(id)
-        .setChannelTypes(ChannelType.GuildText)
-        .setPlaceholder(placeholder)
-        .setMinValues(0)
-        .setMaxValues(1)
-        .setRequired(false);
-
-      return current ? select.setDefaultChannels(current) : select;
-    };
+  public static settingsModal(settings: ScheduleSettings | null, inGuild: boolean) {
 
     return new ModalBuilder()
       .setCustomId(ScheduleCustomIds.admin(ScheduleAdminAction.SettingsModal))
       .setTitle("Настройки расписания")
       .addLabelComponents(
-        new LabelBuilder()
-          .setLabel("Канал заявок")
-          .setDescription("Сюда бот присылает новые занятия с кнопками утверждения. Пусто — только в /manage")
-          .setChannelSelectMenuComponent(channelSelect(ScheduleFields.ReviewChannel, "Канал для заявок на занятия", settings?.reviewChannelId)),
-        new LabelBuilder()
-          .setLabel("Канал табеля")
-          .setDescription("Бот держит здесь общий табель всех учеников. Пусто — не публиковать")
-          .setChannelSelectMenuComponent(channelSelect(ScheduleFields.GradesChannel, "Канал для табеля успеваемости", settings?.gradesChannelId)),
+        ChannelField.label({
+          id: ScheduleFields.ReviewChannel,
+          label: "Канал заявок",
+          description: "Сюда бот присылает новые занятия с кнопками утверждения. Пусто — только в /manage",
+          placeholder: "Канал для заявок на занятия",
+          types: SETTINGS_CHANNEL_TYPES,
+          current: settings?.reviewChannelId ?? null,
+          required: false,
+          inGuild,
+          empty: "только в /manage",
+        }),
+        ChannelField.label({
+          id: ScheduleFields.GradesChannel,
+          label: "Канал табеля",
+          description: "Бот держит здесь общий табель всех учеников. Пусто — не публиковать",
+          placeholder: "Канал для табеля успеваемости",
+          types: SETTINGS_CHANNEL_TYPES,
+          current: settings?.gradesChannelId ?? null,
+          required: false,
+          inGuild,
+          empty: "не публиковать",
+        }),
         new LabelBuilder()
           .setLabel("Напоминание, минут до начала")
           .setTextInputComponent(

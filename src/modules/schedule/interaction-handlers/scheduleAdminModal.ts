@@ -5,6 +5,7 @@ import {
 
 import { MessageFlags, ModalSubmitInteraction, type ContainerBuilder } from "discord.js";
 
+import { ChannelField, SETTINGS_CHANNEL_TYPES } from "../lib/channelField.js";
 import { LessonCard } from "../lib/lessonCard.js";
 import { ScheduleAdminViews } from "../lib/scheduleAdminViews.js";
 import { REVIEW_FLAG, ScheduleAdminAction, ScheduleCustomIds, ScheduleFields } from "../lib/scheduleCustomIds.js";
@@ -87,7 +88,7 @@ export class ScheduleAdminModalHandler extends InteractionHandler {
       }
 
       default: {
-        const channel = (key: string) => interaction.fields.getSelectedChannels(key)?.first()?.id ?? null;
+        const channel = (key: string) => ChannelField.read(interaction, key, guildId, SETTINGS_CHANNEL_TYPES);
 
         await SubjectService.saveSettings(guildId, channel(ScheduleFields.ReviewChannel), field(ScheduleFields.ReminderMinutes));
         await GradeBoardService.setChannel(interaction.client, guildId, channel(ScheduleFields.GradesChannel));

@@ -50,12 +50,12 @@ export class ScheduleButtonHandler extends InteractionHandler {
             throw new ScheduleError("Администрация ещё не добавила ни одного предмета.");
           }
 
-          await interaction.showModal(ScheduleContainer.createModal(subjects));
+          await interaction.showModal(ScheduleContainer.createModal(subjects, interaction.inGuild()));
           return;
         }
 
         case ScheduleAction.Edit:
-          await interaction.showModal(ScheduleContainer.editModal(await LessonService.owned(teacherId, lessonId)));
+          await interaction.showModal(ScheduleContainer.editModal(await LessonService.owned(teacherId, lessonId), interaction.inGuild()));
           return;
 
         case ScheduleAction.Cancel:

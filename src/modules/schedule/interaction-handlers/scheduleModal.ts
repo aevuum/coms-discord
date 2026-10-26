@@ -7,7 +7,9 @@ import { MessageFlags, ModalSubmitInteraction } from "discord.js";
 
 import { GradeWorkType, LessonStatus } from "../../../database/generated/prisma/client.js";
 
+import { ChannelField } from "../lib/channelField.js";
 import { WORK_TYPE_LABELS } from "../lib/gradeMath.js";
+import { LESSON_CHANNEL_TYPES } from "../lib/scheduleContainer.js";
 import { ScheduleAction, ScheduleCustomIds, ScheduleFields } from "../lib/scheduleCustomIds.js";
 import { ScheduleResponder } from "../lib/scheduleResponder.js";
 import { ScheduleView } from "../lib/scheduleView.js";
@@ -43,7 +45,6 @@ export class ScheduleModalHandler extends InteractionHandler {
     const [lessonId, characterId] = result.args;
     const field = (id: string) => interaction.fields.getTextInputValue(id);
     const select = (id: string) => interaction.fields.getStringSelectValues(id)[0] ?? "";
-    const channel = () => interaction.fields.getSelectedChannels(ScheduleFields.Channel)?.first()?.id ?? null;
 
     try {
       if (interaction.isFromMessage()) {
@@ -53,6 +54,7 @@ export class ScheduleModalHandler extends InteractionHandler {
       }
 
       const guildId = await LessonService.assertTeacher(interaction);
+      const channel = () => ChannelField.read(interaction, ScheduleFields.Channel, guildId, LESSON_CHANNEL_TYPES);
 
       switch (result.action) {
         case ScheduleAction.CreateModal: {

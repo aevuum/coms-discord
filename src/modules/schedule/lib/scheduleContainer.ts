@@ -2,7 +2,6 @@ import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  ChannelSelectMenuBuilder,
   ChannelType,
   ContainerBuilder,
   LabelBuilder,
@@ -34,6 +33,7 @@ import {
   subjectTitle,
   text,
 } from "./lessonCard.js";
+import { ChannelField } from "./channelField.js";
 import { MoscowTime } from "./moscowTime.js";
 import { TIMETABLE_FILE } from "./timetableCard.js";
 import { MAX_WEEK_OFFSET } from "./timetableView.js";
@@ -70,17 +70,18 @@ export const LESSON_CHANNEL_TYPES = [
   ChannelType.GuildVoice,
 ];
 
-const channelSelect = (current: string | null) => {
-  const select = new ChannelSelectMenuBuilder()
-    .setCustomId(ScheduleFields.Channel)
-    .setChannelTypes(...LESSON_CHANNEL_TYPES)
-    .setPlaceholder("Канал, ветка или форум, где пройдёт занятие")
-    .setMinValues(current ? 0 : 1)
-    .setMaxValues(1)
-    .setRequired(!current);
-
-  return current ? select.setDefaultChannels(current) : select;
-};
+const roomField = (current: string | null, inGuild: boolean) =>
+  ChannelField.label({
+    id: ScheduleFields.Channel,
+    label: "Кабинет",
+    description: "Канал, активная ветка или форум — в форуме бот создаст пост занятия",
+    placeholder: "Канал, ветка или форум, где пройдёт занятие",
+    types: LESSON_CHANNEL_TYPES,
+    current,
+    required: !current,
+    inGuild,
+    empty: current ? "оставить прежний" : undefined,
+  });
 
 export class ScheduleContainer {
   public static home(lessons: LessonWithSubject[], week: number, weekLessons: LessonWithSubject[], notice: string | null = null) {
@@ -268,7 +269,7 @@ export class ScheduleContainer {
     ]);
   }
 
-  public static createModal(subjects: Subject[]) {
+  public static createModal(subjects: Subject[], inGuild: boolean) {
     return new ModalBuilder()
       .setCustomId(ScheduleCustomIds.teacher(ScheduleAction.CreateModal))
       .setTitle("Новое занятие")
@@ -294,10 +295,7 @@ export class ScheduleContainer {
           .setLabel("Дата и время начала (МСК)")
           .setDescription("Формат: ДД.ММ.ГГГГ ЧЧ:ММ. Год можно не указывать")
           .setTextInputComponent(input(ScheduleFields.StartsAt, TextInputStyle.Short, true, 20, "25.10.2026 19:00")),
-        new LabelBuilder()
-          .setLabel("Кабинет")
-          .setDescription("Канал, активная ветка или форум — в форуме бот создаст пост занятия")
-          .setChannelSelectMenuComponent(channelSelect(null)),
+        roomField(null, inGuild),
         new LabelBuilder()
           .setLabel("Количество мест")
           .setDescription("Пусто — без ограничений")
@@ -305,7 +303,7 @@ export class ScheduleContainer {
       );
   }
 
-  public static editModal(lesson: LessonWithSubject) {
+  public static editModal(lesson: LessonWithSubject, inGuild: boolean) {
     return new ModalBuilder()
       .setCustomId(ScheduleCustomIds.teacher(ScheduleAction.EditModal, lesson.id))
       .setTitle(`${lesson.subject.name} · изменение`.slice(0, 45))
@@ -319,7 +317,7 @@ export class ScheduleContainer {
           .setTextInputComponent(
             input(ScheduleFields.StartsAt, TextInputStyle.Short, true, 20, "25.10.2026 19:00", MoscowTime.format(lesson.startsAt)),
           ),
-        new LabelBuilder().setLabel("Кабинет").setChannelSelectMenuComponent(channelSelect(lesson.channelId)),
+        roomField(lesson.channelId, inGuild),
         new LabelBuilder()
           .setLabel("Количество мест")
           .setDescription("Пусто — без ограничений")
