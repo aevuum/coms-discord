@@ -54,7 +54,7 @@ export class PermissionContainer {
     );
 
     container.addActionRowComponents(
-      PermissionComponents.targetSelect(targets),
+      ...PermissionComponents.targetSelects(targets),
     );
 
     container.addActionRowComponents(ManageComponents.homeRow());

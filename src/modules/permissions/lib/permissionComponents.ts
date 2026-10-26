@@ -17,20 +17,30 @@ import { PermissionCustomIds } from "./permissionCustomIds.js";
 const MAX_SELECT_OPTIONS = 25;
 
 export class PermissionComponents {
-  public static targetSelect(targets: PermissionTargetEntry[]) {
-    return new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-      new StringSelectMenuBuilder()
-        .setCustomId(PermissionCustomIds.target())
-        .setPlaceholder("Выберите команду или раздел")
-        .addOptions(
-          targets.slice(0, MAX_SELECT_OPTIONS).map((target) =>
-            new StringSelectMenuOptionBuilder()
-              .setLabel(target.label.slice(0, 100))
-              .setDescription(this.summary(target).slice(0, 100))
-              .setValue(target.key),
-          ),
+  public static targetSelects(targets: PermissionTargetEntry[]) {
+    const commands = targets.filter((target) => target.label.startsWith("/"));
+    const others = targets.filter((target) => !target.label.startsWith("/"));
+
+    return [
+      ["commands", "Команды", commands],
+      ["sections", "Разделы управления и права", others],
+    ]
+      .filter(([, , list]) => (list as PermissionTargetEntry[]).length)
+      .map(([group, placeholder, list]) =>
+        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+          new StringSelectMenuBuilder()
+            .setCustomId(PermissionCustomIds.target(group as string))
+            .setPlaceholder(placeholder as string)
+            .addOptions(
+              (list as PermissionTargetEntry[]).slice(0, MAX_SELECT_OPTIONS).map((target) =>
+                new StringSelectMenuOptionBuilder()
+                  .setLabel(target.label.slice(0, 100))
+                  .setDescription(this.summary(target).slice(0, 100))
+                  .setValue(target.key),
+              ),
+            ),
         ),
-    );
+      );
   }
 
   public static roleSelect(target: PermissionTargetEntry, rolePage: RolePage) {

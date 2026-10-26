@@ -13,8 +13,8 @@ export class PermissionCustomIds {
     return `${this.PREFIX}:${PermissionAction.Overview}`;
   }
 
-  public static target() {
-    return `${this.PREFIX}:${PermissionAction.Target}`;
+  public static target(group: string) {
+    return `${this.PREFIX}:${PermissionAction.Target}:${group}`;
   }
 
   public static roles(key: string, page: number) {
