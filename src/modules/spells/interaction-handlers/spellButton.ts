@@ -20,6 +20,7 @@ const BUTTON_ACTIONS = new Set<SpellAction>([
   SpellAction.Description,
   SpellAction.Delete,
   SpellAction.DeleteConfirm,
+  SpellAction.Search,
 ]);
 
 export class SpellButtonHandler extends InteractionHandler {
@@ -79,6 +80,12 @@ export class SpellButtonHandler extends InteractionHandler {
               SpellContainer.detail(spell, result.mode, Number(page) || 0),
             ],
           });
+
+          return;
+        }
+
+        case SpellAction.Search: {
+          await interaction.showModal(SpellComponents.searchModal(result.mode));
 
           return;
         }

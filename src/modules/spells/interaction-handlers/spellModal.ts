@@ -19,6 +19,7 @@ const MODAL_ACTIONS = new Set<SpellAction>([
   SpellAction.CreateModal,
   SpellAction.EditModal,
   SpellAction.DescriptionModal,
+  SpellAction.SearchModal,
 ]);
 
 export class SpellModalHandler extends InteractionHandler {
@@ -45,6 +46,7 @@ export class SpellModalHandler extends InteractionHandler {
   public override async run(
     interaction: ModalSubmitInteraction,
     result: {
+      mode: SpellMode;
       action: SpellAction;
       args: string[];
     },
@@ -54,6 +56,21 @@ export class SpellModalHandler extends InteractionHandler {
         await interaction.deferUpdate();
       } else {
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+      }
+
+      if (result.action === SpellAction.SearchModal) {
+        if (result.mode === SpellMode.Manage) {
+          await SpellService.assertCanManage(interaction);
+        }
+
+        const query = interaction.fields.getTextInputValue(SpellModalFields.Query);
+
+        await interaction.editReply({
+          flags: MessageFlags.IsComponentsV2,
+          components: [SpellContainer.search(query, await SpellService.search(query), result.mode)],
+        });
+
+        return;
       }
 
       await SpellService.assertCanManage(interaction);

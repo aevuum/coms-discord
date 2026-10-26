@@ -24,6 +24,7 @@ import {
   DIFFICULTY_STARS,
 } from "./spellConfig.js";
 import { SpellComponents } from "./spellComponents.js";
+import type { SearchHit } from "./spellSearch.js";
 
 const ARROW = "<:48765whitearrow:1518587298281685173>";
 const WAND = "<:wand:1562520778828677280>";
@@ -133,6 +134,52 @@ export class SpellContainer {
     container.addActionRowComponents(
       SpellComponents.detailActions(spell, mode, page),
     );
+
+    return container;
+  }
+
+  public static search(query: string, hits: SearchHit<Spell>[], mode: SpellMode) {
+    const container = new ContainerBuilder().setAccentColor(0x475b56);
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        [
+          `# ${BOOK} Поиск заклинаний`,
+          `-# Запрос: «${query.trim().slice(0, 60)}» · ${hits.length ? `найдено ${hits.length}` : "ничего не найдено"}`,
+        ].join("\n"),
+      ),
+    );
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addTextDisplayComponents(
+      new TextDisplayBuilder().setContent(
+        hits.length
+          ? hits
+              .map(({ item, matched, exact }) =>
+                [
+                  this.listEntry(item),
+                  !exact
+                    ? `-# возможно, вы имели в виду «${matched}»`
+                    : matched !== item.name && matched !== item.incantations[0]
+                      ? `-# найдено по формуле «${matched}»`
+                      : null,
+                ]
+                  .filter((line) => line !== null)
+                  .join("\n"),
+              )
+              .join("\n")
+          : `${ARROW} Похожих заклинаний нет. Попробуйте часть названия или формулы, например «экспел» или «люмос».`,
+      ),
+    );
+
+    container.addSeparatorComponents(
+      new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Large),
+    );
+
+    container.addActionRowComponents(...SpellComponents.searchResults(hits, mode));
 
     return container;
   }

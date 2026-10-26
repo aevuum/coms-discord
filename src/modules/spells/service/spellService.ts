@@ -12,6 +12,7 @@ import { SPELL_SEED } from "../data/spellSeed.js";
 import { Storage } from "../../../lib/storage.js";
 import { GIF_CACHE_TTL_MS, GIFS_STORED_PER_SPELL, MAX_SPELL_COST } from "../lib/spellConfig.js";
 import { SpellMatcher } from "../lib/spellMatcher.js";
+import { SpellSearch } from "../lib/spellSearch.js";
 import {
   SpellRepository,
   type SpellData,
@@ -84,6 +85,12 @@ export class SpellService {
       totalPages,
       total: spells.length,
     };
+  }
+
+  public static async search(query: string) {
+    await this.ensureCache();
+
+    return SpellSearch.find(SpellCache.all(), query, this.PAGE_SIZE);
   }
 
   public static async getSpell(spellId: string) {

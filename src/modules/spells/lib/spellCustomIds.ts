@@ -12,6 +12,8 @@ export enum SpellAction {
   DescriptionModal = "description_modal",
   Delete = "delete",
   DeleteConfirm = "delete_confirm",
+  Search = "search",
+  SearchModal = "search_modal",
 }
 
 export const SpellModalFields = {
@@ -21,6 +23,7 @@ export const SpellModalFields = {
   ManaCost: "mana_cost",
   ImageUrl: "image_url",
   Description: "description",
+  Query: "query",
 } as const;
 
 export class SpellCustomIds {
@@ -68,6 +71,14 @@ export class SpellCustomIds {
 
   public static deleteConfirm(spellId: string, page: number) {
     return `${this.PREFIX}:${SpellMode.Manage}:${SpellAction.DeleteConfirm}:${spellId}:${page}`;
+  }
+
+  public static search(mode: SpellMode) {
+    return `${this.PREFIX}:${mode}:${SpellAction.Search}`;
+  }
+
+  public static searchModal(mode: SpellMode) {
+    return `${this.PREFIX}:${mode}:${SpellAction.SearchModal}`;
   }
 
   public static parse(customId: string) {

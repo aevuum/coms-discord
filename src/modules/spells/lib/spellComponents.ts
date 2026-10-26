@@ -17,6 +17,7 @@ import { SpellMode, type SpellPage } from "../types/spells.js";
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { Mana } from "./mana.js";
 import { DIFFICULTY_LABELS, DIFFICULTY_ORDER } from "./spellConfig.js";
+import type { SearchHit } from "./spellSearch.js";
 import { SpellCustomIds, SpellModalFields } from "./spellCustomIds.js";
 
 export class SpellComponents {
@@ -56,6 +57,8 @@ export class SpellComponents {
         .setEmoji("<:48765whitearrow:1518587298281685173>")
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(page.page >= page.totalPages - 1),
+
+      this.searchButton(mode),
     );
 
     if (mode === SpellMode.Manage) {
@@ -234,10 +237,73 @@ export class SpellComponents {
       );
   }
 
-  private static backButton(mode: SpellMode, page: number) {
+  public static searchButton(mode: SpellMode, label = "Поиск") {
+    return new ButtonBuilder()
+      .setCustomId(SpellCustomIds.search(mode))
+      .setLabel(label)
+      .setEmoji("<:6849serverguide:1518587250802426078>")
+      .setStyle(ButtonStyle.Primary);
+  }
+
+  public static searchModal(mode: SpellMode) {
+    return new ModalBuilder()
+      .setCustomId(SpellCustomIds.searchModal(mode))
+      .setTitle("Поиск заклинания")
+      .addLabelComponents(
+        new LabelBuilder()
+          .setLabel("Название или формула")
+          .setDescription("Можно часть слова или с опечаткой — найдём похожие")
+          .setTextInputComponent(
+            new TextInputBuilder()
+              .setCustomId(SpellModalFields.Query)
+              .setStyle(TextInputStyle.Short)
+              .setRequired(true)
+              .setMinLength(2)
+              .setMaxLength(60)
+              .setPlaceholder("экспелиармус"),
+          ),
+      );
+  }
+
+  public static searchResults(hits: SearchHit<Spell>[], mode: SpellMode) {
+    const rows: ActionRowBuilder<StringSelectMenuBuilder | ButtonBuilder>[] = [];
+
+    if (hits.length) {
+      rows.push(
+        new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+          new StringSelectMenuBuilder()
+            .setCustomId(SpellCustomIds.select(mode, 0))
+            .setPlaceholder("Открыть заклинание")
+            .addOptions(
+              hits.map(({ item }) =>
+                new StringSelectMenuOptionBuilder()
+                  .setLabel(item.name.slice(0, 100))
+                  .setDescription(`${item.incantations[0] ?? ""} · ${Mana.spellCost(item)} маны`.slice(0, 100))
+                  .setValue(item.id),
+              ),
+            ),
+        ),
+      );
+    }
+
+    const buttons = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      this.searchButton(mode, "Искать ещё"),
+      this.backButton(mode, 0, "Все заклинания"),
+    );
+
+    if (mode === SpellMode.Manage) {
+      buttons.addComponents(ManageComponents.homeButton());
+    }
+
+    rows.push(buttons);
+
+    return rows;
+  }
+
+  private static backButton(mode: SpellMode, page: number, label = "К списку") {
     return new ButtonBuilder()
       .setCustomId(SpellCustomIds.page(mode, page))
-      .setLabel("К списку")
+      .setLabel(label)
       .setEmoji("<:26204blackarrow:1518587278467792997>")
       .setStyle(ButtonStyle.Secondary);
   }
