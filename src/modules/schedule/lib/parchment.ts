@@ -98,7 +98,7 @@ export class Parchment {
     return this.canvas.encode("jpeg", 90);
   }
 
-  private static registerFonts() {
+  public static registerFonts() {
     if (this.fontsReady) {
       return;
     }

@@ -810,6 +810,23 @@ export type EnumGradeWorkTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
 }
 
+export type EnumHousePointsSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.HousePointsSource | Prisma.EnumHousePointsSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel> | $Enums.HousePointsSource
+}
+
+export type EnumHousePointsSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HousePointsSource | Prisma.EnumHousePointsSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHousePointsSourceWithAggregatesFilter<$PrismaModel> | $Enums.HousePointsSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1563,6 +1580,23 @@ export type NestedEnumGradeWorkTypeWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGradeWorkTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumHousePointsSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.HousePointsSource | Prisma.EnumHousePointsSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel> | $Enums.HousePointsSource
+}
+
+export type NestedEnumHousePointsSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HousePointsSource | Prisma.EnumHousePointsSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HousePointsSource[] | Prisma.ListEnumHousePointsSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHousePointsSourceWithAggregatesFilter<$PrismaModel> | $Enums.HousePointsSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
 }
 
 

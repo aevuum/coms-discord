@@ -1377,3 +1377,43 @@ model ScheduleSettings {
 
   updatedAt DateTime @updatedAt
 }
+
+enum HousePointsSource {
+  MESSAGE
+  TUPPER
+  MANUAL
+}
+
+model HousePoints {
+  faculty CharacterFaculty @id
+  points  Int              @default(0)
+
+  updatedAt DateTime @updatedAt
+}
+
+model HousePointsLog {
+  id String @id @default(cuid())
+
+  guildId   String
+  faculty   CharacterFaculty
+  delta     Int
+  actorId   String
+  source    HousePointsSource
+  messageId String?
+  channelId String?
+  note      String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([messageId, faculty])
+  @@index([createdAt])
+}
+
+model HousePointsSettings {
+  guildId String @id
+
+  channelId String?
+  messageId String?
+
+  updatedAt DateTime @updatedAt
+}

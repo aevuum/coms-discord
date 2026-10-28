@@ -75,6 +75,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Points,
+    key: "manage.points",
+    label: "Очки факультетов",
+    emoji: "<:sec_rewards:1562521791329468467>",
+    description: "Песочные часы факультетов, ручные начисления и обнуление",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Applications,
     key: "manage.applications",
     label: "Набор в команду",
@@ -121,6 +129,12 @@ export const EXTRA_PERMISSION_TARGETS = [
     key: "schedule.teach",
     label: "Преподавание",
     description: "Создание занятий, оценки и посещаемость в /schedule",
+    access: CommandAccess.Restricted,
+  },
+  {
+    key: "points.award",
+    label: "Очки факультетов",
+    description: "Сообщения вида «+10 Гриффиндор» меняют очки факультетов",
     access: CommandAccess.Restricted,
   },
 ];

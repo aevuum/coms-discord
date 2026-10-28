@@ -7,6 +7,7 @@ import { MessageSplitter } from "../lib/messageSplitter.js";
 import { TupperRepository } from "../repositories/tupperRepository.js";
 import { TupperMessageActions } from "./tupperMessageActions.js";
 import { WebhookService } from "./webhookService.js";
+import { PointsService } from "../../points/service/pointsService.js";
 import { SpellCastService } from "../../spells/service/spellCastService.js";
 import { EmojiAccess } from "../../../lib/emojiAccess.js";
 import { Storage } from "../../../lib/storage.js";
@@ -108,6 +109,8 @@ export class TupperMessageService {
       await SpellCastService.handle(tupper.character.id, content, sent).catch(
         (error) => container.logger.error(error),
       );
+
+      await PointsService.handleTupper(message, sent, content).catch((error) => container.logger.error(error));
     }
 
     return true;

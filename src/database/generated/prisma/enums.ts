@@ -291,3 +291,12 @@ export const GradeWorkType = {
 } as const
 
 export type GradeWorkType = (typeof GradeWorkType)[keyof typeof GradeWorkType]
+
+
+export const HousePointsSource = {
+  MESSAGE: 'MESSAGE',
+  TUPPER: 'TUPPER',
+  MANUAL: 'MANUAL'
+} as const
+
+export type HousePointsSource = (typeof HousePointsSource)[keyof typeof HousePointsSource]

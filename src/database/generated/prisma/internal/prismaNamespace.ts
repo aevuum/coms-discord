@@ -442,7 +442,10 @@ export const ModelName = {
   LessonEnrollment: 'LessonEnrollment',
   LessonNotification: 'LessonNotification',
   CharacterGrade: 'CharacterGrade',
-  ScheduleSettings: 'ScheduleSettings'
+  ScheduleSettings: 'ScheduleSettings',
+  HousePoints: 'HousePoints',
+  HousePointsLog: 'HousePointsLog',
+  HousePointsSettings: 'HousePointsSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -458,7 +461,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll" | "rune" | "characterRune" | "runeStudyRequest" | "spellFormula" | "artifactMaterial" | "artifactBlank" | "artifactRecipe" | "artifactRecipeRune" | "artifactRecipeMaterial" | "artifact" | "artifactRune" | "runeOperation" | "runeAuditLog" | "runeSettings" | "tupperMessage" | "subject" | "lesson" | "lessonEnrollment" | "lessonNotification" | "characterGrade" | "scheduleSettings"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll" | "rune" | "characterRune" | "runeStudyRequest" | "spellFormula" | "artifactMaterial" | "artifactBlank" | "artifactRecipe" | "artifactRecipeRune" | "artifactRecipeMaterial" | "artifact" | "artifactRune" | "runeOperation" | "runeAuditLog" | "runeSettings" | "tupperMessage" | "subject" | "lesson" | "lessonEnrollment" | "lessonNotification" | "characterGrade" | "scheduleSettings" | "housePoints" | "housePointsLog" | "housePointsSettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4828,6 +4831,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HousePoints: {
+      payload: Prisma.$HousePointsPayload<ExtArgs>
+      fields: Prisma.HousePointsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HousePointsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HousePointsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>
+        }
+        findFirst: {
+          args: Prisma.HousePointsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HousePointsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>
+        }
+        findMany: {
+          args: Prisma.HousePointsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>[]
+        }
+        create: {
+          args: Prisma.HousePointsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>
+        }
+        createMany: {
+          args: Prisma.HousePointsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HousePointsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>[]
+        }
+        delete: {
+          args: Prisma.HousePointsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>
+        }
+        update: {
+          args: Prisma.HousePointsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>
+        }
+        deleteMany: {
+          args: Prisma.HousePointsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HousePointsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HousePointsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>[]
+        }
+        upsert: {
+          args: Prisma.HousePointsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsPayload>
+        }
+        aggregate: {
+          args: Prisma.HousePointsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHousePoints>
+        }
+        groupBy: {
+          args: Prisma.HousePointsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HousePointsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HousePointsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HousePointsCountAggregateOutputType> | number
+        }
+      }
+    }
+    HousePointsLog: {
+      payload: Prisma.$HousePointsLogPayload<ExtArgs>
+      fields: Prisma.HousePointsLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HousePointsLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HousePointsLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>
+        }
+        findFirst: {
+          args: Prisma.HousePointsLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HousePointsLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>
+        }
+        findMany: {
+          args: Prisma.HousePointsLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>[]
+        }
+        create: {
+          args: Prisma.HousePointsLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>
+        }
+        createMany: {
+          args: Prisma.HousePointsLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HousePointsLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>[]
+        }
+        delete: {
+          args: Prisma.HousePointsLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>
+        }
+        update: {
+          args: Prisma.HousePointsLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.HousePointsLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HousePointsLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HousePointsLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.HousePointsLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsLogPayload>
+        }
+        aggregate: {
+          args: Prisma.HousePointsLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHousePointsLog>
+        }
+        groupBy: {
+          args: Prisma.HousePointsLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HousePointsLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HousePointsLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HousePointsLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    HousePointsSettings: {
+      payload: Prisma.$HousePointsSettingsPayload<ExtArgs>
+      fields: Prisma.HousePointsSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HousePointsSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HousePointsSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.HousePointsSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HousePointsSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.HousePointsSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.HousePointsSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.HousePointsSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HousePointsSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.HousePointsSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>
+        }
+        update: {
+          args: Prisma.HousePointsSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.HousePointsSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HousePointsSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HousePointsSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.HousePointsSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HousePointsSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.HousePointsSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHousePointsSettings>
+        }
+        groupBy: {
+          args: Prisma.HousePointsSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HousePointsSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HousePointsSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HousePointsSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -5759,6 +5984,41 @@ export const ScheduleSettingsScalarFieldEnum = {
 export type ScheduleSettingsScalarFieldEnum = (typeof ScheduleSettingsScalarFieldEnum)[keyof typeof ScheduleSettingsScalarFieldEnum]
 
 
+export const HousePointsScalarFieldEnum = {
+  faculty: 'faculty',
+  points: 'points',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HousePointsScalarFieldEnum = (typeof HousePointsScalarFieldEnum)[keyof typeof HousePointsScalarFieldEnum]
+
+
+export const HousePointsLogScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  faculty: 'faculty',
+  delta: 'delta',
+  actorId: 'actorId',
+  source: 'source',
+  messageId: 'messageId',
+  channelId: 'channelId',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type HousePointsLogScalarFieldEnum = (typeof HousePointsLogScalarFieldEnum)[keyof typeof HousePointsLogScalarFieldEnum]
+
+
+export const HousePointsSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HousePointsSettingsScalarFieldEnum = (typeof HousePointsSettingsScalarFieldEnum)[keyof typeof HousePointsSettingsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -6269,6 +6529,20 @@ export type ListEnumGradeWorkTypeFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'HousePointsSource'
+ */
+export type EnumHousePointsSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HousePointsSource'>
+    
+
+
+/**
+ * Reference to a field of type 'HousePointsSource[]'
+ */
+export type ListEnumHousePointsSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HousePointsSource[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -6450,6 +6724,9 @@ export type GlobalOmitConfig = {
   lessonNotification?: Prisma.LessonNotificationOmit
   characterGrade?: Prisma.CharacterGradeOmit
   scheduleSettings?: Prisma.ScheduleSettingsOmit
+  housePoints?: Prisma.HousePointsOmit
+  housePointsLog?: Prisma.HousePointsLogOmit
+  housePointsSettings?: Prisma.HousePointsSettingsOmit
 }
 
 /* Types for Logging */

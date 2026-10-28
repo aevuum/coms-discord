@@ -15,6 +15,7 @@ export enum ManageSectionId {
   Permissions = "permissions",
   Runes = "runes",
   Schedule = "schedule",
+  Points = "points",
 }
 
 export type ManageSection = {

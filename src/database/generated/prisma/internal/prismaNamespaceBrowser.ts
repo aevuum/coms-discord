@@ -109,7 +109,10 @@ export const ModelName = {
   LessonEnrollment: 'LessonEnrollment',
   LessonNotification: 'LessonNotification',
   CharacterGrade: 'CharacterGrade',
-  ScheduleSettings: 'ScheduleSettings'
+  ScheduleSettings: 'ScheduleSettings',
+  HousePoints: 'HousePoints',
+  HousePointsLog: 'HousePointsLog',
+  HousePointsSettings: 'HousePointsSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1018,6 +1021,41 @@ export const ScheduleSettingsScalarFieldEnum = {
 } as const
 
 export type ScheduleSettingsScalarFieldEnum = (typeof ScheduleSettingsScalarFieldEnum)[keyof typeof ScheduleSettingsScalarFieldEnum]
+
+
+export const HousePointsScalarFieldEnum = {
+  faculty: 'faculty',
+  points: 'points',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HousePointsScalarFieldEnum = (typeof HousePointsScalarFieldEnum)[keyof typeof HousePointsScalarFieldEnum]
+
+
+export const HousePointsLogScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  faculty: 'faculty',
+  delta: 'delta',
+  actorId: 'actorId',
+  source: 'source',
+  messageId: 'messageId',
+  channelId: 'channelId',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type HousePointsLogScalarFieldEnum = (typeof HousePointsLogScalarFieldEnum)[keyof typeof HousePointsLogScalarFieldEnum]
+
+
+export const HousePointsSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HousePointsSettingsScalarFieldEnum = (typeof HousePointsSettingsScalarFieldEnum)[keyof typeof HousePointsSettingsScalarFieldEnum]
 
 
 export const SortOrder = {

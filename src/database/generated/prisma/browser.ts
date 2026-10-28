@@ -312,3 +312,18 @@ export type CharacterGrade = Prisma.CharacterGradeModel
  * 
  */
 export type ScheduleSettings = Prisma.ScheduleSettingsModel
+/**
+ * Model HousePoints
+ * 
+ */
+export type HousePoints = Prisma.HousePointsModel
+/**
+ * Model HousePointsLog
+ * 
+ */
+export type HousePointsLog = Prisma.HousePointsLogModel
+/**
+ * Model HousePointsSettings
+ * 
+ */
+export type HousePointsSettings = Prisma.HousePointsSettingsModel
