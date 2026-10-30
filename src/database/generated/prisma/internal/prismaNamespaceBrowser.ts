@@ -112,7 +112,10 @@ export const ModelName = {
   ScheduleSettings: 'ScheduleSettings',
   HousePoints: 'HousePoints',
   HousePointsLog: 'HousePointsLog',
-  HousePointsSettings: 'HousePointsSettings'
+  HousePointsSettings: 'HousePointsSettings',
+  HalloweenSettings: 'HalloweenSettings',
+  HalloweenDrop: 'HalloweenDrop',
+  HalloweenOffer: 'HalloweenOffer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1056,6 +1059,54 @@ export const HousePointsSettingsScalarFieldEnum = {
 } as const
 
 export type HousePointsSettingsScalarFieldEnum = (typeof HousePointsSettingsScalarFieldEnum)[keyof typeof HousePointsSettingsScalarFieldEnum]
+
+
+export const HalloweenSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  enabled: 'enabled',
+  channelIds: 'channelIds',
+  endsAt: 'endsAt',
+  nextDropAt: 'nextDropAt',
+  minMinutes: 'minMinutes',
+  maxMinutes: 'maxMinutes',
+  lifetimeMinutes: 'lifetimeMinutes',
+  candyMin: 'candyMin',
+  candyMax: 'candyMax',
+  candyRate: 'candyRate',
+  pumpkinRate: 'pumpkinRate',
+  candyItemId: 'candyItemId',
+  pumpkinItemId: 'pumpkinItemId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HalloweenSettingsScalarFieldEnum = (typeof HalloweenSettingsScalarFieldEnum)[keyof typeof HalloweenSettingsScalarFieldEnum]
+
+
+export const HalloweenDropScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  status: 'status',
+  winnerId: 'winnerId',
+  choice: 'choice',
+  reward: 'reward',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type HalloweenDropScalarFieldEnum = (typeof HalloweenDropScalarFieldEnum)[keyof typeof HalloweenDropScalarFieldEnum]
+
+
+export const HalloweenOfferScalarFieldEnum = {
+  id: 'id',
+  shopItemId: 'shopItemId',
+  candyPrice: 'candyPrice',
+  pumpkinPrice: 'pumpkinPrice',
+  createdAt: 'createdAt'
+} as const
+
+export type HalloweenOfferScalarFieldEnum = (typeof HalloweenOfferScalarFieldEnum)[keyof typeof HalloweenOfferScalarFieldEnum]
 
 
 export const SortOrder = {

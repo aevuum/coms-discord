@@ -2,6 +2,7 @@ import { Listener } from "@sapphire/framework";
 import type { Message } from "discord.js";
 
 import * as Repo from "../repositories/userRepository.js";
+import { HalloweenService } from "../../halloween/service/halloweenService.js";
 import { PointsService } from "../../points/service/pointsService.js";
 import { TupperMessageService } from "../../tupper/service/tupperMessageService.js";
 
@@ -28,6 +29,9 @@ export class MessageCreateListener extends Listener {
     }
 
     await PointsService.handleMessage(message).catch((error) => this.container.logger.error(error));
+
+    HalloweenService.noteActivity(message);
+    await HalloweenService.handleReply(message).catch((error) => this.container.logger.error(error));
 
     await Repo.UserRepository.incrementMessageCount(message.author.id);
   }

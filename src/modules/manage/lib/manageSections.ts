@@ -83,6 +83,14 @@ export const MANAGE_SECTIONS: ManageSection[] = [
     access: CommandAccess.Restricted,
   },
   {
+    id: ManageSectionId.Halloween,
+    key: "manage.halloween",
+    label: "Хэллоуин",
+    emoji: "🎃",
+    description: "Тыквы «Магия или жизнь», конфеты, лавка и курс обмена",
+    access: CommandAccess.Restricted,
+  },
+  {
     id: ManageSectionId.Applications,
     key: "manage.applications",
     label: "Набор в команду",

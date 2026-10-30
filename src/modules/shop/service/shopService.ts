@@ -82,6 +82,10 @@ export class ShopService {
   public static async useItem(discordId: string, itemId: string) {
     const item = await this.getItem(itemId);
 
+    if (item.category === "event_currency") {
+      throw new ShopError("Этот предмет тратится в /halloween — в лавке или при обмене на комс-коины.");
+    }
+
     const remaining = await ShopRepository.changeQuantity(
       discordId,
       item.id,

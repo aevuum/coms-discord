@@ -365,6 +365,7 @@ enum CoinTransactionType {
   AWARD_GRANT
   AWARD_REVOKE
   ACTIVITY_REWARD
+  EVENT_EXCHANGE
 }
 
 model CoinTransaction {
@@ -1416,4 +1417,60 @@ model HousePointsSettings {
   messageId String?
 
   updatedAt DateTime @updatedAt
+}
+
+enum HalloweenDropStatus {
+  OPEN
+  CLAIMED
+  EXPIRED
+}
+
+model HalloweenSettings {
+  guildId String @id
+
+  enabled    Boolean   @default(false)
+  channelIds String[]  @default([])
+  endsAt     DateTime?
+  nextDropAt DateTime?
+
+  minMinutes      Int @default(30)
+  maxMinutes      Int @default(90)
+  lifetimeMinutes Int @default(10)
+  candyMin        Int @default(1)
+  candyMax        Int @default(5)
+  candyRate       Int @default(1)
+  pumpkinRate     Int @default(25)
+
+  candyItemId   String?
+  pumpkinItemId String?
+
+  updatedAt DateTime @updatedAt
+}
+
+model HalloweenDrop {
+  id String @id @default(cuid())
+
+  guildId   String
+  channelId String
+  messageId String @unique
+
+  status    HalloweenDropStatus @default(OPEN)
+  winnerId  String?
+  choice    String?
+  reward    Int?
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  @@index([status, expiresAt])
+}
+
+model HalloweenOffer {
+  id String @id @default(cuid())
+
+  shopItemId   String @unique
+  candyPrice   Int    @default(0)
+  pumpkinPrice Int    @default(0)
+
+  createdAt DateTime @default(now())
 }

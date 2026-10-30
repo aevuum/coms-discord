@@ -827,6 +827,23 @@ export type EnumHousePointsSourceWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
 }
 
+export type EnumHalloweenDropStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.HalloweenDropStatus | Prisma.EnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHalloweenDropStatusFilter<$PrismaModel> | $Enums.HalloweenDropStatus
+}
+
+export type EnumHalloweenDropStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HalloweenDropStatus | Prisma.EnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHalloweenDropStatusWithAggregatesFilter<$PrismaModel> | $Enums.HalloweenDropStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHalloweenDropStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHalloweenDropStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1597,6 +1614,23 @@ export type NestedEnumHousePointsSourceWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
   _max?: Prisma.NestedEnumHousePointsSourceFilter<$PrismaModel>
+}
+
+export type NestedEnumHalloweenDropStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.HalloweenDropStatus | Prisma.EnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHalloweenDropStatusFilter<$PrismaModel> | $Enums.HalloweenDropStatus
+}
+
+export type NestedEnumHalloweenDropStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HalloweenDropStatus | Prisma.EnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HalloweenDropStatus[] | Prisma.ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHalloweenDropStatusWithAggregatesFilter<$PrismaModel> | $Enums.HalloweenDropStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHalloweenDropStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHalloweenDropStatusFilter<$PrismaModel>
 }
 
 

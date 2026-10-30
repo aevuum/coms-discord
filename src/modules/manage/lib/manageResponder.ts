@@ -29,6 +29,7 @@ const USER_ERRORS = new Set([
   "RuneError",
   "ScheduleError",
   "PointsError",
+  "HalloweenError",
 ]);
 
 export class ManageError extends Error {

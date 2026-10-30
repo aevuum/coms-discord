@@ -445,7 +445,10 @@ export const ModelName = {
   ScheduleSettings: 'ScheduleSettings',
   HousePoints: 'HousePoints',
   HousePointsLog: 'HousePointsLog',
-  HousePointsSettings: 'HousePointsSettings'
+  HousePointsSettings: 'HousePointsSettings',
+  HalloweenSettings: 'HalloweenSettings',
+  HalloweenDrop: 'HalloweenDrop',
+  HalloweenOffer: 'HalloweenOffer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -461,7 +464,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll" | "rune" | "characterRune" | "runeStudyRequest" | "spellFormula" | "artifactMaterial" | "artifactBlank" | "artifactRecipe" | "artifactRecipeRune" | "artifactRecipeMaterial" | "artifact" | "artifactRune" | "runeOperation" | "runeAuditLog" | "runeSettings" | "tupperMessage" | "subject" | "lesson" | "lessonEnrollment" | "lessonNotification" | "characterGrade" | "scheduleSettings" | "housePoints" | "housePointsLog" | "housePointsSettings"
+    modelProps: "user" | "award" | "userAward" | "wallet" | "character" | "spell" | "spellCast" | "characterTransaction" | "shopItem" | "inventoryItem" | "characterInventoryItem" | "commandPermission" | "characterFamiliar" | "characterTupper" | "coinTransaction" | "roleStipend" | "ticket" | "location" | "locationRoute" | "travel" | "locationSettings" | "rollEntry" | "activitySettings" | "report" | "staffApplication" | "staffApplicationVote" | "staffApplicationRole" | "reportSettings" | "giveaway" | "giveawayEntry" | "giveawaySettings" | "termsAcceptance" | "suggestion" | "suggestionReaction" | "suggestionRating" | "pingRole" | "prophetState" | "pendingTraitRoll" | "rune" | "characterRune" | "runeStudyRequest" | "spellFormula" | "artifactMaterial" | "artifactBlank" | "artifactRecipe" | "artifactRecipeRune" | "artifactRecipeMaterial" | "artifact" | "artifactRune" | "runeOperation" | "runeAuditLog" | "runeSettings" | "tupperMessage" | "subject" | "lesson" | "lessonEnrollment" | "lessonNotification" | "characterGrade" | "scheduleSettings" | "housePoints" | "housePointsLog" | "housePointsSettings" | "halloweenSettings" | "halloweenDrop" | "halloweenOffer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -5053,6 +5056,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HalloweenSettings: {
+      payload: Prisma.$HalloweenSettingsPayload<ExtArgs>
+      fields: Prisma.HalloweenSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HalloweenSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HalloweenSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.HalloweenSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HalloweenSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.HalloweenSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.HalloweenSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.HalloweenSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HalloweenSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.HalloweenSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>
+        }
+        update: {
+          args: Prisma.HalloweenSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.HalloweenSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HalloweenSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HalloweenSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.HalloweenSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.HalloweenSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHalloweenSettings>
+        }
+        groupBy: {
+          args: Prisma.HalloweenSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HalloweenSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HalloweenSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HalloweenSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
+    HalloweenDrop: {
+      payload: Prisma.$HalloweenDropPayload<ExtArgs>
+      fields: Prisma.HalloweenDropFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HalloweenDropFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HalloweenDropFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>
+        }
+        findFirst: {
+          args: Prisma.HalloweenDropFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HalloweenDropFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>
+        }
+        findMany: {
+          args: Prisma.HalloweenDropFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>[]
+        }
+        create: {
+          args: Prisma.HalloweenDropCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>
+        }
+        createMany: {
+          args: Prisma.HalloweenDropCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HalloweenDropCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>[]
+        }
+        delete: {
+          args: Prisma.HalloweenDropDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>
+        }
+        update: {
+          args: Prisma.HalloweenDropUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>
+        }
+        deleteMany: {
+          args: Prisma.HalloweenDropDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HalloweenDropUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HalloweenDropUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>[]
+        }
+        upsert: {
+          args: Prisma.HalloweenDropUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenDropPayload>
+        }
+        aggregate: {
+          args: Prisma.HalloweenDropAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHalloweenDrop>
+        }
+        groupBy: {
+          args: Prisma.HalloweenDropGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HalloweenDropGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HalloweenDropCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HalloweenDropCountAggregateOutputType> | number
+        }
+      }
+    }
+    HalloweenOffer: {
+      payload: Prisma.$HalloweenOfferPayload<ExtArgs>
+      fields: Prisma.HalloweenOfferFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HalloweenOfferFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HalloweenOfferFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>
+        }
+        findFirst: {
+          args: Prisma.HalloweenOfferFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HalloweenOfferFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>
+        }
+        findMany: {
+          args: Prisma.HalloweenOfferFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>[]
+        }
+        create: {
+          args: Prisma.HalloweenOfferCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>
+        }
+        createMany: {
+          args: Prisma.HalloweenOfferCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HalloweenOfferCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>[]
+        }
+        delete: {
+          args: Prisma.HalloweenOfferDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>
+        }
+        update: {
+          args: Prisma.HalloweenOfferUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>
+        }
+        deleteMany: {
+          args: Prisma.HalloweenOfferDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HalloweenOfferUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HalloweenOfferUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>[]
+        }
+        upsert: {
+          args: Prisma.HalloweenOfferUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HalloweenOfferPayload>
+        }
+        aggregate: {
+          args: Prisma.HalloweenOfferAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHalloweenOffer>
+        }
+        groupBy: {
+          args: Prisma.HalloweenOfferGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HalloweenOfferGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HalloweenOfferCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HalloweenOfferCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -6019,6 +6244,54 @@ export const HousePointsSettingsScalarFieldEnum = {
 export type HousePointsSettingsScalarFieldEnum = (typeof HousePointsSettingsScalarFieldEnum)[keyof typeof HousePointsSettingsScalarFieldEnum]
 
 
+export const HalloweenSettingsScalarFieldEnum = {
+  guildId: 'guildId',
+  enabled: 'enabled',
+  channelIds: 'channelIds',
+  endsAt: 'endsAt',
+  nextDropAt: 'nextDropAt',
+  minMinutes: 'minMinutes',
+  maxMinutes: 'maxMinutes',
+  lifetimeMinutes: 'lifetimeMinutes',
+  candyMin: 'candyMin',
+  candyMax: 'candyMax',
+  candyRate: 'candyRate',
+  pumpkinRate: 'pumpkinRate',
+  candyItemId: 'candyItemId',
+  pumpkinItemId: 'pumpkinItemId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HalloweenSettingsScalarFieldEnum = (typeof HalloweenSettingsScalarFieldEnum)[keyof typeof HalloweenSettingsScalarFieldEnum]
+
+
+export const HalloweenDropScalarFieldEnum = {
+  id: 'id',
+  guildId: 'guildId',
+  channelId: 'channelId',
+  messageId: 'messageId',
+  status: 'status',
+  winnerId: 'winnerId',
+  choice: 'choice',
+  reward: 'reward',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type HalloweenDropScalarFieldEnum = (typeof HalloweenDropScalarFieldEnum)[keyof typeof HalloweenDropScalarFieldEnum]
+
+
+export const HalloweenOfferScalarFieldEnum = {
+  id: 'id',
+  shopItemId: 'shopItemId',
+  candyPrice: 'candyPrice',
+  pumpkinPrice: 'pumpkinPrice',
+  createdAt: 'createdAt'
+} as const
+
+export type HalloweenOfferScalarFieldEnum = (typeof HalloweenOfferScalarFieldEnum)[keyof typeof HalloweenOfferScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -6543,6 +6816,20 @@ export type ListEnumHousePointsSourceFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'HalloweenDropStatus'
+ */
+export type EnumHalloweenDropStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HalloweenDropStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'HalloweenDropStatus[]'
+ */
+export type ListEnumHalloweenDropStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HalloweenDropStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -6727,6 +7014,9 @@ export type GlobalOmitConfig = {
   housePoints?: Prisma.HousePointsOmit
   housePointsLog?: Prisma.HousePointsLogOmit
   housePointsSettings?: Prisma.HousePointsSettingsOmit
+  halloweenSettings?: Prisma.HalloweenSettingsOmit
+  halloweenDrop?: Prisma.HalloweenDropOmit
+  halloweenOffer?: Prisma.HalloweenOfferOmit
 }
 
 /* Types for Logging */

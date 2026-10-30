@@ -351,3 +351,18 @@ export type HousePointsLog = Prisma.HousePointsLogModel
  * 
  */
 export type HousePointsSettings = Prisma.HousePointsSettingsModel
+/**
+ * Model HalloweenSettings
+ * 
+ */
+export type HalloweenSettings = Prisma.HalloweenSettingsModel
+/**
+ * Model HalloweenDrop
+ * 
+ */
+export type HalloweenDrop = Prisma.HalloweenDropModel
+/**
+ * Model HalloweenOffer
+ * 
+ */
+export type HalloweenOffer = Prisma.HalloweenOfferModel

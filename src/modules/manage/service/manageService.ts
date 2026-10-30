@@ -22,6 +22,7 @@ import { ReportReviewers } from "../../reports/service/reportReviewers.js";
 import { RuneAdminViews } from "../../runes/lib/runeAdminViews.js";
 import { ScheduleAdminViews } from "../../schedule/lib/scheduleAdminViews.js";
 import { PointsAdminViews } from "../../points/lib/pointsAdminViews.js";
+import { HalloweenViews } from "../../halloween/lib/halloweenViews.js";
 import { ManageContainer } from "../lib/manageContainer.js";
 import { ManageError } from "../lib/manageResponder.js";
 import { getManageSection } from "../lib/manageSections.js";
@@ -92,6 +93,9 @@ export class ManageService {
 
       case ManageSectionId.Points:
         return PointsAdminViews.root(subject.guildId as string);
+
+      case ManageSectionId.Halloween:
+        return HalloweenViews.admin(subject.guildId as string);
 
       case ManageSectionId.Applications:
         return ApplicationAdminViews.root(interaction.client);

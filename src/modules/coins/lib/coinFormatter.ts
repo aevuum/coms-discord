@@ -10,6 +10,7 @@ const transactionLabels: Record<CoinTransactionType, string> = {
   [CoinTransactionType.AWARD_GRANT]: "Награда",
   [CoinTransactionType.AWARD_REVOKE]: "Снятие награды",
   [CoinTransactionType.ACTIVITY_REWARD]: "Награда за активность",
+  [CoinTransactionType.EVENT_EXCHANGE]: "Обмен ивентовых предметов",
 };
 
 export class CoinFormatter {

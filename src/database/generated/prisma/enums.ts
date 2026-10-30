@@ -78,7 +78,8 @@ export const CoinTransactionType = {
   ADMIN_REMOVE: 'ADMIN_REMOVE',
   AWARD_GRANT: 'AWARD_GRANT',
   AWARD_REVOKE: 'AWARD_REVOKE',
-  ACTIVITY_REWARD: 'ACTIVITY_REWARD'
+  ACTIVITY_REWARD: 'ACTIVITY_REWARD',
+  EVENT_EXCHANGE: 'EVENT_EXCHANGE'
 } as const
 
 export type CoinTransactionType = (typeof CoinTransactionType)[keyof typeof CoinTransactionType]
@@ -300,3 +301,12 @@ export const HousePointsSource = {
 } as const
 
 export type HousePointsSource = (typeof HousePointsSource)[keyof typeof HousePointsSource]
+
+
+export const HalloweenDropStatus = {
+  OPEN: 'OPEN',
+  CLAIMED: 'CLAIMED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type HalloweenDropStatus = (typeof HalloweenDropStatus)[keyof typeof HalloweenDropStatus]
