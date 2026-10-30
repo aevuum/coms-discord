@@ -34,7 +34,7 @@ export class HalloweenCommand extends Command {
 
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,
-        components: [await HalloweenViews.player(interaction.user.id, subject.guildId)],
+        ...(await HalloweenViews.player(interaction.user.id, subject.guildId)),
       });
     } catch (error) {
       await HalloweenResponder.error(interaction, error);

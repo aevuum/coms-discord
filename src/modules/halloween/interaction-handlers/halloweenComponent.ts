@@ -62,7 +62,8 @@ export class HalloweenComponentHandler extends InteractionHandler {
 
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,
-        components: [await HalloweenViews.player(interaction.user.id, subject.guildId, `Куплено: **${item.name}**. Предмет уже в инвентаре профиля.`)],
+        ...(await HalloweenViews.player(interaction.user.id, subject.guildId, `Куплено: **${item.name}**. Предмет уже в инвентаре профиля.`)),
+        attachments: [],
       });
     } catch (error) {
       await HalloweenResponder.error(interaction, error);

@@ -21,6 +21,7 @@ import type { HalloweenOffer, HalloweenSettings, ShopItem } from "../../../datab
 import { ManageComponents } from "../../manage/lib/manageComponents.js";
 import { MoscowTime } from "../../schedule/lib/moscowTime.js";
 import { CANDY, PUMPKIN, PUMPKIN_LIMIT } from "../types/halloween.js";
+import { HalloweenCard } from "./halloweenCard.js";
 
 export type OfferView = HalloweenOffer & { item: ShopItem };
 
@@ -90,7 +91,7 @@ export class HalloweenContainer {
   }
 
   public static player(settings: HalloweenSettings, candy: number, pumpkin: number, offers: OfferView[], notice: string | null = null) {
-    const container = new ContainerBuilder().setAccentColor(0x475b56);
+    const container = HalloweenCard.banner(new ContainerBuilder().setAccentColor(0x475b56));
     const running = settings.enabled && (!settings.endsAt || settings.endsAt > new Date());
 
     text(container, [

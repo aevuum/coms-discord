@@ -1,4 +1,5 @@
 import { HalloweenRepository } from "../repositories/halloweenRepository.js";
+import { HalloweenCard } from "./halloweenCard.js";
 import { HalloweenContainer } from "./halloweenContainer.js";
 
 export class HalloweenViews {
@@ -10,7 +11,10 @@ export class HalloweenViews {
       HalloweenRepository.offers(),
     ]);
 
-    return HalloweenContainer.player(settings, candy, pumpkin, offers, notice);
+    return {
+      components: [HalloweenContainer.player(settings, candy, pumpkin, offers, notice)],
+      files: [HalloweenCard.attachment()],
+    };
   }
 
   public static async admin(guildId: string, notice: string | null = null) {

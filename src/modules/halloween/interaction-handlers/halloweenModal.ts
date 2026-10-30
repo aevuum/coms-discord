@@ -52,13 +52,8 @@ export class HalloweenModalHandler extends InteractionHandler {
 
       await interaction.editReply({
         flags: MessageFlags.IsComponentsV2,
-        components: [
-          await HalloweenViews.player(
-            interaction.user.id,
-            subject.guildId,
-            `Обменяно на **${result.coins}** комс-коинов. Баланс: ${result.balance}.`,
-          ),
-        ],
+        ...(await HalloweenViews.player(interaction.user.id, subject.guildId, `Обменяно на **${result.coins}** комс-коинов. Баланс: ${result.balance}.`)),
+        attachments: [],
       });
     } catch (error) {
       await HalloweenResponder.error(interaction, error);

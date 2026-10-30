@@ -1,10 +1,11 @@
 import { container } from "@sapphire/framework";
 
-import { PermissionFlagsBits, type BaseInteraction, type Client, type Message } from "discord.js";
+import { MessageFlags, PermissionFlagsBits, type BaseInteraction, type Client, type ContainerBuilder, type Message } from "discord.js";
 
 import type { HalloweenSettings } from "../../../database/generated/prisma/client.js";
 
 import { PermissionService } from "../../permissions/service/permissionService.js";
+import { HalloweenCard } from "../lib/halloweenCard.js";
 import { HalloweenRules } from "../lib/halloweenRules.js";
 import { ClaimResult, HalloweenRepository } from "../repositories/halloweenRepository.js";
 import {
@@ -50,7 +51,7 @@ export class HalloweenService {
     const now = new Date();
 
     for (const drop of await HalloweenRepository.expireDue(now)) {
-      await this.editDrop(client, drop.channelId, drop.messageId, `${PUMPKIN} ~~Магия или жизнь?~~\n-# Никто не ответил — тыква укатилась в темноту.`);
+      await this.editDrop(client, drop.channelId, drop.messageId, HalloweenCard.expired(), "Никто не ответил — тыква укатилась в темноту.");
     }
 
     for (const settings of await HalloweenRepository.allEnabled()) {
@@ -84,12 +85,11 @@ export class HalloweenService {
       throw new HalloweenError("Нет ни одного доступного канала для тыкв — выберите каналы в настройках.");
     }
 
+    const expiresAt = new Date(Date.now() + settings.lifetimeMinutes * 60_000);
     const message = await channel.send({
-      content: [
-        `# ${PUMPKIN}`,
-        "**Магия или жизнь?**",
-        `-# Ответьте на это сообщение «магия» или «жизнь». Первый получит награду: за магию — конфеты ${CANDY}, за жизнь — тыкву-артефакт ${PUMPKIN}.`,
-      ].join("\n"),
+      flags: MessageFlags.IsComponentsV2,
+      components: [HalloweenCard.drop(expiresAt, settings.candyMin, settings.candyMax)],
+      files: [HalloweenCard.attachment()],
       allowedMentions: { parse: [] },
     });
 
@@ -97,7 +97,7 @@ export class HalloweenService {
       guildId: settings.guildId,
       channelId: channel.id,
       messageId: message.id,
-      expiresAt: new Date(Date.now() + settings.lifetimeMinutes * 60_000),
+      expiresAt,
     });
 
     return channel.id;
@@ -158,7 +158,8 @@ export class HalloweenService {
       message.client,
       drop.channelId,
       drop.messageId,
-      `${PUMPKIN} ~~Магия или жизнь?~~\n-# <@${message.author.id}> выбрал(а) **${magic ? "магию" : "жизнь"}** и забрал(а) ${reward}.`,
+      HalloweenCard.claimed(message.author.id, magic, reward),
+      `<@${message.author.id}> выбрал(а) ${magic ? "магию" : "жизнь"} и забрал(а) ${reward}.`,
     );
   }
 
@@ -211,7 +212,7 @@ export class HalloweenService {
     return pool[Math.floor(Math.random() * pool.length)] ?? null;
   }
 
-  private static async editDrop(client: Client, channelId: string, messageId: string, content: string) {
+  private static async editDrop(client: Client, channelId: string, messageId: string, card: ContainerBuilder, fallback: string) {
     const channel = await client.channels.fetch(channelId).catch(() => null);
 
     if (!channel?.isTextBased() || channel.isDMBased()) {
@@ -220,6 +221,15 @@ export class HalloweenService {
 
     const message = await channel.messages.fetch(messageId).catch(() => null);
 
-    await message?.edit({ content, allowedMentions: { parse: [] } }).catch(() => null);
+    if (!message) {
+      return;
+    }
+
+    if (message.flags.has(MessageFlags.IsComponentsV2)) {
+      await message.edit({ components: [card], allowedMentions: { parse: [] } }).catch(() => null);
+      return;
+    }
+
+    await message.edit({ content: `${PUMPKIN} ~~Магия или жизнь?~~\n-# ${fallback}`, allowedMentions: { parse: [] } }).catch(() => null);
   }
 }
